@@ -1,9 +1,10 @@
-
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
-
-# Dependency directories
-node_modules/
-jspm_packages/
-build/
-buildd/
+node_modules
+dist
+dist-old
+dist-2
+out
+.DS_Store
+.eslintcache
+*.log*
+yarn.lock
+pnpm-lock.yaml

@@ -1,0 +1,162 @@
+import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { join } from 'path'
+import path from 'path'
+import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import * as Sentry from '@sentry/electron/main'
+import { IPCMode } from '@sentry/electron/main'
+import fs from 'fs'
+import './system'
+import './powershell'
+import './rpc'
+import './tweakHandler'
+import './backup'
+import { executePowerShell } from './powershell'
+import { createTray } from './tray'
+import { setupTweaksHandlers } from './tweakHandler'
+import Store from 'electron-store'
+import { startDiscordRPC, stopDiscordRPC } from './rpc'
+import { autoUpdater, AppUpdater } from 'electron-updater'
+
+autoUpdater.autoDownload = true
+autoUpdater.autoInstallOnAppQuit = true
+
+export const logo = '[Sparkle]:'
+console.clear()
+const folderPath = path.join('C:', 'Sparkle', 'Backup')
+
+if (!fs.existsSync(folderPath)) {
+  fs.mkdirSync(folderPath, { recursive: true })
+  console.log('Folder created at:', folderPath)
+} else {
+  console.log('Folder already exists at:', folderPath)
+}
+
+async function Defender() {
+  const Apppath = path.dirname(process.execPath)
+  if (!is.dev) {
+    const result = await executePowerShell(null, {
+      script: `Add-MpPreference -ExclusionPath ${Apppath}`,
+      name: 'Add-MpPreference'
+    })
+    if (result.success) {
+      console.log(logo, 'Added Sparkle to Windows Defender Exclusions')
+    } else {
+      console.error(logo, 'Failed to add Sparkle to Windows Defender Exclusions', result.error)
+    }
+  } else {
+    console.log(logo, 'Running in development mode, skipping Windows Defender exclusion')
+  }
+}
+
+const store = new Store()
+store.set('discord-rpc', false)
+if (store.get('discord-rpc') !== true) {
+  store.set('discord-rpc', true)
+  startDiscordRPC()
+  console.log('(main.js) ', logo, 'Starting Discord RPC')
+}
+
+ipcMain.handle('discord-rpc:toggle', async (event, value) => {
+  if (value) {
+    store.set('discord-rpc', true)
+    startDiscordRPC()
+    console.log(logo, 'Starting Discord RPC')
+  } else {
+    store.set('discord-rpc', false)
+    await stopDiscordRPC()
+    console.log(logo, 'Stopping Discord RPC')
+  }
+  return store.get('discord-rpc')
+})
+ipcMain.handle('discord-rpc:get', () => {
+  return store.get('discord-rpc')
+})
+
+let mainWindow = null
+
+Sentry.init({
+  dsn: 'https://d1e8991c715dd717e6b7b44dbc5c43dd@o4509167771648000.ingest.us.sentry.io/4509167772958720',
+  ipcMode: IPCMode.Both
+})
+
+function createWindow() {
+  mainWindow = new BrowserWindow({
+    width: 1203,
+    backgroundColor: '#0f172a',
+    height: 694,
+    minWidth: 1203,
+    minHeight: 694,
+    center: true,
+    frame: false,
+    show: false,
+    autoHideMenuBar: true,
+    icon: path.join(__dirname, '../../resources/sparkle2.ico'),
+    webPreferences: {
+      preload: join(__dirname, '../preload/index.js'),
+      sandbox: false
+    }
+  })
+
+  mainWindow.on('ready-to-show', () => {
+    mainWindow.show()
+  })
+
+  mainWindow.webContents.setWindowOpenHandler((details) => {
+    shell.openExternal(details.url)
+    return { action: 'deny' }
+  })
+
+  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+  } else {
+    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+  }
+}
+
+app.whenReady().then(() => {
+  Defender()
+  setupTweaksHandlers()
+  autoUpdater.checkForUpdatesAndNotify().catch(console.error)
+  createWindow()
+  createTray(mainWindow)
+
+  electronApp.setAppUserModelId('com.parcoil.sparkle')
+
+  app.on('browser-window-created', (_, window) => {
+    optimizer.watchWindowShortcuts(window)
+  })
+
+  ipcMain.on('window-minimize', () => {
+    if (mainWindow) mainWindow.minimize()
+  })
+
+  ipcMain.on('window-toggle-maximize', () => {
+    if (mainWindow) {
+      if (mainWindow.isMaximized()) {
+        mainWindow.unmaximize()
+      } else {
+        mainWindow.maximize()
+      }
+    }
+  })
+
+  ipcMain.on('window-close', () => {
+    if (mainWindow) mainWindow.hide()
+  })
+
+  const gotTheLock = app.requestSingleInstanceLock()
+
+  if (!gotTheLock) {
+    app.quit()
+  } else {
+    app.on('second-instance', () => {
+      if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore()
+        mainWindow.focus()
+      }
+    })
+  }
+  app.on('activate', function () {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  })
+})

@@ -1,0 +1,548 @@
+{
+  "apps": [
+    {
+      "name": "Firefox",
+      "id": "Mozilla.Firefox",
+      "category": "browsers",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1024px-Firefox_logo%2C_2019.svg.png",
+      "info": "A fast, private and secure web browsers.",
+      "link": "https://www.mozilla.org/en-US/firefox/new/"
+    },
+    {
+      "name": "Google Chrome",
+      "id": "Google.Chrome",
+      "category": "browsers",
+      "info": "The most popular web browsers.",
+      "link": "https://www.google.com/chrome/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Google_Chrome_icon_%28February_2022%29.svg/2048px-Google_Chrome_icon_%28February_2022%29.svg.png"
+    },
+    {
+      "name": "Discord",
+      "id": "Discord.Discord",
+      "category": "communication",
+      "info": "Discord is a communication app that lets you chat with your friends.",
+      "link": "https://discord.com/",
+      "icon": "https://support.discord.com/hc/user_images/bbW4u80g7yIVxsphv9diNw.png"
+    },
+    {
+      "name": "Spotify",
+      "id": "Spotify",
+      "category": "multimedia",
+      "info": "Listen to music and podcasts.",
+      "link": "https://www.spotify.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png"
+    },
+    {
+      "name": "Steam",
+      "id": "Valve.Steam",
+      "category": "games",
+      "info": "A digital distribution platform for video games.",
+      "link": "https://store.steampowered.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png"
+    },
+    {
+      "name": "Epic Games Launcher",
+      "id": "EpicGames.EpicGamesLauncher",
+      "category": "games",
+      "info": "A Games Store",
+      "link": "https://www.epicgames.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Epic_Games_logo.svg/1200px-Epic_Games_logo.svg.png"
+    },
+    {
+      "name": "EA App",
+      "id": "ElectronicArts.EADesktop",
+      "category": "games",
+      "info": "A Games Store",
+      "link": "https://www.ea.com/",
+      "icon": "https://cdn2.steamgriddb.com/logo_thumb/a208b894ffe062914d0192bb4f663114.png"
+    },
+    {
+      "name": "BattleNet",
+      "id": "Blizzard.BattleNet",
+      "category": "games",
+      "info": "A Games Store",
+      "link": "https://us.shop.battle.net/",
+      "icon": "https://platform.polygon.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/7141739/battle_net.jpg?quality=90&strip=all&crop=7.8125,0,84.375,100"
+    },
+    {
+      "name": "Visual Studio Code",
+      "id": "Microsoft.VisualStudioCode",
+      "category": "development",
+      "info": "A code editor that runs on your computer.",
+      "link": "https://code.visualstudio.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/2048px-Visual_Studio_Code_1.35_icon.svg.png"
+    },
+    {
+      "name": "Visual Studio",
+      "id": "Microsoft.VisualStudio.2022",
+      "category": "development",
+      "info": "A code editor that runs on your computer.",
+      "link": "https://visualstudio.microsoft.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Visual_Studio_Icon_2019.svg/1200px-Visual_Studio_Icon_2019.svg.png"
+    },
+    {
+      "name": "Notepad++",
+      "id": "Notepad++",
+      "category": "development",
+      "info": "A code editor that runs on your computer.",
+      "link": "https://notepad-plus-plus.org/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Notepad%2B%2B_Logo.svg/2048px-Notepad%2B%2B_Logo.svg.png"
+    },
+    {
+      "name": "Sublime Text",
+      "id": "Sublime.Text",
+      "category": "development",
+      "info": "A code editor that runs on your computer.",
+      "link": "https://www.sublimetext.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Breezeicons-apps-48-sublime-text.svg/1200px-Breezeicons-apps-48-sublime-text.svg.png"
+    },
+    {
+      "name": "Brave",
+      "id": "Brave.Brave",
+      "category": "browsers",
+      "info": "A fast, private and secure web browsers.",
+      "link": "https://brave.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Brave_lion_icon.svg/1200px-Brave_lion_icon.svg.png"
+    },
+    {
+      "name": "Opera",
+      "id": "Opera.Opera",
+      "category": "browsers",
+      "info": "A fast, private and secure web browsers.",
+      "link": "https://www.opera.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Opera_2015_icon.svg/2048px-Opera_2015_icon.svg.png"
+    },
+    {
+      "name": "Opera GX",
+      "id": "Opera.OperaGX",
+      "category": "browsers",
+      "info": "A fast, private and secure web browser for gamers.",
+      "link": "https://www.opera.com/gx",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Opera_GX_Icon.svg/2048px-Opera_GX_Icon.svg.png"
+    },
+    {
+      "name": "Vivaldi",
+      "id": "Vivaldi.Vivaldi",
+      "category": "browsers",
+      "info": "A fast, private and secure web browsers.",
+      "link": "https://vivaldi.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Vivaldi_web_browser_logo.svg/1200px-Vivaldi_web_browser_logo.svg.png"
+    },
+    {
+      "name": "Zoom",
+      "id": "Zoom.Zoom",
+      "category": "communication",
+      "info": "A video conferencing app.",
+      "link": "https://zoom.us/",
+      "icon": "https://static.vecteezy.com/system/resources/previews/012/871/376/non_2x/zoom-logo-in-blue-colors-meetings-app-logotype-illustration-free-png.png"
+    },
+    {
+      "name": "Telegram Desktop",
+      "id": "Telegram",
+      "category": "communication",
+      "info": "A messaging app.",
+      "link": "https://telegram.org/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/2048px-Telegram_logo.svg.png"
+    },
+    {
+      "name": "7-Zip",
+      "id": "7Zip.7Zip",
+      "category": "utilities",
+      "info": "A file archiver.",
+      "link": "https://www.7-zip.org/",
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjzfUrl9Bf9AbiHFNM7v4lp7iGHKRTPL8Sdw&s"
+    },
+    {
+      "name": "Git",
+      "id": "Git.Git",
+      "category": "development",
+      "info": "A version control system.",
+      "link": "https://git-scm.com/",
+      "icon": "https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png"
+    },
+    {
+      "name": "GitHub Desktop",
+      "id": "GitHub.GitHubDesktop",
+      "category": "development",
+      "info": "A code editor that runs on your computer.",
+      "link": "https://desktop.github.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Github-desktop-logo-symbol.svg/1200px-Github-desktop-logo-symbol.svg.png"
+    },
+    {
+      "name": "Logitech GHUB",
+      "id": "Logitech.GHUB",
+      "category": "peripherals",
+      "info": "App to Manage your logitech peripherals.",
+      "link": "https://desktop.github.com/",
+      "icon": "https://play-lh.googleusercontent.com/QdFSGhFVBEk98dPetUJxPj6PlfXVzTIOyapbznySpCh_qbS5WljIsT_m7rbLk4_ind8"
+    },
+    {
+      "name": "Python3",
+      "id": "Python.Python",
+      "category": "development",
+      "info": "Programming language",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png"
+    },
+    {
+      "name": "Node.js",
+      "id": "OpenJS.NodeJS",
+      "category": "development",
+      "info": "JavaScript runtime built on Chrome's V8 JavaScript engine.",
+      "link": "https://nodejs.org/",
+      "icon": "https://static-00.iconduck.com/assets.00/node-js-icon-1817x2048-g8tzf91e.png"
+    },
+    {
+      "name": "Postman",
+      "id": "Postman.Postman",
+      "category": "development",
+      "info": "API development environment.",
+      "link": "https://www.postman.com/",
+      "icon": "https://cdn.worldvectorlogo.com/logos/postman.svg"
+    },
+    {
+      "name": "Docker Desktop",
+      "id": "Docker.DockerDesktop",
+      "category": "development",
+      "info": "Containerized application development.",
+      "link": "https://www.docker.com/products/docker-desktop",
+      "icon": "https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png"
+    },
+    {
+      "name": "Slack",
+      "id": "SlackTechnologies.Slack",
+      "category": "communication",
+      "info": "Collaboration hub that connects your work with the people you work with.",
+      "link": "https://slack.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Slack_icon_2019.svg/2048px-Slack_icon_2019.svg.png"
+    },
+    {
+      "name": "RustDesk",
+      "id": "RustDesk.RustDesk",
+      "category": "utilities",
+      "info": "A remote desktop app.",
+      "link": "https://rustdesk.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Rustdesk.svg/2048px-Rustdesk.svg.png"
+    },
+    {
+      "name": "Everything Search",
+      "id": "voidtools.Everything",
+      "category": "utilities",
+      "info": "A file search engine.",
+      "icon": "https://images.dwncdn.net/images/t_app-icon-l/p/518883d1-148e-46b6-9935-3f300ee5eb94/2700159425/2379_4-10890746-imgingest-1136771509381280571.png"
+    },
+    {
+      "name": "VLC",
+      "id": "VideoLAN.VLC",
+      "category": "multimedia",
+      "info": "A free and open source media player.",
+      "link": "https://vlc.media/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/VLC_Icon.svg/2048px-VLC_Icon.svg.png"
+    },
+    {
+      "name": "Audacity",
+      "id": "Audacity.Audacity",
+      "category": "multimedia",
+      "info": "An audio editor.",
+      "link": "https://www.audacityteam.org/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Audacity_Logo.svg/2048px-Audacity_Logo.svg.png"
+    },
+    {
+      "name": "OBS Studio",
+      "id": "OBSProject.OBSStudio",
+      "category": "multimedia",
+      "info": "A free and open source software for video recording and live streaming.",
+      "link": "https://obsproject.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/OBS_Studio_Logo.svg/1200px-OBS_Studio_Logo.svg.png"
+    },
+    {
+      "name": "MSI Afterburner",
+      "id": "Guru3D.Afterburner",
+      "category": "utilities",
+      "info": "A graphics card overclocking utility.",
+      "link": "https://www.msi.com/Landing/afterburner",
+      "icon": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b1997507-606b-44bc-a6c8-dd0740cb1f88/d377tuc-d46dc60f-72a1-4389-8212-e212ec80b527.png/v1/fill/w_900,h_900/msi_afterburner_icon_2048_best_by_vuvuzelahero_d377tuc-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9OTAwIiwicGF0aCI6IlwvZlwvYjE5OTc1MDctNjA2Yi00NGJjLWE2YzgtZGQwNzQwY2IxZjg4XC9kMzc3dHVjLWQ0NmRjNjBmLTcyYTEtNDM4OS04MjEyLWUyMTJlYzgwYjUyNy5wbmciLCJ3aWR0aCI6Ijw9OTAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.ZG2StC-nHNdqju23CIkYfDYs2lx3cFbqUI4dgwhd05w"
+    },
+    {
+      "name": "Fan Control",
+      "id": "Rem0o.FanControl",
+      "category": "utilities",
+      "info": "A fan control utility.",
+      "link": "https://getfancontrol.com/",
+      "icon": "https://www.fileeagle.com/data/2023/03/Fan-Control.png"
+    },
+    {
+      "name": "WinRAR",
+      "id": "RARLab.WinRAR",
+      "category": "utilities",
+      "info": "A file archiver.",
+      "link": "https://www.win-rar.com/",
+      "icon": "https://keyoriginal.com/wp-content/uploads/2023/12/winrar-min.png"
+    },
+    {
+      "name": "Parsec",
+      "id": "Parsec.Parsec",
+      "category": "utilities",
+      "info": "A remote desktop app.",
+      "link": "https://parsec.app/",
+      "icon": "https://static-00.iconduck.com/assets.00/parsec-icon-512x512-4kbj8llm.png"
+    },
+    {
+      "name": "OpenRGB",
+      "id": "CalcProgrammer1.OpenRGB",
+      "category": "utilities",
+      "info": "An open source RGB lighting control software.",
+      "link": "https://openrgb.org/",
+      "icon": "https://cdn2.steamgriddb.com/thumb/76b8407154bc9184dbe6c0d5fb46e30a.jpg"
+    },
+    {
+      "name": "Rust",
+      "id": "Rustlang.Rust.MSVC",
+      "category": "development",
+      "info": "A FAST programming language.",
+      "link": "https://www.rust-lang.org/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Rust_programming_language_black_logo.svg/1200px-Rust_programming_language_black_logo.svg.png"
+    },
+    {
+      "name": "Notion",
+      "id": "Notion.Notion",
+      "category": "productivity",
+      "info": "All-in-one workspace for your notes, tasks, wikis, and databases.",
+      "link": "https://www.notion.so/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Notion-logo.svg/1200px-Notion-logo.svg.png"
+    },
+    {
+      "name": "Microsoft Office",
+      "id": "Microsoft.Office",
+      "category": "productivity",
+      "info": "All-in-one workspace for your notes, tasks, wikis, and databases.",
+      "link": "https://www.notion.so/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Microsoft_Office_logo_%282013%E2%80%932019%29.svg/1200px-Microsoft_Office_logo_%282013%E2%80%932019%29.svg.png"
+    },
+    {
+      "name": "Surfshark VPN",
+      "id": "Surfshark.Surfshark",
+      "category": "VPN",
+      "info": "A Great VPN service.",
+      "link": "https://surfshark.com/",
+      "icon": "https://static-00.iconduck.com/assets.00/surfshark-icon-2048x2048-cw5t9bgc.png"
+    },
+    {
+      "name": "Windscribe",
+      "id": "Windscribe.Windscribe",
+      "category": "VPN",
+      "info": "A Free VPN service.",
+      "link": "https://windscribe.com/",
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaKUVSGAUBm-WHTejyLTAj5knDQtAuPrwMBw&s"
+    },
+    {
+      "name": "Proton VPN",
+      "id": "Proton.ProtonVPN",
+      "category": "VPN",
+      "info": "A Free VPN service.",
+      "link": "https://windscribe.com/",
+      "icon": "https://seeklogo.com/images/P/proton-vpn-logo-A50452564D-seeklogo.com.png"
+    },
+    {
+      "name": "Express VPN",
+      "id": "ExpressVPN.Express VPN",
+      "category": "VPN",
+      "info": "A VPN service.",
+      "link": "https://windscribe.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/3/34/ExpressVPN-logo.png"
+    },
+    {
+      "name": "Private Internet Access",
+      "id": "PrivateInternetAccess.PrivateInternetAccessN",
+      "category": "VPN",
+      "info": "A VPN service.",
+      "link": "https://www.privateinternetaccess.com/",
+      "icon": "https://img.utdstc.com/icon/af1/606/af160626a38c9a3a2de814a31bc6ef98cabc30ba806949a9ddfb3a39e941bfc0:200"
+    },
+    {
+      "name": "NordVPN",
+      "id": "NordSecurity.NordVPN",
+      "category": "VPN",
+      "info": "A VPN service.",
+      "link": "https://nordvpn.com/cybersecurity-site/",
+      "icon": "https://m.media-amazon.com/images/I/31o0QB0R0sL.png"
+    },
+    {
+      "name": "IPVanish",
+      "id": "IPVanish.IPVanish",
+      "category": "VPN",
+      "info": "A VPN service.",
+      "link": "https://www.ipvanish.com/",
+      "icon": "https://www.ipvanish.com/wp-content/uploads/2021/10/ipvanish-full-logo-white.jpg"
+    },
+    {
+      "name": "Mullvad VPN",
+      "id": "MullvadVPN.MullvadVPN",
+      "category": "VPN",
+      "info": "A VPN service.",
+      "link": "https://mullvad.net/",
+      "icon": "https://play-lh.googleusercontent.com/X3V8MJMnYasSOTLeFAN-EX8vKrckT2kxnPSeKRyGEU77pa-PVOjvKSvMdcOhnHX9aEg"
+    },
+    {
+      "name": "GPU-Z",
+      "id": "TechPowerUp.GPU-Z",
+      "category": "utilities",
+      "info": "A GPU performance monitor.",
+      "link": "https://www.techpowerup.com/gpuz/",
+      "icon": "https://upload.wikimedia.org/wikipedia/en/8/82/GPU-Z_icon.png"
+    },
+    {
+      "name": "HWMonitor",
+      "id": "CPUID.HWMonitor",
+      "category": "utilities",
+      "info": "A Hardware monitor.",
+      "link": "https://www.cpuid.com/softwares/hwmonitor.html",
+      "icon": "https://www.cpuid.com/medias/images/softwares/hwmonitor.svg"
+    },
+    {
+      "name": "Neovim",
+      "id": "Neovim.Neovim",
+      "category": "development",
+      "info": "A Vim-fork focused on extensibility and agility.",
+      "link": "https://neovim.io/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Neovim-mark.svg/1200px-Neovim-mark.svg.png"
+    },
+    {
+      "name": "Spotube",
+      "id": "KRTirtho.Spotube",
+      "category": "multimedia",
+      "info": "A Spotify client that uses YouTube.",
+      "icon": "https://apktodo.io/uploads/2023/12/spotube-icon.jpg"
+    },
+    {
+      "name": "PowerToys",
+      "id": "Microsoft.PowerToys",
+      "category": "utilities",
+      "info": "A set of utilities for power users to tune and streamline their Windows experience.",
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzPf7vMthKRCgjSxB6bxmJTypARbHiPoFgFg&s"
+    },
+    {
+      "name": "PuTTY",
+      "id": "PuTTY.PuTTY",
+      "category": "utilities",
+      "info": "A free implementation of SSH and Telnet for Windows and Unix platforms.",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/PuTTY_Icon.svg/2048px-PuTTY_Icon.svg.png"
+    },
+    {
+      "name": "Virtual Desktop Streamer",
+      "id": "VirtualDesktop.Streamer",
+      "category": "games",
+      "info": "Streams Your PC Games to Your Oculus Quest.",
+      "icon": "https://cdn2.steamgriddb.com/icon/acac6e55a8890cb2666e7352729b18f1.ico"
+    },
+    {
+      "name": "Cemu",
+      "id": "Cemu.Cemu",
+      "category": "games",
+      "info": "A Wii U emulator.",
+      "icon": "https://external-preview.redd.it/770b9ca5I7WcAmAl8nE9hYWVbLgGqfrO9qaBKD_8h8M.jpg?auto=webp&s=32184e918495d73cc58bf8971c979314e6a8c3d6"
+    },
+    {
+      "name": "Tor Browser",
+      "id": "TorProject.TorBrowser",
+      "category": "browsers",
+      "info": "A web browser that protects your privacy.",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Tor-logo-2011-flat.svg/2048px-Tor-logo-2011-flat.svg.png"
+    },
+    {
+      "name": "Display Driver Uninstaller",
+      "id": "Wagnardsoft.DisplayDriverUninstaller",
+      "category": "utilities",
+      "info": "A driver uninstaller.",
+      "icon": "https://img.utdstc.com/icon/d9b/bb3/d9bbb3fecc888b09380d5d01e21b615dc5844e92236c90d6fd852116d294d944:200"
+    },
+    {
+      "name": "SignalRgb",
+      "id": "WhirlwindFX.SignalRgb",
+      "category": "utilities",
+      "info": "A RGB lighting control software.",
+      "icon": "https://mp-cdn.elgato.com/media/ab8fd021-8038-4b26-8192-191cce9c9e6b/3c114a0a-d42a-4a5a-8ca4-840f7ef07879/SignalRGB-Deck-app-icon-optimized-ba4f4aa2-85b6-4cc2-b448-eb20786ef85a.png"
+    },
+    {
+      "name": "Flow Launcher",
+      "id": "Flow-Launcher.Flow-Launcher",
+      "category": "utilities",
+      "info": "Keystroke launcher for Windows to search, manage and launch files, folders bookmarks, websites and more.",
+      "icon": "https://styles.redditmedia.com/t5_5fx8y0/styles/communityIcon_lbbwa21m92w81.png"
+    },
+    {
+      "name": "AnyDesk",
+      "id": "AnyDesk.AnyDesk",
+      "category": "utilities",
+      "info": "A remote desktop app.",
+      "link": "https://anydesk.com/en",
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcidJhdaea8NW7PRqSElcdHhKtm8ftgffMvw&s"
+    },
+    {
+      "name": "WizTree",
+      "id": "AntibodySoftware.WizTree",
+      "category": "utilities",
+      "info": "A disk space analyzer.",
+      "link": "https://diskanalyzer.com/",
+      "icon": "https://wiztree.co.uk/wp-content/uploads/2024/05/wiztree445x.png"
+    },
+    {
+      "name": "qBittorrent",
+      "id": "qBittorrent.qBittorrent",
+      "category": "utilities",
+      "info": "A torrent client.",
+      "link": "https://www.qbittorrent.org/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/New_qBittorrent_Logo.svg/2048px-New_qBittorrent_Logo.svg.png"
+    },
+    {
+      "name": "Bitwarden",
+      "id": "Bitwarden.Bitwarden",
+      "category": "utilities",
+      "info": "A password manager.",
+      "link": "https://bitwarden.com/",
+      "icon": "https://assets.wheelhouse.com/media/_solution_logo_11062023_5027381.png"
+    },
+    {
+      "name": "Wireshark",
+      "id": "WiresharkFoundation.Wireshark",
+      "category": "utilities",
+      "info": "A network protocol analyzer.",
+      "link": "https://www.wireshark.org/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Wireshark_icon_new.png"
+    },
+    {
+      "name": "Sunshine",
+      "id": "LizardByte.Sunshine",
+      "category": "games",
+      "info": "A self-hosted game streaming server.",
+      "icon": "https://github.com/LizardByte/Sunshine/raw/master/sunshine.png"
+    },
+    {
+      "name": "Moonlight",
+      "id": "MoonlightGameStreamingProject.Moonlight",
+      "category": "games",
+      "info": "A game streaming client.",
+      "icon": "https://play-lh.googleusercontent.com/QGBq_X2ewz_3HUR9AUI3NXcOjfVJd-Mf1l66-3D6zMzF-HN81f_KeZ-shqxRE633I3M"
+    },
+    {
+      "name": "Playnite",
+      "id": "Playnite.Playnite",
+      "category": "games",
+      "info": "A video game library manager and launcher with support for 3rd party libraries.",
+      "icon": "https://cdn2.steamgriddb.com/icon_thumb/f9ab9a0f7c56435e35dc4dadf0eb6945.png"
+    },
+    {
+      "name": "Bloxstrap",
+      "id": "pizzaboxer.Bloxstrap",
+      "category": "games",
+      "info": "A Alternative Roblox launcher.",
+      "icon": "https://avatars.githubusercontent.com/u/147950331?s=48&v=4"
+    },
+    {
+      "name": "Go",
+      "id": "GoLang.Go",
+      "category": "development",
+      "info": "A Fast programming language.",
+      "icon": "https://go.dev/blog/go-brand/Go-Logo/PNG/Go-Logo_Blue.png"
+    }
+  ]
+}
