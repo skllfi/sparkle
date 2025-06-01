@@ -120,6 +120,26 @@ app.whenReady().then(() => {
   createWindow()
   createTray(mainWindow)
 
+  setInterval(
+    () => {
+      // ik theres a better way to do this but i will fix it later
+      autoUpdater.checkForUpdatesAndNotify().catch(console.error)
+    },
+    15 * 60 * 1000
+  )
+
+  autoUpdater.on('update-available', () => {
+    console.log(logo, 'Update available.')
+  })
+
+  autoUpdater.on('update-not-available', () => {
+    console.log(logo, 'No update available.')
+  })
+
+  autoUpdater.on('error', (err) => {
+    console.error(logo, 'Error in auto-updater:', err)
+  })
+
   electronApp.setAppUserModelId('com.parcoil.sparkle')
 
   app.on('browser-window-created', (_, window) => {

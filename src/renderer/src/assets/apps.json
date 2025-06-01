@@ -543,6 +543,166 @@
       "category": "development",
       "info": "A Fast programming language.",
       "icon": "https://go.dev/blog/go-brand/Go-Logo/PNG/Go-Logo_Blue.png"
+    },
+    {
+      "name": "Bulk Crap Uninstaller",
+      "id": "Klocman.BulkCrapUninstaller",
+      "category": "utilities",
+      "info": "A powerful uninstaller for Windows.",
+      "icon": "https://raw.githubusercontent.com/Klocman/Bulk-Crap-Uninstaller/refs/heads/master/source/BulkCrapUninstaller/logo.ico"
+    },
+    {
+      "name": "Windhawk",
+      "id": "RamenSoftware.Windhawk",
+      "category": "utilities",
+      "info": "A powerful tool to customize Windows.",
+      "link": "https://windhawk.net/",
+      "icon": "https://windhawk.net/static/media/logo-white.07a58d84.svg"
+    },
+    {
+      "name": "Bulk Rename Utility",
+      "id": "TGRMNSoftware.BulkRenameUtility",
+      "category": "utilities",
+      "info": "A powerful file renaming tool.",
+      "link": "https://www.bulkrenameutility.co.uk/",
+      "icon": "https://www.bulkrenameutility.co.uk/favicon.ico"
+    },
+    {
+      "name": "GIMP",
+      "id": "GIMP.GIMP.2",
+      "category": "utilities",
+      "info": "A free and open source image editor.",
+      "link": "https://www.gimp.org/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/The_GIMP_icon_-_v3.0.svg/1200px-The_GIMP_icon_-_v3.0.svg.png"
+    },
+    {
+      "name": "Guilded",
+      "id": "Guilded.Guilded",
+      "category": "communication",
+      "info": "A communication app for gamers.",
+      "link": "https://www.guilded.gg/",
+      "icon": "https://play-lh.googleusercontent.com/6So1NGvRZ1xLq5Y7gjth5jLv9yP_bMkeT4BYYaglZ9tM_oIgoDyEx79PenhceXLwBKpc"
+    },
+    {
+      "name": "Zen Browser",
+      "id": "Zen-Team.Zen-Browser",
+      "category": "browsers",
+      "info": "A fast, private and secure web browser.",
+      "link": "https://zen-browser.app/",
+      "icon": "https://avatars.githubusercontent.com/u/165225155"
+    },
+    {
+      "name": "Lively Wallpaper",
+      "id": "rocksdanister.LivelyWallpaper",
+      "category": "utilities",
+      "info": "A free and open source animated wallpaper app.",
+      "link": "https://rocksdanister.github.io/lively/",
+      "icon": "https://www.rocksdanister.com/lively/assets/logo.webp"
+    },
+    {
+      "name": "File-Converter",
+      "id": "AdrienAllard.FileConverter",
+      "category": "utilities",
+      "info": "A simple file converter app.",
+      "link": "https://file-converter.io/",
+      "icon": "https://file-converter.io/images/application-icon.png"
+    },
+    {
+      "name": "JDownloader 2",
+      "id": "AppWork.JDownloader",
+      "category": "utilities",
+      "info": "A download manager.",
+      "link": "https://jdownloader.org/jdownloader2",
+      "icon": "https://jdownloader.org/_media/knowledge/wiki/jdownloader.png?w=150"
+    },
+    {
+      "name": "Files",
+      "id": "FilesCommunity.Files",
+      "category": "utilities",
+      "info": "A modern file manager for Windows.",
+      "link": "https://files.community/",
+      "icon": "https://files.community/branding/logo-dark.svg"
+    },
+    {
+      "name": "FxSound",
+      "id": "FxSound.FxSound",
+      "category": "multimedia",
+      "info": "An audio enhancer for Windows.",
+      "link": "https://www.fxsound.com/",
+      "icon": "https://avatars.githubusercontent.com/u/103012411?v=4"
+    },
+    {
+      "name": "Blender",
+      "id": "BlenderFoundation.Blender",
+      "category": "multimedia",
+      "info": "A free and open source 3D creation suite.",
+      "link": "https://www.blender.org/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Blender_logo_no_text.svg"
+    },
+    {
+      "name": "GeForce NOW",
+      "id": "NVIDIA.GeForceNOW",
+      "category": "games",
+      "info": "A cloud gaming service.",
+      "link": "https://www.nvidia.com/en-us/geforce-now/",
+      "icon": "https://cdn-1.webcatalog.io/catalog/nvidia-geforce-now/nvidia-geforce-now-icon-filled-256.png?v=1714775303603"
+    },
+    {
+      "name": "Twinkle Tray",
+      "id": "xanderfrangos.twinkletray",
+      "category": "utilities",
+      "info": "A monitor brightness control app.",
+      "link": "https://twinkletray.com/?ref=sparkletweaks",
+      "icon": "https://raw.githubusercontent.com/xanderfrangos/twinkle-tray/master/src/assets/logo.png"
+    },
+    {
+      "name": "SuperF4",
+      "id": "StefanSundin.Superf4",
+      "category": "utilities",
+      "info": "A utility to force close applications with a keyboard shortcut.",
+      "link": "https://stefansundin.github.io/superf4/",
+      "icon": "https://stefansundin.github.io/superf4/img/icon128.png"
+    },
+    {
+      "name": "Revo Uninstaller",
+      "id": "RevoUninstaller.RevoUninstaller",
+      "category": "utilities",
+      "info": "A powerful uninstaller for Windows. (paid)",
+      "link": "https://www.revouninstaller.com/products/revo-uninstaller-free/?ref=sparkletweaks",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/8/83/Revouninstallerpro_icon.png"
+    },
+    {
+      "name": "Unity Hub",
+      "id": "Unity.UnityHub",
+      "category": "development",
+      "info": "A hub for managing Unity projects and installations.",
+      "link": "https://unity.com/products/unity-hub",
+      "icon": "https://i.redd.it/tu3gt6ysfxq71.png"
+    },
+    {
+      "name": "Oh My Posh",
+      "id": "JanDeDobbeleer.OhMyPosh",
+      "category": "development",
+      "info": "A prompt theme engine for any shell.",
+      "link": "https://ohmyposh.dev/",
+      "icon": "https://ohmyposh.dev/img/logo-light.svg"
+    },
+    {
+      "name": "Vesktop",
+      "id": "Vencord.Vesktop",
+      "category": "communication",
+      "info": "A Modded Discord client for Windows.",
+      "link": "https://vencord.dev/",
+      "icon": "https://raw.githubusercontent.com/Vencord/Vesktop/refs/heads/main/static/icon.png"
+    },
+
+    {
+      "name": "Prism Launcher",
+      "id": "PrismLauncher.PrismLauncher",
+      "category": "games",
+      "info": "A Minecraft launcher that supports multiple accounts and modpacks.",
+      "link": "https://prismlauncher.org/",
+      "icon": "https://raw.githubusercontent.com/PrismLauncher/PrismLauncher/refs/heads/develop/program_info/org.prismlauncher.PrismLauncher.svg"
     }
   ]
 }

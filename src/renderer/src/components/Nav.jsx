@@ -73,7 +73,7 @@ function Nav() {
         <a href="https://github.com/parcoil/sparkle" target="_blank">
           <GithubIcon className="w-5 fill-white" />
         </a>
-        <a href="https://github.com/parcoil/sparkle" target="_blank">
+        <a href="https://discord.com/invite/En5YJYWj3Z" target="_blank">
           <DiscordIcon className="w-5 fill-white" />
         </a>
       </div>
