@@ -11,6 +11,7 @@ function RootDiv({ children, ...props }) {
         duration: 0.6,
         ease: [0.075, 0.82, 0.165, 1]
       }}
+      className="h-[calc(100vh-50px)] overflow-y-auto "
       {...props}
     >
       {children}

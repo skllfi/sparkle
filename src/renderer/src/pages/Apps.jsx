@@ -64,7 +64,7 @@ function Apps() {
 
   return (
     <RootDiv>
-      <div className="flex items-center gap-3 bg-slate-800/50 border border-slate-700/50 rounded-xl px-4 backdrop-blur-sm ">
+      <div className="flex items-center gap-3 bg-slate-800/50 border border-slate-700/50 rounded-xl px-4 backdrop-blur-sm">
         <Search className="text-slate-400" />
         <input
           type="text"

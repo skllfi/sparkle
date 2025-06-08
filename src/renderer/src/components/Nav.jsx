@@ -71,13 +71,13 @@ function Nav() {
       )}
       <div className="flex items-center justify-center gap-2 mt-4 mb-2">
         <a href="https://github.com/parcoil/sparkle" target="_blank">
-          <GithubIcon className="w-5 fill-white" />
+          <GithubIcon className="w-5 fill-slate-600" />
         </a>
         <a href="https://discord.com/invite/En5YJYWj3Z" target="_blank">
-          <DiscordIcon className="w-5 fill-white" />
+          <DiscordIcon className="w-5 fill-slate-600" />
         </a>
       </div>
-      <p className="text-slate-400 text-center">v{info.version}</p>
+      <p className="text-slate-500 text-center">v{info.version}</p>
     </nav>
   )
 }

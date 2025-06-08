@@ -17,7 +17,7 @@ function App() {
   const [loading, setLoading] = useState(true)
 
   return (
-    <div className="flex flex-col h-screen bg-slate-900 text-white ">
+    <div className="flex flex-col h-screen bg-slate-900 text-white overflow-hidden">
       <TitleBar />
       <div className="flex flex-1 pt-[50px] relative">
         <AnimatePresence>
@@ -40,7 +40,7 @@ function App() {
         <>
           <Nav />
 
-          <main className="flex-1 ml-52 p-6">
+          <main className="flex-1 ml-52 p-6 ">
             <AnimatePresence mode="wait">
               <motion.div
                 key={location.pathname}

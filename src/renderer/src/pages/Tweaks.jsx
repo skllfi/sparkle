@@ -210,7 +210,7 @@ function Tweaks() {
           <div className="flex justify-end gap-3">
             <Button variant="ghost" onClick={() => setIsModalOpen(false)}>
               Cancel
-            </Button>{' '}
+            </Button>
             <Button
               onClick={async () => {
                 const index = tweaks.indexOf(selectedTweak)
@@ -265,7 +265,7 @@ function Tweaks() {
         </div>
       </Modal>
 
-      <div className="max-w-[1800px] mx-auto overflow-auto">
+      <div className="max-w-[1800px] mx-auto ">
         <div className="mb-4">
           <div className="space-y-4">
             <div className="flex items-center gap-3 bg-slate-800/50 border border-slate-700/50 rounded-xl px-4 backdrop-blur-sm">
@@ -304,64 +304,68 @@ function Tweaks() {
               return (
                 <div
                   key={originalIndex}
-                  className="group bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 shadow-lg hover:shadow-xl hover:border-slate-600/50 transition-all duration-300 overflow-hidden"
+                  className="group bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 shadow-lg hover:shadow-xl hover:border-slate-600/50 transition-all duration-300 overflow-hidde h-52 "
                 >
                   <div className="p-5 flex flex-col h-[260px]">
-                    {tweak.category && (
-                      <div className="flex items-center gap-2 mb-2 flex-wrap">
-                        {(Array.isArray(tweak.category) ? tweak.category : [tweak.category]).map(
-                          (cat) => (
-                            <Tooltip
-                              key={cat}
-                              content={`${cat} Optimization`}
-                              delay={0.3}
-                              side="right"
-                            >
-                              <div className="p-1.5 bg-slate-700/50 rounded-lg hover:bg-slate-700/80 transition-colors">
-                                {categoryIcons[cat] || categoryIcons['General']}
-                              </div>
-                            </Tooltip>
-                          )
-                        )}
-                      </div>
-                    )}
                     <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-2 flex-col">
-                        <h2 className="font-semibold text-white text-base">{tweak.title}</h2>
-                      </div>
-
-                      {tweak.reversible == null || tweak.reversible == true ? (
-                        <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
-                          <input
-                            type="checkbox"
-                            className="sr-only peer"
-                            checked={toggleStates[tweak.name] || false}
-                            onChange={() => handleToggle(originalIndex)}
-                          />
-                          <div className="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sparkle-primary"></div>
-                        </label>
-                      ) : (
-                        <div>
-                          <Button
-                            onClick={() => handleToggle(originalIndex)}
-                            disabled={toggleStates[tweak.name] || false}
-                          >
-                            {toggleStates[tweak.name] ? 'Applied' : 'Apply'}
-                          </Button>
+                      {tweak.category && (
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <>
+                            {tweak.warning && (
+                              <Tooltip content={tweak.warning} delay={0.3} side="right">
+                                <div className="p-1.5 bg-red-900/50 rounded-lg hover:bg-red-900/80 transition-colors">
+                                  <AlertTriangle className="w-4 h-4 text-red-400" />
+                                </div>
+                              </Tooltip>
+                            )}
+                            {(Array.isArray(tweak.category)
+                              ? tweak.category
+                              : [tweak.category]
+                            ).map((cat) => (
+                              <Tooltip
+                                key={cat}
+                                content={`${cat} Optimization`}
+                                delay={0.3}
+                                side="right"
+                              >
+                                <div className="p-1.5 bg-slate-700/50 rounded-lg hover:bg-slate-700/80 transition-colors">
+                                  {categoryIcons[cat] || categoryIcons['General']}
+                                </div>
+                              </Tooltip>
+                            ))}
+                          </>
                         </div>
                       )}
+                      <div className="flex items-center m-0">
+                        {tweak.reversible == null || tweak.reversible == true ? (
+                          <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
+                            <input
+                              type="checkbox"
+                              className="sr-only peer"
+                              checked={toggleStates[tweak.name] || false}
+                              onChange={() => handleToggle(originalIndex)}
+                            />
+                            <div className="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sparkle-primary"></div>
+                          </label>
+                        ) : (
+                          <div>
+                            <Button
+                              onClick={() => handleToggle(originalIndex)}
+                              disabled={toggleStates[tweak.name] || false}
+                            >
+                              {toggleStates[tweak.name] ? 'Applied' : 'Apply'}
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-start mb-3">
+                      <h2 className="font-semibold text-white text-base">{tweak.title}</h2>
                     </div>
                     <div className="flex flex-col flex-1 overflow-hidden">
                       <p className="text-slate-400 text-sm flex-1 overflow-y-auto custom-scrollbar pr-1">
                         {tweak.description}
                       </p>
-
-                      {tweak.warning && (
-                        <div className="mt-2 py-1.5 px-2 bg-red-950/30 border border-red-900/30 rounded text-red-400 text-xs flex items-center gap-1.5">
-                          <AlertTriangle size={12} />
-                          {tweak.warning}
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>

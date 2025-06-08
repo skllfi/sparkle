@@ -80,7 +80,7 @@ function Home() {
   return (
     <RootDiv>
       <div className="max-w-[1800px] mx-auto ">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 shadow-lg overflow-hidden p-5">
             <div className="flex items-start gap-3 mb-4">
               <div className="p-3 bg-blue-500/10 rounded-lg">
