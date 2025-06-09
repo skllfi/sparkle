@@ -25,8 +25,9 @@
       "icon": "https://support.discord.com/hc/user_images/bbW4u80g7yIVxsphv9diNw.png"
     },
     {
-      "name": "Spotify",
+      "name": "Spotify (may not work)",
       "id": "Spotify",
+      "warning": "This app may install properly as sparkle runs as admin. However Uninstalling will continue to work as normal.",
       "category": "multimedia",
       "info": "Listen to music and podcasts.",
       "link": "https://www.spotify.com/",

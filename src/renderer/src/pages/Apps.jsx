@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { use, useState } from 'react'
 import data from '../assets/apps.json'
 import RootDiv from '@/components/RootDiv'
 import { Search } from 'lucide-react'
@@ -9,12 +9,14 @@ import { invoke } from '@/lib/electron'
 import sparkleLogo from '../../../../resources/sparklelogo.png'
 import { Download } from 'lucide-react'
 import { Trash } from 'lucide-react'
+import { toast } from 'react-toastify'
+import { useEffect } from 'react'
 
 function Apps() {
   const [search, setSearch] = useState('')
   const [selectedApps, setSelectedApps] = useState([])
   const [loading, setLoading] = useState('')
-
+  const [currentApp, setCurrentApp] = useState('')
   const appsList = data.apps
 
   const filteredApps = appsList.filter((app) =>
@@ -27,6 +29,28 @@ function Apps() {
     return acc
   }, {})
 
+  useEffect(() => {
+    window.electron.ipcRenderer.on('install-progress', (event, message) => {
+      console.log(message)
+      setCurrentApp(message)
+    })
+    window.electron.ipcRenderer.on('install-complete', () => {
+      setLoading('')
+      setCurrentApp('')
+      toast.success('Operation completed successfully!')
+    })
+    window.electron.ipcRenderer.on('install-error', () => {
+      setLoading('')
+      setCurrentApp('')
+      toast.error('There was an error during the operation. Please try again.')
+    })
+
+    return () => {
+      window.electron.ipcRenderer.removeAllListeners('install-progress')
+      window.electron.ipcRenderer.removeAllListeners('install-complete')
+    }
+  })
+
   const handleAppAction = async (type) => {
     const actionVerb = type === 'install' ? 'Installing' : 'Uninstalling'
     setLoading(type)
@@ -36,30 +60,21 @@ function Apps() {
         const app = appsList.find(
           (a) => a.id === appId || (Array.isArray(a.id) && a.id.includes(appId))
         )
-        if (!app) return []
-
-        const ids = Array.isArray(app.id) ? app.id : [app.id]
-        return ids.map((id) => `winget ${type} --id=${id} --silent -e`)
+        return app
       })
-
-      if (commands.length === 0) return
-
-      const script = commands.join(' ; ')
-
-      const result = await invoke({
-        channel: 'run-powershell',
+      console.log(commands)
+      invoke({
+        channel: 'handle-apps',
         payload: {
-          script,
-          name: `${actionVerb} selected apps`
+          action: type,
+          apps: selectedApps
         }
       })
 
-      //console.log(`${actionVerb} complete`, result)
+      if (commands.length === 0) return
     } catch (error) {
       console.error(`Error ${actionVerb.toLowerCase()} apps:`, error)
     }
-
-    setLoading('')
   }
 
   return (
@@ -83,7 +98,7 @@ function Apps() {
             </div>
             <div>
               <h3 className="text-lg font-medium text-white">
-                {loading === 'install' ? 'Installing' : 'Uninstalling'} apps...
+                {loading === 'install' ? 'Installing' : 'Uninstalling'} {currentApp || 'Apps'}
               </h3>
               <p className="text-sm text-slate-400">This may take a few moments</p>
             </div>

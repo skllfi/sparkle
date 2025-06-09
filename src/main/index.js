@@ -72,7 +72,7 @@ ipcMain.handle('discord-rpc:get', () => {
   return store.get('discord-rpc')
 })
 
-let mainWindow = null
+export let mainWindow = null
 
 Sentry.init({
   dsn: 'https://d1e8991c715dd717e6b7b44dbc5c43dd@o4509167771648000.ingest.us.sentry.io/4509167772958720',

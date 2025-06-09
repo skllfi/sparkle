@@ -1,6 +1,6 @@
 {
   "name": "sparkle",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A Simple Windows Optimizer",
   "main": "./out/main/index.js",
   "author": "The Parcoil Network",
