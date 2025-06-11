@@ -74,3 +74,14 @@
 
   <p align="center">Made with ❤️ by Parcoil</p>
 </div>
+
+
+## Star History
+
+<a href="https://www.star-history.com/#Parcoil/Sparkle&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Parcoil/Sparkle&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Parcoil/Sparkle&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Parcoil/Sparkle&type=Date" />
+ </picture>
+</a>
