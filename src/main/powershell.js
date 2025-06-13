@@ -46,7 +46,7 @@ ipcMain.handle('handle-apps', async (event, { action, apps }) => {
   switch (action) {
     case 'install':
       for (const app of apps) {
-        const command = `winget install ${app} --silent`
+        const command = `winget install ${app} --silent --accept-package-agreements --accept-source-agreements`
         mainWindow.webContents.send('install-progress', `${app}`)
         const result = await executePowerShell(event, { script: command, name: `Install-${app}` })
         if (result.success) {
