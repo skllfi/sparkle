@@ -68,7 +68,7 @@ const tweaks = [
     title: 'Disable Gamebar',
     name: 'disable-gamebar',
     description: 'Disables The Xbox gamebar',
-    category: 'Performance',
+    category: ['Performance'],
     psapply: `
 try {
 winget uninstall 9nzkpstsnw4p --silent --accept-source-agreements 
@@ -94,7 +94,7 @@ catch {
     title: 'Ultimate Performance Power Plan',
     name: 'ultimate-performance-plan',
     description: 'Enables And Applys The Windows Ultimate Powerplan for better performance',
-    category: 'Performance',
+    category: ['Performance'],
     psapply: `
 $ultimatePlan = powercfg -l | Select-String "Ultimate Performance"
 
@@ -149,9 +149,43 @@ if ($balancedExists) {
     description: 'Changes Nvidia Control Panel settings to improve performance'
   },
   {
+    title: 'Disable Location Tracking',
+    name: 'disable-location-tracking',
+    category: ['Privacy'],
+    description: 'Disables Windows location tracking',
+    psapply: `
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" -Name "Allow" -Value "Deny" -Type String -Force
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "SensorPermissionState" -Value 0 -Type DWord -Force
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack" -Name "Status" -Value 0 -Type DWord -Force
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" -Name "AutoUpdateEnabled" -Value 0 -Type DWord -Force`,
+    psunapply: `   
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" -Name "Allow" -Value "Allow" -Type String -Force
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "SensorPermissionState" -Value 1 -Type DWord -Force
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack" -Name "Status" -Value 1 -Type DWord -Force
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" -Name "AutoUpdateEnabled" -Value 1 -Type DWord -Force
+    `
+  },
+  {
+    title: 'Run Disk Cleanup',
+    name: 'run-disk-cleanup',
+    category: ['General', 'Performance'],
+    description: 'Runs disk cleanup on your C: drive. also removes old windows update cache',
+    psapply: `
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" -Name "Allow" -Value "Deny" -Type String -Force
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "SensorPermissionState" -Value 0 -Type DWord -Force
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack" -Name "Status" -Value 0 -Type DWord -Force
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" -Name "AutoUpdateEnabled" -Value 0 -Type DWord -Force`,
+    psunapply: `   
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" -Name "Allow" -Value "Allow" -Type String -Force
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "SensorPermissionState" -Value 1 -Type DWord -Force
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack" -Name "Status" -Value 1 -Type DWord -Force
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" -Name "AutoUpdateEnabled" -Value 1 -Type DWord -Force
+    `
+  },
+  {
     title: 'Set Services to Manual',
     name: 'set-services-to-manual',
-    category: 'Performance',
+    category: ['Performance'],
     description: 'Sets various Windows services to Manual startup type to improve performance',
     psapply: `
     $services = @(
@@ -747,7 +781,7 @@ foreach ($svc in $services) {
   {
     title: 'Enable End Task With Right Click',
     name: 'enable-end-task-right-click',
-    category: 'General',
+    category: ['General'],
     description: 'Enables the "End Task" option in the taskbar context menu',
     psapply: `
       $path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings"
@@ -850,7 +884,7 @@ Set-ItemProperty -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\Allo
   {
     title: 'Disable Core Isolation',
     name: 'disable-core-isolation',
-    category: 'Performance',
+    category: ['Performance'],
     restart: true,
     description: 'Disables Core Isolation Memory Integrity to improve system performance',
     psapply: `
@@ -1113,7 +1147,7 @@ try {
   {
     title: 'Enable HPET (High Precision Event Timer)',
     name: 'enable-hpet',
-    category: 'Performance',
+    category: ['Performance'],
     warning: 'May increase input latency on some systems',
     description:
       'Forces use of the High Precision Event Timer (HPET), which can reduce stuttering and improve timing accuracy on some hardware.',

@@ -178,8 +178,22 @@
       "icon": "https://play-lh.googleusercontent.com/QdFSGhFVBEk98dPetUJxPj6PlfXVzTIOyapbznySpCh_qbS5WljIsT_m7rbLk4_ind8"
     },
     {
-      "name": "Python3",
-      "id": "Python.Python",
+      "name": "Python 3.10",
+      "id": "Python.Python.3.10",
+      "category": "development",
+      "info": "Programming language",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png"
+    },
+    {
+      "name": "Python 3",
+      "id": "Python.Python.3.9",
+      "category": "development",
+      "info": "Programming language",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png"
+    },
+    {
+      "name": "Python 2",
+      "id": "Python.Python.2",
       "category": "development",
       "info": "Programming language",
       "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png"
@@ -696,7 +710,6 @@
       "link": "https://vencord.dev/",
       "icon": "https://raw.githubusercontent.com/Vencord/Vesktop/refs/heads/main/static/icon.png"
     },
-
     {
       "name": "Prism Launcher",
       "id": "PrismLauncher.PrismLauncher",
@@ -704,6 +717,54 @@
       "info": "A Minecraft launcher that supports multiple accounts and modpacks.",
       "link": "https://prismlauncher.org/",
       "icon": "https://raw.githubusercontent.com/PrismLauncher/PrismLauncher/refs/heads/develop/program_info/org.prismlauncher.PrismLauncher.svg"
+    },
+    {
+      "name": "Free Download Manager",
+      "id": "SoftDeluxe.FreeDownloadManager",
+      "category": "utilities",
+      "info": "An app to manage all of your downloads in one place",
+      "link": "https://www.freedownloadmanager.org/",
+      "icon": "https://user-images.githubusercontent.com/35652061/78561726-0c6b0d00-783a-11ea-9952-7be8b0858a73.png"
+    },
+    {
+      "name": "Oracle VirtualBox",
+      "id": "Oracle.VirtualBox",
+      "category": "utilities",
+      "info": "A Virtual machine manager",
+      "link": "https://www.virtualbox.org/",
+      "icon": "https://www.virtualbox.org/favicon.ico"
+    },
+    {
+      "name": "TeamViewer",
+      "id": "TeamViewer.TeamViewer",
+      "category": "utilities",
+      "info": "A remote desktop app.",
+      "link": "https://www.virtualbox.org/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/TeamViewer_Logo_Icon_Only.svg/1024px-TeamViewer_Logo_Icon_Only.svg.png"
+    },
+    {
+      "name": "Ungoogled Chromium",
+      "id": "eloston.ungoogled-chromium",
+      "category": "browsers",
+      "info": "A Chromium web browser with out google features",
+      "link": "https://github.com/ungoogled-software/ungoogled-chromium",
+      "icon": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fio%2Fgithub%2Fungoogled_software.ungoogled_chromium%2F700e96614a13f9b7b5f196b962900420%2Ficons%2F128x128%2Fio.github.ungoogled_software.ungoogled_chromium.png&w=128&q=100"
+    },
+    {
+      "name": "LibreWolf",
+      "id": "LibreWolf.LibreWolf",
+      "category": "browsers",
+      "info": "A privacy focused firefox fork",
+      "link": "https://librewolf.net/",
+      "icon": "https://librewolf.net/icon.svg"
+    },
+    {
+      "name": "ShareX",
+      "id": "ShareX.ShareX",
+      "category": "multimedia",
+      "info": "Advanced Screenshot Tool",
+      "link": "https://github.com/ShareX/ShareX",
+      "icon": "https://getsharex.com/img/ShareX_Logo_512.png"
     }
   ]
 }

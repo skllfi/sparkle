@@ -183,9 +183,14 @@ function Apps() {
             </div>
           </div>
         ))}
-        <p className="text-center text-slate-600">
+        <p className="text-center text-slate-500">
           Request more apps or make a pull request on{' '}
-          <a href="https://github.com/parcoil/sparkle" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://github.com/parcoil/sparkle"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sparkle-primary"
+          >
             github
           </a>
         </p>
