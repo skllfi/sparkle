@@ -1,11 +1,11 @@
-import { promises as fs } from 'fs'
+import { promises as fsp } from 'fs'
 import os from 'os'
 import path from 'path'
 import util from 'util'
 import { exec } from 'child_process'
 import { app, ipcMain } from 'electron'
 import { mainWindow } from './index'
-
+import fs from 'fs'
 const execPromise = util.promisify(exec)
 
 function ensureDirectoryExists(dirPath) {
@@ -18,16 +18,17 @@ export async function executePowerShell(_, props) {
   const { script, name = 'script' } = props
 
   try {
-    const tempDir = os.tmpdir()
+    const tempDir = path.join(app.getPath('userData'), 'scripts')
+    ensureDirectoryExists(tempDir)
     const tempFile = path.join(tempDir, `${name}-${Date.now()}.ps1`)
 
-    await fs.writeFile(tempFile, script)
+    await fsp.writeFile(tempFile, script)
 
     const { stdout, stderr } = await execPromise(
       `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "${tempFile}"`
     )
 
-    await fs.unlink(tempFile).catch(console.error)
+    await fsp.unlink(tempFile).catch(console.error)
 
     if (stderr) {
       console.warn(`PowerShell stderr [${name}]:`, stderr)
