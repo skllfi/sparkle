@@ -11,13 +11,14 @@ import { Download } from 'lucide-react'
 import { Trash } from 'lucide-react'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
-
+import { useNavigate } from 'react-router-dom'
 function Apps() {
   const [search, setSearch] = useState('')
   const [selectedApps, setSelectedApps] = useState([])
   const [loading, setLoading] = useState('')
   const [currentApp, setCurrentApp] = useState('')
   const appsList = data.apps
+  const router = useNavigate()
 
   const filteredApps = appsList.filter((app) =>
     app.name.toLowerCase().includes(search.toLowerCase())
@@ -106,7 +107,7 @@ function Apps() {
         </div>
       </Modal>
 
-      <div className="flex gap-3 mt-5 mb-8">
+      <div className="flex gap-3 mt-5">
         <Button
           className="text-white flex gap-2"
           disabled={selectedApps.length === 0 || loading}
@@ -134,7 +135,12 @@ function Apps() {
           </Button>
         )}
       </div>
-
+      <p className="mb-5 mt-2 text-slate-500 font-medium">
+        Looking to debloat windows? its located in {''}
+        <a className="text-sparkle-primary cursor-pointer" onClick={() => router('/tweaks')}>
+          Tweaks
+        </a>
+      </p>
       <div className="space-y-10 mb-10">
         {Object.entries(appsByCategory).map(([category, apps]) => (
           <div key={category} className="space-y-4">
