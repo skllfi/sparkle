@@ -21,6 +21,7 @@
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
     "@headlessui/react": "^2.2.2",
+    "@lucide/lab": "^0.1.2",
     "@sentry/electron": "^6.5.0",
     "@sentry/react": "^9.13.0",
     "clsx": "^2.1.1",

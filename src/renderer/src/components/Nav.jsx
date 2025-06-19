@@ -1,4 +1,5 @@
-import { Wrench, Home, Folder, Trash, LayoutGrid, RefreshCw } from 'lucide-react'
+import { Wrench, Home, Folder, Trash, LayoutGrid, RefreshCw, Icon } from 'lucide-react'
+import { broom } from '@lucide/lab'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { clsx } from 'clsx'
 import useRestartStore from '../store/restartState'
@@ -12,7 +13,7 @@ const tabIcons = {
   home: <Home size={20} />,
   tweaks: <Wrench size={20} />,
   backup: <Folder size={20} />,
-  clean: <Trash size={20} />,
+  clean: <Icon iconNode={broom} size={20} />,
   apps: <LayoutGrid size={20} />
 }
 
@@ -39,7 +40,7 @@ function Nav() {
   const activeTab = getActiveTab()
 
   return (
-    <nav className="h-screen w-52 bg-slate-900 text-white fixed left-0 top-0 flex flex-col py-6 border-r border-gray-800 z-40">
+    <nav className="h-screen w-52 bg-slate-900 text-white fixed left-0 top-0 flex flex-col py-6 border-r border-slate-800 z-40">
       <div className="flex-1 flex flex-col gap-2 px-3 mt-10">
         {Object.entries(tabs).map(([id, { label, path }]) => (
           <button
@@ -49,7 +50,7 @@ function Nav() {
               'flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 border',
               activeTab === id
                 ? 'bg-slate-800 text-white border-slate-700'
-                : 'text-gray-400 hover:bg-gray-800 hover:text-white border-slate-900'
+                : 'text-gray-400 hover:bg-slate-800 hover:text-white border-slate-900'
             )}
           >
             <div>{tabIcons[id]}</div>

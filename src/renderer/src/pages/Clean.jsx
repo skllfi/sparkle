@@ -2,7 +2,8 @@ import Button from '@/components/ui/button'
 import React, { useState } from 'react'
 import { invoke } from '@/lib/electron'
 import RootDiv from '@/components/RootDiv'
-import { Trash2, RefreshCw } from 'lucide-react'
+import { RefreshCw, Icon } from 'lucide-react'
+import { broom } from '@lucide/lab'
 import { toast } from 'react-toastify'
 
 const cleanups = [
@@ -92,8 +93,8 @@ function Clean() {
         <div className="mb-8">
           <div className="bg-gradient-to-r from-slate-800/50 to-slate-800/30 border border-slate-700/50 rounded-2xl p-6 backdrop-blur-sm">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-red-500/10 rounded-xl">
-                <Trash2 className="text-red-500" size={28} />
+              <div className="p-3 bg-green-500/10 rounded-xl">
+                <Icon iconNode={broom} className="text-green-500" size={28} />
               </div>
               <div className="flex-1">
                 <h2 className="text-2xl font-bold text-white mb-1">System Cleanup</h2>
@@ -130,7 +131,7 @@ function Clean() {
                   </>
                 ) : (
                   <>
-                    <Trash2 size={18} />
+                    <Icon iconNode={broom} size={18} />
                     <span>Run Cleanup</span>
                   </>
                 )}

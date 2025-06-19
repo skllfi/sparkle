@@ -19,26 +19,26 @@ function TitleBar() {
 
       <div className="flex" style={{ WebkitAppRegion: 'no-drag' }}>
         <button
-          className="h-[50px] w-12 inline-flex items-center justify-center text-gray-400 hover:bg-gray-800 transition-colors"
+          className="h-[50px] w-12 inline-flex items-center justify-center text-slate-400 hover:bg-slate-800 transition-colors"
           title="Toggle Discord RPC"
         >
           <DiscordIcon />
         </button>
         <button
           onClick={minimize}
-          className="h-[50px] w-12 inline-flex items-center justify-center text-gray-400 hover:bg-gray-800 transition-colors"
+          className="h-[50px] w-12 inline-flex items-center justify-center text-slate-400 hover:bg-slate-800 transition-colors"
         >
           <Minus size={16} />
         </button>
         <button
           onClick={toggleMaximize}
-          className="h-[50px] w-12 inline-flex items-center justify-center text-gray-400 hover:bg-gray-800 transition-colors"
+          className="h-[50px] w-12 inline-flex items-center justify-center text-slate-400 hover:bg-slate-800 transition-colors"
         >
           <Square size={14} />
         </button>
         <button
           onClick={close}
-          className="h-[50px] w-12 inline-flex items-center justify-center text-gray-400 hover:bg-red-600 hover:text-white transition-colors"
+          className="h-[50px] w-12 inline-flex items-center justify-center text-slate-400 hover:bg-red-600 hover:text-white transition-colors"
         >
           <X size={16} />
         </button>
