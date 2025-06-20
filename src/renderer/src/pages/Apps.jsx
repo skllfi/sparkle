@@ -80,28 +80,28 @@ function Apps() {
 
   return (
     <RootDiv>
-      <div className="flex items-center gap-3 bg-slate-800/50 border border-slate-700/50 rounded-xl px-4 backdrop-blur-sm">
-        <Search className="text-slate-400" />
+      <div className="flex items-center gap-3 bg-sparkle-card border border-sparkle-border rounded-xl px-4 backdrop-blur-sm">
+        <Search className="text-sparkle-text-secondary" />
         <input
           type="text"
           placeholder="Search for apps..."
-          className="w-full py-3 px-0 bg-transparent border-none focus:outline-none focus:ring-0 text-white"
+          className="w-full py-3 px-0 bg-transparent border-none focus:outline-none focus:ring-0 text-sparkle-text placeholder:text-sparkle-text-secondary"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
 
       <Modal open={!!loading} onClose={() => {}}>
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+        <div className="bg-sparkle-card border border-sparkle-border rounded-2xl p-6 shadow-xl">
           <div className="flex items-center gap-4">
             <div className="relative">
-              <div className="w-10 h-10 border-4 border-sparkle-primary/30 rounded-full animate-spin border-t-sparkle-primary"></div>
+              <div className="w-10 h-10 border-4 border-sparkle-primary/30 rounded-full animate-spin border-t-sparkle-primary border-sparkle-accent"></div>
             </div>
             <div>
-              <h3 className="text-lg font-medium text-white">
+              <h3 className="text-lg font-medium text-sparkle-text">
                 {loading === 'install' ? 'Installing' : 'Uninstalling'} {currentApp || 'Apps'}
               </h3>
-              <p className="text-sm text-slate-400">This may take a few moments</p>
+              <p className="text-sm text-sparkle-text-secondary">This may take a few moments</p>
             </div>
           </div>
         </div>
@@ -109,7 +109,7 @@ function Apps() {
 
       <div className="flex gap-3 mt-5">
         <Button
-          className="text-white flex gap-2"
+          className="text-sparkle-text flex gap-2"
           disabled={selectedApps.length === 0 || loading}
           onClick={() => handleAppAction('install')}
         >
@@ -127,7 +127,7 @@ function Apps() {
         </Button>
         {selectedApps.length > 0 && (
           <Button
-            className="flex gap-2 ml-auto bg-slate-800/50"
+            className="flex gap-2 ml-auto bg-sparkle-border text-sparkle-text"
             variant="ghost"
             onClick={() => setSelectedApps([])}
           >
@@ -135,7 +135,7 @@ function Apps() {
           </Button>
         )}
       </div>
-      <p className="mb-5 mt-2 text-slate-500 font-medium">
+      <p className="mb-5 mt-2 text-sparkle-text-muted font-medium">
         Looking to debloat windows? its located in {''}
         <a className="text-sparkle-primary cursor-pointer" onClick={() => router('/tweaks')}>
           Tweaks
@@ -149,7 +149,7 @@ function Apps() {
               {apps.map((app) => (
                 <div
                   key={app.id}
-                  className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-4 hover:border-sparkle-primary transition group"
+                  className="bg-sparkle-card border border-sparkle-border rounded-lg p-4 hover:border-sparkle-primary transition group"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
@@ -163,7 +163,7 @@ function Apps() {
                           )
                         }
                       />
-                      <div className="min-w-10 max-w-10 max--h-10 min-h-10 rounded-lg overflow-hidden bg-slate-700/50 flex items-center justify-center">
+                      <div className="min-w-10 max-w-10 max--h-10 min-h-10 rounded-lg overflow-hidden bg-sparkle-accent flex items-center justify-center">
                         {app.icon ? (
                           <img
                             src={app.icon}
@@ -175,11 +175,13 @@ function Apps() {
                         )}
                       </div>
                       <div>
-                        <h3 className="text-white font-medium group-hover:text-sparkle-primary transition">
+                        <h3 className="text-sparkle-text font-medium group-hover:text-sparkle-primary transition">
                           {app.name}
                         </h3>
                         {app.info && (
-                          <p className="text-sm text-slate-400 mt-0.5 line-clamp-1">{app.info}</p>
+                          <p className="text-sm text-sparkle-text-secondary mt-0.5 line-clamp-1">
+                            {app.info}
+                          </p>
                         )}
                       </div>
                     </div>
@@ -189,7 +191,7 @@ function Apps() {
             </div>
           </div>
         ))}
-        <p className="text-center text-slate-500">
+        <p className="text-center text-sparkle-text-muted">
           Request more apps or make a pull request on{' '}
           <a
             href="https://github.com/parcoil/sparkle"

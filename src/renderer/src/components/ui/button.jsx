@@ -26,7 +26,7 @@ const Button = ({
     outline:
       'border border-sparkle-primary text-sparkle-primary hover:bg-sparkle-primary hover:text-white',
     secondary:
-      'bg-slate-800 border border-slate-600 text-white hover:bg-slate-900 hover:border-slate-700',
+      'bg-sparkle-card border border-sparkle-secondary text-sparkle-text hover:bg-sparkle-secondary hover:border-sparkle-card',
     danger:
       'bg-red-600 text-white border border-red-700 hover:bg-red-700 hover:border-red-800 focus:ring-red-500'
   }

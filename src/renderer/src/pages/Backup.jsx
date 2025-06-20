@@ -188,7 +188,7 @@ export default function BackupManager() {
         <div className="flex items-center justify-between mb-4">
           <div className="relative w-64">
             <Search
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sparkle-text-secondary"
               size={16}
             />
             <input
@@ -196,7 +196,7 @@ export default function BackupManager() {
               placeholder="Search backups..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sparkle-primary focus:border-transparent transition-colors"
+              className="w-full pl-10 pr-4 py-2 bg-sparkle-card border border-sparkle-border rounded-lg text-sparkle-text placeholder-sparkle-text-secondary focus:outline-none focus:ring-2 focus:ring-sparkle-primary focus:border-transparent transition-colors"
             />
           </div>
           <div className="flex gap-2">
@@ -227,26 +227,27 @@ export default function BackupManager() {
         </div>
 
         <div className="grid grid-cols-2 gap-3 mb-4">
-          <div className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-3">
+          {' '}
+          <div className="bg-sparkle-card border border-sparkle-border rounded-lg p-3">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-sparkle-primary/20 rounded-lg">
                 <Shield className="text-sparkle-primary" size={20} />
               </div>
               <div>
-                <p className="text-xs text-slate-400">Total Backups</p>
-                <p className="text-lg font-medium text-white">{backups.length}</p>
+                <p className="text-xs text-sparkle-text-secondary">Total Backups</p>
+                <p className="text-lg font-medium text-sparkle-text">{backups.length}</p>
               </div>
             </div>
           </div>
-
-          <div className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-3">
+          <div className="bg-sparkle-card border border-sparkle-border rounded-lg p-3">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-sparkle-primary/20 rounded-lg">
                 <Clock className="text-sparkle-primary" size={20} />
               </div>
               <div>
-                <p className="text-xs text-slate-400">Latest Backup</p>
-                <p className="text-lg font-medium text-white">
+                {' '}
+                <p className="text-xs text-sparkle-text-secondary">Latest Backup</p>
+                <p className="text-lg font-medium text-sparkle-text">
                   {backups[0] ? formatDate(backups[0].creationTime) : 'None'}
                 </p>
               </div>
@@ -268,12 +269,12 @@ export default function BackupManager() {
             </div>
           </div>
         ) : filteredBackups.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 text-center bg-slate-800 border border-slate-700 rounded-lg">
-            <div className="p-4 bg-slate-700 rounded-full mb-4">
-              <FolderArchive size={28} className="text-slate-300" />
+          <div className="flex flex-col items-center justify-center py-12 text-center bg-sparkle-card border border-sparkle-border rounded-lg">
+            <div className="p-4 bg-sparkle-secondary rounded-full mb-4">
+              <FolderArchive size={28} className="text-sparkle-text" />
             </div>
-            <h3 className="text-lg font-medium mb-2 text-white">No Backups Found</h3>
-            <p className="text-slate-400 max-w-sm mb-4">
+            <h3 className="text-lg font-medium mb-2 text-sparkle-text">No Backups Found</h3>
+            <p className="text-sparkle-text-secondary max-w-sm mb-4">
               {searchQuery
                 ? 'No backups match your search.'
                 : 'Create a backup to preserve your system state. You can restore your system to any backup point when needed.'}
@@ -290,10 +291,10 @@ export default function BackupManager() {
             )}
           </div>
         ) : (
-          <div className="bg-slate-800/50 border border-slate-700/50 rounded-lg overflow-hidden">
+          <div className="bg-sparkle-card border border-sparkle-border rounded-lg overflow-hidden">
             <div className="max-h-96 overflow-y-auto">
               <table className="w-full text-sm text-left">
-                <thead className="text-xs text-slate-400 uppercase bg-slate-800/50 sticky top-0">
+                <thead className="text-xs text-sparkle-text-secondary uppercase bg-sparkle-card sticky top-0">
                   <tr>
                     <th scope="col" className="px-4 py-3">
                       Name
@@ -316,14 +317,14 @@ export default function BackupManager() {
                   {filteredBackups.map((backup, index) => (
                     <tr
                       key={index}
-                      className={`border-t border-slate-700/50 ${index % 2 === 0 ? 'bg-slate-800/50' : 'bg-slate-800/50'}`}
+                      className={`border-t border-sparkle-border ${index % 2 === 0 ? 'bg-sparkle-card' : 'bg-sparkle-card'}`}
                     >
-                      <td className="px-4 py-3 font-medium text-white">{backup.name}</td>
-                      <td className="px-4 py-3 text-slate-300">{backup.description}</td>
-                      <td className="px-4 py-3 text-slate-300">
+                      <td className="px-4 py-3 font-medium text-sparkle-text">{backup.name}</td>
+                      <td className="px-4 py-3 text-sparkle-text">{backup.description}</td>
+                      <td className="px-4 py-3 text-sparkle-text">
                         {formatDate(backup.creationTime)}
                       </td>
-                      <td className="px-4 py-3 text-slate-300">
+                      <td className="px-4 py-3 text-sparkle-text">
                         {formatTime(backup.creationTime)}
                       </td>
                       <td className="px-4 py-3 text-right">
@@ -373,22 +374,22 @@ export default function BackupManager() {
         }
       >
         {modalContent && (
-          <div className="w-[400px] bg-slate-900 border border-slate-800 rounded-xl shadow-xl">
-            <div className="flex items-center justify-between p-4 border-b border-slate-700">
-              <h3 className="text-lg font-medium text-white">{modalContent.title}</h3>
+          <div className="w-[400px] bg-sparkle-bg border border-sparkle-border rounded-xl shadow-xl">
+            <div className="flex items-center justify-between p-4 border-b border-sparkle-border">
+              <h3 className="text-lg font-medium text-sparkle-text">{modalContent.title}</h3>
               <button
                 onClick={() =>
                   !processing &&
                   setModalState({ isOpen: false, type: null, backup: null, backupName: '' })
                 }
-                className={`text-slate-400 transition-colors ${processing ? 'opacity-50 cursor-not-allowed' : 'hover:text-slate-300'}`}
+                className={`text-sparkle-text-secondary transition-colors ${processing ? 'opacity-50 cursor-not-allowed' : 'hover:text-sparkle-text'}`}
                 disabled={processing}
               >
                 <X size={20} />
               </button>
             </div>
             <div className="p-4">
-              <p className="text-slate-300 mb-4">{modalContent.message}</p>
+              <p className="text-sparkle-text mb-4">{modalContent.message}</p>
               {modalContent.showInput && (
                 <div className="mb-4">
                   <input
@@ -398,7 +399,7 @@ export default function BackupManager() {
                       setModalState((prev) => ({ ...prev, backupName: e.target.value }))
                     }
                     placeholder="Enter backup name"
-                    className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sparkle-primary focus:border-transparent transition-colors"
+                    className="w-full px-3 py-2 bg-sparkle-card border border-sparkle-border rounded-lg text-sparkle-text placeholder-sparkle-text-secondary focus:outline-none focus:ring-2 focus:ring-sparkle-primary focus:border-transparent transition-colors"
                     disabled={processing}
                   />
                 </div>

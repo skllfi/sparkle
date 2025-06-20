@@ -1,5 +1,5 @@
-import { useId } from "react"
-import { Check } from "lucide-react"
+import { useId } from 'react'
+import { Check } from 'lucide-react'
 
 export default function Checkbox({ label, checked, onChange }) {
   const id = useId()
@@ -17,7 +17,7 @@ export default function Checkbox({ label, checked, onChange }) {
         className="peer hidden"
         aria-checked={checked}
       />
-      <div className="h-5 w-5 rounded-md border-2 border-slate-500 flex items-center justify-center transition-colors peer-checked:bg-slate-600 peer-checked:border-slate-400">
+      <div className="h-5 w-5 rounded-md border-2 border-sparkle-border flex items-center justify-center transition-colors peer-checked:bg-sparkle-primary peer-checked:border-sparkle-secondary">
         {checked && <Check className="h-3.5 w-3.5 text-white" />}
       </div>
       <span className="text-sm">{label}</span>

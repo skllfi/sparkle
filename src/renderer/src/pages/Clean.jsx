@@ -91,16 +91,16 @@ function Clean() {
     <RootDiv>
       <div className="max-w-[1800px] mx-auto px-4">
         <div className="mb-8">
-          <div className="bg-gradient-to-r from-slate-800/50 to-slate-800/30 border border-slate-700/50 rounded-2xl p-6 backdrop-blur-sm">
+          <div className="bg-sparkle-card border border-sparkle-border rounded-2xl p-6 backdrop-blur-sm">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-green-500/10 rounded-xl">
                 <Icon iconNode={broom} className="text-green-500" size={28} />
               </div>
               <div className="flex-1">
-                <h2 className="text-2xl font-bold text-white mb-1">System Cleanup</h2>
+                <h2 className="text-2xl font-bold text-sparkle-text mb-1">System Cleanup</h2>
                 <div className="flex items-center gap-2">
-                  <p className="text-sm text-slate-400">Last cleaned:</p>
-                  <p className="text-sm font-medium text-slate-300">{lastClean}</p>
+                  <p className="text-sm text-sparkle-text-secondary">Last cleaned:</p>
+                  <p className="text-sm font-medium text-sparkle-text-secondary">{lastClean}</p>
                 </div>
               </div>
             </div>
@@ -111,18 +111,18 @@ function Clean() {
           {cleanups.map(({ id, label, description, script }) => (
             <div
               key={id}
-              className="group relative bg-slate-800/50 hover:bg-slate-800/70 border border-slate-700/50 hover:border-sparkle-primary rounded-xl p-6 transition-all duration-200"
+              className="group relative bg-sparkle-card hover:bg-sparkle-border/50 border border-sparkle-border hover:border-sparkle-primary rounded-xl p-6 transition-all duration-200"
             >
               <div className="mb-6">
-                <h3 className="text-lg font-semibold text-white group-hover:text-sparkle-primary transition-colors duration-200 mb-2">
+                <h3 className="text-lg font-semibold text-sparkle-text group-hover:text-sparkle-primary transition-colors duration-200 mb-2">
                   {label}
                 </h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{description}</p>
+                <p className="text-sparkle-text-secondary text-sm leading-relaxed">{description}</p>
               </div>
               <Button
                 onClick={() => runCleanup(id, script)}
                 disabled={loadingId !== null}
-                className="w-full flex items-center justify-center gap-2 text-white rounded-lg transition-all duration-200 bg-slate-700/50 hover:bg-sparkle-primary border-none"
+                className="w-full flex items-center justify-center gap-2 text-sparkle-text rounded-lg transition-all duration-200 bg-slate-700/50 hover:bg-sparkle-primary border-none"
               >
                 {loadingId === id ? (
                   <>
@@ -137,10 +137,12 @@ function Clean() {
                 )}
               </Button>
               {loadingId === id && (
-                <div className="absolute inset-0 bg-slate-900/10 backdrop-blur-[1px] rounded-xl flex items-center justify-center">
-                  <div className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 flex items-center gap-2">
+                <div className="absolute inset-0  backdrop-blur-[1px] rounded-xl flex items-center justify-center">
+                  <div className="bg-sparkle-card border border-sparkle-border rounded-lg px-4 py-2 flex items-center gap-2">
                     <RefreshCw className="animate-spin text-sparkle-primary" size={18} />
-                    <span className="text-sm font-medium text-white">Running cleanup...</span>
+                    <span className="text-sm font-medium text-sparkle-text">
+                      Running cleanup...
+                    </span>
                   </div>
                 </div>
               )}

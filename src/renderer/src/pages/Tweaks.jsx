@@ -204,11 +204,11 @@ function Tweaks() {
   return (
     <RootDiv>
       <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl max-w-lg w-full mx-4">
-          <h3 className="text-lg font-medium text-white mb-4">{selectedTweak?.title}</h3>
-          <div className="text-slate-300 mb-6">{modalContent}</div>
+        <div className="bg-sparkle-card border border-sparkle-border rounded-2xl p-6 shadow-xl max-w-lg w-full mx-4">
+          <h3 className="text-lg font-medium text-sparkle-text mb-4">{selectedTweak?.title}</h3>
+          <div className="text-sparkle-text-secondary 0 mb-6">{modalContent}</div>
           <div className="flex justify-end gap-3">
-            <Button variant="ghost" onClick={() => setIsModalOpen(false)}>
+            <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
               Cancel
             </Button>
             <Button
@@ -268,12 +268,12 @@ function Tweaks() {
       <div className="max-w-[1800px] mx-auto ">
         <div className="mb-4">
           <div className="space-y-4">
-            <div className="flex items-center gap-3 bg-slate-800/50 border border-slate-700/50 rounded-xl px-4 backdrop-blur-sm">
-              <Search className="text-slate-400" />
+            <div className="flex items-center gap-3 bg-sparkle-card border border-sparkle-border rounded-xl px-4 backdrop-blur-sm">
+              <Search className="text-sparkle-text-secondary" />
               <input
                 type="text"
                 placeholder="Search tweaks by name or description..."
-                className="w-full py-3 px-0 bg-transparent border-none focus:outline-none focus:ring-0 text-white"
+                className="w-full py-3 px-0 bg-transparent border-none focus:outline-none focus:ring-0 text-sparkle-text placeholder:text-sparkle-text-secondary"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -285,8 +285,8 @@ function Tweaks() {
                   key={category}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     activeCategory === category
-                      ? 'bg-sparkle-primary text-white shadow-lg border border-slate-700/50'
-                      : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 border border-slate-700/50'
+                      ? 'bg-sparkle-primary text-white shadow-lg border border-sparkle-border'
+                      : 'bg-sparkle-card/50 text-sparkle-text-secondary  hover:bg-sparkle-border border border-sparkle-border-secondary'
                   }`}
                   onClick={() => setActiveCategory(category)}
                 >
@@ -304,7 +304,7 @@ function Tweaks() {
               return (
                 <div
                   key={originalIndex}
-                  className="group bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 shadow-lg hover:shadow-xl hover:border-slate-600/50 transition-all duration-300 overflow-hidde h-52 "
+                  className="group bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border shadow-lg hover:shadow-xl hover:border-sparkle-border-secondary transition-all duration-300 overflow-hidde h-52 "
                 >
                   <div className="p-5 flex flex-col h-[260px]">
                     <div className="flex items-center justify-between mb-3">
@@ -328,7 +328,7 @@ function Tweaks() {
                                 delay={0.3}
                                 side="right"
                               >
-                                <div className="p-1.5 bg-slate-700/50 rounded-lg hover:bg-slate-700/80 transition-colors">
+                                <div className="p-1.5 bg-sparkle-accent rounded-lg hover:bg-sparkle-bg transition-colors">
                                   {categoryIcons[cat] || categoryIcons['General']}
                                 </div>
                               </Tooltip>
@@ -345,7 +345,7 @@ function Tweaks() {
                               checked={toggleStates[tweak.name] || false}
                               onChange={() => handleToggle(originalIndex)}
                             />
-                            <div className="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sparkle-primary"></div>
+                            <div className="w-11 h-6 bg-sparkle-border-secondary peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sparkle-primary"></div>
                           </label>
                         ) : (
                           <div>
@@ -360,10 +360,10 @@ function Tweaks() {
                       </div>
                     </div>
                     <div className="flex items-start mb-3">
-                      <h2 className="font-semibold text-white text-base">{tweak.title}</h2>
+                      <h2 className="font-semibold text-sparkle-text text-base">{tweak.title}</h2>
                     </div>
                     <div className="flex flex-col flex-1 overflow-hidden">
-                      <p className="text-slate-400 text-sm flex-1 overflow-y-auto custom-scrollbar pr-1">
+                      <p className="text-sparkle-text-secondary text-sm flex-1 overflow-y-auto custom-scrollbar pr-1">
                         {tweak.description}
                       </p>
                     </div>

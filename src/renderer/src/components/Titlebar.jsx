@@ -1,38 +1,78 @@
-import { Minus, Square, X } from 'lucide-react'
+import { Minus, Square, X, Sun, Moon, Palette } from 'lucide-react'
 import { close, invoke, minimize, toggleMaximize } from '../lib/electron'
 import sparkleLogo from '../../../../resources/sparklelogo.png'
 import { useEffect, useState } from 'react'
 
 function TitleBar() {
+  const [theme, setTheme] = useState('dark')
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : theme === 'light' ? 'purple' : 'dark'
+    setTheme(nextTheme)
+    document.body.classList.remove('dark', 'light', 'purple')
+    document.body.classList.add(nextTheme)
+    document.body.setAttribute('data-theme', nextTheme)
+  }
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'dark'
+    setTheme(savedTheme)
+    document.body.classList.add(savedTheme)
+    document.body.setAttribute('data-theme', savedTheme)
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  const ThemeIcon = () => {
+    switch (theme) {
+      case 'light':
+        return <Sun size={16} />
+      case 'purple':
+        return <Palette size={16} />
+      default:
+        return <Moon size={16} />
+    }
+  }
+
   return (
     <div
       style={{ WebkitAppRegion: 'drag' }}
-      className="h-[50px] fixed top-0 left-0 right-0 bg-slate-900 flex justify-between items-center pl-4 z-50 border-b border-slate-800"
+      className="h-[50px] fixed top-0 left-0 right-0  flex justify-between items-center pl-4 z-50 border-b border-sparkle-border-secondary"
     >
-      <div className="flex items-center gap-3 border-r h-full w-48 border-gray-800 pr-4">
+      <div className="flex items-center gap-3 border-r h-full w-48 border-sparkle-border-secondary pr-4">
         <img src={sparkleLogo} alt="Sparkle" className="h-5 w-5" />
-        <span className="text-white text-sm font-medium">Sparkle</span>
-        <div className="bg-slate-800 border border-slate-700 p-1 rounded-xl w-16 text-center text-sm">
+        <span className="text-sparkle-text text-sm font-medium">Sparkle</span>
+        <div className="bg-sparkle-card border border-sparkle-border-secondary p-1 rounded-xl w-16 text-center text-sm text-sparkle-text">
           Beta
         </div>
       </div>
 
       <div className="flex" style={{ WebkitAppRegion: 'no-drag' }}>
+        {' '}
         <button
-          className="h-[50px] w-12 inline-flex items-center justify-center text-slate-400 hover:bg-slate-800 transition-colors"
+          className="h-[50px] w-12 inline-flex items-center justify-center text-sparkle-text-secondary hover:bg-sparkle-accent  transition-colors"
           title="Toggle Discord RPC"
         >
           <DiscordIcon />
         </button>
         <button
+          onClick={toggleTheme}
+          className="h-[50px] w-12 inline-flex items-center justify-center text-sparkle-text-secondary hover:bg-sparkle-accent transition-colors"
+          title={`Current theme: ${theme}. Click to toggle.`}
+        >
+          <ThemeIcon />
+        </button>
+        <button
           onClick={minimize}
-          className="h-[50px] w-12 inline-flex items-center justify-center text-slate-400 hover:bg-slate-800 transition-colors"
+          className="h-[50px] w-12 inline-flex items-center justify-center text-slate-400 hover:bg-sparkle-accent transition-colors"
         >
           <Minus size={16} />
         </button>
         <button
           onClick={toggleMaximize}
-          className="h-[50px] w-12 inline-flex items-center justify-center text-slate-400 hover:bg-slate-800 transition-colors"
+          className="h-[50px] w-12 inline-flex items-center justify-center text-slate-400 hover:bg-sparkle-accent transition-colors"
         >
           <Square size={14} />
         </button>
@@ -73,13 +113,13 @@ function DiscordIcon() {
   return (
     <div
       onClick={toggleDiscordStatus}
-      className="h-[50px] w-12 inline-flex items-center justify-center text-gray-400 hover:bg-gray-800 transition-colors"
+      className="h-[50px] w-12 inline-flex items-center justify-center hover:bg-sparkle-accent transition-colors"
     >
       <svg
         role="img"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
-        className={`h-[20px] w-[20px] text-gray-400 mx-3 my-auto ${
+        className={`h-[20px] w-[20px] mx-3 my-auto ${
           isEnabled ? 'fill-sparkle-secondary' : 'fill-red-600'
         }`}
       >

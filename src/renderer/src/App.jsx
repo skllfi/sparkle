@@ -15,15 +15,23 @@ import Backup from './pages/Backup'
 
 function App() {
   const [loading, setLoading] = useState(true)
+  const [theme, setTheme] = useState(localStorage.getItem('theme'))
 
+  useEffect(() => {
+    const current = theme || 'dark'
+    setTheme(current)
+    document.body.classList.remove('dark', 'light', 'purple')
+    document.body.classList.add(current)
+    document.body.setAttribute('data-theme', current)
+  }, [])
   return (
-    <div className="flex flex-col h-screen bg-slate-900 text-white overflow-hidden">
+    <div className="flex flex-col h-screen bg-sparkle-bg text-sparkle-text overflow-hidden">
       <TitleBar />
       <div className="flex flex-1 pt-[50px] relative">
         <AnimatePresence>
           {loading == true && (
             <motion.div
-              className="absolute inset-0 z-50 bg-slate-900"
+              className="absolute inset-0 z-50 bg-sparkle-bg"
               initial={{ opacity: 1 }}
               exit={{
                 y: '-100%',

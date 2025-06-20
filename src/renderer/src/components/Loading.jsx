@@ -62,7 +62,7 @@ function Loading({ onLoadingComplete }) {
           {steps[loadingStep]}
         </motion.div>
 
-        <div className="w-64 h-1 bg-slate-800 rounded-full ">
+        <div className="w-64 h-1 bg-sparkle-accent rounded-full ">
           <motion.div
             className="h-full bg-sparkle-primary"
             variants={progressVariants}
@@ -76,7 +76,7 @@ function Loading({ onLoadingComplete }) {
           {steps.map((_, i) => (
             <motion.div
               key={i}
-              className={`w-3 h-3 rounded-full ${i === loadingStep ? 'bg-sparkle-primary' : 'bg-slate-700'}`}
+              className={`w-3 h-3 rounded-full ${i === loadingStep ? 'bg-sparkle-primary' : 'bg-sparkle-accent'}`}
               animate={{
                 scale: i === loadingStep ? [1, 1.2, 1] : 1,
                 opacity: i === loadingStep ? 1 : 0.6

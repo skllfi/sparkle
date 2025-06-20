@@ -40,7 +40,7 @@ function Nav() {
   const activeTab = getActiveTab()
 
   return (
-    <nav className="h-screen w-52 bg-slate-900 text-white fixed left-0 top-0 flex flex-col py-6 border-r border-slate-800 z-40">
+    <nav className="h-screen w-52  text-sparkle-text fixed left-0 top-0 flex flex-col py-6 border-r border-sparkle-border-secondary z-40">
       <div className="flex-1 flex flex-col gap-2 px-3 mt-10">
         {Object.entries(tabs).map(([id, { label, path }]) => (
           <button
@@ -49,8 +49,8 @@ function Nav() {
             className={clsx(
               'flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 border',
               activeTab === id
-                ? 'bg-slate-800 text-white border-slate-700'
-                : 'text-gray-400 hover:bg-slate-800 hover:text-white border-slate-900'
+                ? 'bg-sparkle-card text-sparkle-text border-sparkle-border-secondary'
+                : 'text-sparkle-text-secondary hover:bg-sparkle-border-secondary hover:text-sparkle-text border-transparent'
             )}
           >
             <div>{tabIcons[id]}</div>
@@ -61,7 +61,7 @@ function Nav() {
       {needsRestart && (
         <>
           <div className="mx-3 mb-2    flex flex-col items-center gap-2 text-sm">
-            <div className="bg-red-600 text-white rounded-lg p-3">
+            <div className="bg-red-600 text-sparkle-text rounded-lg p-3">
               <span>System Restart required to apply changes</span>
             </div>
             <Button onClick={() => invoke({ channel: 'restart' })} className="w-full">
@@ -72,13 +72,13 @@ function Nav() {
       )}
       <div className="flex items-center justify-center gap-2 mt-4 mb-2">
         <a href="https://github.com/parcoil/sparkle" target="_blank">
-          <GithubIcon className="w-5 fill-slate-600" />
+          <GithubIcon className="w-5 fill-sparkle-text-secondary" />
         </a>
         <a href="https://discord.com/invite/En5YJYWj3Z" target="_blank">
-          <DiscordIcon className="w-5 fill-slate-600" />
+          <DiscordIcon className="w-5 fill-sparkle-text-secondary" />
         </a>
       </div>
-      <p className="text-slate-500 text-center">v{info.version}</p>
+      <p className="text-sparkle-text-secondary text-center">v{info.version}</p>
     </nav>
   )
 }
