@@ -1,5 +1,3 @@
-import React from 'react'
-
 function FirstTime() {
   const handleGetStarted = () => {
     localStorage.setItem('firstTime', 'false')
