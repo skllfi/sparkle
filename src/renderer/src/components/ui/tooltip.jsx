@@ -50,8 +50,7 @@ const Tooltip = ({ content, children, side = 'top', delay = 0.5 }) => {
                   : side === 'left' || side === 'right'
                     ? '50%'
                     : undefined,
-              right: side === 'left' ? '100%' : undefined,
-              left: side === 'right' ? '100%' : undefined
+              right: side === 'left' ? '100%' : undefined
             }}
           >
             {content}
