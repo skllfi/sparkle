@@ -373,11 +373,11 @@ function Tweaks() {
             })
           ) : (
             <div className="col-span-full flex flex-col items-center justify-center py-16 text-center">
-              <div className="bg-slate-700/50 p-6 rounded-2xl mb-4">
-                <Search className="w-10 h-10 text-slate-400" />
+              <div className="bg-sparkle-card p-6 rounded-2xl mb-4">
+                <Search className="w-10 h-10 text-sparkle-text-secondary" />
               </div>
-              <h3 className="text-xl font-medium mb-2 text-white">No tweaks found</h3>
-              <p className="text-slate-400">Try adjusting your search or filters</p>
+              <h3 className="text-xl font-medium mb-2 text-sparkle-text">No tweaks found</h3>
+              <p className="text-sparkle-text-secondary">Try adjusting your search or filters</p>
             </div>
           )}
         </div>
