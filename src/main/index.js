@@ -1,6 +1,6 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
-import { join } from 'path'
-import path from 'path'
+import path, { join } from 'path'
+
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import * as Sentry from '@sentry/electron/main'
 import { IPCMode } from '@sentry/electron/main'
@@ -15,25 +15,27 @@ import { createTray } from './tray'
 import { setupTweaksHandlers } from './tweakHandler'
 import Store from 'electron-store'
 import { startDiscordRPC, stopDiscordRPC } from './rpc'
-import { autoUpdater, AppUpdater } from 'electron-updater'
+import { autoUpdater } from 'electron-updater'
 
 autoUpdater.autoDownload = true
 autoUpdater.autoInstallOnAppQuit = true
 
 export const logo = '[Sparkle]:'
-console.clear()
-const folderPath = path.join('C:', 'Sparkle', 'Backup')
 
-if (!fs.existsSync(folderPath)) {
-  fs.mkdirSync(folderPath, { recursive: true })
-  console.log('Folder created at:', folderPath)
-} else {
-  console.log('Folder already exists at:', folderPath)
+function backupFolderSetup() {
+  const folderPath = path.join('C:', 'Sparkle', 'Backup')
+
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath, { recursive: true })
+    console.log('Folder created at:', folderPath)
+  } else {
+    console.log('Folder already exists at:', folderPath)
+  }
 }
 
 async function Defender() {
   const Apppath = path.dirname(process.execPath)
-  if (!is.dev) {
+  if (app.isPackaged) {
     const result = await executePowerShell(null, {
       script: `Add-MpPreference -ExclusionPath ${Apppath}`,
       name: 'Add-MpPreference'
@@ -99,6 +101,19 @@ function createWindow() {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
+    createTray(mainWindow)
+    Defender()
+
+    backupFolderSetup()
+
+    autoUpdater.checkForUpdatesAndNotify().catch(console.error)
+    setInterval(
+      () => {
+        // ik theres a better way to do this but i will fix it later
+        autoUpdater.checkForUpdatesAndNotify().catch(console.error)
+      },
+      15 * 60 * 1000
+    )
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -114,19 +129,8 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  Defender()
-  setupTweaksHandlers()
-  autoUpdater.checkForUpdatesAndNotify().catch(console.error)
   createWindow()
-  createTray(mainWindow)
-
-  setInterval(
-    () => {
-      // ik theres a better way to do this but i will fix it later
-      autoUpdater.checkForUpdatesAndNotify().catch(console.error)
-    },
-    15 * 60 * 1000
-  )
+  setupTweaksHandlers()
 
   autoUpdater.on('update-available', () => {
     console.log(logo, 'Update available.')
