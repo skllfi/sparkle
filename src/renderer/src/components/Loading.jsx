@@ -53,7 +53,7 @@ function Loading({ onLoadingComplete }) {
         transition={{ duration: 0.5 }}
       >
         <motion.div
-          className="text-2xl font-medium mb-8 text-slate-100"
+          className="text-2xl font-medium mb-8 text-sparkle-text"
           variants={pulseVariants}
           initial="initial"
           animate="animate"
