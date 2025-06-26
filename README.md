@@ -72,9 +72,43 @@
     <li>🧪 Improve code quality</li>
   </ul>
 
+<h4>🛠️ Building Sparkle</h4>
+
+> [!IMPORTANT]
+> The version of sparkle in the repo is most likely newer than the latest release. expect bugs and unreleased features
+
+<p>To build sparkle you will need the following</p>
+<ul>
+  <li><b>Node.js</b> v22 or higher</li>
+  <li><b>PNPM</b></li>
+  <li><b>Windows 10/11</b></li>
+</ul>
+
+<ol>
+  <li>
+    <b>Clone the repository:</b>
+    <pre><code>git clone https://github.com/Parcoil/Sparkle
+cd Sparkle</code></pre>
+  </li>
+  <li>
+    <b>Install dependencies:</b>
+    <pre><code>pnpm install</code></pre>
+  </li>
+  <li>
+    <b>Start the app in development mode:</b>
+    <pre><code>pnpm dev</code></pre>
+    <i>This will launch Sparkle with hot reload for both the Electron main and renderer processes.</i>
+  </li>
+  <br/>
+  <li>
+    <b>Build for production:</b>
+    <pre><code>pnpm build</code></pre>
+    <i>This will generate optimized production builds.</i>
+  </li>
+</ol>
+ <br/>
   <p align="center">Made with ❤️ by Parcoil</p>
 </div>
-
 
 ## Star History
 
