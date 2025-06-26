@@ -1,6 +1,7 @@
 import { ipcMain } from 'electron'
 import discordRPC from 'discord-rpc'
 import { logo } from '.'
+import jsonData from '../../package.json'
 
 const clientId = '1188686354490609754'
 let rpcClient
@@ -14,7 +15,7 @@ function startDiscordRPC() {
 
       rpcClient.setActivity({
         details: 'Optimizing your PC',
-        state: 'Running Sparkle V2',
+        state: `Running Sparkle v${jsonData.version || '2'}`,
         buttons: [
           { label: 'Download Sparkle', url: 'https://parcoil.com/sparkle' },
           { label: 'Join Discord', url: 'https://discord.com/invite/En5YJYWj3Z' }
