@@ -12,6 +12,8 @@ import Clean from './pages/Clean'
 import Apps from './pages/Apps'
 import Loading from './components/Loading'
 import Backup from './pages/Backup'
+import Utilities from './pages/Utilities'
+import Settings from './pages/Settings'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -62,8 +64,10 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/tweaks" element={<Tweaks />} />
                   <Route path="/clean" element={<Clean />} />
-                  <Route path="/apps" element={<Apps />} />
                   <Route path="/backup" element={<Backup />} />
+                  <Route path="/utilities" element={<Utilities />} />
+                  <Route path="/apps" element={<Apps />} />{' '}
+                  <Route path="/settings" element={<Settings />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </motion.div>

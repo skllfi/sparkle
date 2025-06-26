@@ -50,6 +50,21 @@
   --color-secondary: #9333ea;
   --color-accent: #4a266b;
 }
+.green {
+  --color-bg: #102418;
+  --color-text: #e6ffe6;
+  --color-text-dark: #b6e7b6;
+  --color-text-darker: #8fc98f;
+  --color-text-secondary: #6ee7b7;
+  --color-text-muted: #4b7154;
+  --color-card: #183c26;
+  --color-border: #225c36;
+  --color-border-secondary: #1a4730;
+  --color-primary: #34d399;
+  --color-secondary: #059669;
+  --color-accent: #1e2d23;
+}
+
 /* .theme-purple {
   --color-bg: #1e1b2e;
   --color-text: #f3e8ff;

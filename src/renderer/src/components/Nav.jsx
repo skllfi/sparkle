@@ -1,4 +1,4 @@
-import { Wrench, Home, Folder, Trash, LayoutGrid, RefreshCw, Icon } from 'lucide-react'
+import { Wrench, Home, Folder, LayoutGrid, Icon } from 'lucide-react'
 import { broom } from '@lucide/lab'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { clsx } from 'clsx'
@@ -8,13 +8,17 @@ import Button from './ui/button'
 import { invoke } from '@/lib/electron'
 import GithubIcon from './GithubIcon'
 import DiscordIcon from './Discordicon'
+import { Box } from 'lucide-react'
+import { Settings } from 'lucide-react'
 
 const tabIcons = {
   home: <Home size={20} />,
   tweaks: <Wrench size={20} />,
-  backup: <Folder size={20} />,
   clean: <Icon iconNode={broom} size={20} />,
-  apps: <LayoutGrid size={20} />
+  backup: <Folder size={20} />,
+  utilities: <Box size={20} />,
+  apps: <LayoutGrid size={20} />,
+  settings: <Settings size={20} />
 }
 
 const tabs = {
@@ -22,7 +26,9 @@ const tabs = {
   tweaks: { label: 'Tweaks', path: '/tweaks' },
   clean: { label: 'Cleaner', path: '/clean' },
   backup: { label: 'Backup', path: '/backup' },
-  apps: { label: 'Apps', path: '/apps' }
+  utilities: { label: 'Utilities', path: '/utilities' },
+  apps: { label: 'Apps', path: '/apps' },
+  settings: { label: 'Settings', path: '/settings' }
 }
 
 function Nav() {

@@ -42,7 +42,30 @@ export async function executePowerShell(_, props) {
     return { success: false, error: error.message }
   }
 }
+async function runPowerShellInWindow(event, { script, name = 'script', noExit = true }) {
+  try {
+    const tempDir = path.join(app.getPath('userData'), 'scripts')
+    ensureDirectoryExists(tempDir)
 
+    const tempFile = path.join(tempDir, `${name}-${Date.now()}.ps1`)
+    await fsp.writeFile(tempFile, script)
+    const noExitFlag = noExit ? '-NoExit' : ''
+    const command = `start powershell.exe ${noExitFlag} -File "${tempFile}"`
+
+    exec(command, (error) => {
+      if (error) {
+        console.error(`Error launching PowerShell window [${name}]:`, error)
+      }
+    })
+
+    return { success: true }
+  } catch (error) {
+    console.error(`Error in runPowerShellInWindow [${name}]:`, error)
+    return { success: false, error: error.message }
+  }
+}
+
+ipcMain.handle('run-powershell-window', runPowerShellInWindow)
 ipcMain.handle('handle-apps', async (event, { action, apps }) => {
   switch (action) {
     case 'install':
