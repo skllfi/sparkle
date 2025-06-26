@@ -26,8 +26,6 @@ function Home() {
             channel: 'get-system-info'
           })
           setSystemInfo(info)
-
-          // console.log('System info:', info)
         } catch (error) {
           console.error('Error fetching system info:', error)
         } finally {
@@ -47,7 +45,6 @@ function Home() {
           channel: 'tweaks:fetch'
         })
         setTweakInfo(tweaks)
-        // console.log('Fetched tweak info:', tweaks)
       } catch (error) {
         console.error('Error fetching tweak info:', error)
       }
