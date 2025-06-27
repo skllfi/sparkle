@@ -74,15 +74,18 @@
 
 <h4>🛠️ Building Sparkle</h4>
 
-> [!IMPORTANT]
-> The version of sparkle in the repo is most likely newer than the latest release. expect bugs and unreleased features
-
 <p>To build sparkle you will need the following</p>
 <ul>
   <li><b>Node.js</b> v22 or higher</li>
   <li><b>PNPM</b></li>
   <li><b>Windows 10/11</b></li>
 </ul>
+
+</div>
+
+> [!IMPORTANT] 
+> The version of sparkle in the repo is most likely newer than the latest release. expect bugs and unreleased features
+
 
 <ol>
   <li>
@@ -108,7 +111,7 @@ cd Sparkle</code></pre>
 </ol>
  <br/>
   <p align="center">Made with ❤️ by Parcoil</p>
-</div>
+
 
 ## Star History
 
