@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, globalShortcut } from 'electron'
 import path, { join } from 'path'
 
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
@@ -95,6 +95,7 @@ function createWindow() {
     icon: path.join(__dirname, '../../resources/sparkle2.ico'),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
+      devTools: app.isPackaged ? false : true,
       sandbox: false
     }
   })
@@ -131,7 +132,10 @@ function createWindow() {
 app.whenReady().then(() => {
   createWindow()
   setupTweaksHandlers()
-
+  if (app.isPackaged) {
+    globalShortcut.register('CommandOrControl+R', () => {})
+    globalShortcut.register('F5', () => {})
+  }
   autoUpdater.on('update-available', () => {
     console.log(logo, 'Update available.')
   })
