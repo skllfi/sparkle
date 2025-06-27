@@ -12,56 +12,56 @@ const utilities = [
     command: 'sfc /scannow',
     type: 'System',
     icon: <Shield className="w-5 h-5" />,
-    color: 'blue-500'
+    color: 'text-blue-500'
   },
   {
     name: 'DISM Health Restore',
     command: 'DISM /Online /Cleanup-Image /RestoreHealth',
     type: 'System',
     icon: <Activity className="w-5 h-5" />,
-    color: 'green-500'
+    color: 'text-green-500'
   },
   {
     name: 'Check Disk',
     command: 'chkdsk C: /f /r /x',
     type: 'System',
     icon: <HardDrive className="w-5 h-5" />,
-    color: 'yellow-500'
+    color: 'text-yellow-500'
   },
   {
     name: 'Show Power Plan',
     type: 'System',
     command: 'powercfg /getactivescheme',
     icon: <Settings className="w-5 h-5" />,
-    color: 'purple-500'
+    color: 'text-purple-500'
   },
   {
     name: 'Reset IP Stack',
     type: 'Network',
     command: 'netsh int ip reset',
     icon: <Wrench className="w-5 h-5" />,
-    color: 'pink-500'
+    color: 'text-pink-500'
   },
   {
     name: 'Reset Winsock',
     type: 'Network',
     command: 'netsh winsock reset',
     icon: <Wrench className="w-5 h-5" />,
-    color: 'red-500'
+    color: 'text-red-500'
   },
   {
     name: 'Flush DNS Cache',
     type: 'Network',
     command: 'ipconfig /flushdns',
     icon: <Wrench className="w-5 h-5" />,
-    color: 'indigo-500'
+    color: 'text-indigo-500'
   },
   {
     name: 'Disk Cleanup',
     type: 'System',
     command: 'cleanmgr.exe /sagerun:1',
     icon: <HardDrive className="w-5 h-5" />,
-    color: 'teal-500'
+    color: 'text-teal-500'
   }
 ]
 
@@ -127,7 +127,7 @@ export default function UtilitiesPage() {
               disabled={running}
               className="bg-sparkle-card border border-sparkle-border p-4 rounded-2xl flex items-center gap-3 hover:border-sparkle-primary transition"
             >
-              <div className={`text-${util.color}`}>{util.icon}</div>
+              <div className={`${util.color}`}>{util.icon}</div>
               <div className="text-left">
                 <h2 className="font-semibold">Run {util.name}</h2>
                 <p className="text-sm text-sparkle-text-secondary">Type: {util.type}</p>
