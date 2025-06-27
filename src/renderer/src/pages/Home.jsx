@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import RootDiv from '@/components/RootDiv'
 import { Cpu, HardDrive, Zap, MemoryStick, Server, Monitor } from 'lucide-react'
 import { invoke } from '@/lib/electron'

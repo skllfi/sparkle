@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Terminal, Settings, HardDrive, Activity, Shield, Wrench } from 'lucide-react'
+import { Settings, HardDrive, Activity, Shield, Wrench } from 'lucide-react'
 import { invoke } from '@/lib/electron'
 import RootDiv from '@/components/RootDiv'
 import Modal from '@/components/ui/modal'

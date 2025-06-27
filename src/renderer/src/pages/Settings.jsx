@@ -1,5 +1,5 @@
 import RootDiv from '@/components/RootDiv'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import jsonData from '../../../../package.json'
 import { invoke } from '@/lib/electron'
 

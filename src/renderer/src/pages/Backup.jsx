@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   FolderArchive,
   RefreshCw,
@@ -10,8 +10,7 @@ import {
   RotateCcw,
   Loader2,
   X,
-  Search,
-  Info
+  Search
 } from 'lucide-react'
 import RootDiv from '@/components/RootDiv'
 import { invoke } from '@/lib/electron'

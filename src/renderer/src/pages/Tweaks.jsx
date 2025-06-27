@@ -5,7 +5,6 @@ import {
   AlertTriangle,
   Cpu,
   Monitor,
-  Gamepad2,
   Shield,
   Network,
   Keyboard,

@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react'
+import { useState } from 'react'
 import data from '../assets/apps.json'
 import RootDiv from '@/components/RootDiv'
 import { Search } from 'lucide-react'

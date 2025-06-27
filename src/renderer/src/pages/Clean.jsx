@@ -1,5 +1,5 @@
 import Button from '@/components/ui/button'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { invoke } from '@/lib/electron'
 import RootDiv from '@/components/RootDiv'
 import { RefreshCw, Icon } from 'lucide-react'

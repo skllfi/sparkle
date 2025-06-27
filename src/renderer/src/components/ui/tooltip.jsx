@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const Tooltip = ({ content, children, side = 'top', delay = 0.5 }) => {
