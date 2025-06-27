@@ -65,6 +65,21 @@
   --color-accent: #1e2d23;
 }
 
+.gray {
+  --color-bg: #181a1b;
+  --color-text: #e5e7eb;
+  --color-text-dark: #d1d5db;
+  --color-text-darker: #9ca3af;
+  --color-text-secondary: #8a909b;
+  --color-text-muted: #4b5563;
+  --color-card: #232526;
+  --color-border: #2d2f31;
+  --color-border-secondary: #343536;
+  --color-primary: #6366f1;
+  --color-secondary: #818cf8;
+  --color-accent: #27292a;
+}
+
 /* .theme-purple {
   --color-bg: #1e1b2e;
   --color-text: #f3e8ff;

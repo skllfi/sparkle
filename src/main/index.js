@@ -135,6 +135,7 @@ app.whenReady().then(() => {
   if (app.isPackaged) {
     globalShortcut.register('CommandOrControl+R', () => {})
     globalShortcut.register('F5', () => {})
+    globalShortcut.register('CommandOrControl+Shift+R', () => {})
   }
   autoUpdater.on('update-available', () => {
     console.log(logo, 'Update available.')

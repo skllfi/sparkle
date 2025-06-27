@@ -7,7 +7,8 @@ const themes = [
   { label: 'Dark', value: '' },
   { label: 'Light', value: 'light' },
   { label: 'Purple', value: 'purple' },
-  { label: 'Green', value: 'green' }
+  { label: 'Green', value: 'green' },
+  { label: 'Gray', value: 'gray' }
 ]
 
 function Settings() {
@@ -21,7 +22,7 @@ function Settings() {
   }, [])
 
   useEffect(() => {
-    document.body.classList.remove('light', 'purple', 'dark', 'green')
+    document.body.classList.remove('light', 'purple', 'dark', 'green', 'gray')
     if (theme) {
       document.body.classList.add(theme)
     }
