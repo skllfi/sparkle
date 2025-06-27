@@ -179,7 +179,7 @@ export default function UtilitiesPage() {
               <>
                 <p className="mb-4">
                   You are about to run{' '}
-                  <span className={`text-${selectedUtility.color} underline  font-medium`}>
+                  <span className={`${selectedUtility.color} underline  font-medium`}>
                     {selectedUtility.name}
                   </span>
                   .
