@@ -15,6 +15,9 @@ function Settings() {
   const [theme, setTheme] = useState('')
   const [discordEnabled, setDiscordEnabled] = useState(true)
   const [discordLoading, setDiscordLoading] = useState(false)
+  const [posthogDisabled, setPosthogDisabled] = useState(() => {
+    return localStorage.getItem('posthogDisabled') === 'true'
+  })
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || ''
@@ -32,6 +35,15 @@ function Settings() {
   useEffect(() => {
     invoke({ channel: 'discord-rpc:get' }).then((status) => setDiscordEnabled(status))
   }, [])
+
+  useEffect(() => {
+    if (posthogDisabled) {
+      document.body.classList.add('ph-no-capture')
+    } else {
+      document.body.classList.remove('ph-no-capture')
+    }
+    localStorage.setItem('posthogDisabled', posthogDisabled)
+  }, [posthogDisabled])
 
   const handleToggleDiscord = async () => {
     setDiscordLoading(true)
@@ -66,8 +78,7 @@ function Settings() {
             ))}
           </div>
         </div>
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold mb-2 text-sparkle-text">Discord RPC</h2>
+        <div className="">
           <div className="flex items-center gap-4 bg-sparkle-card border border-sparkle-border rounded-lg p-4">
             <span className="text-sparkle-text">Enable Discord Rich Presence</span>
             <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
@@ -87,8 +98,26 @@ function Settings() {
             </span>
           </div>
         </div>
+        <div className="mt-4 mb-4">
+          <div className="flex items-center gap-4 bg-sparkle-card border border-sparkle-border rounded-lg p-4">
+            <span className="text-sparkle-text">Disable Posthog</span>
+            <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
+              <input
+                type="checkbox"
+                checked={posthogDisabled}
+                onChange={() => setPosthogDisabled((v) => !v)}
+                className="sr-only peer"
+              />
+              <div className="w-11 h-6 bg-sparkle-border-secondary peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sparkle-primary"></div>
+            </label>
+            <span
+              className={`text-xs ${posthogDisabled ? 'text-green-400' : 'text-sparkle-text-secondary'}`}
+            >
+              {posthogDisabled ? 'Disabled' : 'Enabled'}
+            </span>
+          </div>
+        </div>
         <div className="mb-8">
-          <h2 className="text-lg font-semibold mb-2 text-sparkle-text">Other Settings</h2>
           <div className="bg-sparkle-card border border-sparkle-border rounded-lg p-4 text-sparkle-text-secondary">
             <p>More settings coming soon...</p>
           </div>

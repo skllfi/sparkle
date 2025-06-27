@@ -25,6 +25,12 @@ function App() {
     document.body.classList.remove('dark', 'light', 'purple')
     document.body.classList.add(current)
     document.body.setAttribute('data-theme', current)
+
+    if (localStorage.getItem('posthogDisabled') === 'true') {
+      document.body.classList.add('ph-no-capture')
+    } else {
+      document.body.classList.remove('ph-no-capture')
+    }
   }, [])
   return (
     <div className="flex flex-col h-screen bg-sparkle-bg text-sparkle-text overflow-hidden">
