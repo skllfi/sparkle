@@ -5,10 +5,18 @@ import { HashRouter } from 'react-router-dom'
 import { init } from '@sentry/electron/renderer'
 import { init as reactInit } from '@sentry/react'
 import { PostHogProvider } from 'posthog-js/react'
+import * as Sentry from '@sentry/react'
 
 init({
   sendDefaultPii: true,
-  integrations: [],
+  replaysSessionSampleRate: 1.0,
+  replaysOnErrorSampleRate: 1.0,
+  integrations: [
+    Sentry.replayIntegration({
+      maskAllText: false,
+      blockAllMedia: false
+    })
+  ],
   reactInit
 })
 

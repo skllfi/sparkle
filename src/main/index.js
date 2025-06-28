@@ -16,7 +16,10 @@ import { setupTweaksHandlers } from './tweakHandler'
 import Store from 'electron-store'
 import { startDiscordRPC, stopDiscordRPC } from './rpc'
 import { autoUpdater } from 'electron-updater'
-
+Sentry.init({
+  dsn: 'https://d1e8991c715dd717e6b7b44dbc5c43dd@o4509167771648000.ingest.us.sentry.io/4509167772958720',
+  ipcMode: IPCMode.Both
+})
 autoUpdater.autoDownload = true
 autoUpdater.autoInstallOnAppQuit = true
 
@@ -75,11 +78,6 @@ ipcMain.handle('discord-rpc:get', () => {
 })
 
 export let mainWindow = null
-
-Sentry.init({
-  dsn: 'https://d1e8991c715dd717e6b7b44dbc5c43dd@o4509167771648000.ingest.us.sentry.io/4509167772958720',
-  ipcMode: IPCMode.Both
-})
 
 function createWindow() {
   mainWindow = new BrowserWindow({
