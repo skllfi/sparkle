@@ -303,7 +303,7 @@
     },
     {
       "name": "OpenRGB",
-      "id": "CalcProgrammer1.OpenRGB",
+      "id": "OpenRGB.OpenRGB",
       "category": "utilities",
       "info": "An open source RGB lighting control software.",
       "link": "https://openrgb.org/",
