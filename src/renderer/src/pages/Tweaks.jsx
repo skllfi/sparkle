@@ -3,14 +3,11 @@ import {
   Wrench,
   Search,
   AlertTriangle,
-  Cpu,
   Monitor,
   Shield,
   Network,
-  Keyboard,
-  Settings,
-  HardDrive,
-  Zap
+  Zap,
+  Paintbrush
 } from 'lucide-react'
 import { toast } from 'react-toastify'
 import RootDiv from '@/components/RootDiv'
@@ -45,7 +42,6 @@ function Tweaks() {
         channel: 'tweaks:fetch'
       })
       setTweaks(fetchedTweaks)
-      //console.log('Fetched tweaks:', fetchedTweaks)
     } catch (error) {
       console.error('Error fetching tweaks:', error)
     }
@@ -179,15 +175,12 @@ function Tweaks() {
   })
 
   const categoryIcons = {
-    Performance: <Zap className="w-4 h-4 text-orange-400" />,
-    CPU: <Cpu className="w-4 h-4 text-blue-400" />,
+    Performance: <Zap className="w-4 h-4  text-yellow-400" />,
     GPU: <Monitor className="w-4 h-4 text-purple-400" />,
     Privacy: <Shield className="w-4 h-4 text-green-500" />,
-    Network: <Network className="w-4 h-4 text-yellow-400" />,
-    Input: <Keyboard className="w-4 h-4 text-pink-400" />,
-    System: <Settings className="w-4 h-4 text-cyan-400" />,
-    Storage: <HardDrive className="w-4 h-4 text-red-400" />,
-    General: <Wrench className="w-4 h-4 text-pink-400" />
+    Network: <Network className="w-4 h-4 text-orange-400" />,
+    Appearance: <Paintbrush className="w-4 h-4 text-sparkle-primary" />,
+    General: <Wrench className="w-4 h-4 text-blue-400" />
   }
 
   if (isLoading) {

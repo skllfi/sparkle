@@ -5,6 +5,7 @@ import RootDiv from '@/components/RootDiv'
 import Modal from '@/components/ui/modal'
 import { toast } from 'react-toastify'
 import Button from '@/components/ui/button'
+import { SquareTerminal } from 'lucide-react'
 
 const utilities = [
   {
@@ -95,30 +96,28 @@ export default function UtilitiesPage() {
     setModalOpen(true)
   }
 
-  const openRegedit = async () => {
+  const openQuickAccessTool = async (script) => {
     await invoke({
       channel: 'run-powershell',
-      payload: { script: 'start regedit.exe' }
+      payload: { script }
     })
   }
 
-  const openDiskCleanup = async () => {
-    await invoke({
-      channel: 'run-powershell',
-      payload: { script: 'start cleanmgr.exe' }
-    })
-  }
-
-  const openSystemInfo = async () => {
-    await invoke({
-      channel: 'run-powershell',
-      payload: { script: 'start msinfo32.exe' }
-    })
-  }
+  const quickAccess = [
+    { name: 'Regedit', command: 'start regedit.exe' },
+    { name: 'Task Manager', command: 'start taskmgr.exe' },
+    { name: 'Disk Cleanup', command: 'start cleanmgr.exe' },
+    { name: 'Display Settings', command: 'start desk.cpl' },
+    { name: 'System Information', command: 'start msinfo32.exe' },
+    { name: 'Device Manager', command: 'start devmgmt.msc' },
+    { name: 'System Properties', command: 'start sysdm.cpl' },
+    { name: 'Character Map', command: 'start charmap.exe' },
+    { name: 'Remote Desktop', command: 'start mstsc.exe' }
+  ]
 
   return (
     <RootDiv>
-      <div className=" bg-sparkle-bg text-sparkle-text">
+      <div className="bg-sparkle-bg text-sparkle-text pb-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {utilities.map((util) => (
             <button
@@ -148,27 +147,21 @@ export default function UtilitiesPage() {
           </label>
           <p>Keep PowerShell window open after execution</p>
         </div>
+
         <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-2 text-sparkle-text-secondary">Tools</h2>
-          <div className="flex gap-4">
-            <button
-              onClick={openRegedit}
-              className="bg-sparkle-card border border-sparkle-border px-4 py-2 rounded-xl hover:border-sparkle-primary transition text-sparkle-text"
-            >
-              Open Regedit
-            </button>
-            <button
-              onClick={openDiskCleanup}
-              className="bg-sparkle-card border border-sparkle-border px-4 py-2 rounded-xl hover:border-sparkle-primary transition text-sparkle-text"
-            >
-              Open Disk Cleanup
-            </button>
-            <button
-              onClick={openSystemInfo}
-              className="bg-sparkle-card border border-sparkle-border px-4 py-2 rounded-xl hover:border-sparkle-primary transition text-sparkle-text"
-            >
-              Open System Information
-            </button>
+          <h2 className="text-xl font-semibold mb-2 text-sparkle-text-secondary">Quick Access</h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {quickAccess.map((tool) => (
+              <button
+                key={tool.name}
+                onClick={() => openQuickAccessTool(tool.command)}
+                className="inline-flex items-center gap-2 px-3 py-3.5 text-sm bg-sparkle-card border border-sparkle-border rounded-xl hover:border-sparkle-primary transition text-sparkle-text"
+              >
+                <SquareTerminal className="w-6 h-6 text-green-400" />
+                <span>Open {tool.name}</span>
+              </button>
+            ))}
           </div>
         </div>
 

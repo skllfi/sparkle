@@ -100,7 +100,9 @@ function Settings() {
         </div>
         <div className="mt-4 mb-4">
           <div className="flex items-center gap-4 bg-sparkle-card border border-sparkle-border rounded-lg p-4">
-            <span className="text-sparkle-text">Disable Posthog</span>
+            <span className="text-sparkle-text">
+              Disable Posthog <span className="text-yellow-500">(Sparkle restart required)</span>
+            </span>
             <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
               <input
                 type="checkbox"

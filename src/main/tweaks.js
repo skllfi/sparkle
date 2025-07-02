@@ -54,15 +54,12 @@ const tweaks = [
       `-DisableSuggestions ` +
       `-DisableLockscreenTips ` +
       `-RevertContextMenu ` +
-      `-TaskbarAlignLeft ` +
       `-HideSearchTb ` +
       `-DisableWidgets ` +
       `-DisableCopilot ` +
       `-ExplorerToThisPC ` +
-      `-ClearStartAllUsers ` +
       `-DisableDVR ` +
-      `-DisableStartRecommended ` +
-      `-DisableMouseAcceleration`
+      `-DisableStartRecommended `
   },
   {
     title: 'Disable Gamebar',
@@ -163,6 +160,26 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "SensorPermissionState" -Value 1 -Type DWord -Force
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack" -Name "Status" -Value 1 -Type DWord -Force
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" -Name "AutoUpdateEnabled" -Value 1 -Type DWord -Force
+    `
+  },
+  {
+    title: 'Enable Dark Mode',
+    name: 'enable-dark-mode',
+    category: ['General', 'Appearance'],
+    description: 'Enables dark mode for Windows. Great for unactivated systems',
+    psapply: `
+$Path = "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"
+Set-ItemProperty -Path $Path -Name AppsUseLightTheme -Value 0
+Set-ItemProperty -Path $Path -Name SystemUsesLightTheme -Value 0
+Stop-Process -Name explorer -Force
+Start-Process explorer.exe
+    `,
+    psunapply: `
+$Path = "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"
+Set-ItemProperty -Path $Path -Name AppsUseLightTheme -Value 1
+Set-ItemProperty -Path $Path -Name SystemUsesLightTheme -Value 1
+Stop-Process -Name explorer -Force
+Start-Process explorer.exe
     `
   },
   {

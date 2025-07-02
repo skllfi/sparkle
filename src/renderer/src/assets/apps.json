@@ -26,7 +26,7 @@
     },
     {
       "name": "Spotify (may not work)",
-      "id": "Spotify",
+      "id": "Spotify.Spotify",
       "warning": "This app may install properly as sparkle runs as admin. However Uninstalling will continue to work as normal.",
       "category": "multimedia",
       "info": "Listen to music and podcasts.",
@@ -72,6 +72,14 @@
       "info": "A code editor that runs on your computer.",
       "link": "https://code.visualstudio.com/",
       "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/2048px-Visual_Studio_Code_1.35_icon.svg.png"
+    },
+    {
+      "name": "Visual Studio Code Insiders",
+      "id": "Microsoft.VisualStudioCode.Insiders",
+      "category": "development",
+      "info": "A code editor that runs on your computer.",
+      "link": "https://code.visualstudio.com/insiders/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Visual_Studio_Code_Insiders_1.36_icon.svg/1200px-Visual_Studio_Code_Insiders_1.36_icon.svg.png"
     },
     {
       "name": "Visual Studio",
@@ -136,6 +144,14 @@
       "info": "A video conferencing app.",
       "link": "https://zoom.us/",
       "icon": "https://static.vecteezy.com/system/resources/previews/012/871/376/non_2x/zoom-logo-in-blue-colors-meetings-app-logotype-illustration-free-png.png"
+    },
+    {
+      "name": "Mircosoft Teams",
+      "id": "Microsoft.Teams",
+      "category": "communication",
+      "info": "A Microsoft video conferencing app.",
+      "link": "https://www.microsoft.com/en-us/microsoft-teams/group-chat-software",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Microsoft_Office_Teams_%282018%E2%80%93present%29.svg/1200px-Microsoft_Office_Teams_%282018%E2%80%93present%29.svg.png"
     },
     {
       "name": "Telegram Desktop",
@@ -326,11 +342,19 @@
       "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Notion-logo.svg/1200px-Notion-logo.svg.png"
     },
     {
+      "name": "Dropbox",
+      "id": "Dropbox.Dropbox",
+      "category": "productivity",
+      "info": "Organize all your team's content, tune out distractions, and get everyone coordinated with the world's first smart workspace.",
+      "link": "https://www.dropbox.com/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Dropbox_Icon.svg/1200px-Dropbox_Icon.svg.png"
+    },
+    {
       "name": "Microsoft Office",
       "id": "Microsoft.Office",
       "category": "productivity",
       "info": "All-in-one workspace for your notes, tasks, wikis, and databases.",
-      "link": "https://www.notion.so/",
+      "link": "https://www.office.com/",
       "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Microsoft_Office_logo_%282013%E2%80%932019%29.svg/1200px-Microsoft_Office_logo_%282013%E2%80%932019%29.svg.png"
     },
     {
@@ -339,7 +363,7 @@
       "category": "VPN",
       "info": "A Great VPN service.",
       "link": "https://surfshark.com/",
-      "icon": "https://static-00.iconduck.com/assets.00/surfshark-icon-2048x2048-cw5t9bgc.png"
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-zk_Mh-GULCT985gk0b-H8dGqBnXd8tavSA&s"
     },
     {
       "name": "Windscribe",
