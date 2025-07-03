@@ -1,0 +1,6 @@
+{
+  "title": "Disable Location Tracking",
+  "name": "disable-location-tracking",
+  "category": ["Privacy"],
+  "description": "Disables Windows location tracking"
+}

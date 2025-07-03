@@ -1,0 +1,6 @@
+{
+  "title": "Enable Dark Mode",
+  "name": "enable-dark-mode",
+  "category": ["General", "Appearance"],
+  "description": "Enables dark mode for Windows. Great for unactivated systems"
+}

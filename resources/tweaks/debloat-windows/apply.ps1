@@ -1,0 +1,15 @@
+& ([scriptblock]::Create((Invoke-RestMethod 'https://debloat.raphi.re/'))) `
+  -Silent `
+  -RemoveApps `
+  -RemoveGamingApps `
+  -DisableTelemetry `
+  -DisableBing `
+  -DisableSuggestions `
+  -DisableLockscreenTips `
+  -RevertContextMenu `
+  -HideSearchTb `
+  -DisableWidgets `
+  -DisableCopilot `
+  -ExplorerToThisPC `
+  -DisableDVR `
+  -DisableStartRecommended

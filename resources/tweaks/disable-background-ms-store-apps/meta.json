@@ -1,0 +1,6 @@
+{
+  "title": "Disable Background MS Store apps",
+  "name": "disable-background-ms-store-apps",
+  "category": ["Performance", "Privacy"],
+  "description": "Disables Microsoft Store apps from running in the background (from ctt)"
+}

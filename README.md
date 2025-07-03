@@ -52,15 +52,8 @@
 
   <h4>Adding New Tweaks</h4>
   <ul>
-    <li>Tweaks are located in <code>src/main/tweaks.js</code></li>
-    <li>Each tweak should include:
-      <ul>
-        <li>A clear description of what it does</li>
-        <li>Proper categorization (Performance, Privacy, etc.)</li>
-        <li>Reversible implementation when possible</li>
-        <li>Warning messages if the tweak might have side effects</li>
-      </ul>
-    </li>
+    <li>Tweaks are located in <code>resources/tweaks/</code></li>
+    <li>More info in <code>resources/tweaks/readme.md</code></li>
   </ul>
 
   <h4>Other Ways to Contribute</h4>
@@ -83,9 +76,8 @@
 
 </div>
 
-> [!IMPORTANT] 
+> [!IMPORTANT]
 > The version of sparkle in the repo is most likely newer than the latest release. expect bugs and unreleased features
-
 
 <ol>
   <li>
@@ -111,7 +103,6 @@ cd Sparkle</code></pre>
 </ol>
  <br/>
   <p align="center">Made with ❤️ by Parcoil</p>
-
 
 ## Star History
 

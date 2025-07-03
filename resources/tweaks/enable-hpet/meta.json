@@ -1,0 +1,7 @@
+{
+  "title": "Enable HPET (High Precision Event Timer)",
+  "name": "enable-hpet",
+  "category": ["Performance"],
+  "warning": "May increase input latency on some systems",
+  "description": "Forces use of the High Precision Event Timer (HPET), which can reduce stuttering and improve timing accuracy on some hardware."
+}

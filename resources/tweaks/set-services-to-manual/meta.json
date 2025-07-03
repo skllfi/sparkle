@@ -1,0 +1,6 @@
+{
+  "title": "Set Services to Manual",
+  "name": "set-services-to-manual",
+  "category": ["Performance"],
+  "description": "Sets various Windows services to Manual startup type to improve performance"
+}

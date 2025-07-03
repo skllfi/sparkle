@@ -1,0 +1,6 @@
+{
+  "title": "Disable Copilot",
+  "name": "disable-copilot",
+  "category": ["Performance", "Privacy"],
+  "description": "Removes Microsoft's Copilot feature. (will fail if copilot is not installed)"
+}

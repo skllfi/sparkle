@@ -1,0 +1,6 @@
+{
+  "title": "Disable Defender RTP",
+  "name": "disable-defender-rtp",
+  "category": ["Performance", "General"],
+  "description": "Disables Defender Real-time Protection"
+}

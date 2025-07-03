@@ -1,0 +1,8 @@
+{
+  "title": "Optimize Nvidia Settings",
+  "name": "optimize-nvidia-settings",
+  "modal": "You can revert these changes in the Nvidia control panel",
+  "reversible": false,
+  "category": ["Performance", "GPU"],
+  "description": "Changes Nvidia Control Panel settings to improve performance"
+}

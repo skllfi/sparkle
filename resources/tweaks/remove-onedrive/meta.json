@@ -1,0 +1,7 @@
+{
+  "title": "Remove OneDrive",
+  "name": "remove-onedrive",
+  "category": ["Performance", "General", "Privacy"],
+  "description": "Removes OneDrive from the system",
+  "modal": "This will remove OneDrive from your system. You can reinstall it later if needed. this also moves onedrive files to your home folder"
+}

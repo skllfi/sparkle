@@ -1,0 +1,6 @@
+{
+  "title": "Disable Wifi Sense",
+  "name": "disable-wifi-sense",
+  "category": ["Privacy", "Network", "General"],
+  "description": "Disables Wifi Sense to prevent sharing of Wi-Fi networks with contacts"
+}

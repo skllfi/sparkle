@@ -1,0 +1,6 @@
+{
+  "title": "Disable Fast Startup",
+  "name": "disable-fast-startup",
+  "category": ["Performance", "General"],
+  "description": "Disables Windows Fast Startup to improve system stability"
+}

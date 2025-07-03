@@ -1,0 +1,7 @@
+{
+  "title": "Optimize Network Settings",
+  "name": "optimize-network-settings",
+  "category": "Network",
+  "restart": true,
+  "description": "Changes various Windows settings to improve network latency and speeds"
+}

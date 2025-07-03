@@ -72,6 +72,10 @@
           "*.nip",
           "*.pow"
         ]
+      },
+      {
+        "from": "resources/tweaks",
+        "to": "tweaks"
       }
     ],
     "appId": "com.parcoil.sparkle",
