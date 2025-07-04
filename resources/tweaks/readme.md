@@ -35,3 +35,29 @@ the tweak must have a `meta.json` and may have the following properites:
 
 - **restart** (`bool`, optional)  
    Gives the user a message that a restart is required to finish applying the tweak.
+
+- **deep-description** (`string`, optional)  
+  Not in use currently but will be used to tell the user what the tweak does
+
+## Tweaks may have the following categories:
+
+- **General**
+  A General Tweak
+
+- **Appearance**
+  A Tweak that Changes Windows Appearance
+
+- **Performance**
+  A Tweak that Increases Windows/Gaming Performance
+
+- **Privacy**
+  A Tweak that Increases User Privacy
+
+- **Gaming**
+  A Tweak that Increases FPS or for example (sets unneeded services to manual or changes nvidia settings for best performance)
+
+- **Network**
+  A Tweak that Changes Network Settings
+
+- **GPU**
+  A Tweak that Changes GPU Related Settings

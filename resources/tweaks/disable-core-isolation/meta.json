@@ -1,7 +1,7 @@
 {
   "title": "Disable Core Isolation",
   "name": "disable-core-isolation",
-  "category": ["Performance"],
+  "category": ["Performance", "Gaming"],
   "restart": true,
   "description": "Disables Core Isolation Memory Integrity to improve system performance"
 }

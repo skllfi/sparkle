@@ -6,7 +6,6 @@
   -DisableBing `
   -DisableSuggestions `
   -DisableLockscreenTips `
-  -RevertContextMenu `
   -HideSearchTb `
   -DisableWidgets `
   -DisableCopilot `

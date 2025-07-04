@@ -19,7 +19,7 @@
   --color-border-secondary: #d1d5db;
   --color-primary: #2563eb;
   --color-secondary: #10b981;
-  --color-accent: #1f2937;
+  --color-accent: #d8dce2;
 }
 
 :root {
@@ -34,7 +34,7 @@
   --color-border-secondary: #1e293b;
   --color-primary: #3b82f6;
   --color-secondary: #34d399;
-  --color-accent: #2b323d;
+  --color-accent: #2e394b;
 }
 .purple {
   --color-bg: #1e1b2e;
@@ -62,7 +62,7 @@
   --color-border-secondary: #1a4730;
   --color-primary: #34d399;
   --color-secondary: #059669;
-  --color-accent: #1e2d23;
+  --color-accent: #34523e;
 }
 
 .gray {
@@ -77,7 +77,7 @@
   --color-border-secondary: #343536;
   --color-primary: #6366f1;
   --color-secondary: #818cf8;
-  --color-accent: #27292a;
+  --color-accent: #343535;
 }
 
 /* .theme-purple {

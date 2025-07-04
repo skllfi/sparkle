@@ -40,7 +40,7 @@ const Tooltip = ({ content, children, side = 'top', delay = 0.5 }) => {
             animate={{ opacity: 1, scale: 1, ...position }}
             exit={{ opacity: 0, scale: 0.95, ...position }}
             transition={{ duration: 0.15 }}
-            className="absolute z-50 px-2 py-1 text-xs font-medium bg-sparkle-accent text-slate-100 rounded-md shadow-lg border border-sparkle-border whitespace-nowrap"
+            className="absolute z-50 px-2 py-1 text-xs font-medium bg-sparkle-card text-sparkle-text rounded-md shadow-lg border border-sparkle-border whitespace-nowrap"
             style={{
               left: side === 'top' || side === 'bottom' ? '50%' : undefined,
               bottom: side === 'top' ? '100%' : undefined,

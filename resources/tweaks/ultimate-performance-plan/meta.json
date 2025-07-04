@@ -2,5 +2,6 @@
   "title": "Ultimate Performance Power Plan",
   "name": "ultimate-performance-plan",
   "description": "Enables And Applys The Windows Ultimate Powerplan for better performance",
-  "category": ["Performance"]
+  "recommended": true,
+  "category": ["Performance", "Gaming"]
 }

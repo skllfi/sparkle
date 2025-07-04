@@ -1,0 +1,6 @@
+{
+  "title": "Revert Context Menu",
+  "name": "revert-context-menu",
+  "category": ["General", "Appearance"],
+  "description": "Reverts the context menu to the default Windows 10 context menu."
+}

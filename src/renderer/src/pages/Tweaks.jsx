@@ -5,6 +5,7 @@ import {
   AlertTriangle,
   Monitor,
   Shield,
+  Gamepad,
   Network,
   Zap,
   Paintbrush
@@ -174,12 +175,20 @@ function Tweaks() {
     return matchesSearch && matchesCategory
   })
 
+  // sort this so recommended tweaks are at the top
+  const sortedTweaks = filteredTweaks.sort((a, b) => {
+    const aRec = !!a.recommended
+    const bRec = !!b.recommended
+    return bRec - aRec
+  })
+
   const categoryIcons = {
     Performance: <Zap className="w-4 h-4  text-yellow-400" />,
     GPU: <Monitor className="w-4 h-4 text-purple-400" />,
     Privacy: <Shield className="w-4 h-4 text-green-500" />,
     Network: <Network className="w-4 h-4 text-orange-400" />,
     Appearance: <Paintbrush className="w-4 h-4 text-sparkle-primary" />,
+    Gaming: <Gamepad className="w-4 h-4 text-teal-400" />,
     General: <Wrench className="w-4 h-4 text-blue-400" />
   }
 
@@ -290,8 +299,8 @@ function Tweaks() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
-          {filteredTweaks.length > 0 ? (
-            filteredTweaks.map((tweak, index) => {
+          {sortedTweaks.length > 0 ? (
+            sortedTweaks.map((tweak, index) => {
               const originalIndex = tweaks.indexOf(tweak)
               return (
                 <div
@@ -320,7 +329,7 @@ function Tweaks() {
                                 delay={0.3}
                                 side="right"
                               >
-                                <div className="p-1.5 bg-sparkle-accent rounded-lg hover:bg-sparkle-bg transition-colors">
+                                <div className="p-1.5 bg-sparkle-accent rounded-lg hover:bg-sparkle-bg transition-colors text-sparkle-text">
                                   {categoryIcons[cat] || categoryIcons['General']}
                                 </div>
                               </Tooltip>

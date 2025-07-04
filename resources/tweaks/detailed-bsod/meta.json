@@ -1,0 +1,6 @@
+{
+  "title": "Detailed BSOD",
+  "name": "detailed-bsod",
+  "category": ["General"],
+  "description": "Adds detailed information to the Blue Screen of Death (BSOD) screen"
+}
