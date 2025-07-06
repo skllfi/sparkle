@@ -377,7 +377,8 @@ function Tweaks() {
               <div className="bg-sparkle-card p-6 rounded-2xl mb-4">
                 <Search className="w-10 h-10 text-sparkle-text-secondary" />
               </div>
-              <h3 className="text-xl font-medium mb-2 text-sparkle-text">No tweaks found</h3>
+              <h3 className="text-xl font-medium mb-2 text-sparkle-text"> Loading Tweaks...</h3>
+              <h3 className="text-sm font-medium mb-2 text-sparkle-text-muted">No tweaks Found</h3>
               <p className="text-sparkle-text-secondary">Try adjusting your search or filters</p>
             </div>
           )}

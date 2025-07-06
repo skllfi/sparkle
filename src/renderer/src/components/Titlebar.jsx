@@ -6,7 +6,7 @@ function TitleBar() {
   return (
     <div
       style={{ WebkitAppRegion: 'drag' }}
-      className="h-[50px] fixed top-0 left-0 right-0  flex justify-between items-center pl-4 z-50 border-b border-sparkle-border-secondary"
+      className="h-[50px] fixed top-0 left-0 right-0  flex justify-between items-center pl-4 border-b border-sparkle-border-secondary"
     >
       <div className="flex items-center gap-3 border-r h-full w-48 border-sparkle-border-secondary pr-4">
         <img src={sparkleLogo} alt="Sparkle" className="h-5 w-5" />

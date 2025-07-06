@@ -1,22 +1,61 @@
+import { useEffect, useState } from 'react'
+import Modal from '@/components/ui/modal'
+import Button from './ui/button'
+import { toast } from 'react-toastify'
+import { invoke } from '@/lib/electron'
+import data from '../../../../package.json'
+
 function FirstTime() {
-  const handleGetStarted = () => {
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    const firstTime = localStorage.getItem('firstTime')
+    if (firstTime === null || firstTime === 'true') {
+      const timer = setTimeout(() => setOpen(true), 20)
+      return () => clearTimeout(timer)
+    }
+  }, [])
+
+  const handleGetStarted = async () => {
     localStorage.setItem('firstTime', 'false')
-    window.location.reload()
+    setOpen(false)
+    toast.warn('Creating restore point... Please wait before applying tweaks.')
+    try {
+      await invoke({ channel: 'create-sparkle-restore-point' })
+      toast.success('Restore point created!')
+    } catch (err) {
+      toast.error('Failed to create restore point.')
+      console.error('Error creating restore point:', err)
+    }
+  }
+  const handleNoRestorePoint = () => {
+    localStorage.setItem('firstTime', 'false')
+    setOpen(false)
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center ">
-      <div className="text-center p-8 max-w-md bg-slate-800 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-white mb-4">Welcome to Sparkle</h1>
-        <p className="text-gray-400">Your first time here? Let's get started!</p>
-        <button
-          className="mt-6 px-4 py-2 bg-sparkle-primary text-white rounded-lg hover:bg-sparkle-secondary transition duration-200"
-          onClick={handleGetStarted}
-        >
-          Get Started
-        </button>
+    <Modal open={open}>
+      <div className="bg-sparkle-card border border-sparkle-border rounded-2xl p-8 shadow-2xl max-w-lg w-full mx-4 flex flex-col items-center">
+        <h1 className="text-2xl font-semibold text-sparkle-text mb-3 text-center">
+          Welcome to Sparkle
+        </h1>
+        <p className="text-sparkle-text-secondary mb-8 text-center ">
+          It looks like this is your first time here. Would you like to create a restore point
+          before you start?
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
+          <Button className="" onClick={handleNoRestorePoint} variant="danger">
+            No (Not Recommended)
+          </Button>
+          <Button className="" onClick={handleGetStarted}>
+            Yes (Recommended)
+          </Button>
+        </div>
+        <p className="text-sparkle-text-secondary mt-4">
+          Sparkle Version: {data?.version || 'Error cant get version'}
+        </p>
       </div>
-    </div>
+    </Modal>
   )
 }
 

@@ -61,7 +61,6 @@ function Home() {
     return (
       <RootDiv>
         <div className="flex items-center justify-center h-64 flex-col gap-5">
-          <div className="text-sparkle-text-secondary">Loading system information...</div>
           <div className="">
             <div
               className="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-sparkle-primary rounded-full ml-3"
@@ -69,6 +68,10 @@ function Home() {
               aria-label="loading"
             ></div>
           </div>
+          <div className="text-sparkle-text-secondary">Loading system information...</div>
+          <p className="text-sm text-sparkle-primary">
+            You may use other parts of sparkle while this loads
+          </p>
         </div>
       </RootDiv>
     )
