@@ -25,17 +25,6 @@ autoUpdater.autoInstallOnAppQuit = true
 
 export const logo = '[Sparkle]:'
 
-function backupFolderSetup() {
-  const folderPath = path.join('C:', 'Sparkle', 'Backup')
-
-  if (!fs.existsSync(folderPath)) {
-    fs.mkdirSync(folderPath, { recursive: true })
-    console.log('Folder created at:', folderPath)
-  } else {
-    console.log('Folder already exists at:', folderPath)
-  }
-}
-
 async function Defender() {
   const Apppath = path.dirname(process.execPath)
   if (app.isPackaged) {
@@ -102,8 +91,6 @@ function createWindow() {
     mainWindow.show()
     createTray(mainWindow)
     Defender()
-
-    backupFolderSetup()
 
     autoUpdater.checkForUpdatesAndNotify().catch(console.error)
     setInterval(

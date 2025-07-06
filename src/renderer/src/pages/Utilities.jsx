@@ -6,6 +6,7 @@ import Modal from '@/components/ui/modal'
 import { toast } from 'react-toastify'
 import Button from '@/components/ui/button'
 import { SquareTerminal } from 'lucide-react'
+import Toggle from '@/components/ui/toggle'
 
 const utilities = [
   {
@@ -135,16 +136,7 @@ export default function UtilitiesPage() {
           ))}
         </div>
         <div className="flex flex-row gap-2 mt-3">
-          <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
-            <input
-              type="checkbox"
-              id="noExitToggle"
-              checked={noExit}
-              onChange={() => setNoExit(!noExit)}
-              className="sr-only peer"
-            />
-            <div className="w-11 h-6 bg-sparkle-border-secondary peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white  after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sparkle-primary"></div>
-          </label>
+          <Toggle checked={noExit} onChange={() => setNoExit(!noExit)} id="noExitToggle" />
           <p>Keep PowerShell window open after execution</p>
         </div>
 

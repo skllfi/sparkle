@@ -80,7 +80,7 @@ function Apps() {
 
   return (
     <RootDiv>
-      <div className="flex items-center gap-3 bg-sparkle-card border border-sparkle-border rounded-xl px-4 backdrop-blur-sm">
+      <div className="flex items-center gap-3 bg-sparkle-card border border-sparkle-border rounded-xl px-4 backdrop-blur-sm ml-1 mr-1">
         <Search className="text-sparkle-text-secondary" />
         <input
           type="text"
@@ -107,7 +107,7 @@ function Apps() {
         </div>
       </Modal>
 
-      <div className="flex gap-3 mt-5">
+      <div className="flex gap-3 mt-5 w-auto ml-1 mr-1">
         <Button
           className="text-sparkle-text flex gap-2"
           disabled={selectedApps.length === 0 || loading}

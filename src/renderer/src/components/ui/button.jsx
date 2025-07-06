@@ -18,7 +18,7 @@ const Button = ({
   ...props
 }) => {
   const base =
-    'flex items-center rounded-lg font-medium transition-colors duration-200 select-none focus:outline-none '
+    'flex items-center rounded-lg font-medium transition-all duration-200 select-none focus:outline-none hover:scale-105 active:scale-95'
 
   const variants = {
     primary:

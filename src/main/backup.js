@@ -3,6 +3,8 @@ import { ipcMain, shell } from 'electron'
 import fs from 'fs'
 import path from 'path'
 
+// all of this code will be removed in the future as this is being replaced with windows restore points.
+
 function getFormattedDate() {
   const date = new Date()
   const yyyy = date.getFullYear()
@@ -170,6 +172,20 @@ ipcMain.handle('create-sparkle-restore-point', async () => {
     exec(cmd, { windowsHide: true }, (err, stdout, stderr) => {
       if (err) return reject(stderr || err.message)
       resolve({ success: true, label })
+    })
+  })
+})
+
+ipcMain.handle('delete-old-sparkle-backups', async () => {
+  return new Promise((resolve, reject) => {
+    const sparkleRoot = `C:\\Sparkle`
+    if (!fs.existsSync(sparkleRoot)) {
+      return resolve({ success: true, message: 'Sparkle folder does not exist' })
+    }
+
+    fs.rm(sparkleRoot, { recursive: true, force: true }, (err) => {
+      if (err) return reject(err)
+      resolve({ success: true, message: 'Sparkle folder deleted' })
     })
   })
 })

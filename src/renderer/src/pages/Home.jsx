@@ -213,19 +213,17 @@ function Home() {
                 <Zap className="text-yellow-500" size={24} />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-sparkle-text mb-1">Optimizations</h2>
+                <h2 className="text-lg font-semibold text-sparkle-text mb-1">Tweaks</h2>
                 <p className="text-sparkle-text-secondary text-sm">System Tweaks Status</p>
               </div>
             </div>
             <div className="space-y-3">
               <div>
-                <p className="text-sparkle-text-secondary text-xs mb-1">Available Optimizations</p>
-                <p className="text-sparkle-text font-medium">
-                  {tweakInfo?.length || '0'} Optimizations
-                </p>
+                <p className="text-sparkle-text-secondary text-xs mb-1">Available Tweaks</p>
+                <p className="text-sparkle-text font-medium">{tweakInfo?.length || '0'} Tweaks</p>
               </div>
               <div>
-                <p className="text-sparkle-text-secondary text-xs mb-1">Active Optimizations</p>
+                <p className="text-sparkle-text-secondary text-xs mb-1">Active Tweaks</p>
                 <p className="text-sparkle-text font-medium">{activeTweaks || '0'} Active</p>
               </div>
             </div>
