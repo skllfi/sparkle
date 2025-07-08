@@ -10,6 +10,7 @@ import GithubIcon from './GithubIcon'
 import DiscordIcon from './Discordicon'
 import { Box } from 'lucide-react'
 import { Settings } from 'lucide-react'
+import { RefreshCw } from 'lucide-react'
 
 const tabIcons = {
   home: <Home size={20} />,
@@ -64,17 +65,21 @@ function Nav() {
           </button>
         ))}
       </div>
-      {needsRestart && (
-        <>
-          <div className="mx-3 mb-2    flex flex-col items-center gap-2 text-sm">
-            <div className="bg-red-600 text-sparkle-text rounded-lg p-3">
-              <span>System Restart required to apply changes</span>
-            </div>
-            <Button onClick={() => invoke({ channel: 'restart' })} className="w-full">
-              Restart Now
-            </Button>
-          </div>
-        </>
+      {true && (
+        <button
+          className={clsx(
+            'flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 border m-3',
+            'bg-sparkle-card text-sparkle-text border-sparkle-border-secondary hover:bg-sparkle-border-secondary hover:text-sparkle-text'
+          )}
+          onClick={() => invoke({ channel: 'restart' })}
+        >
+          <span
+            className="text-sm flex text-center items-center gap-2 text-yellow-300"
+            title="Restart Windows"
+          >
+            <RefreshCw size={16} /> Restart Now
+          </span>
+        </button>
       )}
       <div className="flex items-center justify-center gap-2 mt-4 mb-2">
         <a href="https://github.com/parcoil/sparkle" target="_blank">

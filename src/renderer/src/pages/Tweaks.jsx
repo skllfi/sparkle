@@ -285,7 +285,7 @@ function Tweaks() {
               {categories.map((category) => (
                 <button
                   key={category}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95  ${
                     activeCategory === category
                       ? 'bg-sparkle-primary text-white shadow-lg border border-sparkle-border'
                       : 'bg-sparkle-card/50 text-sparkle-text-secondary  hover:bg-sparkle-border border border-sparkle-border-secondary'
