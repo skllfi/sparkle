@@ -66,6 +66,7 @@ async function runPowerShellInWindow(event, { script, name = 'script', noExit = 
 }
 
 ipcMain.handle('run-powershell-window', runPowerShellInWindow)
+ipcMain.handle('run-powershell', executePowerShell)
 ipcMain.handle('handle-apps', async (event, { action, apps }) => {
   switch (action) {
     case 'install':
@@ -100,5 +101,3 @@ ipcMain.handle('handle-apps', async (event, { action, apps }) => {
       console.error(`Unknown action: ${action}`)
   }
 })
-
-ipcMain.handle('run-powershell', executePowerShell)

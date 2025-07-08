@@ -2,6 +2,8 @@ import os from 'os'
 import { ipcMain } from 'electron'
 import si from 'systeminformation'
 import { exec } from 'child_process'
+import fs from 'fs'
+import path from 'path'
 
 async function getSystemInfo() {
   try {
@@ -78,6 +80,33 @@ function restartSystem() {
   }
 }
 
-ipcMain.handle('restart', restartSystem)
+function clearSparkleCache() {
+  try {
+    const scriptsPath = path.join(
+      process.env.APPDATA || path.join(os.homedir(), 'AppData', 'Roaming'),
+      'sparkle',
+      'scripts'
+    )
+    if (fs.existsSync(scriptsPath)) {
+      const files = fs.readdirSync(scriptsPath)
+      for (const file of files) {
+        const filePath = path.join(scriptsPath, file)
+        if (fs.lstatSync(filePath).isFile()) {
+          fs.unlinkSync(filePath)
+        }
+      }
+      console.log('Sparkle scripts directory files cleared successfully.')
+      return { success: true }
+    } else {
+      console.warn('Sparkle scripts directory does not exist.')
+      return { success: false, error: 'Scripts directory does not exist.' }
+    }
+  } catch (error) {
+    console.error('Failed to clear Sparkle scripts directory:', error)
+    return { success: false, error: error.message }
+  }
+}
 
+ipcMain.handle('restart', restartSystem)
+ipcMain.handle('clear-sparkle-cache', clearSparkleCache)
 ipcMain.handle('get-system-info', getSystemInfo)

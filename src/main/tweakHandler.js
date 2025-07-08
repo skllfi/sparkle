@@ -4,6 +4,7 @@ import path from 'path'
 import { exec } from 'child_process'
 import { promisify } from 'util'
 import { logo } from './index'
+import { executePowerShell } from './powershell'
 
 const execPromise = promisify(exec)
 const userDataPath = app.getPath('userData')
@@ -86,24 +87,6 @@ const getNipPath = () => {
   return path.join(process.resourcesPath, 'sparklenvidia.nip')
 }
 
-async function runPowerShellScript(script, name) {
-  const tempDir = app.getPath('temp')
-  const tempFile = path.join(tempDir, `${name}-${Date.now()}.ps1`)
-
-  await fs.writeFile(tempFile, script)
-
-  const { stdout, stderr } = await execPromise(
-    `powershell -ExecutionPolicy Bypass -File "${tempFile}"`
-  )
-
-  await fs.unlink(tempFile).catch(console.error)
-
-  if (stderr) console.warn(`Warning running PowerShell for ${name}:`, stderr)
-  console.log(logo, `${name}:`, stdout)
-
-  return { success: true, output: stdout }
-}
-
 function NvidiaProfileInspector() {
   const exePath = getExePath('nvidiaProfileInspector.exe')
   const nipPath = getNipPath()
@@ -161,7 +144,7 @@ export const setupTweaksHandlers = () => {
       console.log(logo, 'Running Nvidia settings optimization...')
       NvidiaProfileInspector()
     } else {
-      return runPowerShellScript(tweak.psapply, name)
+      return executePowerShell(null, { script: tweak.psapply, name })
     }
   })
 
@@ -171,7 +154,7 @@ export const setupTweaksHandlers = () => {
     if (!tweak || !tweak.psunapply) {
       throw new Error(`No unapply script found for tweak: ${name}`)
     }
-    return runPowerShellScript(tweak.psunapply, name)
+    return executePowerShell(null, { script: tweak.psunapply, name })
   })
 
   ipcMain.handle('nvidia-inspector', (_, args) => {

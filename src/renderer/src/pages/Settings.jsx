@@ -5,6 +5,7 @@ import { invoke } from '@/lib/electron'
 import Button from '@/components/ui/button'
 import Modal from '@/components/ui/modal'
 import Toggle from '@/components/ui/toggle'
+import { toast } from 'react-toastify'
 
 const themes = [
   { label: 'Dark', value: '' },
@@ -154,13 +155,13 @@ function Settings() {
 
           <SettingSection title="Data Management">
             <SettingCard>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mb-4">
                 <div className="flex-1">
                   <h3 className="text-base font-medium text-sparkle-text mb-1">Legacy Backups</h3>
                   <p className="text-sm text-sparkle-text-secondary">
                     Remove old backup files stored in{' '}
                     <code className="bg-sparkle-border-secondary/20 px-1 py-0.5 rounded text-xs">
-                      C:\Sparkle
+                      C:\Sparkle\Backup
                     </code>
                   </p>
                 </div>
@@ -168,14 +169,27 @@ function Settings() {
                   Delete Backups
                 </Button>
               </div>
+              <div className="flex items-center justify-between mt-2">
+                <div className="flex-1">
+                  <h3 className="text-base font-medium text-sparkle-text mb-1">
+                    Clear Sparkle Cache
+                  </h3>
+                  <p className="text-sm text-sparkle-text-secondary">
+                    Remove temporary PowerShell files Sparkle may leave behind.
+                  </p>
+                </div>
+                <Button
+                  variant="secondary"
+                  onClick={async () => {
+                    await invoke({ channel: 'clear-sparkle-cache' })
+                    toast.success('Sparkle cache cleared successfully!')
+                  }}
+                >
+                  Clear Cache
+                </Button>
+              </div>
             </SettingCard>
           </SettingSection>
-
-          {/* <SettingCard className="border-dashed">
-            <div className="text-center py-1">
-              <p className="text-sparkle-text-secondary">More settings coming soon...</p>
-            </div>
-          </SettingCard> */}
 
           <SettingSection title="About">
             <SettingCard>
@@ -217,7 +231,7 @@ function Settings() {
                 Are you sure you want to delete all legacy registry backups? This will permanently
                 remove the{' '}
                 <code className="bg-sparkle-border-secondary/20 px-1 py-0.5 rounded text-xs">
-                  C:\Sparkle
+                  C:\Sparkle\Backup
                 </code>{' '}
                 folder and all its contents.
               </p>
