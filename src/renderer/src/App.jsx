@@ -11,6 +11,7 @@ import Clean from './pages/Clean'
 import Apps from './pages/Apps'
 import Utilities from './pages/Utilities'
 import Settings from './pages/Settings'
+import Backup from './pages/Backup'
 import FirstTime from './components/FirstTime'
 
 function App() {
@@ -50,7 +51,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/tweaks" element={<Tweaks />} />
                   <Route path="/clean" element={<Clean />} />
-                  {/* <Route path="/backup" element={<Backup />} /> */}
+                  <Route path="/backup" element={<Backup />} />
                   <Route path="/utilities" element={<Utilities />} />
                   <Route path="/apps" element={<Apps />} />{' '}
                   <Route path="/settings" element={<Settings />} />

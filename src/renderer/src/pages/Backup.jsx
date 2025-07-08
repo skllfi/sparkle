@@ -1,136 +1,100 @@
 import { useEffect, useState } from 'react'
-import {
-  FolderArchive,
-  RefreshCw,
-  PlusCircle,
-  Shield,
-  Clock,
-  FolderOpen,
-  Trash2,
-  RotateCcw,
-  Loader2,
-  X,
-  Search
-} from 'lucide-react'
+import { RefreshCw, PlusCircle, Shield, Clock, RotateCcw, Loader2, X, Search } from 'lucide-react'
 import RootDiv from '@/components/RootDiv'
 import { invoke } from '@/lib/electron'
 import Button from '@/components/ui/button'
 import Modal from '@/components/ui/modal'
 import { toast } from 'react-toastify'
+import { Trash } from 'lucide-react'
 
-export default function BackupManager() {
-  const [backups, setBackups] = useState([])
+export default function RestorePointManager() {
+  const [restorePoints, setRestorePoints] = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
   const [processing, setProcessing] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [modalState, setModalState] = useState({
     isOpen: false,
     type: null,
-    backup: null,
-    backupName: ''
+    restorePoint: null
   })
 
-  const fetchBackups = async () => {
+  const [customModalOpen, setCustomModalOpen] = useState(false)
+  const [customName, setCustomName] = useState('')
+
+  const fetchRestorePoints = async () => {
     setLoading(true)
     try {
-      const response = await invoke({ channel: 'get-backups' })
-      const sorted = response.sort((a, b) => new Date(b.creationTime) - new Date(a.creationTime))
-      setBackups(sorted)
-      setError(null)
+      const response = await invoke({ channel: 'get-restore-points' })
+      setRestorePoints(response.sort((a, b) => new Date(b.CreationTime) - new Date(a.CreationTime)))
     } catch (error) {
-      console.error('Error fetching backups:', error)
-      setError('Failed to load backups. Please try again.')
-      toast.error('Failed to load backups. Please try again.')
+      toast.error('Failed to load restore points.')
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    fetchBackups()
+    fetchRestorePoints()
   }, [])
 
-  const validateBackupName = (name) => {
-    if (!name.trim()) return 'Backup name cannot be empty'
-    if (name.length > 50) return 'Backup name cannot exceed 50 characters'
-    if (/[<>:"/\\|?*]/.test(name)) return 'Backup name contains invalid characters'
-    return null
-  }
-
-  const handleCreateBackup = async () => {
-    setModalState({ isOpen: true, type: 'create', backupName: '' })
-  }
-
-  const handleOpenFolder = async (backup) => {
-    try {
-      setProcessing(true)
-      await invoke({ channel: 'open-backup-folder', payload: backup.path })
-    } catch (err) {
-      console.error('Failed to open folder:', err)
-      toast.error('Failed to open backup folder')
-    }
-    setProcessing(false)
-  }
-
-  const handleRestoreBackup = async (backup) => {
-    setModalState({ isOpen: true, type: 'restore', backup })
-  }
-
-  const handleDeleteBackup = async (backup) => {
-    setModalState({ isOpen: true, type: 'delete', backup })
-  }
-
-  const executeBackupAction = async () => {
+  const handleCreateRestorePoint = async () => {
     setProcessing(true)
     try {
-      switch (modalState.type) {
-        case 'create':
-          const nameError = validateBackupName(modalState.backupName)
-          if (nameError) {
-            toast.error(nameError)
-            setProcessing(false)
-            return
-          }
-          await invoke({ channel: 'create-backup', payload: modalState.backupName })
-          await fetchBackups()
-          toast.success('Backup created successfully')
-          break
-        case 'restore':
-          const restoreResult = await invoke({
-            channel: 'restore-backup',
-            payload: modalState.backup.path
-          })
-          if (!restoreResult.success) {
-            throw new Error(restoreResult.error || 'Failed to restore backup')
-          }
-          await fetchBackups()
-          toast.success('Backup restored successfully')
-          break
-        case 'delete':
-          const deleteResult = await invoke({
-            channel: 'delete-backup',
-            payload: modalState.backup.path
-          })
-          if (!deleteResult.success) {
-            throw new Error(deleteResult.error || 'Failed to delete backup')
-          }
-          setBackups(backups.filter((b) => b.path !== modalState.backup.path))
-          toast.success('Backup deleted successfully')
-          break
-      }
+      await invoke({ channel: 'create-sparkle-restore-point' })
+      toast.success('Restore point created!')
+      await fetchRestorePoints()
     } catch (err) {
-      console.error(`Failed to ${modalState.type} backup:`, err)
-      toast.error(`Failed to ${modalState.type} backup: ${err.message || 'Please try again.'}`)
+      toast.error('Failed to create restore point.')
     }
     setProcessing(false)
-    setModalState({ isOpen: false, type: null, backup: null, backupName: '' })
   }
 
-  const filteredBackups = backups.filter(
-    (backup) =>
-      backup.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      backup.description.toLowerCase().includes(searchQuery.toLowerCase())
+  const handleRestore = (restorePoint) => {
+    setModalState({ isOpen: true, type: 'restore', restorePoint })
+  }
+
+  const executeRestore = async () => {
+    setProcessing(true)
+    try {
+      await invoke({
+        channel: 'restore-restore-point',
+        payload: modalState.restorePoint.SequenceNumber
+      })
+      toast.success('System restore started. Your PC may restart.')
+    } catch (err) {
+      toast.error('Failed to start system restore.')
+    }
+    setProcessing(false)
+    setModalState({ isOpen: false, type: null, restorePoint: null })
+  }
+
+  const handleCustomRestorePoint = async () => {
+    setProcessing(true)
+    try {
+      if (!customName.trim()) {
+        toast.error('Please enter a name for the restore point.')
+        setProcessing(false)
+        return
+      }
+      await invoke({ channel: 'create-restore-point', payload: customName })
+      toast.success('Restore point created!')
+      setCustomModalOpen(false)
+      setCustomName('')
+      await fetchRestorePoints()
+    } catch (err) {
+      toast.error('Failed to create restore point.')
+    }
+    setProcessing(false)
+  }
+  const handleDeleteAll = async () => {
+    setProcessing(true)
+    await invoke({ channel: 'delete-all-restore-points' })
+    toast.success('All restore points deleted successfully.')
+    setProcessing(false)
+    await fetchRestorePoints()
+  }
+  const filteredRestorePoints = restorePoints.filter((rp) =>
+    (rp.Description || '').toLowerCase().includes(searchQuery.toLowerCase())
   )
 
   const formatDate = (dateString) => {
@@ -150,107 +114,62 @@ export default function BackupManager() {
     })
   }
 
-  const getModalContent = () => {
-    switch (modalState.type) {
-      case 'create':
-        return {
-          title: 'Create Backup',
-          message: 'Enter a name for your backup:',
-          confirmText: 'Create Backup',
-          variant: 'primary',
-          showInput: true
-        }
-      case 'restore':
-        return {
-          title: 'Restore Backup',
-          message: `Are you sure you want to restore the backup "${modalState.backup.name}" from ${formatDate(modalState.backup.creationTime)}? Current settings will be replaced.`,
-          confirmText: 'Restore Backup',
-          variant: 'primary'
-        }
-      case 'delete':
-        return {
-          title: 'Delete Backup',
-          message: `Are you sure you want to delete the backup "${modalState.backup.name}" from ${formatDate(modalState.backup.creationTime)}? This action cannot be undone.`,
-          confirmText: 'Delete Backup',
-          variant: 'danger'
-        }
-      default:
-        return null
-    }
-  }
-
-  const modalContent = getModalContent()
-
   return (
     <RootDiv>
-      <div className="h-full max-w-full p-4">
+      <div className="h-full max-w-full">
         <div className="flex items-center justify-between mb-4">
-          <div className="relative w-64">
+          <div className="relative w-64 mt-1 ml-1">
             <Search
               className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sparkle-text-secondary"
               size={16}
             />
             <input
               type="text"
-              placeholder="Search backups..."
+              placeholder="Search Restore Points..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2 bg-sparkle-card border border-sparkle-border rounded-lg text-sparkle-text placeholder-sparkle-text-secondary focus:outline-none focus:ring-2 focus:ring-sparkle-primary focus:border-transparent transition-colors"
             />
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 mr-1">
+            <Button
+              variant="danger"
+              onClick={handleDeleteAll}
+              disabled={loading || processing}
+              className="flex items-center gap-2"
+            >
+              <Trash size={16} />
+              Delete All
+            </Button>
             <Button
               variant="secondary"
-              icon={<RefreshCw size={16} />}
-              onClick={fetchBackups}
+              onClick={fetchRestorePoints}
+              className="flex items-center gap-2"
               disabled={loading || processing}
             >
+              <RefreshCw size={16} />
               Refresh
             </Button>
-
             <Button
               variant="primary"
-              icon={
-                processing ? (
-                  <Loader2 size={16} className="animate-spin" />
-                ) : (
-                  <PlusCircle size={16} />
-                )
-              }
-              onClick={handleCreateBackup}
+              onClick={handleCreateRestorePoint}
+              className="flex items-center gap-2"
               disabled={loading || processing}
             >
-              Create Backup
+              {processing ? (
+                <Loader2 size={16} className="animate-spin" />
+              ) : (
+                <PlusCircle size={16} />
+              )}
+              Quick Restore Point
             </Button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          {' '}
-          <div className="bg-sparkle-card border border-sparkle-border rounded-lg p-3">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-sparkle-primary/20 rounded-lg">
-                <Shield className="text-sparkle-primary" size={20} />
-              </div>
-              <div>
-                <p className="text-xs text-sparkle-text-secondary">Total Backups</p>
-                <p className="text-lg font-medium text-sparkle-text">{backups.length}</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-sparkle-card border border-sparkle-border rounded-lg p-3">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-sparkle-primary/20 rounded-lg">
-                <Clock className="text-sparkle-primary" size={20} />
-              </div>
-              <div>
-                {' '}
-                <p className="text-xs text-sparkle-text-secondary">Latest Backup</p>
-                <p className="text-lg font-medium text-sparkle-text">
-                  {backups[0] ? formatDate(backups[0].creationTime) : 'None'}
-                </p>
-              </div>
-            </div>
+            <Button
+              variant="primary"
+              onClick={() => setCustomModalOpen(true)}
+              disabled={loading || processing}
+            >
+              Custom Restore Point
+            </Button>
           </div>
         </div>
 
@@ -258,34 +177,25 @@ export default function BackupManager() {
           <div className="flex items-center justify-center h-96">
             <Loader2 size={32} className="text-sparkle-primary animate-spin" />
           </div>
-        ) : error ? (
-          <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-lg">
-            <p className="text-center">{error}</p>
-            <div className="flex justify-center mt-3">
-              <Button variant="secondary" onClick={fetchBackups}>
-                Try Again
-              </Button>
-            </div>
-          </div>
-        ) : filteredBackups.length === 0 ? (
+        ) : filteredRestorePoints.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center bg-sparkle-card border border-sparkle-border rounded-lg">
             <div className="p-4 bg-sparkle-secondary rounded-full mb-4">
-              <FolderArchive size={28} className="text-sparkle-text" />
+              <Shield size={28} className="text-sparkle-text" />
             </div>
-            <h3 className="text-lg font-medium mb-2 text-sparkle-text">No Backups Found</h3>
+            <h3 className="text-lg font-medium mb-2 text-sparkle-text">No Restore Points Found</h3>
             <p className="text-sparkle-text-secondary max-w-sm mb-4">
               {searchQuery
-                ? 'No backups match your search.'
-                : 'Create a backup to preserve your system state. You can restore your system to any backup point when needed.'}
+                ? 'No restore points match your search.'
+                : 'Create a restore point to preserve your system state. You can restore your system to any point when needed.'}
             </p>
             {!searchQuery && (
               <Button
                 variant="primary"
                 icon={<PlusCircle size={16} />}
-                onClick={handleCreateBackup}
+                onClick={handleCreateRestorePoint}
                 disabled={processing}
               >
-                Create Your First Backup
+                Create a Quick Restore Point
               </Button>
             )}
           </div>
@@ -295,65 +205,28 @@ export default function BackupManager() {
               <table className="w-full text-sm text-left">
                 <thead className="text-xs text-sparkle-text-secondary uppercase bg-sparkle-card sticky top-0">
                   <tr>
-                    <th scope="col" className="px-4 py-3">
-                      Name
-                    </th>
-                    <th scope="col" className="px-4 py-3">
+                    <th scope="col" className="px-6 py-4">
                       Description
                     </th>
-                    <th scope="col" className="px-4 py-3 w-36">
-                      Date
-                    </th>
-                    <th scope="col" className="px-4 py-3 w-28">
-                      Time
-                    </th>
-                    <th scope="col" className="px-4 py-3 w-32 text-right">
+                    <th scope="col" className="px-6 py-4 w-32 text-center">
                       Actions
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredBackups.map((backup, index) => (
-                    <tr
-                      key={index}
-                      className={`border-t border-sparkle-border ${index % 2 === 0 ? 'bg-sparkle-card' : 'bg-sparkle-card'}`}
-                    >
-                      <td className="px-4 py-3 font-medium text-sparkle-text">{backup.name}</td>
-                      <td className="px-4 py-3 text-sparkle-text">{backup.description}</td>
-                      <td className="px-4 py-3 text-sparkle-text">
-                        {formatDate(backup.creationTime)}
-                      </td>
-                      <td className="px-4 py-3 text-sparkle-text">
-                        {formatTime(backup.creationTime)}
-                      </td>
-                      <td className="px-4 py-3 text-right">
-                        <div className="flex justify-end gap-1">
+                  {filteredRestorePoints.map((rp, index) => (
+                    <tr key={index} className={`border-t border-sparkle-border`}>
+                      <td className="px-6 py-4 font-medium text-sparkle-text">{rp.Description}</td>
+                      <td className="px-6 py-4 text-center">
+                        <div className="flex justify-center">
                           <Button
                             variant="ghost"
-                            className="!p-1.5"
-                            onClick={() => handleRestoreBackup(backup)}
+                            className="!p-2"
+                            onClick={() => handleRestore(rp)}
                             disabled={processing}
-                            title="Restore Backup"
+                            title="Restore System"
                           >
                             <RotateCcw size={16} className="text-sparkle-primary" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            className="!p-1.5"
-                            onClick={() => handleOpenFolder(backup)}
-                            disabled={processing}
-                            title="Open Backup Folder"
-                          >
-                            <FolderOpen size={16} className="text-sparkle-primary" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            className="!p-1.5"
-                            onClick={() => handleDeleteBackup(backup)}
-                            disabled={processing}
-                            title="Delete Backup"
-                          >
-                            <Trash2 size={16} className="text-red-400" />
                           </Button>
                         </div>
                       </td>
@@ -365,21 +238,19 @@ export default function BackupManager() {
           </div>
         )}
       </div>
-
       <Modal
         open={modalState.isOpen}
         onClose={() =>
-          !processing && setModalState({ isOpen: false, type: null, backup: null, backupName: '' })
+          !processing && setModalState({ isOpen: false, type: null, restorePoint: null })
         }
       >
-        {modalContent && (
+        {modalState.type === 'restore' && (
           <div className="w-[400px] bg-sparkle-bg border border-sparkle-border rounded-xl shadow-xl">
             <div className="flex items-center justify-between p-4 border-b border-sparkle-border">
-              <h3 className="text-lg font-medium text-sparkle-text">{modalContent.title}</h3>
+              <h3 className="text-lg font-medium text-sparkle-text">Restore System</h3>
               <button
                 onClick={() =>
-                  !processing &&
-                  setModalState({ isOpen: false, type: null, backup: null, backupName: '' })
+                  !processing && setModalState({ isOpen: false, type: null, restorePoint: null })
                 }
                 className={`text-sparkle-text-secondary transition-colors ${processing ? 'opacity-50 cursor-not-allowed' : 'hover:text-sparkle-text'}`}
                 disabled={processing}
@@ -388,47 +259,89 @@ export default function BackupManager() {
               </button>
             </div>
             <div className="p-4">
-              <p className="text-sparkle-text mb-4">{modalContent.message}</p>
-              {modalContent.showInput && (
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    value={modalState.backupName}
-                    onChange={(e) =>
-                      setModalState((prev) => ({ ...prev, backupName: e.target.value }))
-                    }
-                    placeholder="Enter backup name"
-                    className="w-full px-3 py-2 bg-sparkle-card border border-sparkle-border rounded-lg text-sparkle-text placeholder-sparkle-text-secondary focus:outline-none focus:ring-2 focus:ring-sparkle-primary focus:border-transparent transition-colors"
-                    disabled={processing}
-                  />
-                </div>
-              )}
+              <p className="text-sparkle-text mb-4">
+                Are you sure you want to restore your system to "
+                {modalState.restorePoint.Description}" from{' '}
+                {formatDate(modalState.restorePoint.CreationTime)}? Your PC may restart.
+              </p>
               <div className="flex justify-end gap-3">
                 <Button
                   variant="secondary"
                   onClick={() =>
-                    !processing &&
-                    setModalState({ isOpen: false, type: null, backup: null, backupName: '' })
+                    !processing && setModalState({ isOpen: false, type: null, restorePoint: null })
                   }
                   disabled={processing}
                 >
                   Cancel
                 </Button>
-                <Button
-                  variant={modalContent.variant}
-                  onClick={executeBackupAction}
-                  disabled={processing || (modalContent.showInput && !modalState.backupName.trim())}
-                >
-                  {processing ? (
-                    <Loader2 size={16} className="animate-spin" />
-                  ) : (
-                    modalContent.confirmText
-                  )}
+                <Button variant="primary" onClick={executeRestore} disabled={processing}>
+                  {processing ? <Loader2 size={16} className="animate-spin" /> : 'Restore'}
                 </Button>
               </div>
             </div>
           </div>
         )}
+      </Modal>
+      <Modal
+        open={customModalOpen}
+        onClose={() => {
+          if (!processing) {
+            setCustomModalOpen(false)
+            setCustomName('')
+          }
+        }}
+      >
+        <div className="w-[400px] bg-sparkle-bg border border-sparkle-border rounded-xl shadow-xl">
+          <div className="flex items-center justify-between p-4 border-b border-sparkle-border">
+            <h3 className="text-lg font-medium text-sparkle-text">Create Custom Restore Point</h3>
+            <button
+              onClick={() => {
+                if (!processing) {
+                  setCustomModalOpen(false)
+                  setCustomName('')
+                }
+              }}
+              className={`text-sparkle-text-secondary transition-colors ${processing ? 'opacity-50 cursor-not-allowed' : 'hover:text-sparkle-text'}`}
+              disabled={processing}
+            >
+              <X size={20} />
+            </button>
+          </div>
+          <div className="p-4">
+            <input
+              type="text"
+              value={customName}
+              onChange={(e) => setCustomName(e.target.value)}
+              placeholder="Enter restore point name"
+              className="w-full px-3 py-2 bg-sparkle-card border border-sparkle-border rounded-lg text-sparkle-text placeholder-sparkle-text-secondary focus:outline-none focus:ring-2 focus:ring-sparkle-primary focus:border-transparent transition-colors mb-4"
+              disabled={processing}
+            />
+            <div className="flex justify-end gap-3">
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  if (!processing) {
+                    setCustomModalOpen(false)
+                    setCustomName('')
+                  }
+                }}
+                disabled={processing}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                onClick={handleCustomRestorePoint}
+                disabled={processing || !customName.trim()}
+              >
+                {processing ? <Loader2 size={16} className="animate-spin" /> : 'Create'}
+              </Button>
+            </div>
+            <p className="text-sm text-center mt-3 text-sparkle-text-muted">
+              This may take a while depending on your hardware
+            </p>
+          </div>
+        </div>
       </Modal>
     </RootDiv>
   )

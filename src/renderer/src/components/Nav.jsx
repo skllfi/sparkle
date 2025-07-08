@@ -15,7 +15,7 @@ const tabIcons = {
   home: <Home size={20} />,
   tweaks: <Wrench size={20} />,
   clean: <Icon iconNode={broom} size={20} />,
-  // backup: <Folder size={20} />,
+  backup: <Folder size={20} />,
   utilities: <Box size={20} />,
   apps: <LayoutGrid size={20} />,
   settings: <Settings size={20} />
@@ -25,7 +25,7 @@ const tabs = {
   home: { label: 'Dashboard', path: '/' },
   tweaks: { label: 'Tweaks', path: '/tweaks' },
   clean: { label: 'Cleaner', path: '/clean' },
-  // backup: { label: 'Backup', path: '/backup' },
+  backup: { label: 'Restore Points', path: '/backup' },
   utilities: { label: 'Utilities', path: '/utilities' },
   apps: { label: 'Apps', path: '/apps' },
   settings: { label: 'Settings', path: '/settings' }
