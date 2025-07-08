@@ -65,7 +65,7 @@ function Nav() {
           </button>
         ))}
       </div>
-      {true && (
+      {needsRestart && (
         <button
           className={clsx(
             'flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 border m-3',
