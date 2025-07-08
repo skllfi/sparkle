@@ -262,7 +262,8 @@ export default function RestorePointManager() {
               <p className="text-sparkle-text mb-4">
                 Are you sure you want to restore your system to "
                 {modalState.restorePoint.Description}" from{' '}
-                {formatDate(modalState.restorePoint.CreationTime)}? Your PC may restart.
+                {formatDate(modalState.restorePoint.CreationTime)}? Your PC will restart shortly
+                please wait.
               </p>
               <div className="flex justify-end gap-3">
                 <Button
