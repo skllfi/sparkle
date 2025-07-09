@@ -144,3 +144,7 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: theme('colors.slate.600');
 }
+button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
