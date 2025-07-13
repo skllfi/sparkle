@@ -148,6 +148,43 @@ function Tweaks() {
     }
   }
 
+  const applyNonReversibleTweak = async (tweak, index) => {
+    const newStates = {
+      ...toggleStates,
+      [tweak.name]: true
+    }
+
+    setToggleStates(newStates)
+
+    const loadingToastId = toast.loading(`Applying tweak: ${tweak.title}`)
+
+    try {
+      await saveToggleStates(newStates)
+      await invoke({
+        channel: 'tweak:apply',
+        payload: tweak.name
+      })
+      incrementTweaks()
+      if (tweak.restart) {
+        setNeedsRestart(true)
+      }
+      toast.update(loadingToastId, {
+        render: `Applied tweak: ${tweak.title}`,
+        type: 'success',
+        isLoading: false,
+        autoClose: 3000
+      })
+    } catch (error) {
+      console.error(`Error applying tweak ${tweak.title}:`, error)
+      toast.update(loadingToastId, {
+        render: `Failed to apply tweak: ${tweak.title}`,
+        type: 'error',
+        isLoading: false,
+        autoClose: 3000
+      })
+    }
+  }
+
   const handleToggle = async (index) => {
     const tweak = tweaks[index]
 
@@ -159,6 +196,19 @@ function Tweaks() {
     }
 
     await applyTweak(tweak, index)
+  }
+
+  const handleButtonClick = async (index) => {
+    const tweak = tweaks[index]
+
+    if (tweak.modal) {
+      setSelectedTweak(tweak)
+      setModalContent(tweak.modal)
+      setIsModalOpen(true)
+      return
+    }
+
+    await applyNonReversibleTweak(tweak, index)
   }
 
   const categories = ['All', ...new Set(tweaks.flatMap((t) => t.category || []).filter(Boolean))]
@@ -348,10 +398,10 @@ function Tweaks() {
                         ) : (
                           <div>
                             <Button
-                              onClick={() => handleToggle(originalIndex)}
-                              disabled={toggleStates[tweak.name] || false}
+                              onClick={() => handleButtonClick(originalIndex)}
+                              disabled={false}
                             >
-                              {toggleStates[tweak.name] ? 'Applied' : 'Apply'}
+                              Apply
                             </Button>
                           </div>
                         )}

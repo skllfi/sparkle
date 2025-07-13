@@ -50,7 +50,7 @@ async function runPowerShellInWindow(event, { script, name = 'script', noExit = 
     const tempFile = path.join(tempDir, `${name}-${Date.now()}.ps1`)
     await fsp.writeFile(tempFile, script)
     const noExitFlag = noExit ? '-NoExit' : ''
-    const command = `start powershell.exe ${noExitFlag} -File "${tempFile}"`
+    const command = `start powershell.exe ${noExitFlag} -ExecutionPolicy Bypass -File "${tempFile}"`
 
     exec(command, (error) => {
       if (error) {

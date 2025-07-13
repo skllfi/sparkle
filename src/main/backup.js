@@ -1,10 +1,10 @@
 import { exec } from 'child_process'
 import { ipcMain } from 'electron'
-
+import fs from 'fs'
 function runPowerShell(cmd) {
   return new Promise((resolve, reject) => {
     exec(
-      `powershell -NoProfile -Command "${cmd}"`,
+      `powershell -NoProfile -ExecutionPolicy Bypass -Command "${cmd}"`,
       { windowsHide: true },
       (err, stdout, stderr) => {
         if (err) return reject(stderr || err.message)
@@ -14,7 +14,13 @@ function runPowerShell(cmd) {
   })
 }
 
-ipcMain.handle('create-sparkle-restore-point', async () => {
+function changeRestorePointCooldown() {
+  return runPowerShell(
+    'New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\SystemRestore" -Name "SystemRestorePointCreationFrequency" -Value 0 -PropertyType DWord -Force'
+  )
+}
+
+function getTimestamp() {
   const date = new Date()
   const yyyy = date.getFullYear()
   const mm = String(date.getMonth() + 1).padStart(2, '0')
@@ -22,27 +28,36 @@ ipcMain.handle('create-sparkle-restore-point', async () => {
   const hh = String(date.getHours()).padStart(2, '0')
   const mi = String(date.getMinutes()).padStart(2, '0')
   const ss = String(date.getSeconds()).padStart(2, '0')
-  const label = `SparkleBackup-${yyyy}-${mm}-${dd}_${hh}-${mi}-${ss}`
-  await runPowerShell(`Checkpoint-Computer -Description '${label}'`)
-  return { success: true, label }
+  return `${yyyy}-${mm}-${dd}_${hh}-${mi}-${ss}`
+}
+
+ipcMain.handle('create-sparkle-restore-point', async () => {
+  const label = `SparkleBackup-${getTimestamp()}`
+  try {
+    await changeRestorePointCooldown()
+    await runPowerShell(`Checkpoint-Computer -Description '${label}'`)
+    return { success: true, label }
+  } catch (error) {
+    console.error(error)
+    return { success: false, error: error.message }
+  }
 })
 
 ipcMain.handle('create-restore-point', async (_, name) => {
-  const date = new Date()
-  const yyyy = date.getFullYear()
-  const mm = String(date.getMonth() + 1).padStart(2, '0')
-  const dd = String(date.getDate()).padStart(2, '0')
-  const hh = String(date.getHours()).padStart(2, '0')
-  const mi = String(date.getMinutes()).padStart(2, '0')
-  const ss = String(date.getSeconds()).padStart(2, '0')
-  const label = name
-    ? `${name}-${yyyy}-${mm}-${dd}_${hh}-${mi}-${ss}`
-    : `ManualRestore-${yyyy}-${mm}-${dd}_${hh}-${mi}-${ss}`
-  await runPowerShell(`Checkpoint-Computer -Description '${label}'`)
-  return { success: true, label }
+  try {
+    const label = name ? `${name}-${getTimestamp()}` : `ManualRestore-${getTimestamp()}`
+    await changeRestorePointCooldown()
+    await runPowerShell(`Checkpoint-Computer -Description '${label}'`)
+    return { success: true, label }
+  } catch (error) {
+    console.error(error)
+    return { success: false, error: error.message }
+  }
 })
+
 ipcMain.handle('delete-all-restore-points', async (_, sequenceNumber) => {
   try {
+    await changeRestorePointCooldown()
     await runPowerShell(`vssadmin delete shadows /all /quiet`)
     return { success: true }
   } catch (error) {
@@ -52,22 +67,34 @@ ipcMain.handle('delete-all-restore-points', async (_, sequenceNumber) => {
 })
 
 ipcMain.handle('get-restore-points', async () => {
-  const output = await runPowerShell(
-    'Get-ComputerRestorePoint | Select-Object SequenceNumber, Description, CreationTime, EventType, RestorePointType | ConvertTo-Json'
-  )
-  let points = []
   try {
-    points = JSON.parse(output)
-    if (!Array.isArray(points)) points = [points]
-  } catch (e) {
-    points = []
+    await changeRestorePointCooldown()
+    const output = await runPowerShell(
+      'Get-ComputerRestorePoint | Select-Object SequenceNumber, Description, CreationTime, EventType, RestorePointType | ConvertTo-Json'
+    )
+    let points = []
+    try {
+      points = JSON.parse(output)
+      if (!Array.isArray(points)) points = [points]
+    } catch {
+      points = []
+    }
+    return { success: true, points }
+  } catch (error) {
+    console.error(error)
+    return { success: false, error: error.message }
   }
-  return points
 })
 
 ipcMain.handle('restore-restore-point', async (_, sequenceNumber) => {
-  await runPowerShell(`Restore-Computer -RestorePoint ${sequenceNumber}`)
-  return { success: true }
+  try {
+    await changeRestorePointCooldown()
+    await runPowerShell(`Restore-Computer -RestorePoint ${sequenceNumber}`)
+    return { success: true }
+  } catch (error) {
+    console.error(error)
+    return { success: false, error: error.message }
+  }
 })
 
 ipcMain.handle('delete-old-sparkle-backups', async () => {

@@ -39,20 +39,26 @@ function FirstTime() {
         <h1 className="text-2xl font-semibold text-sparkle-text mb-3 text-center">
           Welcome to Sparkle
         </h1>
-        <p className="text-sparkle-text-secondary mb-8 text-center ">
-          It looks like this is your first time here. Would you like to create a restore point
-          before you start?
+        <p className="text-sparkle-text-secondary mb-8 text-center">
+          It looks like this is your first time here.
+          <br />
+          <br />
+          Would you like to create a restore point before you start?
+          <br />
+          <span className="font-medium">
+            By clicking yes, Sparkle will create a restore point for you and disable the cooldown
+            for creating restore points.
+          </span>
         </p>
         <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
-          <Button className="" onClick={handleNoRestorePoint} variant="danger">
+          <Button onClick={handleNoRestorePoint} variant="danger">
             No (Not Recommended)
           </Button>
-          <Button className="" onClick={handleGetStarted}>
-            Yes (Recommended)
-          </Button>
+          <Button onClick={handleGetStarted}>Yes (Recommended)</Button>
         </div>
-        <p className="text-sparkle-text-secondary mt-4">
-          Sparkle Version: {data?.version || 'Error cant get version'}
+        <p className="text-sparkle-text-secondary mt-2 text-sm">
+          <span className="font-semibold">Sparkle Version:</span>{' '}
+          {data?.version || "Error can't get version"}
         </p>
       </div>
     </Modal>
