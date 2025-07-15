@@ -1,6 +1,7 @@
 import { exec } from 'child_process'
 import { ipcMain } from 'electron'
 import fs from 'fs'
+
 function runPowerShell(cmd) {
   return new Promise((resolve, reject) => {
     exec(
@@ -16,7 +17,7 @@ function runPowerShell(cmd) {
 
 function changeRestorePointCooldown() {
   return runPowerShell(
-    'New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\SystemRestore" -Name "SystemRestorePointCreationFrequency" -Value 0 -PropertyType DWord -Force'
+    "New-ItemProperty -Path 'HKLM:\\Software\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore' -Name 'SystemRestorePointCreationFrequency' -Value 0 -PropertyType DWord -Force"
   )
 }
 
@@ -34,8 +35,8 @@ function getTimestamp() {
 ipcMain.handle('create-sparkle-restore-point', async () => {
   const label = `SparkleBackup-${getTimestamp()}`
   try {
-    await changeRestorePointCooldown()
     await runPowerShell(`Checkpoint-Computer -Description '${label}'`)
+    await changeRestorePointCooldown()
     return { success: true, label }
   } catch (error) {
     console.error(error)
@@ -46,8 +47,9 @@ ipcMain.handle('create-sparkle-restore-point', async () => {
 ipcMain.handle('create-restore-point', async (_, name) => {
   try {
     const label = name ? `${name}-${getTimestamp()}` : `ManualRestore-${getTimestamp()}`
-    await changeRestorePointCooldown()
+
     await runPowerShell(`Checkpoint-Computer -Description '${label}'`)
+    await changeRestorePointCooldown()
     return { success: true, label }
   } catch (error) {
     console.error(error)
@@ -57,8 +59,8 @@ ipcMain.handle('create-restore-point', async (_, name) => {
 
 ipcMain.handle('delete-all-restore-points', async (_, sequenceNumber) => {
   try {
-    await changeRestorePointCooldown()
     await runPowerShell(`vssadmin delete shadows /all /quiet`)
+    await changeRestorePointCooldown()
     return { success: true }
   } catch (error) {
     console.error('Error deleting all restore points:', error)
@@ -68,10 +70,11 @@ ipcMain.handle('delete-all-restore-points', async (_, sequenceNumber) => {
 
 ipcMain.handle('get-restore-points', async () => {
   try {
-    await changeRestorePointCooldown()
     const output = await runPowerShell(
       'Get-ComputerRestorePoint | Select-Object SequenceNumber, Description, CreationTime, EventType, RestorePointType | ConvertTo-Json'
     )
+    await changeRestorePointCooldown()
+
     let points = []
     try {
       points = JSON.parse(output)
@@ -88,8 +91,8 @@ ipcMain.handle('get-restore-points', async () => {
 
 ipcMain.handle('restore-restore-point', async (_, sequenceNumber) => {
   try {
-    await changeRestorePointCooldown()
     await runPowerShell(`Restore-Computer -RestorePoint ${sequenceNumber}`)
+    await changeRestorePointCooldown()
     return { success: true }
   } catch (error) {
     console.error(error)
