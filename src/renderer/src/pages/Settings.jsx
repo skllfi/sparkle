@@ -128,7 +128,7 @@ function Settings() {
                 <div className="flex-1">
                   <h3 className="text-base font-medium text-sparkle-text mb-1">Analytics</h3>
                   <p className="text-sm text-sparkle-text-secondary">
-                    Disable Posthog analytics
+                    Posthog analytics
                     <span className="inline-flex items-center gap-1 ml-2 text-yellow-500">
                       <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></span>
                       Requires restart
