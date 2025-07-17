@@ -8,61 +8,62 @@
   display: none;
 }
 .light {
-  --color-bg: #ffffff;
-  --color-text: #000000;
-  --color-text-dark: #1a1a1a;
-  --color-text-darker: #0f0f0f;
-  --color-text-secondary: #6b7280;
-  --color-text-muted: #4b5563;
-  --color-card: #f3f4f6;
-  --color-border: #e5e7eb;
-  --color-border-secondary: #d1d5db;
-  --color-primary: #2563eb;
-  --color-secondary: #10b981;
-  --color-accent: #d8dce2;
+  --color-bg: #f9fafb;
+  --color-text: #1e293b;
+  --color-text-dark: #334155;
+  --color-text-darker: #475569;
+  --color-text-secondary: #64748b;
+  --color-text-muted: #94a3b8;
+  --color-card: #ffffff;
+  --color-border: #e2e8f0;
+  --color-border-secondary: #cbd5e1;
+  --color-primary: #3b82f6;
+  --color-secondary: #2dac7d;
+  --color-accent: #f1f5f9;
 }
 
 :root {
-  --color-bg: #0f172a;
-  --color-text: #ffffff;
-  --color-text-dark: #e6e6e6;
-  --color-text-darker: #cccccc;
-  --color-text-secondary: #94a3b8;
-  --color-text-muted: #475569;
-  --color-card: #162033;
-  --color-border: #253144;
-  --color-border-secondary: #1e293b;
-  --color-primary: #3b82f6;
-  --color-secondary: #2dac7d;
-  --color-accent: #2e394b;
+  --color-bg: #0c121f;
+  --color-text: #f0f4f8;
+  --color-text-dark: #d3dbe4;
+  --color-text-darker: #aab4c3;
+  --color-text-secondary: #7e92a9;
+  --color-text-muted: #3b4658;
+  --color-card: #131c2c;
+  --color-border: #1f2a3d;
+  --color-border-secondary: #17202e;
+  --color-primary: #4f90e6;
+  --color-secondary: #3db58a;
+  --color-accent: #243144;
 }
 .purple {
-  --color-bg: #1e1b2e;
-  --color-text: #f3e8ff;
-  --color-text-dark: #e6d5ff;
-  --color-text-darker: #d4bbff;
-  --color-text-secondary: #c4b5fd;
-  --color-text-muted: #54437c;
-  --color-card: #2a213d;
-  --color-border: #442572;
-  --color-border-secondary: #443972;
-  --color-primary: #a855f7;
-  --color-secondary: #9333ea;
-  --color-accent: #4a266b;
+  --color-bg: #151122;
+  --color-text: #dac9f5;
+  --color-text-dark: #c6aef5;
+  --color-text-darker: #b091e6;
+  --color-text-secondary: #a48adf;
+  --color-text-muted: #3c305a;
+  --color-card: #1e1830;
+  --color-border: #301a54;
+  --color-border-secondary: #341d5a;
+  --color-primary: #7c32cc;
+  --color-secondary: #6a1cb4;
+  --color-accent: #341a4c;
 }
+
 .green {
-  --color-bg: #102418;
-  --color-text: #e6ffe6;
-  --color-text-dark: #b6e7b6;
-  --color-text-darker: #8fc98f;
-  --color-text-secondary: #6ee7b7;
-  --color-text-muted: #4b7154;
-  --color-card: #183c26;
-  --color-border: #225c36;
-  --color-border-secondary: #1a4730;
-  --color-primary: #34d399;
-  --color-secondary: #059669;
-  --color-accent: #34523e;
+  --color-bg: #0a1a11;
+  --color-text: #cceccc;
+  --color-text-dark: #9fd9a3;
+  --color-text-darker: #76b981;
+  --color-text-secondary: #4fd19c;
+  --color-text-muted: #365542;
+  --color-card: #122c1d;
+  --color-border: #1a3f28;
+  --color-border-secondary: #153422;
+  --color-primary: #1ebd87;
+  --color-secondary: #047857;
+  --color-accent: #254335;
 }
 
 .gray {
@@ -80,21 +81,20 @@
   --color-accent: #343535;
 }
 
-/* .theme-purple {
-  --color-bg: #1e1b2e;
-  --color-text: #f3e8ff;
-  --color-text-dark: #e6d5ff;
-  --color-text-darker: #d4bbff;
-  --color-text-secondary: #c4b5fd;
-  --color-text-muted: #54437c;
-  --color-card: rgb(31, 25, 51);
-  --color-border: #321061;
-  --color-border-secondary: #2a225f;
-  --color-primary: #a855f7;
-  --color-secondary: #9333ea;
-  --color-accent: #3b1e57;
-} */
-
+.classic {
+  --color-bg: #0f172a;
+  --color-text: #ffffff;
+  --color-text-dark: #e6e6e6;
+  --color-text-darker: #cccccc;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #475569;
+  --color-card: #162033;
+  --color-border: #253144;
+  --color-border-secondary: #1e293b;
+  --color-primary: #3b82f6;
+  --color-secondary: #2dac7d;
+  --color-accent: #2e394b;
+}
 .Toastify__toast-theme--dark {
   @apply bg-[--color-card] text-[--color-text] border border-[--color-border] shadow-lg;
 }
@@ -126,7 +126,6 @@
   stroke: theme('colors.sparkle.primary');
 }
 
-/* Custom Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   display: block;
   width: 6px;

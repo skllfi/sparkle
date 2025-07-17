@@ -21,35 +21,39 @@ export default function RestorePointManager() {
   const [customModalOpen, setCustomModalOpen] = useState(false)
   const [customName, setCustomName] = useState('')
 
-const fetchRestorePoints = async () => {
-  setLoading(true)
-  try {
-    const response = await invoke({ channel: 'get-restore-points' })
-    if (response.success && Array.isArray(response.points)) {
-      const sorted = response.points.sort((a, b) => {
-        const parse = (str) =>
-          new Date(
-            str.slice(0, 4) + '-' +
-            str.slice(4, 6) + '-' +
-            str.slice(6, 8) + 'T' +
-            str.slice(8, 10) + ':' +
-            str.slice(10, 12) + ':' +
-            str.slice(12, 14)
-          )
-        return parse(b.CreationTime) - parse(a.CreationTime)
-      })
-      setRestorePoints(sorted)
-    } else {
+  const fetchRestorePoints = async () => {
+    setLoading(true)
+    try {
+      const response = await invoke({ channel: 'get-restore-points' })
+      if (response.success && Array.isArray(response.points)) {
+        const sorted = response.points.sort((a, b) => {
+          const parse = (str) =>
+            new Date(
+              str.slice(0, 4) +
+                '-' +
+                str.slice(4, 6) +
+                '-' +
+                str.slice(6, 8) +
+                'T' +
+                str.slice(8, 10) +
+                ':' +
+                str.slice(10, 12) +
+                ':' +
+                str.slice(12, 14)
+            )
+          return parse(b.CreationTime) - parse(a.CreationTime)
+        })
+        setRestorePoints(sorted)
+      } else {
+        toast.error('Failed to load restore points.')
+      }
+    } catch (error) {
       toast.error('Failed to load restore points.')
+      console.error(error)
+    } finally {
+      setLoading(false)
     }
-  } catch (error) {
-    toast.error('Failed to load restore points.')
-    console.error(error)
-  } finally {
-    setLoading(false)
   }
-}
-
 
   useEffect(() => {
     fetchRestorePoints()
@@ -255,6 +259,10 @@ const fetchRestorePoints = async () => {
             </div>
           </div>
         )}
+        <p className="text-center text-sparkle-text-muted mt-4">
+          Listing restore points is a beta feature and may be unreliable, but creating restore
+          points works as expected.
+        </p>
       </div>
       <Modal
         open={modalState.isOpen}

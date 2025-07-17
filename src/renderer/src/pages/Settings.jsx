@@ -12,7 +12,8 @@ const themes = [
   { label: 'Light', value: 'light' },
   { label: 'Purple', value: 'purple' },
   { label: 'Green', value: 'green' },
-  { label: 'Gray', value: 'gray' }
+  { label: 'Gray', value: 'gray' },
+  { label: 'Classic', value: 'classic' }
 ]
 
 function Settings() {
@@ -30,7 +31,7 @@ function Settings() {
   }, [])
 
   useEffect(() => {
-    document.body.classList.remove('light', 'purple', 'dark', 'green', 'gray')
+    document.body.classList.remove('light', 'purple', 'dark', 'green', 'gray', 'classic')
     if (theme) {
       document.body.classList.add(theme)
     }
@@ -66,7 +67,7 @@ function Settings() {
             <SettingCard>
               <div className="space-y-4">
                 <h3 className="text-base font-medium text-sparkle-text">Theme</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                <div className="grid grid-cols-6 gap-3">
                   {themes.map((t) => (
                     <label
                       key={t.value}

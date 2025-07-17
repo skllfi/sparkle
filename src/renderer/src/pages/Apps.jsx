@@ -6,7 +6,6 @@ import Button from '@/components/ui/button'
 import Checkbox from '@/components/ui/Checkbox'
 import Modal from '@/components/ui/modal'
 import { invoke } from '@/lib/electron'
-import sparkleLogo from '../../../../resources/sparklelogo.png'
 import { Download } from 'lucide-react'
 import { Trash } from 'lucide-react'
 import { toast } from 'react-toastify'
@@ -149,40 +148,39 @@ function Apps() {
               {apps.map((app) => (
                 <div
                   key={app.id}
-                  className="bg-sparkle-card border border-sparkle-border rounded-lg p-4 hover:border-sparkle-primary transition group"
+                  className="bg-sparkle-card border border-sparkle-border rounded-lg p-4 hover:border-sparkle-primary transition group cursor-pointer"
+                  onClick={() =>
+                    setSelectedApps((prev) =>
+                      prev.includes(app.id) ? prev.filter((id) => id !== app.id) : [...prev, app.id]
+                    )
+                  }
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <Checkbox
-                        checked={selectedApps.includes(app.id)}
-                        onChange={() =>
-                          setSelectedApps((prev) =>
-                            prev.includes(app.id)
-                              ? prev.filter((id) => id !== app.id)
-                              : [...prev, app.id]
-                          )
-                        }
-                      />
-                      <div className="min-w-10 max-w-10 max--h-10 min-h-10 rounded-lg overflow-hidden bg-sparkle-accent flex items-center justify-center">
-                        {app.icon ? (
-                          <img
-                            src={app.icon}
-                            alt={app.name}
-                            className="w-8 h-8 object-contain rounded-md"
-                          />
-                        ) : (
-                          <img src={sparkleLogo} alt="" className="w-6 h-6 opacity-50" />
-                        )}
+                      <div
+                        onClick={(e) => e.stopPropagation()} // Prevent double toggle when checkbox is clicked
+                      >
+                        <Checkbox
+                          checked={selectedApps.includes(app.id)}
+                          onChange={() =>
+                            setSelectedApps((prev) =>
+                              prev.includes(app.id)
+                                ? prev.filter((id) => id !== app.id)
+                                : [...prev, app.id]
+                            )
+                          }
+                        />
                       </div>
                       <div>
                         <h3 className="text-sparkle-text font-medium group-hover:text-sparkle-primary transition">
                           {app.name}
                         </h3>
                         {app.info && (
-                          <p className="text-sm text-sparkle-text-secondary mt-0.5 line-clamp-1">
+                          <p className="text-sm text-sparkle-text-secondary line-clamp-1 font-semibold">
                             {app.info}
                           </p>
                         )}
+                        <p className="text-xs text-sparkle-text-secondary">ID: {app.id}</p>
                       </div>
                     </div>
                   </div>
