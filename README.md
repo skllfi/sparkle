@@ -7,10 +7,11 @@
   <p>Ultimate Windows Optimizer</p>
 
   <p>
-    <img alt="React" src="https://img.shields.io/badge/React-000000?style=for-the-badge&logo=react&labelColor=0f172a&color=0f172a">
-    <img alt="Electron" src="https://img.shields.io/badge/Electron-000000?style=for-the-badge&logo=electron&labelColor=0f172a&color=0f172a">
-    <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-000000?style=for-the-badge&logo=javascript&labelColor=0f172a&color=0f172a">
-    <img alt="PowerShell" src="https://img.shields.io/badge/PowerShell-000000?style=for-the-badge&logo=gnometerminal&labelColor=0f172a&color=0f172a">
+    <img alt="React" src="https://img.shields.io/badge/React-000000?style=for-the-badge&logo=react&labelColor=0c121f&color=0c121f">
+    <img alt="Electron" src="https://img.shields.io/badge/Electron-000000?style=for-the-badge&logo=electron&labelColor=0c121f&color=0c121f">
+    <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-000000?style=for-the-badge&logo=javascript&labelColor=0c121f&color=0c121f">
+    <img alt="PowerShell" src="https://img.shields.io/badge/PowerShell-000000?style=for-the-badge&logo=gnometerminal&labelColor=0c121f&color=0c121f">
+    <img alt="GitHub Downloads (all assets, latest release)" src="https://img.shields.io/github/downloads/parcoil/sparkle/latest/total?style=for-the-badge&label=Total%20Downloads&labelColor=0c121f&color=0c121f">
   </p>
 
 <a href="https://github.com/Parcoil/Sparkle/releases/latest">Download Latest</a>
