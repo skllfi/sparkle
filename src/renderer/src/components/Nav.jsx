@@ -1,4 +1,4 @@
-import { Wrench, Home, Folder, LayoutGrid, Icon } from 'lucide-react'
+import { Wrench, Home, Folder, LayoutGrid, Icon, Globe } from 'lucide-react'
 import { broom } from '@lucide/lab'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { clsx } from 'clsx'
@@ -18,6 +18,7 @@ const tabIcons = {
   clean: <Icon iconNode={broom} size={20} />,
   backup: <Folder size={20} />,
   utilities: <Box size={20} />,
+  dns: <Globe size={20} />,
   apps: <LayoutGrid size={20} />,
   settings: <Settings size={20} />
 }
@@ -28,6 +29,7 @@ const tabs = {
   clean: { label: 'Cleaner', path: '/clean' },
   backup: { label: 'Restore Points', path: '/backup' },
   utilities: { label: 'Utilities', path: '/utilities' },
+  dns: { label: 'DNS Manager', path: '/dns' },
   apps: { label: 'Apps', path: '/apps' },
   settings: { label: 'Settings', path: '/settings' }
 }

@@ -76,6 +76,13 @@
       {
         "from": "resources/tweaks",
         "to": "tweaks"
+      },
+      {
+        "from": "scripts",
+        "to": "scripts",
+        "filter": [
+          "**/*"
+        ]
       }
     ],
     "appId": "com.parcoil.sparkle",
@@ -95,7 +102,8 @@
       "!{.env,.env.*,.npmrc,pnpm-lock.yaml}"
     ],
     "asarUnpack": [
-      "resources/**"
+      "resources/**",
+      "scripts/**"
     ],
     "win": {
       "executableName": "sparkle",

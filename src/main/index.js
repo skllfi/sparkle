@@ -9,10 +9,12 @@ import './system'
 import './powershell'
 import './rpc'
 import './tweakHandler'
+import './dnsHandler'
 import './backup'
 import { executePowerShell } from './powershell'
 import { createTray } from './tray'
 import { setupTweaksHandlers } from './tweakHandler'
+import { setupDNSHandlers } from './dnsHandler'
 import Store from 'electron-store'
 import { startDiscordRPC, stopDiscordRPC } from './rpc'
 import { autoUpdater } from 'electron-updater'
@@ -117,6 +119,7 @@ function createWindow() {
 app.whenReady().then(() => {
   createWindow()
   setupTweaksHandlers()
+  setupDNSHandlers()
   if (app.isPackaged) {
     globalShortcut.register('CommandOrControl+R', () => {})
     globalShortcut.register('F5', () => {})

@@ -10,6 +10,7 @@ import Tweaks from './pages/Tweaks'
 import Clean from './pages/Clean'
 import Apps from './pages/Apps'
 import Utilities from './pages/Utilities'
+import DNS from './pages/DNS'
 import Settings from './pages/Settings'
 import Backup from './pages/Backup'
 import FirstTime from './components/FirstTime'
@@ -53,6 +54,7 @@ function App() {
                   <Route path="/clean" element={<Clean />} />
                   <Route path="/backup" element={<Backup />} />
                   <Route path="/utilities" element={<Utilities />} />
+                  <Route path="/dns" element={<DNS />} />
                   <Route path="/apps" element={<Apps />} />{' '}
                   <Route path="/settings" element={<Settings />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
