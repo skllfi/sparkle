@@ -5,6 +5,10 @@ import { exec } from 'child_process'
 import { promisify } from 'util'
 import { logo } from './index'
 import { executePowerShell } from './powershell'
+import log from 'electron-log'
+console.log = log.log
+console.error = log.error
+console.warn = log.warn
 
 const execPromise = promisify(exec)
 const userDataPath = app.getPath('userData')

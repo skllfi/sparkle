@@ -19,6 +19,7 @@ import useTweaksStore from '@/store/tweaksStore'
 import useRestartStore from '@/store/restartState'
 import Button from '@/components/ui/button'
 import Toggle from '@/components/ui/Toggle'
+import log from 'electron-log/renderer'
 
 function Tweaks() {
   const [tweaks, setTweaks] = useState([])
@@ -46,6 +47,7 @@ function Tweaks() {
       setTweaks(fetchedTweaks)
     } catch (error) {
       console.error('Error fetching tweaks:', error)
+      log.error('Error fetching tweaks:', error)
     }
   }
 
@@ -60,6 +62,7 @@ function Tweaks() {
       }
     } catch (error) {
       console.error('Error loading toggle states:', error)
+      log.error('Error loading toggle states:', error)
     } finally {
       setIsLoading(false)
     }
@@ -73,6 +76,7 @@ function Tweaks() {
       })
     } catch (error) {
       console.error('Error saving toggle states:', error)
+      log.error('Error saving toggle states:', error)
     }
   }
 
@@ -125,6 +129,7 @@ function Tweaks() {
       }
     } catch (error) {
       console.error(`Error toggling tweak ${tweak.title}:`, error)
+      log.error(`Error toggling tweak ${tweak.title}:`, error)
 
       toast.update(loadingToastId, {
         render: `Failed to ${newState ? 'apply' : 'unapply'} tweak: ${tweak.title}`,
@@ -144,6 +149,7 @@ function Tweaks() {
         await saveToggleStates(revertedStates)
       } catch (err) {
         console.error('Error reverting toggle state:', err)
+        log.error('Error reverting toggle state:', err)
       }
     }
   }
@@ -176,6 +182,7 @@ function Tweaks() {
       })
     } catch (error) {
       console.error(`Error applying tweak ${tweak.title}:`, error)
+      log.error(`Error applying tweak ${tweak.title}:`, error)
       toast.update(loadingToastId, {
         render: `Failed to apply tweak: ${tweak.title}`,
         type: 'error',
@@ -295,12 +302,7 @@ function Tweaks() {
                   })
                 } catch (error) {
                   console.error(`Error applying tweak ${selectedTweak.title}:`, error)
-                  toast.update(loadingToastId, {
-                    render: `Failed to apply tweak: ${selectedTweak.title}`,
-                    type: 'error',
-                    isLoading: false,
-                    autoClose: 3000
-                  })
+                  log.error(`Error applying tweak ${selectedTweak.title}:`, error)
 
                   const revertedStates = {
                     ...toggleStates,

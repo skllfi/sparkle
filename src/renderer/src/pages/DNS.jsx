@@ -6,6 +6,7 @@ import Modal from '@/components/ui/modal'
 import { toast } from 'react-toastify'
 import { Globe, Shield, Settings, RefreshCw, CheckCircle, AlertCircle, Info } from 'lucide-react'
 import { Cloud } from 'lucide-react'
+import log from 'electron-log/renderer'
 
 const dnsProviders = [
   {
@@ -94,6 +95,7 @@ export default function DNSPage() {
       }
     } catch (error) {
       console.error('Error getting current DNS:', error)
+      log.error('Error getting current DNS:', error)
     }
   }
 
@@ -138,6 +140,7 @@ export default function DNSPage() {
         isLoading: false,
         autoClose: 5000
       })
+      log.error('Failed to apply DNS:', error)
     } finally {
       setLoading(false)
       setModalOpen(false)

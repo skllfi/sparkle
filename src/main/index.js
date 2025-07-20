@@ -5,6 +5,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import * as Sentry from '@sentry/electron/main'
 import { IPCMode } from '@sentry/electron/main'
 import fs from 'fs'
+import log from 'electron-log'
 import './system'
 import './powershell'
 import './rpc'
@@ -22,11 +23,15 @@ Sentry.init({
   dsn: 'https://d1e8991c715dd717e6b7b44dbc5c43dd@o4509167771648000.ingest.us.sentry.io/4509167772958720',
   ipcMode: IPCMode.Both
 })
+console.log = log.log
+console.error = log.error
+console.warn = log.warn
+
 autoUpdater.autoDownload = true
 autoUpdater.autoInstallOnAppQuit = true
 
 export const logo = '[Sparkle]:'
-
+log.initialize()
 async function Defender() {
   const Apppath = path.dirname(process.execPath)
   if (app.isPackaged) {
@@ -91,6 +96,7 @@ function createWindow() {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
+
     createTray(mainWindow)
     Defender()
 

@@ -5,6 +5,7 @@ import RootDiv from '@/components/RootDiv'
 import { RefreshCw, Icon } from 'lucide-react'
 import { broom } from '@lucide/lab'
 import { toast } from 'react-toastify'
+import log from 'electron-log/renderer'
 
 const cleanups = [
   {
@@ -82,6 +83,7 @@ function Clean() {
         isLoading: false,
         autoClose: 4000
       })
+      log.error(`Failed to run ${id} cleanup: ${err.message || err}`)
     } finally {
       setLoadingId(null)
     }

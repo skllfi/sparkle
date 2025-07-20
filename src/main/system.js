@@ -4,7 +4,11 @@ import si from 'systeminformation'
 import { exec } from 'child_process'
 import fs from 'fs'
 import path from 'path'
-
+import log from 'electron-log'
+import { shell } from 'electron'
+console.log = log.log
+console.error = log.error
+console.warn = log.warn
 async function getSystemInfo() {
   try {
     const [cpuData, graphicsData, osInfo, memLayout, diskLayout] = await Promise.all([
@@ -82,31 +86,82 @@ function restartSystem() {
 
 function clearSparkleCache() {
   try {
-    const scriptsPath = path.join(
-      process.env.APPDATA || path.join(os.homedir(), 'AppData', 'Roaming'),
-      'sparkle',
-      'scripts'
-    )
+    const appDataPath = process.env.APPDATA || path.join(os.homedir(), 'AppData', 'Roaming')
+    const scriptsPath = path.join(appDataPath, 'sparkle', 'scripts')
+    const logsPath = path.join(appDataPath, 'sparkle', 'logs')
+
+    let scriptsCleared = false
+    let logsCleared = false
+    let errors = []
+
     if (fs.existsSync(scriptsPath)) {
       const files = fs.readdirSync(scriptsPath)
       for (const file of files) {
         const filePath = path.join(scriptsPath, file)
-        if (fs.lstatSync(filePath).isFile()) {
-          fs.unlinkSync(filePath)
+        try {
+          if (fs.lstatSync(filePath).isFile()) {
+            fs.unlinkSync(filePath)
+          }
+        } catch (err) {
+          errors.push(`Failed to delete script file: ${file} - ${err.message}`)
         }
       }
+
+      scriptsCleared = true
       console.log('Sparkle scripts directory files cleared successfully.')
-      return { success: true }
     } else {
       console.warn('Sparkle scripts directory does not exist.')
-      return { success: false, error: 'Scripts directory does not exist.' }
+      errors.push('Scripts directory does not exist.')
+    }
+
+    if (fs.existsSync(logsPath)) {
+      const logFiles = fs.readdirSync(logsPath)
+      for (const file of logFiles) {
+        const filePath = path.join(logsPath, file)
+        try {
+          if (fs.lstatSync(filePath).isFile()) {
+            fs.unlinkSync(filePath)
+          }
+        } catch (err) {
+          errors.push(`Failed to delete log file: ${file} - ${err.message}`)
+        }
+      }
+      logsCleared = true
+      console.log('Sparkle logs directory files cleared successfully.')
+    } else {
+      console.warn('Sparkle logs directory does not exist.')
+      errors.push('Logs directory does not exist.')
+    }
+
+    if (errors.length === 0) {
+      return { success: true }
+    } else {
+      return {
+        success: scriptsCleared || logsCleared,
+        error: errors.join(' | ')
+      }
     }
   } catch (error) {
-    console.error('Failed to clear Sparkle scripts directory:', error)
+    console.error('Failed to clear Sparkle scripts or logs directory:', error)
     return { success: false, error: error.message }
   }
 }
 
+function openLogFolder() {
+  const logPath = path.join(
+    process.env.APPDATA || path.join(os.homedir(), 'AppData', 'Roaming'),
+    'sparkle',
+    'logs'
+  )
+  if (fs.existsSync(logPath)) {
+    shell.openPath(logPath)
+  } else {
+    console.warn('Sparkle logs directory does not exist.')
+    return { success: false, error: 'Logs directory does not exist.' }
+  }
+}
+
 ipcMain.handle('restart', restartSystem)
+ipcMain.handle('open-log-folder', openLogFolder)
 ipcMain.handle('clear-sparkle-cache', clearSparkleCache)
 ipcMain.handle('get-system-info', getSystemInfo)

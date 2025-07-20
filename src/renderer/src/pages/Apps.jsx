@@ -11,6 +11,7 @@ import { Trash } from 'lucide-react'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import log from 'electron-log/renderer'
 function Apps() {
   const [search, setSearch] = useState('')
   const [selectedApps, setSelectedApps] = useState([])
@@ -74,6 +75,7 @@ function Apps() {
       if (commands.length === 0) return
     } catch (error) {
       console.error(`Error ${actionVerb.toLowerCase()} apps:`, error)
+      log.error(`Error ${actionVerb.toLowerCase()} apps:`, error)
     }
   }
 

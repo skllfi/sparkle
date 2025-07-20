@@ -10,3 +10,4 @@ yarn.lock
 pnpm-lock.yaml
 firstsparkle2build.zip
 .env
+.mutagen.yml

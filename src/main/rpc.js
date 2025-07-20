@@ -2,7 +2,10 @@ import { ipcMain } from 'electron'
 import discordRPC from 'discord-rpc'
 import { logo } from '.'
 import jsonData from '../../package.json'
-
+import log from 'electron-log'
+console.log = log.log
+console.error = log.error
+console.warn = log.warn
 const clientId = '1188686354490609754'
 let rpcClient
 

@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 import Button from '@/components/ui/button'
 import { SquareTerminal } from 'lucide-react'
 import Toggle from '@/components/ui/toggle'
+import log from 'electron-log/renderer'
 
 const utilities = [
   {
@@ -78,16 +79,26 @@ export default function UtilitiesPage() {
     setModalOpen(false)
     setRunning(true)
     const toastId = toast.loading(`Running ${selectedUtility.name}...`)
-    await invoke({
-      channel: 'run-powershell-window',
-      payload: { script: selectedUtility.command, name: selectedUtility.name, noExit: noExit }
-    })
-    toast.update(toastId, {
-      render: `${selectedUtility.name} completed!`,
-      type: 'success',
-      isLoading: false,
-      autoClose: 3000
-    })
+    try {
+      await invoke({
+        channel: 'run-powershell-window',
+        payload: { script: selectedUtility.command, name: selectedUtility.name, noExit: noExit }
+      })
+      toast.update(toastId, {
+        render: `${selectedUtility.name} completed!`,
+        type: 'success',
+        isLoading: false,
+        autoClose: 3000
+      })
+    } catch (error) {
+      log.error(`Error running utility ${selectedUtility.name}:`, error)
+      toast.update(toastId, {
+        render: `Failed to run ${selectedUtility.name}: ${error.message || error}`,
+        type: 'error',
+        isLoading: false,
+        autoClose: 4000
+      })
+    }
     setRunning(false)
     setSelectedUtility(null)
   }
@@ -98,10 +109,14 @@ export default function UtilitiesPage() {
   }
 
   const openQuickAccessTool = async (script) => {
-    await invoke({
-      channel: 'run-powershell',
-      payload: { script }
-    })
+    try {
+      await invoke({
+        channel: 'run-powershell',
+        payload: { script }
+      })
+    } catch (error) {
+      log.error('Error running quick access tool:', error)
+    }
   }
 
   const quickAccess = [

@@ -188,6 +188,15 @@ function Settings() {
                 >
                   Clear Cache
                 </Button>
+                <Button
+                  variant="secondary"
+                  className="ml-2"
+                  onClick={async () => {
+                    await invoke({ channel: 'open-log-folder' })
+                  }}
+                >
+                  Open Log Folder
+                </Button>
               </div>
             </SettingCard>
           </SettingSection>

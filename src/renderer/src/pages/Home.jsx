@@ -6,6 +6,7 @@ import useTweaksStore from '../store/tweaksStore'
 import Button from '@/components/ui/button'
 import { useNavigate } from 'react-router-dom'
 import useSystemStore from '@/store/systemInfo'
+import log from 'electron-log/renderer'
 function Home() {
   const systemInfo = useSystemStore((state) => state.systemInfo)
   const setSystemInfo = useSystemStore((state) => state.setSystemInfo)
@@ -26,8 +27,11 @@ function Home() {
             channel: 'get-system-info'
           })
           setSystemInfo(info)
+          log.info(systemInfo)
+          console.log(systemInfo)
         } catch (error) {
           console.error('Error fetching system info:', error)
+          log.error('Error fetching system info:', error)
         } finally {
           setLoading(false)
         }

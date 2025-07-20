@@ -1,6 +1,10 @@
 import { exec } from 'child_process'
 import { ipcMain } from 'electron'
 import fs from 'fs'
+import log from 'electron-log'
+console.log = log.log
+console.error = log.error
+console.warn = log.warn
 
 function runPowerShell(cmd) {
   return new Promise((resolve, reject) => {

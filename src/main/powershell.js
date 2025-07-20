@@ -6,7 +6,12 @@ import { exec } from 'child_process'
 import { app, ipcMain } from 'electron'
 import { mainWindow } from './index'
 import fs from 'fs'
+import log from 'electron-log'
 const execPromise = util.promisify(exec)
+
+console.log = log.log
+console.error = log.error
+console.warn = log.warn
 
 function ensureDirectoryExists(dirPath) {
   if (!fs.existsSync(dirPath)) {

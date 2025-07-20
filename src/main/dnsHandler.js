@@ -2,6 +2,10 @@ import { ipcMain, app } from 'electron'
 import { executePowerShell } from './powershell'
 import path from 'path'
 import fs from 'fs/promises'
+import log from 'electron-log'
+console.log = log.log
+console.error = log.error
+console.warn = log.warn
 
 const ensureScriptsAvailable = async () => {
   const userDataScriptsDir = path.join(app.getPath('userData'), 'scripts', 'dns-changer')

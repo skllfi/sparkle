@@ -6,6 +6,7 @@ import Button from '@/components/ui/button'
 import Modal from '@/components/ui/modal'
 import { toast } from 'react-toastify'
 import { Trash } from 'lucide-react'
+import log from 'electron-log/renderer'
 
 export default function RestorePointManager() {
   const [restorePoints, setRestorePoints] = useState([])
@@ -50,6 +51,7 @@ export default function RestorePointManager() {
     } catch (error) {
       toast.error('Failed to load restore points.')
       console.error(error)
+      log.error('Failed to load restore points:', error)
     } finally {
       setLoading(false)
     }
@@ -67,6 +69,7 @@ export default function RestorePointManager() {
       await fetchRestorePoints()
     } catch (err) {
       toast.error('Failed to create restore point.')
+      log.error('Failed to create restore point:', err)
     }
     setProcessing(false)
   }
@@ -85,6 +88,7 @@ export default function RestorePointManager() {
       toast.success('System restore started. Your PC may restart.')
     } catch (err) {
       toast.error('Failed to start system restore.')
+      log.error('Failed to start system restore:', err)
     }
     setProcessing(false)
     setModalState({ isOpen: false, type: null, restorePoint: null })
@@ -105,6 +109,7 @@ export default function RestorePointManager() {
       await fetchRestorePoints()
     } catch (err) {
       toast.error('Failed to create restore point.')
+      log.error('Failed to create restore point:', err)
     }
     setProcessing(false)
   }
