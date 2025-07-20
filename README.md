@@ -17,7 +17,7 @@
 Install with Powershell:
 
 ```powershell
-irm https://parcoil.github.io/Sparkle/get.ps1 | iex
+irm https://raw.githubusercontent.com/Parcoil/Sparkle/v2/get.ps1 | iex
 ```
 
 <a href="https://github.com/Parcoil/Sparkle/releases/latest">Download Installer/Portable</a>
