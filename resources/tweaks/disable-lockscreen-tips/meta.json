@@ -2,5 +2,5 @@
   "title": "Disable Lockscreen Tips",
   "name": "disable-lockscreen-tips",
   "description": "Disables tips on the lockscreen.",
-  "category": ["Performance", "Productivity"]
+  "category": ["Performance"]
 }
