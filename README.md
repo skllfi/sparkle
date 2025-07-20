@@ -14,7 +14,13 @@
     <img alt="GitHub Downloads (all assets, latest release)" src="https://img.shields.io/github/downloads/parcoil/sparkle/latest/total?style=for-the-badge&label=Total%20Downloads&labelColor=0c121f&color=0c121f">
   </p>
 
-<a href="https://github.com/Parcoil/Sparkle/releases/latest">Download Latest</a>
+Install with Powershell:
+
+```powershell
+irm https://parcoil.github.io/Sparkle/get.ps1 | iex
+```
+
+<a href="https://github.com/Parcoil/Sparkle/releases/latest">Download Installer/Portable</a>
 
   <br/>
   <br/>
