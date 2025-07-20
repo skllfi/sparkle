@@ -782,6 +782,14 @@
       "info": "Advanced Screenshot Tool",
       "link": "https://github.com/ShareX/ShareX",
       "icon": "https://getsharex.com/img/ShareX_Logo_512.png"
+    },
+    {
+      "name": "Fastfetch",
+      "id": "Fastfetch-cli.Fastfetch",
+      "category": "utilities",
+      "info": "System Info Tool",
+      "link": "https://github.com/fastfetch-cli/fastfetch",
+      "icon": "https://github.com/fastfetch-cli/fastfetch"
     }
   ]
 }
