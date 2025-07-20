@@ -5,6 +5,7 @@ import Button from '@/components/ui/button'
 import Modal from '@/components/ui/modal'
 import { toast } from 'react-toastify'
 import { Globe, Shield, Settings, RefreshCw, CheckCircle, AlertCircle, Info } from 'lucide-react'
+import { Cloud } from 'lucide-react'
 
 const dnsProviders = [
   {
@@ -47,6 +48,16 @@ const dnsProviders = [
     features: ['Security', 'Threat blocking', 'Privacy'],
     color: 'text-purple-500',
     icon: <Shield className="w-5 h-5" />
+  },
+  {
+    id: 'adguard',
+    name: 'AdGuard DNS',
+    primary: '94.140.14.14',
+    secondary: '94.140.15.15',
+    description: 'Blocks ads, trackers, malware',
+    features: ['Security', 'Threat blocking', 'Privacy'],
+    color: 'text-teal-500',
+    icon: <Cloud className="w-5 h-5" />
   },
   {
     id: 'automatic',
