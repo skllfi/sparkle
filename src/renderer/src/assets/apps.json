@@ -446,13 +446,6 @@
       "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Neovim-mark.svg/1200px-Neovim-mark.svg.png"
     },
     {
-      "name": "Spotube",
-      "id": "KRTirtho.Spotube",
-      "category": "multimedia",
-      "info": "A Spotify client that uses YouTube.",
-      "icon": "https://apktodo.io/uploads/2023/12/spotube-icon.jpg"
-    },
-    {
       "name": "PowerToys",
       "id": "Microsoft.PowerToys",
       "category": "utilities",
