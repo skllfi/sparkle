@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react"
 import {
   Wrench,
   Search,
@@ -8,25 +8,25 @@ import {
   Gamepad,
   Network,
   Zap,
-  Paintbrush
-} from 'lucide-react'
-import { toast } from 'react-toastify'
-import RootDiv from '@/components/RootDiv'
-import Tooltip from '@/components/ui/tooltip'
-import Modal from '@/components/ui/modal'
-import { invoke } from '@/lib/electron'
-import useTweaksStore from '@/store/tweaksStore'
-import useRestartStore from '@/store/restartState'
-import Button from '@/components/ui/button'
-import Toggle from '@/components/ui/Toggle'
-import log from 'electron-log/renderer'
+  Paintbrush,
+} from "lucide-react"
+import { toast } from "react-toastify"
+import RootDiv from "@/components/RootDiv"
+import Tooltip from "@/components/ui/tooltip"
+import Modal from "@/components/ui/modal"
+import { invoke } from "@/lib/electron"
+import useTweaksStore from "@/store/tweaksStore"
+import useRestartStore from "@/store/restartState"
+import Button from "@/components/ui/button"
+import Toggle from "@/components/ui/Toggle"
+import log from "electron-log/renderer"
 
 function Tweaks() {
   const [tweaks, setTweaks] = useState([])
   const [toggleStates, setToggleStates] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [activeCategory, setActiveCategory] = useState('All')
+  const [searchTerm, setSearchTerm] = useState("")
+  const [activeCategory, setActiveCategory] = useState("All")
   const [modalContent, setModalContent] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedTweak, setSelectedTweak] = useState(null)
@@ -42,27 +42,27 @@ function Tweaks() {
   const loadTweaks = async () => {
     try {
       const fetchedTweaks = await invoke({
-        channel: 'tweaks:fetch'
+        channel: "tweaks:fetch",
       })
       setTweaks(fetchedTweaks)
     } catch (error) {
-      console.error('Error fetching tweaks:', error)
-      log.error('Error fetching tweaks:', error)
+      console.error("Error fetching tweaks:", error)
+      log.error("Error fetching tweaks:", error)
     }
   }
 
   const loadToggleStates = async () => {
     try {
       const savedStates = await invoke({
-        channel: 'tweak-states:load'
+        channel: "tweak-states:load",
       })
 
       if (savedStates) {
         setToggleStates(JSON.parse(savedStates))
       }
     } catch (error) {
-      console.error('Error loading toggle states:', error)
-      log.error('Error loading toggle states:', error)
+      console.error("Error loading toggle states:", error)
+      log.error("Error loading toggle states:", error)
     } finally {
       setIsLoading(false)
     }
@@ -71,12 +71,12 @@ function Tweaks() {
   const saveToggleStates = async (newStates) => {
     try {
       await invoke({
-        channel: 'tweak-states:save',
-        payload: JSON.stringify(newStates)
+        channel: "tweak-states:save",
+        payload: JSON.stringify(newStates),
       })
     } catch (error) {
-      console.error('Error saving toggle states:', error)
-      log.error('Error saving toggle states:', error)
+      console.error("Error saving toggle states:", error)
+      log.error("Error saving toggle states:", error)
     }
   }
 
@@ -84,13 +84,13 @@ function Tweaks() {
     const newState = !toggleStates[tweak.name]
     const newStates = {
       ...toggleStates,
-      [tweak.name]: newState
+      [tweak.name]: newState,
     }
 
     setToggleStates(newStates)
 
     const loadingToastId = toast.loading(
-      `${newState ? 'Applying' : 'Unapplying'} tweak: ${tweak.title}`
+      `${newState ? "Applying" : "Unapplying"} tweak: ${tweak.title}`,
     )
 
     try {
@@ -98,8 +98,8 @@ function Tweaks() {
 
       if (newState) {
         await invoke({
-          channel: 'tweak:apply',
-          payload: tweak.name
+          channel: "tweak:apply",
+          payload: tweak.name,
         })
         incrementTweaks()
         if (tweak.restart) {
@@ -107,14 +107,14 @@ function Tweaks() {
         }
         toast.update(loadingToastId, {
           render: `Applied tweak: ${tweak.title}`,
-          type: 'success',
+          type: "success",
           isLoading: false,
-          autoClose: 3000
+          autoClose: 3000,
         })
       } else {
         await invoke({
-          channel: 'tweak:unapply',
-          payload: tweak.name
+          channel: "tweak:unapply",
+          payload: tweak.name,
         })
         decrementTweaks()
         if (tweak.restart) {
@@ -122,9 +122,9 @@ function Tweaks() {
         }
         toast.update(loadingToastId, {
           render: `Unapplied tweak: ${tweak.title}`,
-          type: 'info',
+          type: "info",
           isLoading: false,
-          autoClose: 3000
+          autoClose: 3000,
         })
       }
     } catch (error) {
@@ -132,15 +132,15 @@ function Tweaks() {
       log.error(`Error toggling tweak ${tweak.title}:`, error)
 
       toast.update(loadingToastId, {
-        render: `Failed to ${newState ? 'apply' : 'unapply'} tweak: ${tweak.title}`,
-        type: 'error',
+        render: `Failed to ${newState ? "apply" : "unapply"} tweak: ${tweak.title}`,
+        type: "error",
         isLoading: false,
-        autoClose: 3000
+        autoClose: 3000,
       })
 
       const revertedStates = {
         ...newStates,
-        [index]: !newState
+        [index]: !newState,
       }
 
       setToggleStates(revertedStates)
@@ -148,8 +148,8 @@ function Tweaks() {
       try {
         await saveToggleStates(revertedStates)
       } catch (err) {
-        console.error('Error reverting toggle state:', err)
-        log.error('Error reverting toggle state:', err)
+        console.error("Error reverting toggle state:", err)
+        log.error("Error reverting toggle state:", err)
       }
     }
   }
@@ -157,7 +157,7 @@ function Tweaks() {
   const applyNonReversibleTweak = async (tweak, index) => {
     const newStates = {
       ...toggleStates,
-      [tweak.name]: true
+      [tweak.name]: true,
     }
 
     setToggleStates(newStates)
@@ -167,8 +167,8 @@ function Tweaks() {
     try {
       await saveToggleStates(newStates)
       await invoke({
-        channel: 'tweak:apply',
-        payload: tweak.name
+        channel: "tweak:apply",
+        payload: tweak.name,
       })
       incrementTweaks()
       if (tweak.restart) {
@@ -176,18 +176,18 @@ function Tweaks() {
       }
       toast.update(loadingToastId, {
         render: `Applied tweak: ${tweak.title}`,
-        type: 'success',
+        type: "success",
         isLoading: false,
-        autoClose: 3000
+        autoClose: 3000,
       })
     } catch (error) {
       console.error(`Error applying tweak ${tweak.title}:`, error)
       log.error(`Error applying tweak ${tweak.title}:`, error)
       toast.update(loadingToastId, {
         render: `Failed to apply tweak: ${tweak.title}`,
-        type: 'error',
+        type: "error",
         isLoading: false,
-        autoClose: 3000
+        autoClose: 3000,
       })
     }
   }
@@ -218,7 +218,7 @@ function Tweaks() {
     await applyNonReversibleTweak(tweak, index)
   }
 
-  const categories = ['All', ...new Set(tweaks.flatMap((t) => t.category || []).filter(Boolean))]
+  const categories = ["All", ...new Set(tweaks.flatMap((t) => t.category || []).filter(Boolean))]
 
   const filteredTweaks = tweaks.filter((tweak) => {
     const matchesSearch =
@@ -226,7 +226,7 @@ function Tweaks() {
       tweak.description.toLowerCase().includes(searchTerm.toLowerCase())
 
     const matchesCategory =
-      activeCategory === 'All' ||
+      activeCategory === "All" ||
       (Array.isArray(tweak.category) && tweak.category.includes(activeCategory)) ||
       tweak.category === activeCategory
 
@@ -247,7 +247,7 @@ function Tweaks() {
     Network: <Network className="w-4 h-4 text-orange-400" />,
     Appearance: <Paintbrush className="w-4 h-4 text-sparkle-primary" />,
     Gaming: <Gamepad className="w-4 h-4 text-teal-400" />,
-    General: <Wrench className="w-4 h-4 text-blue-400" />
+    General: <Wrench className="w-4 h-4 text-blue-400" />,
   }
 
   if (isLoading) {
@@ -276,7 +276,7 @@ function Tweaks() {
                 const newState = true
                 const newStates = {
                   ...toggleStates,
-                  [selectedTweak.name]: newState
+                  [selectedTweak.name]: newState,
                 }
 
                 setToggleStates(newStates)
@@ -287,8 +287,8 @@ function Tweaks() {
                 try {
                   await saveToggleStates(newStates)
                   await invoke({
-                    channel: 'tweak:apply',
-                    payload: selectedTweak.name
+                    channel: "tweak:apply",
+                    payload: selectedTweak.name,
                   })
                   incrementTweaks()
                   if (selectedTweak.restart) {
@@ -296,9 +296,9 @@ function Tweaks() {
                   }
                   toast.update(loadingToastId, {
                     render: `Applied tweak: ${selectedTweak.title}`,
-                    type: 'success',
+                    type: "success",
                     isLoading: false,
-                    autoClose: 3000
+                    autoClose: 3000,
                   })
                 } catch (error) {
                   console.error(`Error applying tweak ${selectedTweak.title}:`, error)
@@ -306,7 +306,7 @@ function Tweaks() {
 
                   const revertedStates = {
                     ...toggleStates,
-                    [selectedTweak.name]: false
+                    [selectedTweak.name]: false,
                   }
                   setToggleStates(revertedStates)
                   await saveToggleStates(revertedStates)
@@ -339,8 +339,8 @@ function Tweaks() {
                   key={category}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95  ${
                     activeCategory === category
-                      ? 'bg-sparkle-primary text-white shadow-lg border border-sparkle-border'
-                      : 'bg-sparkle-card/50 text-sparkle-text-secondary  hover:bg-sparkle-border border border-sparkle-border-secondary'
+                      ? "bg-sparkle-primary text-white shadow-lg border border-sparkle-border"
+                      : "bg-sparkle-card/50 text-sparkle-text-secondary  hover:bg-sparkle-border border border-sparkle-border-secondary"
                   }`}
                   onClick={() => setActiveCategory(category)}
                 >
@@ -358,7 +358,7 @@ function Tweaks() {
               return (
                 <div
                   key={originalIndex}
-                  className="group bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border shadow-lg hover:shadow-xl hover:border-sparkle-border-secondary transition-all duration-300 overflow-hidde h-52 "
+                  className="group bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm hover:border-sparkle-border-secondary transition-all duration-300 overflow-hidde h-52 "
                 >
                   <div className="p-5 flex flex-col h-[260px]">
                     <div className="flex items-center justify-between mb-3">
@@ -383,7 +383,7 @@ function Tweaks() {
                                 side="right"
                               >
                                 <div className="p-1.5 bg-sparkle-accent rounded-lg hover:bg-sparkle-bg transition-colors text-sparkle-text">
-                                  {categoryIcons[cat] || categoryIcons['General']}
+                                  {categoryIcons[cat] || categoryIcons["General"]}
                                 </div>
                               </Tooltip>
                             ))}
