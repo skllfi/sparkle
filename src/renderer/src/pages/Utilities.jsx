@@ -1,13 +1,26 @@
 import { useState } from 'react'
-import { Settings, HardDrive, Activity, Shield, Wrench } from 'lucide-react'
 import { invoke } from '@/lib/electron'
 import RootDiv from '@/components/RootDiv'
 import Modal from '@/components/ui/modal'
 import { toast } from 'react-toastify'
 import Button from '@/components/ui/button'
-import { SquareTerminal } from 'lucide-react'
 import Toggle from '@/components/ui/toggle'
 import log from 'electron-log/renderer'
+import { SquareTerminal,
+    Binary,
+    ChartColumn,
+    Settings,
+    HardDrive,
+    Activity,
+    Shield,
+    Wrench,
+    Monitor,
+    MonitorCog,
+    Printer,
+    Info,
+    CaseSensitive,
+    ScreenShare
+} from 'lucide-react'
 
 const utilities = [
   {
@@ -120,15 +133,15 @@ export default function UtilitiesPage() {
   }
 
   const quickAccess = [
-    { name: 'Regedit', command: 'start regedit.exe' },
-    { name: 'Task Manager', command: 'start taskmgr.exe' },
-    { name: 'Disk Cleanup', command: 'start cleanmgr.exe' },
-    { name: 'Display Settings', command: 'start desk.cpl' },
-    { name: 'System Information', command: 'start msinfo32.exe' },
-    { name: 'Device Manager', command: 'start devmgmt.msc' },
-    { name: 'System Properties', command: 'start sysdm.cpl' },
-    { name: 'Character Map', command: 'start charmap.exe' },
-    { name: 'Remote Desktop', command: 'start mstsc.exe' }
+    { name: 'Regedit', command: 'start regedit.exe', icon: <Binary className="w-6 h-6 text-green-400" /> },
+    { name: 'Task Manager', command: 'start taskmgr.exe', icon: <ChartColumn className="w-6 h-6 text-blue-400" /> },
+    { name: 'Disk Cleanup', command: 'start cleanmgr.exe', icon: <HardDrive className="w-6 h-6 text-teal-400" /> },
+    { name: 'Display Settings', command: 'start desk.cpl', icon: <Monitor className="w-6 h-6 text-purple-400" /> },
+    { name: 'System Information', command: 'start msinfo32.exe', icon: <MonitorCog className="w-6 h-6 text-red-400" /> },
+    { name: 'Device Manager', command: 'start devmgmt.msc', icon: <Printer className="w-6 h-6 text-indigo-400" /> },
+    { name: 'System Properties', command: 'start sysdm.cpl', icon: <Info className="w-6 h-6 text-yellow-400" /> },
+    { name: 'Character Map', command: 'start charmap.exe', icon: <CaseSensitive className="w-6 h-6 text-pink-400" /> },
+    { name: 'Remote Desktop', command: 'start mstsc.exe', icon: <ScreenShare className="w-6 h-6 text-blue-400" /> }
   ]
 
   return (
@@ -165,7 +178,7 @@ export default function UtilitiesPage() {
                 onClick={() => openQuickAccessTool(tool.command)}
                 className="inline-flex items-center gap-2 px-3 py-3.5 text-sm bg-sparkle-card border border-sparkle-border rounded-xl hover:border-sparkle-primary transition text-sparkle-text"
               >
-                <SquareTerminal className="w-6 h-6 text-green-400" />
+                {tool.icon}
                 <span>Open {tool.name}</span>
               </button>
             ))}
