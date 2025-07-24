@@ -17,7 +17,7 @@ const themes = [
 ]
 
 function Settings() {
-  const [theme, setTheme] = useState('')
+  const [theme, setTheme] = useState(localStorage.getItem('theme'))
   const [discordEnabled, setDiscordEnabled] = useState(true)
   const [discordLoading, setDiscordLoading] = useState(false)
   const [posthogDisabled, setPosthogDisabled] = useState(() => {
@@ -25,10 +25,10 @@ function Settings() {
   })
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || ''
-    setTheme(savedTheme)
-  }, [])
+  // useEffect(() => {
+  //   const savedTheme = localStorage.getItem('theme') || ''
+  //   setTheme(savedTheme)
+  // }, [])
 
   useEffect(() => {
     document.body.classList.remove('light', 'purple', 'dark', 'green', 'gray', 'classic')
