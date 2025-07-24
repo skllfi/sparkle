@@ -1,62 +1,73 @@
-import RootDiv from '@/components/RootDiv'
-import { useEffect, useState } from 'react'
-import jsonData from '../../../../package.json'
-import { invoke } from '@/lib/electron'
-import Button from '@/components/ui/button'
-import Modal from '@/components/ui/modal'
-import Toggle from '@/components/ui/toggle'
-import { toast } from 'react-toastify'
+import RootDiv from "@/components/RootDiv"
+import { useEffect, useState } from "react"
+import jsonData from "../../../../package.json"
+import { invoke } from "@/lib/electron"
+import Button from "@/components/ui/button"
+import Modal from "@/components/ui/modal"
+import Toggle from "@/components/ui/toggle"
+import { toast } from "react-toastify"
 
 const themes = [
-  { label: 'Dark', value: '' },
-  { label: 'Light', value: 'light' },
-  { label: 'Purple', value: 'purple' },
-  { label: 'Green', value: 'green' },
-  { label: 'Gray', value: 'gray' },
-  { label: 'Classic', value: 'classic' }
+  { label: "Dark", value: "" },
+  { label: "Light", value: "light" },
+  { label: "Purple", value: "purple" },
+  { label: "Green", value: "green" },
+  { label: "Gray", value: "gray" },
+  { label: "Classic", value: "classic" },
 ]
 
 function Settings() {
-  const [theme, setTheme] = useState('')
+  const [theme, setTheme] = useState(localStorage.getItem("theme"))
   const [discordEnabled, setDiscordEnabled] = useState(true)
   const [discordLoading, setDiscordLoading] = useState(false)
+  const [trayEnabled, setTrayEnabled] = useState(true)
+  const [trayLoading, setTrayLoading] = useState(false)
   const [posthogDisabled, setPosthogDisabled] = useState(() => {
-    return localStorage.getItem('posthogDisabled') === 'true'
+    return localStorage.getItem("posthogDisabled") === "true"
   })
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || ''
-    setTheme(savedTheme)
-  }, [])
+  // useEffect(() => {
+  //   const savedTheme = localStorage.getItem('theme') || ''
+  //   setTheme(savedTheme)
+  // }, [])
 
   useEffect(() => {
-    document.body.classList.remove('light', 'purple', 'dark', 'green', 'gray', 'classic')
+    document.body.classList.remove("light", "purple", "dark", "green", "gray", "classic")
     if (theme) {
       document.body.classList.add(theme)
     }
-    localStorage.setItem('theme', theme)
+    localStorage.setItem("theme", theme)
   }, [theme])
 
   useEffect(() => {
-    invoke({ channel: 'discord-rpc:get' }).then((status) => setDiscordEnabled(status))
+    invoke({ channel: "discord-rpc:get" }).then((status) => setDiscordEnabled(status))
+    invoke({ channel: "tray:get" }).then((status) => setTrayEnabled(status))
   }, [])
 
   useEffect(() => {
     if (posthogDisabled) {
-      document.body.classList.add('ph-no-capture')
+      document.body.classList.add("ph-no-capture")
     } else {
-      document.body.classList.remove('ph-no-capture')
+      document.body.classList.remove("ph-no-capture")
     }
-    localStorage.setItem('posthogDisabled', posthogDisabled)
+    localStorage.setItem("posthogDisabled", posthogDisabled)
   }, [posthogDisabled])
 
   const handleToggleDiscord = async () => {
     setDiscordLoading(true)
     const newStatus = !discordEnabled
-    await invoke({ channel: 'discord-rpc:toggle', payload: newStatus })
+    await invoke({ channel: "discord-rpc:toggle", payload: newStatus })
     setDiscordEnabled(newStatus)
     setDiscordLoading(false)
+  }
+
+  const handleToggleTray = async () => {
+    setTrayLoading(true)
+    const newStatus = !trayEnabled
+    await invoke({ channel: "tray:set", payload: newStatus })
+    setTrayEnabled(newStatus)
+    setTrayLoading(false)
   }
 
   return (
@@ -72,7 +83,7 @@ function Settings() {
                     <label
                       key={t.value}
                       className={`flex items-center justify-center gap-2 cursor-pointer p-3 rounded-lg border transition-all duration-200 hover:scale-105 active:scale-95 ${
-                        theme === t.value ? 'border-sparkle-primary' : 'border-sparkle-border'
+                        theme === t.value ? "border-sparkle-primary" : "border-sparkle-border"
                       }`}
                     >
                       <input
@@ -111,11 +122,11 @@ function Settings() {
                   <span
                     className={`text-xs font-medium px-2 py-1 rounded-full ${
                       discordEnabled
-                        ? 'text-green-400 bg-green-400/10'
-                        : 'text-sparkle-text-secondary bg-sparkle-border-secondary/20'
+                        ? "text-green-400 bg-green-400/10"
+                        : "text-sparkle-text-secondary bg-sparkle-border-secondary/20"
                     }`}
                   >
-                    {discordEnabled ? 'Enabled' : 'Disabled'}
+                    {discordEnabled ? "Enabled" : "Disabled"}
                   </span>
                 </div>
               </div>
@@ -143,11 +154,11 @@ function Settings() {
                   <span
                     className={`text-xs font-medium px-2 py-1 rounded-full ${
                       posthogDisabled
-                        ? 'text-green-400 bg-green-400/10'
-                        : 'text-sparkle-text-secondary bg-sparkle-border-secondary/20'
+                        ? "text-green-400 bg-green-400/10"
+                        : "text-sparkle-text-secondary bg-sparkle-border-secondary/20"
                     }`}
                   >
-                    {posthogDisabled ? 'Disabled' : 'Enabled'}
+                    {posthogDisabled ? "Disabled" : "Enabled"}
                   </span>
                 </div>
               </div>
@@ -160,7 +171,7 @@ function Settings() {
                 <div className="flex-1">
                   <h3 className="text-base font-medium text-sparkle-text mb-1">Legacy Backups</h3>
                   <p className="text-sm text-sparkle-text-secondary">
-                    Remove old backup files stored in{' '}
+                    Remove old backup files stored in{" "}
                     <code className="bg-sparkle-border-secondary/20 px-1 py-0.5 rounded text-xs">
                       C:\Sparkle\Backup
                     </code>
@@ -182,8 +193,8 @@ function Settings() {
                 <Button
                   variant="secondary"
                   onClick={async () => {
-                    await invoke({ channel: 'clear-sparkle-cache' })
-                    toast.success('Sparkle cache cleared successfully!')
+                    await invoke({ channel: "clear-sparkle-cache" })
+                    toast.success("Sparkle cache cleared successfully!")
                   }}
                 >
                   Clear Cache
@@ -192,11 +203,44 @@ function Settings() {
                   variant="secondary"
                   className="ml-2"
                   onClick={async () => {
-                    await invoke({ channel: 'open-log-folder' })
+                    await invoke({ channel: "open-log-folder" })
                   }}
                 >
                   Open Log Folder
                 </Button>
+              </div>
+            </SettingCard>
+          </SettingSection>
+
+          <SettingSection title="Other">
+            <SettingCard>
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <h3 className="text-base font-medium text-sparkle-text mb-1">Show tray icon</h3>
+                  <p className="text-sm text-sparkle-text-secondary">
+                    Enable or disable the Sparkle tray icon in the system tray.
+                    <span className="inline-flex items-center gap-1 ml-2 text-yellow-500">
+                      <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></span>
+                      Requires restart
+                    </span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Toggle
+                    checked={trayEnabled}
+                    onChange={handleToggleTray}
+                    disabled={trayLoading}
+                  />
+                  <span
+                    className={`text-xs font-medium px-2 py-1 rounded-full ${
+                      trayEnabled
+                        ? "text-green-400 bg-green-400/10"
+                        : "text-sparkle-text-secondary bg-sparkle-border-secondary/20"
+                    }`}
+                  >
+                    {trayEnabled ? "Enabled" : "Disabled"}
+                  </span>
+                </div>
               </div>
             </SettingCard>
           </SettingSection>
@@ -239,10 +283,10 @@ function Settings() {
               <h2 className="text-xl font-semibold text-white mb-3">Delete Legacy Backups</h2>
               <p className="text-gray-300 text-sm leading-relaxed">
                 Are you sure you want to delete all legacy registry backups? This will permanently
-                remove the{' '}
+                remove the{" "}
                 <code className="bg-sparkle-border-secondary/20 px-1 py-0.5 rounded text-xs">
                   C:\Sparkle\Backup
-                </code>{' '}
+                </code>{" "}
                 folder and all its contents.
               </p>
             </div>
@@ -254,7 +298,7 @@ function Settings() {
                 variant="danger"
                 onClick={() => {
                   setDeleteModalOpen(false)
-                  invoke({ channel: 'delete-old-sparkle-backups' })
+                  invoke({ channel: "delete-old-sparkle-backups" })
                 }}
               >
                 Delete
@@ -267,7 +311,7 @@ function Settings() {
   )
 }
 // this saves alot of time
-const SettingCard = ({ children, className = '' }) => (
+const SettingCard = ({ children, className = "" }) => (
   <div className={`bg-sparkle-card border border-sparkle-border rounded-lg p-4 ${className}`}>
     {children}
   </div>

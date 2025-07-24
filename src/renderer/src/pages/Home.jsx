@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react'
-import RootDiv from '@/components/RootDiv'
-import { Cpu, HardDrive, Zap, MemoryStick, Server, Monitor } from 'lucide-react'
-import { invoke } from '@/lib/electron'
-import useTweaksStore from '../store/tweaksStore'
-import Button from '@/components/ui/button'
-import { useNavigate } from 'react-router-dom'
-import useSystemStore from '@/store/systemInfo'
-import log from 'electron-log/renderer'
+import { useState, useEffect } from "react"
+import RootDiv from "@/components/RootDiv"
+import { Cpu, HardDrive, Zap, MemoryStick, Server, Monitor } from "lucide-react"
+import { invoke } from "@/lib/electron"
+import useTweaksStore from "../store/tweaksStore"
+import Button from "@/components/ui/button"
+import { useNavigate } from "react-router-dom"
+import useSystemStore from "@/store/systemInfo"
+import log from "electron-log/renderer"
 function Home() {
   const systemInfo = useSystemStore((state) => state.systemInfo)
   const setSystemInfo = useSystemStore((state) => state.setSystemInfo)
@@ -16,7 +16,7 @@ function Home() {
   const activeTweaks = useTweaksStore((state) => state.activeTweaks)
 
   const goToTweaks = () => {
-    router('tweaks')
+    router("tweaks")
   }
 
   useEffect(() => {
@@ -24,14 +24,14 @@ function Home() {
       if (!systemInfo || Object.keys(systemInfo).length === 0) {
         try {
           const info = await invoke({
-            channel: 'get-system-info'
+            channel: "get-system-info",
           })
           setSystemInfo(info)
           log.info(systemInfo)
           console.log(systemInfo)
         } catch (error) {
-          console.error('Error fetching system info:', error)
-          log.error('Error fetching system info:', error)
+          console.error("Error fetching system info:", error)
+          log.error("Error fetching system info:", error)
         } finally {
           setLoading(false)
         }
@@ -46,19 +46,19 @@ function Home() {
     async function fetchTweakInfo() {
       try {
         const tweaks = await invoke({
-          channel: 'tweaks:fetch'
+          channel: "tweaks:fetch",
         })
         setTweakInfo(tweaks)
       } catch (error) {
-        console.error('Error fetching tweak info:', error)
+        console.error("Error fetching tweak info:", error)
       }
     }
 
     fetchTweakInfo()
   }, [])
   const formatBytes = (bytes) => {
-    if (bytes === 0 || !bytes) return '0 GB'
-    return (bytes / 1024 / 1024 / 1024).toFixed(2) + ' GB'
+    if (bytes === 0 || !bytes) return "0 GB"
+    return (bytes / 1024 / 1024 / 1024).toFixed(2) + " GB"
   }
 
   if (loading) {
@@ -85,7 +85,7 @@ function Home() {
     <RootDiv>
       <div className="max-w-[1800px] mx-auto ">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border shadow-lg overflow-hidden p-5">
+          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5">
             <div className="flex items-start gap-3 mb-4">
               <div className="p-3 bg-blue-500/10 rounded-lg">
                 <Cpu className="text-blue-500" size={24} />
@@ -99,19 +99,19 @@ function Home() {
               <div>
                 <p className="text-sparkle-text-secondary text-xs mb-1">Model</p>
                 <p className="text-sparkle-text font-medium">
-                  {systemInfo?.cpu_model || 'Unknown'}
+                  {systemInfo?.cpu_model || "Unknown"}
                 </p>
               </div>
               <div>
                 <p className="text-sparkle-text-secondary text-xs mb-1">Cores</p>
                 <p className="text-sparkle-text font-medium">
-                  {systemInfo?.cpu_cores || '0'} Cores
+                  {systemInfo?.cpu_cores || "0"} Cores
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border shadow-lg overflow-hidden p-5">
+          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5">
             <div className="flex items-start gap-3 mb-4">
               <div className="p-3 bg-green-500/10 rounded-lg">
                 <Monitor className="text-green-500" size={24} />
@@ -125,17 +125,17 @@ function Home() {
               <div>
                 <p className="text-sparkle-text-secondary text-xs mb-1">Model</p>
                 <p className="text-sparkle-text font-medium">
-                  {systemInfo?.gpu_model || 'Unknown'}
+                  {systemInfo?.gpu_model || "Unknown"}
                 </p>
               </div>
               <div>
                 <p className="text-sparkle-text-secondary text-xs mb-1">VRAM</p>
-                <p className="text-sparkle-text font-medium">{systemInfo?.vram || 'Unknown'}</p>
+                <p className="text-sparkle-text font-medium">{systemInfo?.vram || "Unknown"}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border shadow-lg overflow-hidden p-5">
+          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5">
             <div className="flex items-start gap-3 mb-4">
               <div className="p-3 bg-purple-500/10 rounded-lg">
                 <MemoryStick className="text-purple-500" size={24} />
@@ -155,13 +155,13 @@ function Home() {
               <div>
                 <p className="text-sparkle-text-secondary text-xs mb-1">Type</p>
                 <p className="text-sparkle-text font-medium">
-                  {systemInfo?.memory_type || 'Unknown'}
+                  {systemInfo?.memory_type || "Unknown"}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border shadow-lg overflow-hidden p-5">
+          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5">
             <div className="flex items-start gap-3 mb-4">
               <div className="p-3 bg-red-500/10 rounded-lg">
                 <Server className="text-red-500" size={24} />
@@ -174,18 +174,18 @@ function Home() {
             <div className="space-y-3">
               <div>
                 <p className="text-sparkle-text-secondary text-xs mb-1">Operating System</p>
-                <p className="text-sparkle-text font-medium">{systemInfo?.os || 'Unknown'}</p>
+                <p className="text-sparkle-text font-medium">{systemInfo?.os || "Unknown"}</p>
               </div>
               <div>
                 <p className="text-sparkle-text-secondary text-xs mb-1">Version</p>
                 <p className="text-sparkle-text font-medium">
-                  {systemInfo?.os_version || 'Unknown'}
+                  {systemInfo?.os_version || "Unknown"}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border shadow-lg overflow-hidden p-5">
+          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5">
             <div className="flex items-start gap-3 mb-4">
               <div className="p-3 bg-orange-500/10 rounded-lg">
                 <HardDrive className="text-orange-500" size={24} />
@@ -199,19 +199,19 @@ function Home() {
               <div>
                 <p className="text-sparkle-text-secondary text-xs mb-1">Primary Disk</p>
                 <p className="text-sparkle-text font-medium">
-                  {systemInfo?.disk_model || 'Unknown'}
+                  {systemInfo?.disk_model || "Unknown"}
                 </p>
               </div>
               <div>
                 <p className="text-sparkle-text-secondary text-xs mb-1">Total Space</p>
                 <p className="text-sparkle-text font-medium">
-                  {systemInfo?.disk_size || 'Unknown'}
+                  {systemInfo?.disk_size || "Unknown"}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border shadow-lg overflow-hidden p-5">
+          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5">
             <div className="flex items-start gap-3 mb-4">
               <div className="p-3 bg-yellow-500/10 rounded-lg">
                 <Zap className="text-yellow-500" size={24} />
@@ -224,16 +224,16 @@ function Home() {
             <div className="space-y-3">
               <div>
                 <p className="text-sparkle-text-secondary text-xs mb-1">Available Tweaks</p>
-                <p className="text-sparkle-text font-medium">{tweakInfo?.length || '0'} Tweaks</p>
+                <p className="text-sparkle-text font-medium">{tweakInfo?.length || "0"} Tweaks</p>
               </div>
               <div>
                 <p className="text-sparkle-text-secondary text-xs mb-1">Active Tweaks</p>
-                <p className="text-sparkle-text font-medium">{activeTweaks || '0'} Active</p>
+                <p className="text-sparkle-text font-medium">{activeTweaks || "0"} Active</p>
               </div>
             </div>
           </div>
         </div>
-        <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border shadow-lg overflow-hidden p-3 w-full mt-5 flex gap-4 items-center ">
+        <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-3 w-full mt-5 flex gap-4 items-center ">
           <div className="p-3 bg-yellow-500/10 rounded-lg items-center justify-center text-center ">
             <Zap className="text-yellow-500 " size={18} />
           </div>
