@@ -1,12 +1,13 @@
 import { useId } from 'react'
 import { Check } from 'lucide-react'
 
-export default function Checkbox({ label, checked, onChange }) {
+export default function Checkbox({ label, checked, onChange, onClick }) {
   const id = useId()
 
   return (
     <label
       htmlFor={id}
+      onClick={onClick}
       className="flex items-center gap-2 cursor-pointer select-none text-slate-200"
     >
       <input
