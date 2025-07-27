@@ -91,7 +91,7 @@
     },
     {
       "name": "Notepad++",
-      "id": "Notepad++",
+      "id": "Notepad++.Notepad++",
       "category": "development",
       "info": "A code editor that runs on your computer.",
       "link": "https://notepad-plus-plus.org/",

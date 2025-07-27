@@ -17,6 +17,15 @@ function Apps() {
   const [selectedApps, setSelectedApps] = useState([])
   const [loading, setLoading] = useState('')
   const [currentApp, setCurrentApp] = useState('')
+  const [installedApps, setInstalledApps] = useState(() => {
+    try {
+      const item = window.localStorage.getItem('installedApps')
+      return item ? JSON.parse(item) : []
+    } catch (error) {
+      console.error(error)
+      return []
+    }
+  })
   const appsList = data.apps
   const router = useNavigate()
 
@@ -30,27 +39,60 @@ function Apps() {
     return acc
   }, {})
 
+  const checkInstalledApps = () => {
+    invoke({
+      channel: 'handle-apps',
+      payload: {
+        action: 'check-installed',
+        apps: appsList.map((a) => a.id)
+      }
+    })
+  }
+
   useEffect(() => {
-    window.electron.ipcRenderer.on('install-progress', (event, message) => {
-      console.log(message)
-      setCurrentApp(message)
-    })
-    window.electron.ipcRenderer.on('install-complete', () => {
-      setLoading('')
-      setCurrentApp('')
-      toast.success('Operation completed successfully!')
-    })
-    window.electron.ipcRenderer.on('install-error', () => {
-      setLoading('')
-      setCurrentApp('')
-      toast.error('There was an error during the operation. Please try again.')
+    checkInstalledApps()
+
+    const listeners = {
+      'install-progress': (event, message) => {
+        console.log(message)
+        setCurrentApp(message)
+      },
+      'install-complete': () => {
+        setLoading('')
+        setCurrentApp('')
+        toast.success('Operation completed successfully!')
+        checkInstalledApps()
+      },
+      'install-error': () => {
+        setLoading('')
+        setCurrentApp('')
+        toast.error('There was an error during the operation. Please try again.')
+      },
+      'installed-apps-checked': (event, { success, installed, error }) => {
+        if (success) {
+          setInstalledApps(installed)
+          try {
+            window.localStorage.setItem('installedApps', JSON.stringify(installed))
+          } catch (err) {
+            console.error('Failed to save installed apps to localStorage', err)
+          }
+        } else {
+          console.error('Failed to check installed apps:', error)
+          toast.error('Could not verify installed apps.')
+        }
+      }
+    }
+
+    Object.entries(listeners).forEach(([channel, listener]) => {
+      window.electron.ipcRenderer.on(channel, listener)
     })
 
     return () => {
-      window.electron.ipcRenderer.removeAllListeners('install-progress')
-      window.electron.ipcRenderer.removeAllListeners('install-complete')
+      Object.keys(listeners).forEach((channel) => {
+        window.electron.ipcRenderer.removeAllListeners(channel)
+      })
     }
-  })
+  }, [])
 
   const handleAppAction = async (type) => {
     const actionVerb = type === 'install' ? 'Installing' : 'Uninstalling'
@@ -185,6 +227,11 @@ function Apps() {
                         <p className="text-xs text-sparkle-text-secondary">ID: {app.id}</p>
                       </div>
                     </div>
+                    {installedApps.includes(app.id) && (
+                      <div className="text-xs font-semibold text-sparkle-text bg-sparkle-accent py-1 px-2 rounded-full">
+                        Installed
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
