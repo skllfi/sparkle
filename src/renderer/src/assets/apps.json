@@ -790,6 +790,14 @@
       "info": "System Info Tool",
       "link": "https://github.com/fastfetch-cli/fastfetch",
       "icon": "https://github.com/fastfetch-cli/fastfetch"
+    },
+    {
+      "name": "ZeroTier One",
+      "id": "ZeroTier.ZeroTierOne",
+      "category": "utilities",
+      "info": "A softwarethat allows you to virtual networks.",
+      "link": "https://github.com/fastfetch-cli/fastfetch",
+      "icon": "https://github.com/fastfetch-cli/fastfetch"
     }
   ]
 }

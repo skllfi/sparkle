@@ -20,6 +20,7 @@ import useRestartStore from "@/store/restartState"
 import Button from "@/components/ui/button"
 import Toggle from "@/components/ui/Toggle"
 import log from "electron-log/renderer"
+import posthog from "posthog-js"
 
 function Tweaks() {
   const [tweaks, setTweaks] = useState([])
@@ -111,6 +112,10 @@ function Tweaks() {
           isLoading: false,
           autoClose: 3000,
         })
+        posthog.capture("tweak_applied", {
+          tweak_name: tweak.name,
+        })
+
       } else {
         await invoke({
           channel: "tweak:unapply",
@@ -125,6 +130,9 @@ function Tweaks() {
           type: "info",
           isLoading: false,
           autoClose: 3000,
+        })
+        posthog.capture("tweak_unapplied", {
+          tweak_name: tweak.name,
         })
       }
     } catch (error) {
@@ -179,6 +187,9 @@ function Tweaks() {
         type: "success",
         isLoading: false,
         autoClose: 3000,
+      })
+      posthog.capture("tweak_applied", {
+        tweak_name: tweak.name,
       })
     } catch (error) {
       console.error(`Error applying tweak ${tweak.title}:`, error)
