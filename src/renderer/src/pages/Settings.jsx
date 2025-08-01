@@ -62,6 +62,13 @@ function Settings() {
     setDiscordLoading(false)
   }
 
+  const clearCache = async () => {
+    await invoke({ channel: "clear-sparkle-cache" })
+    localStorage.removeItem("sparkle:systemInfo")
+    localStorage.removeItem("sparkle:tweakInfo")
+    toast.success("Sparkle cache cleared successfully!")
+  }
+
   const handleToggleTray = async () => {
     setTrayLoading(true)
     const newStatus = !trayEnabled
@@ -190,13 +197,7 @@ function Settings() {
                     Remove temporary PowerShell files Sparkle may leave behind.
                   </p>
                 </div>
-                <Button
-                  variant="secondary"
-                  onClick={async () => {
-                    await invoke({ channel: "clear-sparkle-cache" })
-                    toast.success("Sparkle cache cleared successfully!")
-                  }}
-                >
+                <Button variant="secondary" onClick={clearCache}>
                   Clear Cache
                 </Button>
                 <Button
