@@ -10,15 +10,15 @@ import log from "electron-log/renderer"
 function Home() {
   const systemInfo = useSystemStore((state) => state.systemInfo)
   const setSystemInfo = useSystemStore((state) => state.setSystemInfo)
-const [tweakInfo, setTweakInfo] = useState(() => {
-  try {
-    const cached = localStorage.getItem("sparkle:tweakInfo")
-    return cached ? JSON.parse(cached) : null
-  } catch (err) {
-    console.error("Failed to parse tweakInfo cache", err)
-    return null
-  }
-})
+  const [tweakInfo, setTweakInfo] = useState(() => {
+    try {
+      const cached = localStorage.getItem("sparkle:tweakInfo")
+      return cached ? JSON.parse(cached) : null
+    } catch (err) {
+      console.error("Failed to parse tweakInfo cache", err)
+      return null
+    }
+  })
   const router = useNavigate()
   const [loading, setLoading] = useState(true)
   const [usingCache, setUsingCache] = useState(false)
@@ -28,49 +28,61 @@ const [tweakInfo, setTweakInfo] = useState(() => {
     router("tweaks")
   }
 
-useEffect(() => {
-  async function fetchSystemInfo() {
-    const cached = localStorage.getItem("sparkle:systemInfo")
-    if (cached) {
-      try {
-        const parsed = JSON.parse(cached)
-        setSystemInfo(parsed)
-        setUsingCache(true)
-        setLoading(false)
-      } catch (err) {
-        console.warn("Failed to parse systemInfo cache", err)
+  useEffect(() => {
+    const idleHandle = requestIdleCallback(() => {
+      const cached = localStorage.getItem("sparkle:systemInfo")
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached)
+          setSystemInfo(parsed)
+          setUsingCache(true)
+          setLoading(false)
+        } catch (err) {
+          console.warn("Failed to parse systemInfo cache", err)
+        }
       }
-    }
 
-    try {
-      const info = await invoke({ channel: "get-system-info" })
-      setSystemInfo(info)
-      localStorage.setItem("sparkle:systemInfo", JSON.stringify(info))
-      setUsingCache(false)
-      log.info(info)
-    } catch (err) {
-      log.error("Error fetching system info:", err)
-      console.error("Error fetching system info:", err)
-    } finally {
-      setLoading(false)
-    }
-  }
+      invoke({ channel: "get-system-info" })
+        .then((info) => {
+          setSystemInfo(info)
+          localStorage.setItem("sparkle:systemInfo", JSON.stringify(info))
+          setUsingCache(false)
+          log.info("Fetched system info") // logging summary only
+        })
+        .catch((err) => {
+          log.error("Error fetching system info:", err)
+          console.error("Error fetching system info:", err)
+        })
+        .finally(() => setLoading(false))
+    })
 
-  fetchSystemInfo()
-}, [])
-useEffect(() => {
-  async function fetchTweakInfo() {
-    try {
-      const tweaks = await invoke({ channel: "tweaks:fetch" })
-      setTweakInfo(tweaks)
-      localStorage.setItem("sparkle:tweakInfo", JSON.stringify(tweaks))
-    } catch (err) {
-      console.error("Error fetching tweak info:", err)
-    }
-  }
+    return () => cancelIdleCallback(idleHandle)
+  }, [])
 
-  fetchTweakInfo()
-}, [])
+  useEffect(() => {
+    const idleHandle = requestIdleCallback(() => {
+      const cached = localStorage.getItem("sparkle:tweakInfo")
+      if (cached) {
+        try {
+          setTweakInfo(JSON.parse(cached))
+        } catch (err) {
+          console.error("Failed to parse tweakInfo cache", err)
+        }
+      }
+
+      invoke({ channel: "tweaks:fetch" })
+        .then((tweaks) => {
+          setTweakInfo(tweaks)
+          localStorage.setItem("sparkle:tweakInfo", JSON.stringify(tweaks))
+        })
+        .catch((err) => {
+          console.error("Error fetching tweak info:", err)
+        })
+    })
+
+    return () => cancelIdleCallback(idleHandle)
+  }, [])
+
   const formatBytes = (bytes) => {
     if (bytes === 0 || !bytes) return "0 GB"
     return (bytes / 1024 / 1024 / 1024).toFixed(2) + " GB"
@@ -267,9 +279,10 @@ useEffect(() => {
               <Zap size={18} /> Tweaks
             </Button>
           </div>
-          
         </div>
-        <p className="text-xs text-sparkle-text-secondary text-center mt-4">{usingCache ? "Loading latest system data..." : ""}</p>
+        <p className="text-xs text-sparkle-text-secondary text-center mt-4">
+          {usingCache ? "Loading latest system data..." : ""}
+        </p>
       </div>
     </RootDiv>
   )
