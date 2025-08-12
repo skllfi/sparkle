@@ -73,11 +73,18 @@ ipcMain.handle("tray:set", (event, value) => {
   return store.get("showTray")
 })
 
-store.set("discord-rpc", false)
-if (store.get("discord-rpc") !== true) {
+if (store.get("discord-rpc") === undefined) {
   store.set("discord-rpc", true)
   startDiscordRPC()
   console.log("(main.js) ", logo, "Starting Discord RPC")
+}
+
+switch (store.get("discord-rpc")) {
+  case true:
+    startDiscordRPC()
+    break
+  case false:
+    break
 }
 
 ipcMain.handle("discord-rpc:toggle", async (event, value) => {
@@ -144,8 +151,7 @@ app.whenReady().then(() => {
   setTimeout(() => {
     void triggerAutoUpdateCheck()
   }, 1500)
-  setupTweaksHandlers()
-  setupDNSHandlers()
+  Promise.all([setupTweaksHandlers(), setupDNSHandlers()])
   if (app.isPackaged) {
     globalShortcut.register("CommandOrControl+R", () => {})
     globalShortcut.register("F5", () => {})
