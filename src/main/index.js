@@ -18,7 +18,7 @@ import { setupTweaksHandlers } from "./tweakHandler"
 import { setupDNSHandlers } from "./dnsHandler"
 import Store from "electron-store"
 import { startDiscordRPC, stopDiscordRPC } from "./rpc"
-import { autoUpdater } from "electron-updater"
+import { initAutoUpdater, triggerAutoUpdateCheck } from "./updates.js"
 Sentry.init({
   dsn: "https://d1e8991c715dd717e6b7b44dbc5c43dd@o4509167771648000.ingest.us.sentry.io/4509167772958720",
   ipcMode: IPCMode.Both,
@@ -26,9 +26,6 @@ Sentry.init({
 console.log = log.log
 console.error = log.error
 console.warn = log.warn
-
-autoUpdater.autoDownload = true
-autoUpdater.autoInstallOnAppQuit = true
 
 export const logo = "[Sparkle]:"
 log.initialize()
@@ -126,15 +123,6 @@ function createWindow() {
       trayInstance = createTray(mainWindow)
     }
     Defender()
-
-    autoUpdater.checkForUpdatesAndNotify().catch(console.error)
-    setInterval(
-      () => {
-        // ik theres a better way to do this but i will fix it later
-        autoUpdater.checkForUpdatesAndNotify().catch(console.error)
-      },
-      15 * 60 * 1000,
-    )
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -151,6 +139,11 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow()
+  initAutoUpdater(() => mainWindow)
+
+  setTimeout(() => {
+    void triggerAutoUpdateCheck()
+  }, 1500)
   setupTweaksHandlers()
   setupDNSHandlers()
   if (app.isPackaged) {
@@ -158,17 +151,6 @@ app.whenReady().then(() => {
     globalShortcut.register("F5", () => {})
     globalShortcut.register("CommandOrControl+Shift+R", () => {})
   }
-  autoUpdater.on("update-available", () => {
-    console.log(logo, "Update available.")
-  })
-
-  autoUpdater.on("update-not-available", () => {
-    console.log(logo, "No update available.")
-  })
-
-  autoUpdater.on("error", (err) => {
-    console.error(logo, "Error in auto-updater:", err)
-  })
 
   electronApp.setAppUserModelId("com.parcoil.sparkle")
 

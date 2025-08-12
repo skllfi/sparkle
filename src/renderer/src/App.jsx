@@ -14,6 +14,7 @@ import DNS from './pages/DNS'
 import Settings from './pages/Settings'
 import Backup from './pages/Backup'
 import FirstTime from './components/FirstTime'
+import UpdateManager from './components/UpdateManager'
 
 function App() {
   const [theme, setTheme] = useState(localStorage.getItem('theme'))
@@ -64,6 +65,8 @@ function App() {
           </main>
         </>
       </div>
+
+      <UpdateManager />
 
       <ToastContainer
         stacked

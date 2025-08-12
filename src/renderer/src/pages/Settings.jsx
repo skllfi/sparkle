@@ -16,8 +16,9 @@ const themes = [
   { label: "Classic", value: "classic" },
 ]
 
-function Settings() {
+function Settings({onCheckForUpdates}) {
   const [theme, setTheme] = useState(localStorage.getItem("theme"))
+  const [checking, setChecking] = useState(false)
   const [discordEnabled, setDiscordEnabled] = useState(true)
   const [discordLoading, setDiscordLoading] = useState(false)
   const [trayEnabled, setTrayEnabled] = useState(true)
@@ -31,6 +32,20 @@ function Settings() {
   //   const savedTheme = localStorage.getItem('theme') || ''
   //   setTheme(savedTheme)
   // }, [])
+
+const checkForUpdates = async () => {
+    try {
+      setChecking(true)
+      const res = await window.electron.ipcRenderer.invoke('updater:check')
+      if (res?.ok && !res.updateInfo) {
+        toast.success("You're up to date")
+      }
+    } catch (e) {
+      toast.error(String(e))
+    } finally {
+      setChecking(false)
+    }
+  }
 
   useEffect(() => {
     document.body.classList.remove("light", "purple", "dark", "green", "gray", "classic")
@@ -171,7 +186,21 @@ function Settings() {
               </div>
             </SettingCard>
           </SettingSection>
-
+<SettingSection title="Updates">
+<SettingCard>
+  <div className="flex items-center justify-between">
+    <div className="flex-1">
+      <h3 className="text-base font-medium text-sparkle-text mb-1">Check for Updates</h3>
+      <p className="text-sm text-sparkle-text-secondary">
+        Check for updates
+      </p>
+    </div>
+    <Button onClick={checkForUpdates} disabled={checking}>
+      {checking ? "Checking..." : "Check for Updates"}
+    </Button>
+  </div>
+</SettingCard>
+</SettingSection>
           <SettingSection title="Data Management">
             <SettingCard>
               <div className="flex items-center justify-between mb-4">
