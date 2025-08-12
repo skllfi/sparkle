@@ -89,7 +89,7 @@ function Settings() {
                   {themes.map((t) => (
                     <label
                       key={t.value}
-                      className={`flex items-center justify-center gap-2 cursor-pointer p-3 rounded-lg border transition-all duration-200 hover:scale-105 active:scale-95 ${
+                      className={`flex items-center justify-center gap-2 cursor-pointer p-3 rounded-lg border transition-all duration-200 active:scale-95 ${
                         theme === t.value ? "border-sparkle-primary" : "border-sparkle-border"
                       }`}
                     >
