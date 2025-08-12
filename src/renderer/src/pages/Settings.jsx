@@ -16,7 +16,7 @@ const themes = [
   { label: "Classic", value: "classic" },
 ]
 
-function Settings({onCheckForUpdates}) {
+function Settings({ onCheckForUpdates }) {
   const [theme, setTheme] = useState(localStorage.getItem("theme"))
   const [checking, setChecking] = useState(false)
   const [discordEnabled, setDiscordEnabled] = useState(true)
@@ -33,10 +33,10 @@ function Settings({onCheckForUpdates}) {
   //   setTheme(savedTheme)
   // }, [])
 
-const checkForUpdates = async () => {
+  const checkForUpdates = async () => {
     try {
       setChecking(true)
-      const res = await window.electron.ipcRenderer.invoke('updater:check')
+      const res = await window.electron.ipcRenderer.invoke("updater:check")
       if (res?.ok && !res.updateInfo) {
         toast.success("You're up to date")
       }
@@ -154,7 +154,21 @@ const checkForUpdates = async () => {
               </div>
             </SettingCard>
           </SettingSection>
-
+          <SettingSection title="Updates">
+            <SettingCard>
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <h3 className="text-base font-medium text-sparkle-text mb-1">
+                    Check for Updates
+                  </h3>
+                  <p className="text-sm text-sparkle-text-secondary">Check for updates</p>
+                </div>
+                <Button onClick={checkForUpdates} disabled={checking}>
+                  {checking ? "Checking..." : "Check for Updates"}
+                </Button>
+              </div>
+            </SettingCard>
+          </SettingSection>
           <SettingSection title="Privacy">
             <SettingCard>
               <div className="flex items-center justify-between">
@@ -186,21 +200,7 @@ const checkForUpdates = async () => {
               </div>
             </SettingCard>
           </SettingSection>
-<SettingSection title="Updates">
-<SettingCard>
-  <div className="flex items-center justify-between">
-    <div className="flex-1">
-      <h3 className="text-base font-medium text-sparkle-text mb-1">Check for Updates</h3>
-      <p className="text-sm text-sparkle-text-secondary">
-        Check for updates
-      </p>
-    </div>
-    <Button onClick={checkForUpdates} disabled={checking}>
-      {checking ? "Checking..." : "Check for Updates"}
-    </Button>
-  </div>
-</SettingCard>
-</SettingSection>
+
           <SettingSection title="Data Management">
             <SettingCard>
               <div className="flex items-center justify-between mb-4">
@@ -223,7 +223,7 @@ const checkForUpdates = async () => {
                     Clear Sparkle Cache
                   </h3>
                   <p className="text-sm text-sparkle-text-secondary">
-                    Remove temporary PowerShell files Sparkle may leave behind.
+                    Remove temporary files/logs Sparkle may leave behind.
                   </p>
                 </div>
                 <Button variant="secondary" onClick={clearCache}>
