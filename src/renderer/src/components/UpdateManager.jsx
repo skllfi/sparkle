@@ -1,7 +1,7 @@
-import { useState, useEffect, useMemo } from 'react'
-import Modal from '@/components/ui/modal' 
-import Button  from '@/components/ui/button' 
-import { toast } from 'react-toastify'
+import { useState, useEffect, useMemo } from "react"
+import Modal from "@/components/ui/modal"
+import Button from "@/components/ui/button"
+import { toast } from "react-toastify"
 
 export default function UpdateManager() {
   const [updateOpen, setUpdateOpen] = useState(false)
@@ -64,16 +64,16 @@ export default function UpdateManager() {
 
   return (
     <Modal open={updateOpen} onClose={() => !isDownloading && setUpdateOpen(false)}>
-      <div className="bg-sparkle-card dark:bg-sparkle-card-dark rounded-lg shadow-lg max-w-md p-6 min-w-[300px] border-sparkle-border border">
+      <div className="bg-sparkle-card border border-sparkle-border rounded-2xl p-6 shadow-xl max-w-lg w-full mx-4">
         <h2 className="text-xl font-semibold mb-2 text-sparkle-text">
-          Update available{updateVersion ? ` (${updateVersion})` : ''}
+          Update available{updateVersion ? ` (${updateVersion})` : ""}
         </h2>
         <p className="mb-6 text-sparkle-text">
           {isDownloaded
-            ? 'The update has been downloaded. Restart to install now.'
+            ? "The update has been downloaded. Restart to install now."
             : isDownloading
-            ? `Downloading update… ${Math.floor(downloadPercent)}%`
-            : 'A new version is available. Would you like to update now?'}
+              ? `Downloading update… ${Math.floor(downloadPercent)}%`
+              : "A new version is available. Would you like to update now?"}
         </p>
         <div className="flex justify-end gap-3">
           {!isDownloading && (
@@ -82,11 +82,7 @@ export default function UpdateManager() {
             </Button>
           )}
           <Button onClick={handleUpdateNow} disabled={isDownloading}>
-            {isDownloaded
-              ? 'Restart and install'
-              : isDownloading
-              ? 'Downloading…'
-              : 'Update now'}
+            {isDownloaded ? "Restart and install" : isDownloading ? "Downloading…" : "Update now"}
           </Button>
         </div>
       </div>
