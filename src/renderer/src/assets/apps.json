@@ -155,7 +155,7 @@
     },
     {
       "name": "Telegram Desktop",
-      "id": "Telegram",
+      "id": "Telegram.TelegramDesktop",
       "category": "communication",
       "info": "A messaging app.",
       "link": "https://telegram.org/",
@@ -383,7 +383,7 @@
     },
     {
       "name": "Express VPN",
-      "id": "ExpressVPN.Express VPN",
+      "id": "ExpressVPN.ExpressVPN",
       "category": "VPN",
       "info": "A VPN service.",
       "link": "https://windscribe.com/",
@@ -391,7 +391,7 @@
     },
     {
       "name": "Private Internet Access",
-      "id": "PrivateInternetAccess.PrivateInternetAccessN",
+      "id": "PrivateInternetAccess.PrivateInternetAccess",
       "category": "VPN",
       "info": "A VPN service.",
       "link": "https://www.privateinternetaccess.com/",
