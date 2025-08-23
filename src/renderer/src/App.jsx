@@ -74,7 +74,9 @@ function App() {
         position="bottom-right"
         theme="dark"
         transition={Slide}
-        toastClassName="bg-gray-800 text-white"
+        hideProgressBar
+        pauseOnFocusLoss={false}
+    
       />
     </div>
   )
