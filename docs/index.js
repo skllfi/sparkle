@@ -88,7 +88,7 @@ A collection of tweaks to customize and enhance your Windows experience using Sp
 
 _this page is auto-generated, do not edit directly_
 
-## All Tweaks
+## All Tweaks (${tweaksList.length})
 ${tweaksList.map((t) => `- [${t.name}](tweaks/${t.slug}.md)`).join("\n")}
 `
 
