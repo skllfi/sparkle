@@ -147,7 +147,7 @@ function Tweaks() {
 
       const revertedStates = {
         ...newStates,
-        [index]: !newState,
+        [tweak.name]: !newState,
       }
 
       setToggleStates(revertedStates)
@@ -272,12 +272,24 @@ function Tweaks() {
 
   return (
     <RootDiv>
-      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      <Modal
+        open={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false)
+        }}
+      >
         <div className="bg-sparkle-card border border-sparkle-border rounded-2xl p-6 shadow-xl max-w-lg w-full mx-4">
-          <h3 className="text-lg font-medium text-sparkle-text mb-4">{selectedTweak?.title}</h3>
-          <div className="text-sparkle-text-secondary 0 mb-6">{modalContent}</div>
+          <h3 className="text-xl font-semibold text-sparkle-text mb-3">{selectedTweak?.title}</h3>
+          <div className="text-sparkle-text-secondary text-sm leading-6 whitespace-pre-wrap max-h-64 overflow-y-auto custom-scrollbar mb-6">
+            {modalContent}
+          </div>
           <div className="flex justify-end gap-3">
-            <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setIsModalOpen(false)
+              }}
+            >
               Cancel
             </Button>
             <Button
@@ -407,7 +419,11 @@ function Tweaks() {
                         {tweak.reversible == null || tweak.reversible == true ? (
                           <Toggle
                             checked={toggleStates[tweak.name] || false}
-                            onChange={() => handleToggle(originalIndex)}
+                            onChange={(e) => {
+                              e.preventDefault()
+                              e.stopPropagation()
+                              handleToggle(originalIndex)
+                            }}
                             disabled={false}
                           />
                         ) : (
