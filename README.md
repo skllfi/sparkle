@@ -45,6 +45,12 @@ irm https://raw.githubusercontent.com/Parcoil/Sparkle/v2/get.ps1 | iex
 </div>
 
 <div>
+  <h2>📃 Docs</h2>
+  <p>You can find the docs <a href="https://sparkle.parcoil.com">here</a></p>
+  the docs cover all the tweaks how they work what they do and all of sparkles pages
+</div>
+
+<div>
   <h3>💖 Credits</h3>
   <ul>
     <li>
