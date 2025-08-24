@@ -11,3 +11,14 @@ pnpm-lock.yaml
 firstsparkle2build.zip
 .env
 .mutagen.yml
+
+
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
