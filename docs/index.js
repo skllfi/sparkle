@@ -3,9 +3,9 @@
 import fs from "fs"
 import path from "path"
 
-const tweaksDir = "../resources/tweaks"
+const tweaksDir = "./resources/tweaks"
 const docsDir = "./docs/tweaks"
-const tweaksIndexFile = "./docs/tweaks.md"
+const tweaksIndexFile = "./docs/docs/tweaks.md"
 
 fs.mkdirSync(docsDir, { recursive: true })
 
@@ -94,5 +94,5 @@ ${tweaksList.map((t) => `- [${t.name}](tweaks/${t.slug}.md)`).join("\n")}
 
 fs.writeFileSync(tweaksIndexFile, tweaksIndex.trim() + "\n", "utf-8")
 
-console.log("[✅] - Docs generated!")
-console.log(`[🛠️] - Total tweaks: ${tweaksList.length}`)
+console.log("✅ - Docs generated!")
+console.log(`🛠️  - Total tweaks: ${tweaksList.length}`)
