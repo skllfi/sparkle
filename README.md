@@ -54,7 +54,7 @@ irm https://raw.githubusercontent.com/Parcoil/Sparkle/v2/get.ps1 | iex
   <h3>💖 Credits</h3>
   <ul>
     <li>
-      <a href="https://github.com/ChrisTitusTech/winutil">CTT's WinUtil (Some of the tweaks & inspo for making this project)</a>
+      <a href="https://github.com/ChrisTitusTech/winutil">CTT's WinUtil (Some of the tweaks & part of the inspo for making this v2 of this project)</a>
     </li>
     <li>
       <a href="https://github.com/Raphire/Win11Debloat">Win11Debloat (Main windows debloat script)</a>
@@ -68,6 +68,8 @@ irm https://raw.githubusercontent.com/Parcoil/Sparkle/v2/get.ps1 | iex
     <li>Tweaks are located in <code>resources/tweaks/</code></li>
     <li>More info in <code>resources/tweaks/readme.md</code></li>
   </ul>
+
+Refer to the <a href="https://sparkle.parcoil.com">docs</a> for more info on how to add new tweaks
 
   <h4>Other Ways to Contribute</h4>
   <ul>
