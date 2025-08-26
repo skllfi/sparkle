@@ -7,8 +7,11 @@ Description: Improves system responsiveness and reduces latency by disabling dyn
 
 - Disables Windows Dynamic Ticking by setting `disabledynamictick` to `yes` using `bcdedit`, which prevents the system timer from stopping to reduce input latency and improve responsiveness.
 
-> ⚠️ May increase power consumption
 
+!!! warning "Tweak Warning"
+    
+
+    May increase power consumption
 
 ## Apply
 ```powershell

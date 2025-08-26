@@ -44,7 +44,8 @@ Sparkle is a free and open-source Windows optimization tool. It provides a user-
 
 ## Learn More
 
-- [Tweaks & Customization](tweaks.md)
+- [Tweaks & Customization](tweaks)
+- [Creating Tweaks](creating-tweaks)
 - [Official Website](https://parcoil.com/sparkle/)
 - [GitHub Repository](https://github.com/Parcoil/Sparkle)
 

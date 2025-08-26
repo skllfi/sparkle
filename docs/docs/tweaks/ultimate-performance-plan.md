@@ -6,8 +6,10 @@ Description: Enables And Applys The Windows Ultimate Powerplan for better perfor
 - Enables the Ultimate Performance power plan by creating it if missing, retrieving its GUID, and activating it to maximize system responsiveness and performance by preventing power-saving limitations.
 
 
-> ⭐ This is a recommended tweak.
 
+!!! tip "Recommended"
+
+    This is a recommended tweak.
 ## Apply
 ```powershell
 $ultimatePlan = powercfg -l | Select-String "Ultimate Performance"

@@ -2,8 +2,11 @@
 ID/URL: optimize-nvidia-settings
 
 Description: Changes Nvidia Control Panel settings to improve performance
-> ⚠️ This tweak cannot be reversed. Must be done manually  
 
+!!! info
+
+    This tweak cannot be reversed. Must be done manually
+  
 ## This tweak sets the following NVIDIA Control Panel settings to maximize performance and reduce input lag:
 
 - Image Scaling → Off

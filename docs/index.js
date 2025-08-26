@@ -66,12 +66,35 @@ for (const folder of subfolders) {
 ID/URL: ${tweak.name || folder}
 
 Description: ${tweak.description || ""}
-${tweak.reversible === false ? "> ⚠️ This tweak cannot be reversed. Must be done manually  \n" : ""}
+${
+  tweak.reversible === false
+    ? `
+!!! info
+
+    This tweak cannot be reversed. Must be done manually
+  `
+    : ""
+}
 ${deepDesc}
 
-${tweak.warning ? `> ⚠️ ${tweak.warning}\n` : ""}
-${tweak.recommended ? "> ⭐ This is a recommended tweak.\n" : ""}
-${applyScript ? `## Apply\n\`\`\`powershell\n${applyScript}\n\`\`\`\n` : ""}
+
+${
+  tweak.warning
+    ? `!!! warning "Tweak Warning"
+    
+
+    ${tweak.warning}
+`
+    : ""
+}
+${
+  tweak.recommended
+    ? `!!! tip "Recommended"
+
+    This is a recommended tweak.
+`
+    : ""
+}${applyScript ? `## Apply\n\`\`\`powershell\n${applyScript}\n\`\`\`\n` : ""}
 ${unapplyScript ? `## Unapply\n\`\`\`powershell\n${unapplyScript}\n\`\`\`\n` : ""}
 
 

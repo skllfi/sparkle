@@ -5,5 +5,11 @@
 
   "reversible": false,
   "modal": "You can reinstall these apps in the Microsoft Store. Look for these in the Microsoft Store: 'Xbox Game Bar and Xbox App'",
-  "category": ["Performance", "Privacy"]
+  "category": ["Performance", "Privacy"],
+  "links": [
+    {
+      "name": "Reinstall Xbox App",
+      "url": "https://apps.microsoft.com/detail/9mv0b5hzvk9z"
+    }
+  ]
 }

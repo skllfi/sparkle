@@ -5,8 +5,11 @@ Description: Forces use of the High Precision Event Timer (HPET), which can redu
 
 - Enables the High Precision Event Timer (HPET) by setting useplatformclock to true via bcdedit, which can improve timing accuracy and reduce stuttering on some systems, though may increase input latency in others.
 
-> ⚠️ May increase input latency on some systems
 
+!!! warning "Tweak Warning"
+    
+
+    May increase input latency on some systems
 
 ## Apply
 ```powershell

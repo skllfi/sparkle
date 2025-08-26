@@ -2,8 +2,11 @@
 ID/URL: debloat-windows
 
 Description: Removes Unnecessary Windows Features And Apps (RECOMMENDED)
-> ⚠️ This tweak cannot be reversed. Must be done manually  
 
+!!! info
+
+    This tweak cannot be reversed. Must be done manually
+  
 ## Overview:
 
 - This tweak removes unnecessary applications from your Windows installation to improve system performance, reduce clutter, and enhance privacy.
@@ -102,8 +105,10 @@ Description: Removes Unnecessary Windows Features And Apps (RECOMMENDED)
 - XING
 
 
-> ⭐ This is a recommended tweak.
 
+!!! tip "Recommended"
+
+    This is a recommended tweak.
 ## Apply
 ```powershell
 & ([scriptblock]::Create((Invoke-RestMethod 'https://debloat.raphi.re/'))) `

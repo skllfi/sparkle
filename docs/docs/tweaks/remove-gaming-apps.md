@@ -2,8 +2,11 @@
 ID/URL: remove-gaming-apps
 
 Description: Removes Xbox app, Xbox Game Bar, and Xbox Game Overlay
-> ⚠️ This tweak cannot be reversed. Must be done manually  
 
+!!! info
+
+    This tweak cannot be reversed. Must be done manually
+  
 
 
 
@@ -18,3 +21,12 @@ foreach ($app in $appsList) {
 }
 
 ```
+
+
+
+
+
+
+
+## Links
+- [Reinstall Xbox App](https://apps.microsoft.com/detail/9mv0b5hzvk9z)
