@@ -169,6 +169,33 @@ function Settings({ onCheckForUpdates }) {
               </div>
             </SettingCard>
           </SettingSection>
+          <SettingSection title="Profile">
+            <SettingCard>
+              <div className="space-y-4">
+                <h3 className="text-base font-medium text-sparkle-text">User Name</h3>
+                <input
+                  type="text"
+                  defaultValue={localStorage.getItem("sparkle:user") || ""}
+                  onChange={(e) => localStorage.setItem("sparkle:user", e.target.value)}
+                  className="w-full bg-sparkle-card border border-sparkle-border rounded-lg px-3 py-2 text-sparkle-text focus:ring-0 focus:outline-none"
+                  placeholder="Enter your name"
+                />
+                <div className="flex gap-2">
+                  <Button
+                    variant="secondary"
+                    onClick={async () => {
+                      const username = await invoke({ channel: "get-user-name" })
+                      localStorage.setItem("sparkle:user", username)
+                      toast.success("Name reset to system user")
+                    }}
+                  >
+                    Reset to System Name
+                  </Button>
+                </div>
+              </div>
+            </SettingCard>
+          </SettingSection>
+
           <SettingSection title="Privacy">
             <SettingCard>
               <div className="flex items-center justify-between">

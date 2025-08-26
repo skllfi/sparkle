@@ -7,6 +7,7 @@ import Button from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import useSystemStore from "@/store/systemInfo"
 import log from "electron-log/renderer"
+import Greeting from "@/components/Greeting"
 function Home() {
   const systemInfo = useSystemStore((state) => state.systemInfo)
   const setSystemInfo = useSystemStore((state) => state.setSystemInfo)
@@ -111,6 +112,7 @@ function Home() {
   return (
     <RootDiv>
       <div className="max-w-[1800px] mx-auto ">
+       <Greeting />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5">
             <div className="flex items-start gap-3 mb-4">

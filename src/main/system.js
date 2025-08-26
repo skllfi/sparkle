@@ -93,7 +93,9 @@ function restartSystem() {
     throw error
   }
 }
-
+function getUserName() {
+  return os.userInfo().username
+}
 function clearSparkleCache() {
   try {
     const appDataPath = process.env.APPDATA || path.join(os.homedir(), "AppData", "Roaming")
@@ -175,3 +177,4 @@ ipcMain.handle("restart", restartSystem)
 ipcMain.handle("open-log-folder", openLogFolder)
 ipcMain.handle("clear-sparkle-cache", clearSparkleCache)
 ipcMain.handle("get-system-info", getSystemInfo)
+ipcMain.handle("get-user-name", getUserName)
