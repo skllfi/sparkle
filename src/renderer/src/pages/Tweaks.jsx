@@ -9,6 +9,7 @@ import {
   Network,
   Zap,
   Paintbrush,
+  ExternalLink,
 } from "lucide-react"
 import { toast } from "react-toastify"
 import RootDiv from "@/components/RootDiv"
@@ -415,13 +416,29 @@ function Tweaks() {
                           </>
                         </div>
                       )}
-                      <div className="flex items-center m-0">
+                      <div className="flex items-center m-0 gap-2">
+                        <Button
+                          variant="secondary"
+                          className="!px-2 !py-1 text-xs flex items-center gap-1"
+                          title="Open Docs"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            const url = `https://sparkle.parcoil.com/tweaks/${tweak.name}`
+                            window.open(url, "_blank")
+                          }}
+                        >
+                          <ExternalLink className="w-3 h-3" /> Docs
+                        </Button>
                         {tweak.reversible == null || tweak.reversible == true ? (
                           <Toggle
                             checked={toggleStates[tweak.name] || false}
                             onChange={(e) => {
-                              e.preventDefault()
-                              e.stopPropagation()
+                              const willOpenModal = !!tweak.modal && !toggleStates[tweak.name]
+                              if (willOpenModal) {
+                                e.preventDefault()
+                                e.stopPropagation()
+                              }
                               handleToggle(originalIndex)
                             }}
                             disabled={false}
