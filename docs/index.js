@@ -77,7 +77,14 @@ ${
 }
 ${deepDesc}
 
-
+${
+  tweak.docs_warning
+    ? `!!! warning "Tweak Warning"
+    
+    
+    ${tweak.docs_warning}`
+    : ""
+}
 ${
   tweak.warning
     ? `!!! warning "Tweak Warning"
