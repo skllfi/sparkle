@@ -22,9 +22,10 @@ function Apps() {
   const appsList = data.apps
   const router = useNavigate()
 
-  const filteredApps = appsList.filter((app) =>
-    app.name.toLowerCase().includes(search.toLowerCase()),
-  )
+  const filteredApps = useMemo(() => {
+    const query = search.toLowerCase()
+    return appsList.filter((app) => app.name.toLowerCase().includes(query))
+  }, [search, appsList])
 
   const appsByCategory = useMemo(() => {
     return filteredApps.reduce((acc, app) => {
@@ -50,60 +51,12 @@ function Apps() {
   }
 
   useEffect(() => {
-    const idleHandle = requestIdleCallback(() => {
-      try {
-        const item = window.localStorage.getItem("installedApps")
-        if (item) {
-          setInstalledApps(JSON.parse(item))
-        }
-      } catch (error) {
-        console.error("Failed to parse installedApps from localStorage", error)
-      }
-    })
-
-    checkInstalledApps()
-
-    const listeners = {
-      "install-progress": (event, message) => {
-        console.log(message)
-        setCurrentApp(message)
-      },
-      "install-complete": () => {
-        setLoading("")
-        setCurrentApp("")
-        toast.success("Operation completed successfully!")
-        checkInstalledApps()
-      },
-      "install-error": () => {
-        setLoading("")
-        setCurrentApp("")
-        toast.error("There was an error during the operation. Please try again.")
-      },
-      "installed-apps-checked": (event, { success, installed, error }) => {
-        if (success) {
-          setInstalledApps(installed)
-          try {
-            window.localStorage.setItem("installedApps", JSON.stringify(installed))
-          } catch (err) {
-            console.error("Failed to save installed apps to localStorage", err)
-          }
-        } else {
-          console.error("Failed to check installed apps:", error)
-          toast.error("Could not verify installed apps.")
-        }
-      },
-    }
-
-    Object.entries(listeners).forEach(([channel, listener]) => {
-      window.electron.ipcRenderer.on(channel, listener)
-    })
-
-    return () => {
-      cancelIdleCallback(idleHandle)
-      Object.keys(listeners).forEach((channel) => {
-        window.electron.ipcRenderer.removeAllListeners(channel)
-      })
-    }
+    try {
+      const item = window.localStorage.getItem("installedApps")
+      if (item) setInstalledApps(JSON.parse(item))
+    } catch {}
+    const idleHandle = requestIdleCallback(() => checkInstalledApps())
+    return () => cancelIdleCallback(idleHandle)
   }, [])
 
   const handleAppAction = async (type) => {
@@ -111,22 +64,10 @@ function Apps() {
     setLoading(type)
 
     try {
-      const commands = selectedApps.flatMap((appId) => {
-        const app = appsList.find(
-          (a) => a.id === appId || (Array.isArray(a.id) && a.id.includes(appId)),
-        )
-        return app
-      })
-      console.log(commands)
       invoke({
         channel: "handle-apps",
-        payload: {
-          action: type,
-          apps: selectedApps,
-        },
+        payload: { action: type, apps: selectedApps },
       })
-
-      if (commands.length === 0) return
     } catch (error) {
       console.error(`Error ${actionVerb.toLowerCase()} apps:`, error)
       log.error(`Error ${actionVerb.toLowerCase()} apps:`, error)

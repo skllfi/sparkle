@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import {
   Wrench,
   Search,
@@ -229,27 +229,34 @@ function Tweaks() {
     await applyNonReversibleTweak(tweak, index)
   }
 
-  const categories = ["All", ...new Set(tweaks.flatMap((t) => t.category || []).filter(Boolean))]
+  const categories = useMemo(
+    () => ["All", ...new Set(tweaks.flatMap((t) => t.category || []).filter(Boolean))],
+    [tweaks],
+  )
 
-  const filteredTweaks = tweaks.filter((tweak) => {
-    const matchesSearch =
-      tweak.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      tweak.description.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredTweaks = useMemo(() => {
+    return tweaks.filter((tweak) => {
+      const matchesSearch =
+        tweak.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        tweak.description.toLowerCase().includes(searchTerm.toLowerCase())
 
-    const matchesCategory =
-      activeCategory === "All" ||
-      (Array.isArray(tweak.category) && tweak.category.includes(activeCategory)) ||
-      tweak.category === activeCategory
+      const matchesCategory =
+        activeCategory === "All" ||
+        (Array.isArray(tweak.category) && tweak.category.includes(activeCategory)) ||
+        tweak.category === activeCategory
 
-    return matchesSearch && matchesCategory
-  })
+      return matchesSearch && matchesCategory
+    })
+  }, [tweaks, searchTerm, activeCategory])
 
   // sort this so recommended tweaks are at the top
-  const sortedTweaks = filteredTweaks.sort((a, b) => {
-    const aRec = !!a.recommended
-    const bRec = !!b.recommended
-    return bRec - aRec
-  })
+  const sortedTweaks = useMemo(() => {
+    return [...filteredTweaks].sort((a, b) => {
+      const aRec = !!a.recommended
+      const bRec = !!b.recommended
+      return bRec - aRec
+    })
+  }, [filteredTweaks])
 
   const categoryIcons = {
     Performance: <Zap className="w-4 h-4  text-yellow-400" />,
