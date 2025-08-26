@@ -5,7 +5,7 @@ import path from "path"
 
 const tweaksDir = "./resources/tweaks"
 const docsDir = "./docs/docs/tweaks"
-const tweaksIndexFile = "./docs/docs/tweaks.md"
+const tweaksIndexFile = "./docs/docs/tweaks/index.md"
 
 fs.mkdirSync(docsDir, { recursive: true })
 
@@ -70,12 +70,13 @@ ${tweak.reversible === false ? "> ⚠️ This tweak cannot be reversed. Must be 
 ${deepDesc}
 
 ${tweak.warning ? `> ⚠️ ${tweak.warning}\n` : ""}
-
+${tweak.recommended ? "> ⭐ This is a recommended tweak.\n" : ""}
 ${applyScript ? `## Apply\n\`\`\`powershell\n${applyScript}\n\`\`\`\n` : ""}
 ${unapplyScript ? `## Unapply\n\`\`\`powershell\n${unapplyScript}\n\`\`\`\n` : ""}
 
 
-${tweak.recommended ? "> ⭐ This is a recommended tweak.\n" : ""}
+
+${tweak.links ? `\n\n## Links\n${tweak.links.map((link) => `- [${link.name}](${link.url})`).join("\n")}` : ""}
 `
 
   fs.writeFileSync(mdPath, mdContent.trim() + "\n", "utf-8")
@@ -83,13 +84,19 @@ ${tweak.recommended ? "> ⭐ This is a recommended tweak.\n" : ""}
   tweaksList.push({ name: tweak.name || folder, slug })
 }
 
-const tweaksIndex = `# Sparkle Tweaks
+const tweaksIndex = `
+---
+title: "All Tweaks"
+---
+
+
+# Sparkle Tweaks
 A collection of tweaks to customize and enhance your Windows experience using Sparkle.
 
-_this page is auto-generated, do not edit directly_
+_this page is auto-generated_
 
 ## All Tweaks (${tweaksList.length})
-${tweaksList.map((t) => `- [${t.name}](tweaks/${t.slug}.md)`).join("\n")}
+${tweaksList.map((t) => `- [${t.name}](${t.slug}.md)`).join("\n")}
 `
 
 fs.writeFileSync(tweaksIndexFile, tweaksIndex.trim() + "\n", "utf-8")

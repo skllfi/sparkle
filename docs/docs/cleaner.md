@@ -1,52 +1,54 @@
-# Cleaner Page
+---
+title: Cleaner
+---
 
-the sparkle cleaner page has the following options:
+# Sparkle Cleaner
 
-## Clean Temporary Files
+The Sparkle Cleaner helps free up disk space and remove unnecessary system files.
 
-Remove system and user temporary files.
+## 1. Clean Temporary Files
+
+Removes both system and user temporary files.
 
 ```powershell
-  $systemTemp = "$env:SystemRoot\\Temp"
-      $userTemp = [System.IO.Path]::GetTempPath()
-      $foldersToClean = @($systemTemp, $userTemp)
-      foreach ($folder in $foldersToClean) {
-          if (Test-Path $folder) {
-              Get-ChildItem -Path $folder -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-          }
-      }
+$systemTemp = "$env:SystemRoot\\Temp"
+$userTemp = [System.IO.Path]::GetTempPath()
+$foldersToClean = @($systemTemp, $userTemp)
 
+foreach ($folder in $foldersToClean) {
+    if (Test-Path $folder) {
+        Get-ChildItem -Path $folder -Recurse -Force -ErrorAction SilentlyContinue |
+            Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}
 ```
 
-## Clean Prefetch Files
+## 2. Clean Prefetch Files
 
-Delete files from the Windows Prefetch folder.
+Deletes files from the Windows Prefetch folder.
 
 ```powershell
-     $prefetch = "$env:SystemRoot\\Prefetch"
-      if (Test-Path $prefetch) {
-          Remove-Item "$prefetch\\*" -Force -Recurse -ErrorAction SilentlyContinue
-      }
+$prefetch = "$env:SystemRoot\\Prefetch"
+if (Test-Path $prefetch) {
+    Remove-Item "$prefetch\\*" -Force -Recurse -ErrorAction SilentlyContinue
+}
 ```
 
-## Empty Recycle Bin
+## 3. Empty Recycle Bin
 
-Permanently remove files from the Recycle Bin.
+Permanently removes files from the Recycle Bin.
 
 ```powershell
-     $prefetch = "$env:SystemRoot\\Prefetch"
-      if (Test-Path $prefetch) {
-          Remove-Item "$prefetch\\*" -Force -Recurse -ErrorAction SilentlyContinue
-      }
+Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 ```
 
-## Clean Windows Update Cache
+## 4. Clean Windows Update Cache
 
-Remove Windows Update downloaded installation files.
+Removes downloaded Windows Update installation files.
 
 ```powershell
- $windowsUpdateDownload = "$env:SystemRoot\\SoftwareDistribution\\Download"
-      if (Test-Path $windowsUpdateDownload) {
-          Remove-Item "$windowsUpdateDownload\\*" -Force -Recurse -ErrorAction SilentlyContinue
-      }
+$windowsUpdateDownload = "$env:SystemRoot\\SoftwareDistribution\\Download"
+if (Test-Path $windowsUpdateDownload) {
+    Remove-Item "$windowsUpdateDownload\\*" -Force -Recurse -ErrorAction SilentlyContinue
+}
 ```

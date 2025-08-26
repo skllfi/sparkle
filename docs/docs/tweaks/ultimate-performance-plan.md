@@ -6,6 +6,7 @@ Description: Enables And Applys The Windows Ultimate Powerplan for better perfor
 - Enables the Ultimate Performance power plan by creating it if missing, retrieving its GUID, and activating it to maximize system responsiveness and performance by preventing power-saving limitations.
 
 
+> ⭐ This is a recommended tweak.
 
 ## Apply
 ```powershell
@@ -44,7 +45,3 @@ $balancedGUID = "381b4222-f694-41f0-9685-ff5bb260df2e"
       Write-Host "Balanced power plan created and activated." 
   }
 ```
-
-
-
-> ⭐ This is a recommended tweak.

@@ -1,3 +1,7 @@
+---
+title: "Apps"
+---
+
 # Apps Page
 
 The **Apps Page** is a simple app installer that uses **Winget** to install or uninstall applications on your system.

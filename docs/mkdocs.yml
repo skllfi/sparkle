@@ -38,7 +38,9 @@ theme:
     - content.code.annotate
     - content.tabs.link
     - navigation.instant
+    - navigation.instant.progress
     - navigation.sections
+  navigation.depth: 2
   icon:
     repo: fontawesome/brands/github
 
@@ -74,11 +76,10 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.com/invite/En5YJYWj3Z
   # announcement: "⭐ Star Sparkle on GitHub!"
-
-nav:
-  - Home: index.md
-  - Tweaks: tweaks.md
-  - Cleaner: cleaner.md
-  - Utilities: utilities.md
-  - DNS Manager: dns-manager.md
-  - Apps: apps.md
+# nav:
+#   - Home: index.md
+#   - Tweaks: tweaks.md
+#   - Cleaner: cleaner.md
+#   - Utilities: utilities.md
+#   - DNS Manager: dns-manager.md
+#   - Apps: apps.md

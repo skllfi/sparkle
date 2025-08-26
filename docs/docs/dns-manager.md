@@ -1,3 +1,7 @@
+---
+title: "DNS Manager"
+---
+
 # DNS Page Features
 
 ## DNS Providers
