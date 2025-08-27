@@ -431,7 +431,7 @@ function Tweaks() {
                           onClick={(e) => {
                             e.preventDefault()
                             e.stopPropagation()
-                            const url = `https://sparkle.parcoil.com/tweaks/${tweak.name}`
+                            const url = `https://docs.getsparkle.net/tweaks/${tweak.name}`
                             window.open(url, "_blank")
                           }}
                         >

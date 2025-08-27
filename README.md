@@ -11,7 +11,6 @@
     <img alt="Electron" src="https://img.shields.io/badge/Electron-000000?style=for-the-badge&logo=electron&labelColor=0c121f&color=0c121f">
     <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-000000?style=for-the-badge&logo=javascript&labelColor=0c121f&color=0c121f">
     <img alt="PowerShell" src="https://img.shields.io/badge/PowerShell-000000?style=for-the-badge&logo=gnometerminal&labelColor=0c121f&color=0c121f">
-    <img alt="GitHub Downloads (all assets, latest release)" src="https://img.shields.io/github/downloads/parcoil/sparkle/latest/total?style=for-the-badge&label=Total%20Downloads&labelColor=0c121f&color=0c121f">
   </p>
 
 Install with Powershell:
@@ -46,7 +45,7 @@ irm https://raw.githubusercontent.com/Parcoil/Sparkle/v2/get.ps1 | iex
 
 <div>
   <h2>📃 Docs</h2>
-  <p>You can find the docs <a href="https://sparkle.parcoil.com">here</a></p>
+  <p>You can find the docs <a href="https://docs.getsparkle.net">here</a></p>
   the docs cover all the tweaks how they work what they do and all of sparkles pages
 </div>
 
@@ -69,7 +68,7 @@ irm https://raw.githubusercontent.com/Parcoil/Sparkle/v2/get.ps1 | iex
     <li>More info in <code>resources/tweaks/readme.md</code></li>
   </ul>
 
-Refer to the <a href="https://sparkle.parcoil.com">docs</a> for more info on how to add new tweaks
+Refer to the <a href="https://docs.getsparkle.net">docs</a> for more info on how to add new tweaks
 
   <h4>Other Ways to Contribute</h4>
   <ul>
