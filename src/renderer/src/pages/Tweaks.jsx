@@ -279,7 +279,7 @@ function Tweaks() {
   }
 
   return (
-    <RootDiv>
+    <>
       <Modal
         open={isModalOpen}
         onClose={() => {
@@ -351,142 +351,145 @@ function Tweaks() {
           </div>
         </div>
       </Modal>
+      <RootDiv>
+        <div className="max-w-[1800px] mx-auto mr-4">
+          <div className="mb-4">
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 bg-sparkle-card border border-sparkle-border rounded-xl px-4 backdrop-blur-sm">
+                <Search className="text-sparkle-text-secondary" />
+                <input
+                  type="text"
+                  placeholder="Search tweaks by name or description..."
+                  className="w-full py-3 px-0 bg-transparent border-none focus:outline-none focus:ring-0 text-sparkle-text placeholder:text-sparkle-text-secondary"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
 
-      <div className="max-w-[1800px] mx-auto ">
-        <div className="mb-4">
-          <div className="space-y-4">
-            <div className="flex items-center gap-3 bg-sparkle-card border border-sparkle-border rounded-xl px-4 backdrop-blur-sm">
-              <Search className="text-sparkle-text-secondary" />
-              <input
-                type="text"
-                placeholder="Search tweaks by name or description..."
-                className="w-full py-3 px-0 bg-transparent border-none focus:outline-none focus:ring-0 text-sparkle-text placeholder:text-sparkle-text-secondary"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 active:scale-95  ${
-                    activeCategory === category
-                      ? "bg-sparkle-primary text-white shadow-lg border border-sparkle-border"
-                      : "bg-sparkle-card/50 text-sparkle-text-secondary  hover:bg-sparkle-border border border-sparkle-border-secondary"
-                  }`}
-                  onClick={() => setActiveCategory(category)}
-                >
-                  {category}
-                </button>
-              ))}
+              <div className="flex flex-wrap items-center gap-2">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 active:scale-95  ${
+                      activeCategory === category
+                        ? "bg-sparkle-primary text-white shadow-lg border border-sparkle-border"
+                        : "bg-sparkle-card/50 text-sparkle-text-secondary  hover:bg-sparkle-border border border-sparkle-border-secondary"
+                    }`}
+                    onClick={() => setActiveCategory(category)}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
-          {sortedTweaks.length > 0 ? (
-            sortedTweaks.map((tweak, index) => {
-              const originalIndex = tweaks.indexOf(tweak)
-              return (
-                <div
-                  key={originalIndex}
-                  className="group bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm hover:border-sparkle-border-secondary transition-all duration-300 overflow-hidde h-52 "
-                >
-                  <div className="p-5 flex flex-col h-[260px]">
-                    <div className="flex items-center justify-between mb-3">
-                      {tweak.category && (
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <>
-                            {tweak.warning && (
-                              <Tooltip content={tweak.warning} delay={0.3} side="right">
-                                <div className="p-1.5 bg-red-900/50 rounded-lg hover:bg-red-900/80 transition-colors">
-                                  <AlertTriangle className="w-4 h-4 text-red-400" />
-                                </div>
-                              </Tooltip>
-                            )}
-                            {(Array.isArray(tweak.category)
-                              ? tweak.category
-                              : [tweak.category]
-                            ).map((cat) => (
-                              <Tooltip
-                                key={cat}
-                                content={`${cat} Optimization`}
-                                delay={0.3}
-                                side="right"
-                              >
-                                <div className="p-1.5 bg-sparkle-accent rounded-lg hover:bg-sparkle-bg transition-colors text-sparkle-text">
-                                  {categoryIcons[cat] || categoryIcons["General"]}
-                                </div>
-                              </Tooltip>
-                            ))}
-                          </>
-                        </div>
-                      )}
-                      <div className="flex items-center m-0 gap-2">
-                        <Button
-                          variant="secondary"
-                          className="!px-2 !py-1 text-xs flex items-center gap-1"
-                          title="Open Docs"
-                          onClick={(e) => {
-                            e.preventDefault()
-                            e.stopPropagation()
-                            const url = `https://docs.getsparkle.net/tweaks/${tweak.name}`
-                            window.open(url, "_blank")
-                          }}
-                        >
-                          <ExternalLink className="w-3 h-3" /> Docs
-                        </Button>
-                        {tweak.reversible == null || tweak.reversible == true ? (
-                          <Toggle
-                            checked={toggleStates[tweak.name] || false}
-                            onChange={(e) => {
-                              const willOpenModal = !!tweak.modal && !toggleStates[tweak.name]
-                              if (willOpenModal) {
-                                e.preventDefault()
-                                e.stopPropagation()
-                              }
-                              handleToggle(originalIndex)
-                            }}
-                            disabled={false}
-                          />
-                        ) : (
-                          <div>
-                            <Button
-                              onClick={() => handleButtonClick(originalIndex)}
-                              disabled={false}
-                            >
-                              Apply
-                            </Button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+            {sortedTweaks.length > 0 ? (
+              sortedTweaks.map((tweak, index) => {
+                const originalIndex = tweaks.indexOf(tweak)
+                return (
+                  <div
+                    key={originalIndex}
+                    className="group bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm hover:border-sparkle-border-secondary transition-all duration-300 overflow-hidde h-52 "
+                  >
+                    <div className="p-5 flex flex-col h-[260px]">
+                      <div className="flex items-center justify-between mb-3">
+                        {tweak.category && (
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <>
+                              {tweak.warning && (
+                                <Tooltip content={tweak.warning} delay={0.3} side="right">
+                                  <div className="p-1.5 bg-red-900/50 rounded-lg hover:bg-red-900/80 transition-colors">
+                                    <AlertTriangle className="w-4 h-4 text-red-400" />
+                                  </div>
+                                </Tooltip>
+                              )}
+                              {(Array.isArray(tweak.category)
+                                ? tweak.category
+                                : [tweak.category]
+                              ).map((cat) => (
+                                <Tooltip
+                                  key={cat}
+                                  content={`${cat} Optimization`}
+                                  delay={0.3}
+                                  side="right"
+                                >
+                                  <div className="p-1.5 bg-sparkle-accent rounded-lg hover:bg-sparkle-bg transition-colors text-sparkle-text">
+                                    {categoryIcons[cat] || categoryIcons["General"]}
+                                  </div>
+                                </Tooltip>
+                              ))}
+                            </>
                           </div>
                         )}
+                        <div className="flex items-center m-0 gap-2">
+                          <Button
+                            variant="secondary"
+                            className="!px-2 !py-1 text-xs flex items-center gap-1"
+                            title="Open Docs"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              e.stopPropagation()
+                              const url = `https://docs.getsparkle.net/tweaks/${tweak.name}`
+                              window.open(url, "_blank")
+                            }}
+                          >
+                            <ExternalLink className="w-3 h-3" /> Docs
+                          </Button>
+                          {tweak.reversible == null || tweak.reversible == true ? (
+                            <Toggle
+                              checked={toggleStates[tweak.name] || false}
+                              onChange={(e) => {
+                                const willOpenModal = !!tweak.modal && !toggleStates[tweak.name]
+                                if (willOpenModal) {
+                                  e.preventDefault()
+                                  e.stopPropagation()
+                                }
+                                handleToggle(originalIndex)
+                              }}
+                              disabled={false}
+                            />
+                          ) : (
+                            <div>
+                              <Button
+                                onClick={() => handleButtonClick(originalIndex)}
+                                disabled={false}
+                              >
+                                Apply
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-start mb-3">
+                        <h2 className="font-semibold text-sparkle-text text-base">{tweak.title}</h2>
+                      </div>
+                      <div className="flex flex-col flex-1 overflow-hidden">
+                        <p className="text-sparkle-text-secondary text-sm flex-1 overflow-y-auto custom-scrollbar pr-1">
+                          {tweak.description}
+                        </p>
                       </div>
                     </div>
-                    <div className="flex items-start mb-3">
-                      <h2 className="font-semibold text-sparkle-text text-base">{tweak.title}</h2>
-                    </div>
-                    <div className="flex flex-col flex-1 overflow-hidden">
-                      <p className="text-sparkle-text-secondary text-sm flex-1 overflow-y-auto custom-scrollbar pr-1">
-                        {tweak.description}
-                      </p>
-                    </div>
                   </div>
+                )
+              })
+            ) : (
+              <div className="col-span-full flex flex-col items-center justify-center py-16 text-center">
+                <div className="bg-sparkle-card p-6 rounded-2xl mb-4">
+                  <Search className="w-10 h-10 text-sparkle-text-secondary" />
                 </div>
-              )
-            })
-          ) : (
-            <div className="col-span-full flex flex-col items-center justify-center py-16 text-center">
-              <div className="bg-sparkle-card p-6 rounded-2xl mb-4">
-                <Search className="w-10 h-10 text-sparkle-text-secondary" />
+                <h3 className="text-xl font-medium mb-2 text-sparkle-text"> Loading Tweaks...</h3>
+                <h3 className="text-sm font-medium mb-2 text-sparkle-text-muted">
+                  No tweaks Found
+                </h3>
+                <p className="text-sparkle-text-secondary">Try adjusting your search or filters</p>
               </div>
-              <h3 className="text-xl font-medium mb-2 text-sparkle-text"> Loading Tweaks...</h3>
-              <h3 className="text-sm font-medium mb-2 text-sparkle-text-muted">No tweaks Found</h3>
-              <p className="text-sparkle-text-secondary">Try adjusting your search or filters</p>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
-    </RootDiv>
+      </RootDiv>
+    </>
   )
 }
 

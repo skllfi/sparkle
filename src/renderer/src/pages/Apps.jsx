@@ -134,18 +134,7 @@ function Apps() {
   }
 
   return (
-    <RootDiv>
-      <div className="flex items-center gap-3 bg-sparkle-card border border-sparkle-border rounded-xl px-4 backdrop-blur-sm ml-1 mr-1">
-        <Search className="text-sparkle-text-secondary" />
-        <input
-          type="text"
-          placeholder="Search for apps..."
-          className="w-full py-3 px-0 bg-transparent border-none focus:outline-none focus:ring-0 text-sparkle-text placeholder:text-sparkle-text-secondary"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
-
+    <>
       <Modal open={!!loading} onClose={() => {}}>
         <div className="bg-sparkle-card border border-sparkle-border rounded-2xl p-6 shadow-xl">
           <div className="flex items-center gap-4">
@@ -161,98 +150,110 @@ function Apps() {
           </div>
         </div>
       </Modal>
+      <RootDiv>
+        <div className="flex items-center gap-3 bg-sparkle-card border border-sparkle-border rounded-xl px-4 backdrop-blur-sm ml-1 mr-1">
+          <Search className="text-sparkle-text-secondary" />
+          <input
+            type="text"
+            placeholder="Search for apps..."
+            className="w-full py-3 px-0 bg-transparent border-none focus:outline-none focus:ring-0 text-sparkle-text placeholder:text-sparkle-text-secondary"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
 
-      <div className="flex gap-3 mt-5 w-auto ml-1 mr-1">
-        <Button
-          className="text-sparkle-text flex gap-2"
-          disabled={selectedApps.length === 0 || loading}
-          onClick={() => handleAppAction("install")}
-        >
-          <Download className="w-5" />
-          Install Selected
-        </Button>
-        <Button
-          className="flex gap-2"
-          variant="danger"
-          disabled={selectedApps.length === 0 || loading}
-          onClick={() => handleAppAction("uninstall")}
-        >
-          <Trash className="w-5" />
-          Uninstall Selected
-        </Button>
-        {selectedApps.length > 0 && (
+        <div className="flex gap-3 mt-5 w-auto ml-1 mr-1">
           <Button
-            className="flex gap-2 ml-auto bg-sparkle-border text-sparkle-text"
-            variant="ghost"
-            onClick={() => setSelectedApps([])}
+            className="text-sparkle-text flex gap-2"
+            disabled={selectedApps.length === 0 || loading}
+            onClick={() => handleAppAction("install")}
           >
-            Uncheck All
+            <Download className="w-5" />
+            Install Selected
           </Button>
-        )}
-      </div>
-      <p className="mb-5 mt-2 text-sparkle-text-muted font-medium">
-        Looking to debloat windows? its located in {""}
-        <a className="text-sparkle-primary cursor-pointer" onClick={() => router("/tweaks")}>
-          Tweaks
-        </a>
-      </p>
-      <div className="space-y-10 mb-10">
-        {Object.entries(appsByCategory).map(([category, apps]) => (
-          <div key={category} className="space-y-4">
-            <h2 className="text-2xl text-sparkle-primary font-bold capitalize">{category}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-              {apps.map((app) => (
-                <div
-                  key={app.id}
-                  className="bg-sparkle-card border border-sparkle-border rounded-lg p-4 hover:border-sparkle-primary transition group cursor-pointer"
-                  onClick={() => toggleApp(app.id)}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div
-                        onClick={(e) => e.stopPropagation()} // Prevent double toggle when checkbox is clicked
-                      >
-                        <Checkbox
-                          checked={selectedApps.includes(app.id)}
-                          onChange={() => toggleApp(app.id)}
-                        />
-                      </div>
-                      <div>
-                        <h3 className="text-sparkle-text font-medium group-hover:text-sparkle-primary transition">
-                          {app.name}
-                        </h3>
-                        {app.info && (
-                          <p className="text-sm text-sparkle-text-secondary line-clamp-1 font-semibold">
-                            {app.info}
-                          </p>
-                        )}
-                        <p className="text-xs text-sparkle-text-secondary">ID: {app.id}</p>
-                      </div>
-                    </div>
-                    {installedApps.includes(app.id) && (
-                      <div className="text-xs font-semibold text-sparkle-text bg-sparkle-accent py-1 px-2 rounded-full">
-                        Installed
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-        <p className="text-center text-sparkle-text-muted">
-          Request more apps or make a pull request on{" "}
-          <a
-            href="https://github.com/parcoil/sparkle"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sparkle-primary"
+          <Button
+            className="flex gap-2"
+            variant="danger"
+            disabled={selectedApps.length === 0 || loading}
+            onClick={() => handleAppAction("uninstall")}
           >
-            github
+            <Trash className="w-5" />
+            Uninstall Selected
+          </Button>
+          {selectedApps.length > 0 && (
+            <Button
+              className="flex gap-2 ml-auto bg-sparkle-border text-sparkle-text"
+              variant="ghost"
+              onClick={() => setSelectedApps([])}
+            >
+              Uncheck All
+            </Button>
+          )}
+        </div>
+        <p className="mb-5 mt-2 text-sparkle-text-muted font-medium">
+          Looking to debloat windows? its located in {""}
+          <a className="text-sparkle-primary cursor-pointer" onClick={() => router("/tweaks")}>
+            Tweaks
           </a>
         </p>
-      </div>
-    </RootDiv>
+        <div className="space-y-10 mb-10">
+          {Object.entries(appsByCategory).map(([category, apps]) => (
+            <div key={category} className="space-y-4">
+              <h2 className="text-2xl text-sparkle-primary font-bold capitalize">{category}</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                {apps.map((app) => (
+                  <div
+                    key={app.id}
+                    className="bg-sparkle-card border border-sparkle-border rounded-lg p-4 hover:border-sparkle-primary transition group cursor-pointer"
+                    onClick={() => toggleApp(app.id)}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div
+                          onClick={(e) => e.stopPropagation()} // Prevent double toggle when checkbox is clicked
+                        >
+                          <Checkbox
+                            checked={selectedApps.includes(app.id)}
+                            onChange={() => toggleApp(app.id)}
+                          />
+                        </div>
+                        <div>
+                          <h3 className="text-sparkle-text font-medium group-hover:text-sparkle-primary transition">
+                            {app.name}
+                          </h3>
+                          {app.info && (
+                            <p className="text-sm text-sparkle-text-secondary line-clamp-1 font-semibold">
+                              {app.info}
+                            </p>
+                          )}
+                          <p className="text-xs text-sparkle-text-secondary">ID: {app.id}</p>
+                        </div>
+                      </div>
+                      {installedApps.includes(app.id) && (
+                        <div className="text-xs font-semibold text-sparkle-text bg-sparkle-accent py-1 px-2 rounded-full">
+                          Installed
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+          <p className="text-center text-sparkle-text-muted">
+            Request more apps or make a pull request on{" "}
+            <a
+              href="https://github.com/parcoil/sparkle"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sparkle-primary"
+            >
+              github
+            </a>
+          </p>
+        </div>
+      </RootDiv>
+    </>
   )
 }
 

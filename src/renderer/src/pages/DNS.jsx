@@ -168,164 +168,169 @@ export default function DNSPage() {
   }
 
   return (
-    <RootDiv>
-      <div className="bg-sparkle-bg text-sparkle-text pb-10">
-        <div className="bg-sparkle-card border border-sparkle-border p-4 rounded-2xl mb-6">
-          <div className="flex items-center gap-3 mb-3">
-            <h2 className="font-semibold">Current DNS Settings</h2>
-            <Button onClick={getCurrentDNS} variant="" size="sm" className="ml-auto">
-              <RefreshCw className="w-5 h-5" />
-            </Button>
-          </div>
-
-          {currentDNS && currentDNS.length > 0 ? (
-            <div className="space-y-2">
-              {currentDNS.map((dns, index) => (
-                <div key={index} className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span className="font-medium">{dns.adapter}:</span>
-                  <span className="text-sparkle-text-secondary">{dns.servers}</span>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="flex items-center gap-2 text-sm text-sparkle-text-secondary">
-              <AlertCircle className="w-4 h-4" />
-              <span>Loading Network Info, this may take a while...</span>
-            </div>
-          )}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-          {dnsProviders.map((provider) => (
-            <button
-              key={provider.id}
-              onClick={() => openConfirmationModal(provider)}
-              disabled={loading}
-              className="bg-sparkle-card border border-sparkle-border p-4 rounded-2xl hover:border-sparkle-primary transition text-left"
-            >
-              <div className="flex items-center gap-3 mb-3">
-                <div className={provider.color}>{provider.icon}</div>
-
-                <div>
-                  <h3 className="font-semibold">
-                    {provider.name}
-                    {provider.recommended && (
-                      <span className="text-xs text-sparkle-primary ml-2">Recommended</span>
-                    )}
-                  </h3>
-
-                  <p className="text-sm text-sparkle-text-secondary">
-                    {provider.primary} / {provider.secondary}
-                  </p>
+    <>
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+        <div className="bg-sparkle-card p-6 rounded-2xl border border-sparkle-border text-sparkle-text w-[90vw] max-w-md">
+          <h2 className="text-lg font-semibold mb-4">Confirm DNS Change</h2>
+          {selectedProvider && (
+            <>
+              <p className="mb-4">
+                You are about to change your DNS servers to{" "}
+                <span className="text-sparkle-primary font-medium">{selectedProvider.name}</span>.
+              </p>
+              <div className="bg-sparkle-border-secondary border border-sparkle-border p-3 rounded-md mb-4">
+                <div className="text-sm">
+                  <div>
+                    <strong>Primary:</strong> {selectedProvider.primary}
+                  </div>
+                  <div>
+                    <strong>Secondary:</strong> {selectedProvider.secondary}
+                  </div>
                 </div>
               </div>
-              <p className="text-sm text-sparkle-text-secondary">{provider.description}</p>
-              {/* <div className="flex flex-wrap gap-1 mt-3">
+              <p className="text-sm text-sparkle-text-secondary mb-4">
+                This will change DNS settings for all active network adapters and flush the DNS
+                cache.
+              </p>
+            </>
+          )}
+          <div className="flex justify-end gap-2">
+            <Button onClick={() => setModalOpen(false)} variant="secondary">
+              Cancel
+            </Button>
+            <Button onClick={() => applyDNS(selectedProvider)} disabled={loading}>
+              {loading ? "Applying..." : "Apply"}
+            </Button>
+          </div>
+        </div>
+      </Modal>
+      <RootDiv>
+        <div className="bg-sparkle-bg text-sparkle-text pb-10">
+          <div className="bg-sparkle-card border border-sparkle-border p-4 rounded-2xl mb-6">
+            <div className="flex items-center gap-3 mb-3">
+              <h2 className="font-semibold">Current DNS Settings</h2>
+              <Button onClick={getCurrentDNS} variant="" size="sm" className="ml-auto">
+                <RefreshCw className="w-5 h-5" />
+              </Button>
+            </div>
+
+            {currentDNS && currentDNS.length > 0 ? (
+              <div className="space-y-2">
+                {currentDNS.map((dns, index) => (
+                  <div key={index} className="flex items-center gap-2 text-sm">
+                    <CheckCircle className="w-4 h-4 text-green-500" />
+                    <span className="font-medium">{dns.adapter}:</span>
+                    <span className="text-sparkle-text-secondary">{dns.servers}</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 text-sm text-sparkle-text-secondary">
+                <AlertCircle className="w-4 h-4" />
+                <span>Loading Network Info, this may take a while...</span>
+              </div>
+            )}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+            {dnsProviders.map((provider) => (
+              <button
+                key={provider.id}
+                onClick={() => openConfirmationModal(provider)}
+                disabled={loading}
+                className="bg-sparkle-card border border-sparkle-border p-4 rounded-2xl hover:border-sparkle-primary transition text-left"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className={provider.color}>{provider.icon}</div>
+
+                  <div>
+                    <h3 className="font-semibold">
+                      {provider.name}
+                      {provider.recommended && (
+                        <span className="text-xs text-sparkle-primary ml-2">Recommended</span>
+                      )}
+                    </h3>
+
+                    <p className="text-sm text-sparkle-text-secondary">
+                      {provider.primary} / {provider.secondary}
+                    </p>
+                  </div>
+                </div>
+                <p className="text-sm text-sparkle-text-secondary">{provider.description}</p>
+                {/* <div className="flex flex-wrap gap-1 mt-3">
                 {provider.features.map((feature, index) => (
                   <span key={index} className="px-2 py-1 bg-sparkle-border text-xs rounded-md">
                     {feature}
                   </span>
                 ))}
               </div> */}
-            </button>
-          ))}
-        </div>
-
-        <div className="bg-sparkle-card border border-sparkle-border p-4 rounded-2xl mb-6">
-          <div className="flex items-center gap-3 ">
-            <Settings className="w-5 h-5 text-purple-500" />
-            <h2 className="font-semibold">Custom DNS</h2>
-            <Button onClick={() => setShowCustom(!showCustom)} size="sm">
-              {showCustom ? "Hide" : "Show"}
-            </Button>
+              </button>
+            ))}
           </div>
 
-          {showCustom && (
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Primary DNS</label>
-                  <input
-                    type="text"
-                    value={customDNS.primary}
-                    onChange={(e) => setCustomDNS((prev) => ({ ...prev, primary: e.target.value }))}
-                    placeholder="e.g., 1.1.1.1"
-                    className="w-full px-3 py-2 bg-sparkle-border border border-sparkle-border-secondary rounded-lg text-sparkle-text focus:outline-none focus:border-sparkle-primary"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Secondary DNS (Optional)</label>
-                  <input
-                    type="text"
-                    value={customDNS.secondary}
-                    onChange={(e) =>
-                      setCustomDNS((prev) => ({ ...prev, secondary: e.target.value }))
-                    }
-                    placeholder="e.g., 1.0.0.1"
-                    className="w-full px-3 py-2 bg-sparkle-border border border-sparkle-border-secondary rounded-lg text-sparkle-text focus:outline-none focus:border-sparkle-primary"
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 text-sm text-sparkle-text-secondary">
-                <Info className="w-4 h-4" />
-                <span>Enter valid IPv4 addresses for custom DNS servers</span>
-              </div>
-
-              <Button
-                onClick={() =>
-                  openConfirmationModal({
-                    id: "custom",
-                    name: "Custom DNS",
-                    primary: customDNS.primary,
-                    secondary: customDNS.secondary,
-                  })
-                }
-                disabled={!isCustomDNSValid() || loading}
-                className="w-full"
-              >
-                Apply Custom DNS
+          <div className="bg-sparkle-card border border-sparkle-border p-4 rounded-2xl mb-6">
+            <div className="flex items-center gap-3 ">
+              <Settings className="w-5 h-5 text-purple-500" />
+              <h2 className="font-semibold">Custom DNS</h2>
+              <Button onClick={() => setShowCustom(!showCustom)} size="sm">
+                {showCustom ? "Hide" : "Show"}
               </Button>
             </div>
-          )}
-        </div>
 
-        <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-          <div className="bg-sparkle-card p-6 rounded-2xl border border-sparkle-border text-sparkle-text w-[90vw] max-w-md">
-            <h2 className="text-lg font-semibold mb-4">Confirm DNS Change</h2>
-            {selectedProvider && (
-              <>
-                <p className="mb-4">
-                  You are about to change your DNS servers to{" "}
-                  <span className="text-sparkle-primary font-medium">{selectedProvider.name}</span>.
-                </p>
-                <div className="bg-sparkle-border-secondary border border-sparkle-border p-3 rounded-md mb-4">
-                  <div className="text-sm">
-                    <div>
-                      <strong>Primary:</strong> {selectedProvider.primary}
-                    </div>
-                    <div>
-                      <strong>Secondary:</strong> {selectedProvider.secondary}
-                    </div>
+            {showCustom && (
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Primary DNS</label>
+                    <input
+                      type="text"
+                      value={customDNS.primary}
+                      onChange={(e) =>
+                        setCustomDNS((prev) => ({ ...prev, primary: e.target.value }))
+                      }
+                      placeholder="e.g., 1.1.1.1"
+                      className="w-full px-3 py-2 bg-sparkle-border border border-sparkle-border-secondary rounded-lg text-sparkle-text focus:outline-none focus:border-sparkle-primary"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Secondary DNS (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      value={customDNS.secondary}
+                      onChange={(e) =>
+                        setCustomDNS((prev) => ({ ...prev, secondary: e.target.value }))
+                      }
+                      placeholder="e.g., 1.0.0.1"
+                      className="w-full px-3 py-2 bg-sparkle-border border border-sparkle-border-secondary rounded-lg text-sparkle-text focus:outline-none focus:border-sparkle-primary"
+                    />
                   </div>
                 </div>
-                <p className="text-sm text-sparkle-text-secondary mb-4">
-                  This will change DNS settings for all active network adapters and flush the DNS
-                  cache.
-                </p>
-              </>
+
+                <div className="flex items-center gap-2 text-sm text-sparkle-text-secondary">
+                  <Info className="w-4 h-4" />
+                  <span>Enter valid IPv4 addresses for custom DNS servers</span>
+                </div>
+
+                <Button
+                  onClick={() =>
+                    openConfirmationModal({
+                      id: "custom",
+                      name: "Custom DNS",
+                      primary: customDNS.primary,
+                      secondary: customDNS.secondary,
+                    })
+                  }
+                  disabled={!isCustomDNSValid() || loading}
+                  className="w-full"
+                >
+                  Apply Custom DNS
+                </Button>
+              </div>
             )}
-            <div className="flex justify-end gap-2">
-              <Button onClick={() => setModalOpen(false)} variant="secondary">
-                Cancel
-              </Button>
-              <Button onClick={() => applyDNS(selectedProvider)} disabled={loading}>
-                {loading ? "Applying..." : "Apply"}
-              </Button>
-            </div>
           </div>
-        </Modal>
-      </div>
-    </RootDiv>
+        </div>
+      </RootDiv>
+    </>
   )
 }

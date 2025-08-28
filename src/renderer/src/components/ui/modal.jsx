@@ -1,24 +1,30 @@
+import React, { useEffect } from "react"
+
 export default function Modal({ open, onClose, children }) {
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === "Escape") onClose()
+    }
+    if (open) window.addEventListener("keydown", handleKey)
+    return () => window.removeEventListener("keydown", handleKey)
+  }, [open, onClose])
+
   return (
     <div
       onClick={onClose}
       className={`
-        fixed inset-0 flex justify-center items-center transition-all duration-200 z-50
-        ${open ? "visible bg-black/60 backdrop-blur-sm" : "invisible"}
+        fixed inset-0 flex justify-center items-center z-50 transition-all
+        ${open ? "visible bg-black/60 backdrop-blur-sm" : "invisible bg-black/0"}
       `}
     >
       <div
         onClick={(e) => e.stopPropagation()}
         className={`
-          transition-all duration-200
-          ${open ? "scale-100 opacity-100" : "scale-95 opacity-0"}
+          transform transition-all
+          duration-300 ease-out
+          ${open ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 translate-y-4"}
         `}
       >
-        {/* <button
-          onClick={onClose}
-          className="absolute top-2 right-2 p-1 rounded-lg text-gray-400 bg-white hover:bg-gray-50 hover:text-gray-600"
-          as
-        ></button> */}
         {children}
       </div>
     </div>

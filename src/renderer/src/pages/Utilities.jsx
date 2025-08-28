@@ -182,72 +182,73 @@ export default function UtilitiesPage() {
   ]
 
   return (
-    <RootDiv>
-      <div className="bg-sparkle-bg text-sparkle-text pb-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {utilities.map((util) => (
-            <button
-              key={util.name}
-              onClick={() => openConfirmationModal(util)}
-              disabled={running}
-              className="bg-sparkle-card border border-sparkle-border p-4 rounded-2xl flex items-center gap-3 hover:border-sparkle-primary transition"
-            >
-              <div className={`${util.color}`}>{util.icon}</div>
-              <div className="text-left">
-                <h2 className="font-semibold">Run {util.name}</h2>
-                <p className="text-sm text-sparkle-text-secondary">Type: {util.type}</p>
+    <>
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+        <div className="bg-sparkle-card p-6 rounded-2xl border border-sparkle-border text-sparkle-text w-[90vw] max-w-md">
+          <h2 className="text-lg font-semibold mb-4">Confirm Action</h2>
+          {selectedUtility && (
+            <>
+              <p className="mb-4">
+                You are about to run{" "}
+                <span className={`${selectedUtility.color} underline  font-medium`}>
+                  {selectedUtility.name}
+                </span>
+                .
+              </p>
+              <div className="bg-sparkle-border-secondary border border-sparkle-border p-2 text-sm rounded-md text-sparkle-text-secondary">
+                {selectedUtility.command}
               </div>
-            </button>
-          ))}
+            </>
+          )}
+          <div className="mt-6 flex justify-end gap-2">
+            <Button onClick={() => setModalOpen(false)} variant="secondary">
+              Cancel
+            </Button>
+            <Button onClick={confirmAndRun}>Run</Button>
+          </div>
         </div>
-        <div className="flex flex-row gap-2 mt-3">
-          <Toggle checked={noExit} onChange={() => setNoExit(!noExit)} id="noExitToggle" />
-          <p>Keep PowerShell window open after execution</p>
-        </div>
-
-        <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-2 text-sparkle-text-secondary">Quick Access</h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {quickAccess.map((tool) => (
+      </Modal>
+      <RootDiv>
+        <div className="bg-sparkle-bg text-sparkle-text pb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {utilities.map((util) => (
               <button
-                key={tool.name}
-                onClick={() => openQuickAccessTool(tool.command)}
-                className="inline-flex items-center gap-2 px-3 py-3.5 text-sm bg-sparkle-card border border-sparkle-border rounded-xl hover:border-sparkle-primary transition text-sparkle-text"
+                key={util.name}
+                onClick={() => openConfirmationModal(util)}
+                disabled={running}
+                className="bg-sparkle-card border border-sparkle-border p-4 rounded-2xl flex items-center gap-3 hover:border-sparkle-primary transition"
               >
-                {tool.icon}
-                <span>Open {tool.name}</span>
+                <div className={`${util.color}`}>{util.icon}</div>
+                <div className="text-left">
+                  <h2 className="font-semibold">Run {util.name}</h2>
+                  <p className="text-sm text-sparkle-text-secondary">Type: {util.type}</p>
+                </div>
               </button>
             ))}
           </div>
-        </div>
+          <div className="flex flex-row gap-2 mt-3">
+            <Toggle checked={noExit} onChange={() => setNoExit(!noExit)} id="noExitToggle" />
+            <p>Keep PowerShell window open after execution</p>
+          </div>
 
-        <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-          <div className="bg-sparkle-card p-6 rounded-2xl border border-sparkle-border text-sparkle-text w-[90vw] max-w-md">
-            <h2 className="text-lg font-semibold mb-4">Confirm Action</h2>
-            {selectedUtility && (
-              <>
-                <p className="mb-4">
-                  You are about to run{" "}
-                  <span className={`${selectedUtility.color} underline  font-medium`}>
-                    {selectedUtility.name}
-                  </span>
-                  .
-                </p>
-                <div className="bg-sparkle-border-secondary border border-sparkle-border p-2 text-sm rounded-md text-sparkle-text-secondary">
-                  {selectedUtility.command}
-                </div>
-              </>
-            )}
-            <div className="mt-6 flex justify-end gap-2">
-              <Button onClick={() => setModalOpen(false)} variant="secondary">
-                Cancel
-              </Button>
-              <Button onClick={confirmAndRun}>Run</Button>
+          <div className="mt-8">
+            <h2 className="text-xl font-semibold mb-2 text-sparkle-text-secondary">Quick Access</h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {quickAccess.map((tool) => (
+                <button
+                  key={tool.name}
+                  onClick={() => openQuickAccessTool(tool.command)}
+                  className="inline-flex items-center gap-2 px-3 py-3.5 text-sm bg-sparkle-card border border-sparkle-border rounded-xl hover:border-sparkle-primary transition text-sparkle-text"
+                >
+                  {tool.icon}
+                  <span>Open {tool.name}</span>
+                </button>
+              ))}
             </div>
           </div>
-        </Modal>
-      </div>
-    </RootDiv>
+        </div>
+      </RootDiv>
+    </>
   )
 }
