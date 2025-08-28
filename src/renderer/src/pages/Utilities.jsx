@@ -1,84 +1,85 @@
-import { useState } from 'react'
-import { invoke } from '@/lib/electron'
-import RootDiv from '@/components/RootDiv'
-import Modal from '@/components/ui/modal'
-import { toast } from 'react-toastify'
-import Button from '@/components/ui/button'
-import Toggle from '@/components/ui/toggle'
-import log from 'electron-log/renderer'
-import { SquareTerminal,
-    Binary,
-    ChartColumn,
-    Settings,
-    HardDrive,
-    Activity,
-    Shield,
-    Wrench,
-    Monitor,
-    MonitorCog,
-    Printer,
-    Info,
-    CaseSensitive,
-    ScreenShare
-} from 'lucide-react'
+import { useState } from "react"
+import { invoke } from "@/lib/electron"
+import RootDiv from "@/components/RootDiv"
+import Modal from "@/components/ui/modal"
+import { toast } from "react-toastify"
+import Button from "@/components/ui/button"
+import Toggle from "@/components/ui/toggle"
+import log from "electron-log/renderer"
+import {
+  SquareTerminal,
+  Binary,
+  ChartColumn,
+  Settings,
+  HardDrive,
+  Activity,
+  Shield,
+  Wrench,
+  Monitor,
+  MonitorCog,
+  Printer,
+  Info,
+  CaseSensitive,
+  ScreenShare,
+} from "lucide-react"
 
 const utilities = [
   {
-    name: 'System File Checker',
-    command: 'sfc /scannow',
-    type: 'System',
+    name: "System File Checker",
+    command: "sfc /scannow",
+    type: "System",
     icon: <Shield className="w-5 h-5" />,
-    color: 'text-blue-500'
+    color: "text-blue-500",
   },
   {
-    name: 'DISM Health Restore',
-    command: 'DISM /Online /Cleanup-Image /RestoreHealth',
-    type: 'System',
+    name: "DISM Health Restore",
+    command: "DISM /Online /Cleanup-Image /RestoreHealth",
+    type: "System",
     icon: <Activity className="w-5 h-5" />,
-    color: 'text-green-500'
+    color: "text-green-500",
   },
   {
-    name: 'Check Disk',
-    command: 'chkdsk C: /f /r /x',
-    type: 'System',
+    name: "Check Disk",
+    command: "chkdsk C: /f /r /x",
+    type: "System",
     icon: <HardDrive className="w-5 h-5" />,
-    color: 'text-yellow-500'
+    color: "text-yellow-500",
   },
   {
-    name: 'Show Power Plan',
-    type: 'System',
-    command: 'powercfg /getactivescheme',
+    name: "Show Power Plan",
+    type: "System",
+    command: "powercfg /getactivescheme",
     icon: <Settings className="w-5 h-5" />,
-    color: 'text-purple-500'
+    color: "text-purple-500",
   },
   {
-    name: 'Reset IP Stack',
-    type: 'Network',
-    command: 'netsh int ip reset',
+    name: "Reset IP Stack",
+    type: "Network",
+    command: "netsh int ip reset",
     icon: <Wrench className="w-5 h-5" />,
-    color: 'text-pink-500'
+    color: "text-pink-500",
   },
   {
-    name: 'Reset Winsock',
-    type: 'Network',
-    command: 'netsh winsock reset',
+    name: "Reset Winsock",
+    type: "Network",
+    command: "netsh winsock reset",
     icon: <Wrench className="w-5 h-5" />,
-    color: 'text-red-500'
+    color: "text-red-500",
   },
   {
-    name: 'Flush DNS Cache',
-    type: 'Network',
-    command: 'ipconfig /flushdns',
+    name: "Flush DNS Cache",
+    type: "Network",
+    command: "ipconfig /flushdns",
     icon: <Wrench className="w-5 h-5" />,
-    color: 'text-indigo-500'
+    color: "text-indigo-500",
   },
   {
-    name: 'Disk Cleanup',
-    type: 'System',
-    command: 'cleanmgr.exe /sagerun:1',
+    name: "Disk Cleanup",
+    type: "System",
+    command: "cleanmgr.exe /sagerun:1",
     icon: <HardDrive className="w-5 h-5" />,
-    color: 'text-teal-500'
-  }
+    color: "text-teal-500",
+  },
 ]
 
 export default function UtilitiesPage() {
@@ -94,22 +95,22 @@ export default function UtilitiesPage() {
     const toastId = toast.loading(`Running ${selectedUtility.name}...`)
     try {
       await invoke({
-        channel: 'run-powershell-window',
-        payload: { script: selectedUtility.command, name: selectedUtility.name, noExit: noExit }
+        channel: "run-powershell-window",
+        payload: { script: selectedUtility.command, name: selectedUtility.name, noExit: noExit },
       })
       toast.update(toastId, {
         render: `${selectedUtility.name} completed!`,
-        type: 'success',
+        type: "success",
         isLoading: false,
-        autoClose: 3000
+        autoClose: 3000,
       })
     } catch (error) {
       log.error(`Error running utility ${selectedUtility.name}:`, error)
       toast.update(toastId, {
         render: `Failed to run ${selectedUtility.name}: ${error.message || error}`,
-        type: 'error',
+        type: "error",
         isLoading: false,
-        autoClose: 4000
+        autoClose: 4000,
       })
     }
     setRunning(false)
@@ -124,24 +125,60 @@ export default function UtilitiesPage() {
   const openQuickAccessTool = async (script) => {
     try {
       await invoke({
-        channel: 'run-powershell',
-        payload: { script }
+        channel: "run-powershell",
+        payload: { script },
       })
     } catch (error) {
-      log.error('Error running quick access tool:', error)
+      log.error("Error running quick access tool:", error)
     }
   }
 
   const quickAccess = [
-    { name: 'Regedit', command: 'start regedit.exe', icon: <Binary className="w-6 h-6 text-green-400" /> },
-    { name: 'Task Manager', command: 'start taskmgr.exe', icon: <ChartColumn className="w-6 h-6 text-blue-400" /> },
-    { name: 'Disk Cleanup', command: 'start cleanmgr.exe', icon: <HardDrive className="w-6 h-6 text-teal-400" /> },
-    { name: 'Display Settings', command: 'start desk.cpl', icon: <Monitor className="w-6 h-6 text-purple-400" /> },
-    { name: 'System Information', command: 'start msinfo32.exe', icon: <MonitorCog className="w-6 h-6 text-red-400" /> },
-    { name: 'Device Manager', command: 'start devmgmt.msc', icon: <Printer className="w-6 h-6 text-indigo-400" /> },
-    { name: 'System Properties', command: 'start sysdm.cpl', icon: <Info className="w-6 h-6 text-yellow-400" /> },
-    { name: 'Character Map', command: 'start charmap.exe', icon: <CaseSensitive className="w-6 h-6 text-pink-400" /> },
-    { name: 'Remote Desktop', command: 'start mstsc.exe', icon: <ScreenShare className="w-6 h-6 text-blue-400" /> }
+    {
+      name: "Regedit",
+      command: "start regedit.exe",
+      icon: <Binary className="w-6 h-6 text-green-400" />,
+    },
+    {
+      name: "Task Manager",
+      command: "start taskmgr.exe",
+      icon: <ChartColumn className="w-6 h-6 text-blue-400" />,
+    },
+    {
+      name: "Disk Cleanup",
+      command: "start cleanmgr.exe",
+      icon: <HardDrive className="w-6 h-6 text-teal-400" />,
+    },
+    {
+      name: "Display Settings",
+      command: "start desk.cpl",
+      icon: <Monitor className="w-6 h-6 text-purple-400" />,
+    },
+    {
+      name: "System Information",
+      command: "start msinfo32.exe",
+      icon: <MonitorCog className="w-6 h-6 text-red-400" />,
+    },
+    {
+      name: "Device Manager",
+      command: "start devmgmt.msc",
+      icon: <Printer className="w-6 h-6 text-indigo-400" />,
+    },
+    {
+      name: "System Properties",
+      command: "start sysdm.cpl",
+      icon: <Info className="w-6 h-6 text-yellow-400" />,
+    },
+    {
+      name: "Character Map",
+      command: "start charmap.exe",
+      icon: <CaseSensitive className="w-6 h-6 text-pink-400" />,
+    },
+    {
+      name: "Remote Desktop",
+      command: "start mstsc.exe",
+      icon: <ScreenShare className="w-6 h-6 text-blue-400" />,
+    },
   ]
 
   return (
@@ -191,7 +228,7 @@ export default function UtilitiesPage() {
             {selectedUtility && (
               <>
                 <p className="mb-4">
-                  You are about to run{' '}
+                  You are about to run{" "}
                   <span className={`${selectedUtility.color} underline  font-medium`}>
                     {selectedUtility.name}
                   </span>

@@ -1,35 +1,35 @@
-import { useEffect, useState } from 'react'
-import Modal from '@/components/ui/modal'
-import Button from './ui/button'
-import { toast } from 'react-toastify'
-import { invoke } from '@/lib/electron'
-import data from '../../../../package.json'
+import { useEffect, useState } from "react"
+import Modal from "@/components/ui/modal"
+import Button from "./ui/button"
+import { toast } from "react-toastify"
+import { invoke } from "@/lib/electron"
+import data from "../../../../package.json"
 
 function FirstTime() {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const firstTime = localStorage.getItem('firstTime')
-    if (firstTime === null || firstTime === 'true') {
+    const firstTime = localStorage.getItem("firstTime")
+    if (firstTime === null || firstTime === "true") {
       const timer = setTimeout(() => setOpen(true), 20)
       return () => clearTimeout(timer)
     }
   }, [])
 
   const handleGetStarted = async () => {
-    localStorage.setItem('firstTime', 'false')
+    localStorage.setItem("firstTime", "false")
     setOpen(false)
-    toast.warn('Creating restore point... Please wait before applying tweaks.')
+    toast.warn("Creating restore point... Please wait before applying tweaks.")
     try {
-      await invoke({ channel: 'create-sparkle-restore-point' })
-      toast.success('Restore point created!')
+      await invoke({ channel: "create-sparkle-restore-point" })
+      toast.success("Restore point created!")
     } catch (err) {
-      toast.error('Failed to create restore point.')
-      console.error('Error creating restore point:', err)
+      toast.error("Failed to create restore point.")
+      console.error("Error creating restore point:", err)
     }
   }
   const handleNoRestorePoint = () => {
-    localStorage.setItem('firstTime', 'false')
+    localStorage.setItem("firstTime", "false")
     setOpen(false)
   }
 
@@ -57,7 +57,7 @@ function FirstTime() {
           <Button onClick={handleGetStarted}>Yes (Recommended)</Button>
         </div>
         <p className="text-sparkle-text-secondary mt-2 text-sm">
-          <span className="font-semibold">Sparkle Version:</span>{' '}
+          <span className="font-semibold">Sparkle Version:</span>{" "}
           {data?.version || "Error can't get version"}
         </p>
       </div>

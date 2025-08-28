@@ -1,7 +1,7 @@
-import { exec } from 'child_process'
-import { ipcMain } from 'electron'
-import fs from 'fs'
-import log from 'electron-log'
+import { exec } from "child_process"
+import { ipcMain } from "electron"
+import fs from "fs"
+import log from "electron-log"
 console.log = log.log
 console.error = log.error
 console.warn = log.warn
@@ -14,29 +14,29 @@ function runPowerShell(cmd) {
       (err, stdout, stderr) => {
         if (err) return reject(stderr || err.message)
         resolve(stdout)
-      }
+      },
     )
   })
 }
 
 function changeRestorePointCooldown() {
   return runPowerShell(
-    "New-ItemProperty -Path 'HKLM:\\Software\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore' -Name 'SystemRestorePointCreationFrequency' -Value 0 -PropertyType DWord -Force"
+    "New-ItemProperty -Path 'HKLM:\\Software\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore' -Name 'SystemRestorePointCreationFrequency' -Value 0 -PropertyType DWord -Force",
   )
 }
 
 function getTimestamp() {
   const date = new Date()
   const yyyy = date.getFullYear()
-  const mm = String(date.getMonth() + 1).padStart(2, '0')
-  const dd = String(date.getDate()).padStart(2, '0')
-  const hh = String(date.getHours()).padStart(2, '0')
-  const mi = String(date.getMinutes()).padStart(2, '0')
-  const ss = String(date.getSeconds()).padStart(2, '0')
+  const mm = String(date.getMonth() + 1).padStart(2, "0")
+  const dd = String(date.getDate()).padStart(2, "0")
+  const hh = String(date.getHours()).padStart(2, "0")
+  const mi = String(date.getMinutes()).padStart(2, "0")
+  const ss = String(date.getSeconds()).padStart(2, "0")
   return `${yyyy}-${mm}-${dd}_${hh}-${mi}-${ss}`
 }
 
-ipcMain.handle('create-sparkle-restore-point', async () => {
+ipcMain.handle("create-sparkle-restore-point", async () => {
   const label = `SparkleBackup-${getTimestamp()}`
   try {
     await runPowerShell(`Checkpoint-Computer -Description '${label}'`)
@@ -48,7 +48,7 @@ ipcMain.handle('create-sparkle-restore-point', async () => {
   }
 })
 
-ipcMain.handle('create-restore-point', async (_, name) => {
+ipcMain.handle("create-restore-point", async (_, name) => {
   try {
     const label = name ? `${name}-${getTimestamp()}` : `ManualRestore-${getTimestamp()}`
 
@@ -61,21 +61,21 @@ ipcMain.handle('create-restore-point', async (_, name) => {
   }
 })
 
-ipcMain.handle('delete-all-restore-points', async (_, sequenceNumber) => {
+ipcMain.handle("delete-all-restore-points", async (_, sequenceNumber) => {
   try {
     await runPowerShell(`vssadmin delete shadows /all /quiet`)
     await changeRestorePointCooldown()
     return { success: true }
   } catch (error) {
-    console.error('Error deleting all restore points:', error)
+    console.error("Error deleting all restore points:", error)
     return { success: false, error: error.message }
   }
 })
 
-ipcMain.handle('get-restore-points', async () => {
+ipcMain.handle("get-restore-points", async () => {
   try {
     const output = await runPowerShell(
-      'Get-ComputerRestorePoint | Select-Object SequenceNumber, Description, CreationTime, EventType, RestorePointType | ConvertTo-Json'
+      "Get-ComputerRestorePoint | Select-Object SequenceNumber, Description, CreationTime, EventType, RestorePointType | ConvertTo-Json",
     )
     await changeRestorePointCooldown()
 
@@ -93,7 +93,7 @@ ipcMain.handle('get-restore-points', async () => {
   }
 })
 
-ipcMain.handle('restore-restore-point', async (_, sequenceNumber) => {
+ipcMain.handle("restore-restore-point", async (_, sequenceNumber) => {
   try {
     await runPowerShell(`Restore-Computer -RestorePoint ${sequenceNumber}`)
     await changeRestorePointCooldown()
@@ -104,16 +104,16 @@ ipcMain.handle('restore-restore-point', async (_, sequenceNumber) => {
   }
 })
 
-ipcMain.handle('delete-old-sparkle-backups', async () => {
+ipcMain.handle("delete-old-sparkle-backups", async () => {
   return new Promise((resolve, reject) => {
     const sparkleRoot = `C:\\Sparkle`
     if (!fs.existsSync(sparkleRoot)) {
-      return resolve({ success: true, message: 'Sparkle folder does not exist' })
+      return resolve({ success: true, message: "Sparkle folder does not exist" })
     }
 
     fs.rm(sparkleRoot, { recursive: true, force: true }, (err) => {
       if (err) return reject(err)
-      resolve({ success: true, message: 'Sparkle folder deleted' })
+      resolve({ success: true, message: "Sparkle folder deleted" })
     })
   })
 })

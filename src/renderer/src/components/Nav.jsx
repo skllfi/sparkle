@@ -1,18 +1,18 @@
-import { Wrench, Home, Folder, LayoutGrid, Icon, Globe } from 'lucide-react'
-import { broom } from '@lucide/lab'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { clsx } from 'clsx'
-import useRestartStore from '../store/restartState'
-import info from '../../../../package.json'
-import Button from './ui/button'
-import Modal from './ui/modal'
-import { invoke } from '@/lib/electron'
-import GithubIcon from './GithubIcon'
-import DiscordIcon from './Discordicon'
-import { Box } from 'lucide-react'
-import { Settings } from 'lucide-react'
-import { RefreshCw } from 'lucide-react'
-import { useRef, useEffect, useState } from 'react'
+import { Wrench, Home, Folder, LayoutGrid, Icon, Globe } from "lucide-react"
+import { broom } from "@lucide/lab"
+import { useLocation, useNavigate } from "react-router-dom"
+import { clsx } from "clsx"
+import useRestartStore from "../store/restartState"
+import info from "../../../../package.json"
+import Button from "./ui/button"
+import Modal from "./ui/modal"
+import { invoke } from "@/lib/electron"
+import GithubIcon from "./GithubIcon"
+import DiscordIcon from "./Discordicon"
+import { Box } from "lucide-react"
+import { Settings } from "lucide-react"
+import { RefreshCw } from "lucide-react"
+import { useRef, useEffect, useState } from "react"
 
 const tabIcons = {
   home: <Home size={20} />,
@@ -22,18 +22,18 @@ const tabIcons = {
   utilities: <Box size={20} />,
   dns: <Globe size={20} />,
   apps: <LayoutGrid size={20} />,
-  settings: <Settings size={20} />
+  settings: <Settings size={20} />,
 }
 
 const tabs = {
-  home: { label: 'Dashboard', path: '/' },
-  tweaks: { label: 'Tweaks', path: '/tweaks' },
-  clean: { label: 'Cleaner', path: '/clean' },
-  backup: { label: 'Restore Points', path: '/backup' },
-  utilities: { label: 'Utilities', path: '/utilities' },
-  dns: { label: 'DNS Manager', path: '/dns' },
-  apps: { label: 'Apps', path: '/apps' },
-  settings: { label: 'Settings', path: '/settings' }
+  home: { label: "Dashboard", path: "/" },
+  tweaks: { label: "Tweaks", path: "/tweaks" },
+  clean: { label: "Cleaner", path: "/clean" },
+  backup: { label: "Restore Points", path: "/backup" },
+  utilities: { label: "Utilities", path: "/utilities" },
+  dns: { label: "DNS Manager", path: "/dns" },
+  apps: { label: "Apps", path: "/apps" },
+  settings: { label: "Settings", path: "/settings" },
 }
 
 function Nav() {
@@ -48,9 +48,9 @@ function Nav() {
 
   const getActiveTab = () => {
     const path = location.pathname
-    if (path === '/') return 'home'
+    if (path === "/") return "home"
     const match = Object.entries(tabs).find(([, { path: p }]) => p === path)
-    return match ? match[0] : ''
+    return match ? match[0] : ""
   }
 
   const activeTab = getActiveTab()
@@ -64,13 +64,13 @@ function Nav() {
         const containerRect = container.getBoundingClientRect()
         setIndicatorStyle({
           top: tabRect.top - containerRect.top,
-          height: tabRect.height
+          height: tabRect.height,
         })
       }
     }
     updateIndicator()
-    window.addEventListener('resize', updateIndicator)
-    return () => window.removeEventListener('resize', updateIndicator)
+    window.addEventListener("resize", updateIndicator)
+    return () => window.removeEventListener("resize", updateIndicator)
   }, [activeTab])
 
   return (
@@ -81,7 +81,7 @@ function Nav() {
           style={{
             top: indicatorStyle.top,
             height: indicatorStyle.height,
-            transition: 'top 0.2s ease, height 0.2s ease'
+            transition: "top 0.2s ease, height 0.2s ease",
           }}
         />
         {Object.entries(tabs).map(([id, { label, path }]) => (
@@ -91,10 +91,10 @@ function Nav() {
             ref={(el) => (tabRefs.current[id] = el)}
             onClick={() => navigate(path)}
             className={clsx(
-              'flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 border relative',
+              "flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 border relative",
               activeTab === id
-                ? 'border-transparent text-sparkle-primary'
-                : 'text-sparkle-text-secondary hover:bg-sparkle-border-secondary hover:text-sparkle-text border-transparent'
+                ? "border-transparent text-sparkle-primary"
+                : "text-sparkle-text-secondary hover:bg-sparkle-border-secondary hover:text-sparkle-text border-transparent",
             )}
           >
             <div>{tabIcons[id]}</div>
@@ -105,8 +105,8 @@ function Nav() {
       {needsRestart && (
         <button
           className={clsx(
-            'flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 border m-3',
-            'bg-sparkle-card text-sparkle-text border-sparkle-border-secondary hover:bg-sparkle-border-secondary hover:text-sparkle-text'
+            "flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 border m-3",
+            "bg-sparkle-card text-sparkle-text border-sparkle-border-secondary hover:bg-sparkle-border-secondary hover:text-sparkle-text",
           )}
           onClick={() => setShowRestartModal(true)}
         >
@@ -129,7 +129,7 @@ function Nav() {
             <Button
               onClick={() => {
                 setShowRestartModal(false)
-                invoke({ channel: 'restart' })
+                invoke({ channel: "restart" })
               }}
               variant="danger"
             >

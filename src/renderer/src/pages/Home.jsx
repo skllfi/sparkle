@@ -113,7 +113,7 @@ function Home() {
   return (
     <RootDiv>
       <div className="max-w-[1800px] mx-auto ">
-       <Greeting />
+        <Greeting />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <InfoCard
             icon={Cpu}
@@ -122,8 +122,8 @@ function Home() {
             title="CPU"
             subtitle="Processor Information"
             items={[
-              { label: 'Model', value: systemInfo?.cpu_model || 'Unknown' },
-              { label: 'Cores', value: `${systemInfo?.cpu_cores || '0'} Cores` }
+              { label: "Model", value: systemInfo?.cpu_model || "Unknown" },
+              { label: "Cores", value: `${systemInfo?.cpu_cores || "0"} Cores` },
             ]}
           />
 
@@ -134,8 +134,8 @@ function Home() {
             title="GPU"
             subtitle="Graphics Information"
             items={[
-              { label: 'Model', value: systemInfo?.gpu_model || 'Unknown' },
-              { label: 'VRAM', value: systemInfo?.vram || 'Unknown' }
+              { label: "Model", value: systemInfo?.gpu_model || "Unknown" },
+              { label: "VRAM", value: systemInfo?.vram || "Unknown" },
             ]}
           />
 
@@ -146,8 +146,8 @@ function Home() {
             title="Memory"
             subtitle="RAM Information"
             items={[
-              { label: 'Total Memory', value: formatBytes(systemInfo?.memory_total) },
-              { label: 'Type', value: systemInfo?.memory_type || 'Unknown' }
+              { label: "Total Memory", value: formatBytes(systemInfo?.memory_total) },
+              { label: "Type", value: systemInfo?.memory_type || "Unknown" },
             ]}
           />
 
@@ -158,8 +158,8 @@ function Home() {
             title="System"
             subtitle="OS Information"
             items={[
-              { label: 'Operating System', value: systemInfo?.os || 'Unknown' },
-              { label: 'Version', value: systemInfo?.os_version || 'Unknown' }
+              { label: "Operating System", value: systemInfo?.os || "Unknown" },
+              { label: "Version", value: systemInfo?.os_version || "Unknown" },
             ]}
           />
 
@@ -170,8 +170,8 @@ function Home() {
             title="Storage"
             subtitle="Disk Information"
             items={[
-              { label: 'Primary Disk', value: systemInfo?.disk_model || 'Unknown' },
-              { label: 'Total Space', value: systemInfo?.disk_size || 'Unknown' }
+              { label: "Primary Disk", value: systemInfo?.disk_model || "Unknown" },
+              { label: "Total Space", value: systemInfo?.disk_size || "Unknown" },
             ]}
           />
 
@@ -182,8 +182,8 @@ function Home() {
             title="Tweaks"
             subtitle="System Tweaks Status"
             items={[
-              { label: 'Available Tweaks', value: `${tweakInfo?.length || '0'} Tweaks` },
-              { label: 'Active Tweaks', value: `${activeTweaks || '0'} Active` }
+              { label: "Available Tweaks", value: `${tweakInfo?.length || "0"} Tweaks` },
+              { label: "Active Tweaks", value: `${activeTweaks || "0"} Active` },
             ]}
           />
         </div>
@@ -198,11 +198,7 @@ function Home() {
             </p>
           </div>
           <div className="ml-auto">
-            <Button
-              variant="outline"
-              className="flex items-center gap-2"
-              onClick={goToTweaks}
-            >
+            <Button variant="outline" className="flex items-center gap-2" onClick={goToTweaks}>
               <Zap size={18} /> Tweaks
             </Button>
           </div>

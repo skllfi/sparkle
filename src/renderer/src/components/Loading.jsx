@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
 
 function Loading({ onLoadingComplete }) {
   const [loadingStep, setLoadingStep] = useState(0)
 
-  const steps = ['Loading tweaks', 'Checking backups', 'Fetching system info']
+  const steps = ["Loading tweaks", "Checking backups", "Fetching system info"]
 
   useEffect(() => {
     const stepIntervals = [
@@ -12,7 +12,7 @@ function Loading({ onLoadingComplete }) {
       setTimeout(() => setLoadingStep(2), 2000),
       setTimeout(() => {
         setTimeout(() => onLoadingComplete(), 1000)
-      }, 2900)
+      }, 2900),
     ]
 
     return () => {
@@ -28,9 +28,9 @@ function Loading({ onLoadingComplete }) {
       transition: {
         duration: 1.5,
         repeat: Infinity,
-        ease: 'easeInOut'
-      }
-    }
+        ease: "easeInOut",
+      },
+    },
   }
 
   const progressVariants = {
@@ -39,9 +39,9 @@ function Loading({ onLoadingComplete }) {
       width: `${((custom + 1) / steps.length) * 100}%`,
       transition: {
         duration: 1,
-        ease: 'easeOut'
-      }
-    })
+        ease: "easeOut",
+      },
+    }),
   }
 
   return (
@@ -76,15 +76,15 @@ function Loading({ onLoadingComplete }) {
           {steps.map((_, i) => (
             <motion.div
               key={i}
-              className={`w-3 h-3 rounded-full ${i === loadingStep ? 'bg-sparkle-primary' : 'bg-sparkle-accent'}`}
+              className={`w-3 h-3 rounded-full ${i === loadingStep ? "bg-sparkle-primary" : "bg-sparkle-accent"}`}
               animate={{
                 scale: i === loadingStep ? [1, 1.2, 1] : 1,
-                opacity: i === loadingStep ? 1 : 0.6
+                opacity: i === loadingStep ? 1 : 0.6,
               }}
               transition={{
                 duration: 0.8,
                 repeat: i === loadingStep ? Infinity : 0,
-                repeatType: 'reverse'
+                repeatType: "reverse",
               }}
             />
           ))}

@@ -4,8 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -15,14 +13,12 @@
   background: var(--color-border);
   border-radius: 5px;
   transition: all 0.2s ease-in-out;
- 
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-primary);
   border-radius: 5px;
   transition: all 0.2s ease-in-out;
-  
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -133,7 +129,6 @@
 }
 * {
   user-select: none;
-
 }
 
 @layer utilities {
@@ -149,7 +144,6 @@
 .recharts-line path {
   stroke: theme("colors.sparkle.primary");
 }
-
 
 button:focus {
   outline: none !important;

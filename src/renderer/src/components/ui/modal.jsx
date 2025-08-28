@@ -4,14 +4,14 @@ export default function Modal({ open, onClose, children }) {
       onClick={onClose}
       className={`
         fixed inset-0 flex justify-center items-center transition-all duration-200 z-50
-        ${open ? 'visible bg-black/60 backdrop-blur-sm' : 'invisible'}
+        ${open ? "visible bg-black/60 backdrop-blur-sm" : "invisible"}
       `}
     >
       <div
         onClick={(e) => e.stopPropagation()}
         className={`
           transition-all duration-200
-          ${open ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}
+          ${open ? "scale-100 opacity-100" : "scale-95 opacity-0"}
         `}
       >
         {/* <button

@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 
-const Tooltip = ({ content, children, side = 'top', delay = 0.5 }) => {
+const Tooltip = ({ content, children, side = "top", delay = 0.5 }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [timeoutId, setTimeoutId] = useState(null)
 
@@ -18,10 +18,10 @@ const Tooltip = ({ content, children, side = 'top', delay = 0.5 }) => {
   }
 
   const sideToPosition = {
-    top: { y: -8, x: '-50%' },
-    bottom: { y: 8, x: '-50%' },
-    left: { x: -8, y: '-50%' },
-    right: { x: 8, y: '-50%' }
+    top: { y: -8, x: "-50%" },
+    bottom: { y: 8, x: "-50%" },
+    left: { x: -8, y: "-50%" },
+    right: { x: 8, y: "-50%" },
   }
 
   const position = sideToPosition[side] || sideToPosition.top
@@ -42,15 +42,15 @@ const Tooltip = ({ content, children, side = 'top', delay = 0.5 }) => {
             transition={{ duration: 0.15 }}
             className="absolute z-50 px-2 py-1 text-xs font-medium bg-sparkle-card text-sparkle-text rounded-md shadow-lg border border-sparkle-border whitespace-nowrap"
             style={{
-              left: side === 'top' || side === 'bottom' ? '50%' : undefined,
-              bottom: side === 'top' ? '100%' : undefined,
+              left: side === "top" || side === "bottom" ? "50%" : undefined,
+              bottom: side === "top" ? "100%" : undefined,
               top:
-                side === 'bottom'
-                  ? '100%'
-                  : side === 'left' || side === 'right'
-                    ? '50%'
+                side === "bottom"
+                  ? "100%"
+                  : side === "left" || side === "right"
+                    ? "50%"
                     : undefined,
-              right: side === 'left' ? '100%' : undefined
+              right: side === "left" ? "100%" : undefined,
             }}
           >
             {content}
