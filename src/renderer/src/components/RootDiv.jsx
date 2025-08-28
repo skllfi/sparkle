@@ -1,21 +1,43 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import React, { useEffect, useState } from "react"
 
 function RootDiv({ children, ...props }) {
+  const [style, setStyle] = useState({
+    opacity: 0,
+    transform: "translateY(90px)",
+    transition:
+      "opacity 0.6s cubic-bezier(0.075,0.82,0.165,1), transform 0.6s cubic-bezier(0.075,0.82,0.165,1)",
+  })
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setStyle((prev) => ({
+        ...prev,
+        opacity: 1,
+        transform: "translateY(0)",
+      }))
+    }, 10)
+
+    return () => {
+      setStyle((prev) => ({
+        ...prev,
+        opacity: 0,
+        transform: "translateY(90px)",
+      }))
+      clearTimeout(timeout)
+    }
+  }, [])
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 90 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 90 }}
-      transition={{
-        duration: 0.6,
-        ease: [0.075, 0.82, 0.165, 1]
+    <div
+      style={{
+        ...style,
+        height: "calc(100vh - 50px)",
+        overflowY: "auto",
       }}
-      className="h-[calc(100vh-50px)] overflow-y-auto "
       {...props}
     >
       {children}
-    </motion.div>
+    </div>
   )
 }
 
