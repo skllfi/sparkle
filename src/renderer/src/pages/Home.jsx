@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import RootDiv from "@/components/RootDiv"
-import { Cpu, HardDrive, Zap, MemoryStick, Server, Monitor } from "lucide-react"
+import { Cpu, HardDrive, Zap, MemoryStick, Server, Monitor, ChevronRight } from "lucide-react"
+import InfoCard from "@/components/InfoCard"
 import { invoke } from "@/lib/electron"
 import useTweaksStore from "../store/tweaksStore"
 import Button from "@/components/ui/button"
@@ -114,157 +115,81 @@ function Home() {
       <div className="max-w-[1800px] mx-auto ">
        <Greeting />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5">
-            <div className="flex items-start gap-3 mb-4">
-              <div className="p-3 bg-blue-500/10 rounded-lg">
-                <Cpu className="text-blue-500" size={24} />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-sparkle-text mb-1">CPU</h2>
-                <p className="text-sparkle-text-secondary text-sm">Processor Information</p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <div>
-                <p className="text-sparkle-text-secondary text-xs mb-1">Model</p>
-                <p className="text-sparkle-text font-medium">
-                  {systemInfo?.cpu_model || "Unknown"}
-                </p>
-              </div>
-              <div>
-                <p className="text-sparkle-text-secondary text-xs mb-1">Cores</p>
-                <p className="text-sparkle-text font-medium">
-                  {systemInfo?.cpu_cores || "0"} Cores
-                </p>
-              </div>
-            </div>
-          </div>
+          <InfoCard
+            icon={Cpu}
+            iconBgColor="bg-blue-500/10"
+            iconColor="text-blue-500"
+            title="CPU"
+            subtitle="Processor Information"
+            items={[
+              { label: 'Model', value: systemInfo?.cpu_model || 'Unknown' },
+              { label: 'Cores', value: `${systemInfo?.cpu_cores || '0'} Cores` }
+            ]}
+          />
 
-          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5">
-            <div className="flex items-start gap-3 mb-4">
-              <div className="p-3 bg-green-500/10 rounded-lg">
-                <Monitor className="text-green-500" size={24} />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-sparkle-text mb-1">GPU</h2>
-                <p className="text-sparkle-text-secondary text-sm">Graphics Information</p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <div>
-                <p className="text-sparkle-text-secondary text-xs mb-1">Model</p>
-                <p className="text-sparkle-text font-medium">
-                  {systemInfo?.gpu_model || "Unknown"}
-                </p>
-              </div>
-              <div>
-                <p className="text-sparkle-text-secondary text-xs mb-1">VRAM</p>
-                <p className="text-sparkle-text font-medium">{systemInfo?.vram || "Unknown"}</p>
-              </div>
-            </div>
-          </div>
+          <InfoCard
+            icon={Monitor}
+            iconBgColor="bg-green-500/10"
+            iconColor="text-green-500"
+            title="GPU"
+            subtitle="Graphics Information"
+            items={[
+              { label: 'Model', value: systemInfo?.gpu_model || 'Unknown' },
+              { label: 'VRAM', value: systemInfo?.vram || 'Unknown' }
+            ]}
+          />
 
-          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5">
-            <div className="flex items-start gap-3 mb-4">
-              <div className="p-3 bg-purple-500/10 rounded-lg">
-                <MemoryStick className="text-purple-500" size={24} />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-sparkle-text mb-1">Memory</h2>
-                <p className="text-sparkle-text-secondary text-sm">RAM Information</p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <div>
-                <p className="text-sparkle-text-secondary text-xs mb-1">Total Memory</p>
-                <p className="text-sparkle-text font-medium">
-                  {formatBytes(systemInfo?.memory_total)}
-                </p>
-              </div>
-              <div>
-                <p className="text-sparkle-text-secondary text-xs mb-1">Type</p>
-                <p className="text-sparkle-text font-medium">
-                  {systemInfo?.memory_type || "Unknown"}
-                </p>
-              </div>
-            </div>
-          </div>
+          <InfoCard
+            icon={MemoryStick}
+            iconBgColor="bg-purple-500/10"
+            iconColor="text-purple-500"
+            title="Memory"
+            subtitle="RAM Information"
+            items={[
+              { label: 'Total Memory', value: formatBytes(systemInfo?.memory_total) },
+              { label: 'Type', value: systemInfo?.memory_type || 'Unknown' }
+            ]}
+          />
 
-          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5">
-            <div className="flex items-start gap-3 mb-4">
-              <div className="p-3 bg-red-500/10 rounded-lg">
-                <Server className="text-red-500" size={24} />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-sparkle-text mb-1">System</h2>
-                <p className="text-sparkle-text-secondary text-sm">OS Information</p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <div>
-                <p className="text-sparkle-text-secondary text-xs mb-1">Operating System</p>
-                <p className="text-sparkle-text font-medium">{systemInfo?.os || "Unknown"}</p>
-              </div>
-              <div>
-                <p className="text-sparkle-text-secondary text-xs mb-1">Version</p>
-                <p className="text-sparkle-text font-medium">
-                  {systemInfo?.os_version || "Unknown"}
-                </p>
-              </div>
-            </div>
-          </div>
+          <InfoCard
+            icon={Server}
+            iconBgColor="bg-red-500/10"
+            iconColor="text-red-500"
+            title="System"
+            subtitle="OS Information"
+            items={[
+              { label: 'Operating System', value: systemInfo?.os || 'Unknown' },
+              { label: 'Version', value: systemInfo?.os_version || 'Unknown' }
+            ]}
+          />
 
-          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5">
-            <div className="flex items-start gap-3 mb-4">
-              <div className="p-3 bg-orange-500/10 rounded-lg">
-                <HardDrive className="text-orange-500" size={24} />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-sparkle-text mb-1">Storage</h2>
-                <p className="text-sparkle-text-secondary text-sm">Disk Information</p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <div>
-                <p className="text-sparkle-text-secondary text-xs mb-1">Primary Disk</p>
-                <p className="text-sparkle-text font-medium">
-                  {systemInfo?.disk_model || "Unknown"}
-                </p>
-              </div>
-              <div>
-                <p className="text-sparkle-text-secondary text-xs mb-1">Total Space</p>
-                <p className="text-sparkle-text font-medium">
-                  {systemInfo?.disk_size || "Unknown"}
-                </p>
-              </div>
-            </div>
-          </div>
+          <InfoCard
+            icon={HardDrive}
+            iconBgColor="bg-orange-500/10"
+            iconColor="text-orange-500"
+            title="Storage"
+            subtitle="Disk Information"
+            items={[
+              { label: 'Primary Disk', value: systemInfo?.disk_model || 'Unknown' },
+              { label: 'Total Space', value: systemInfo?.disk_size || 'Unknown' }
+            ]}
+          />
 
-          <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5">
-            <div className="flex items-start gap-3 mb-4">
-              <div className="p-3 bg-yellow-500/10 rounded-lg">
-                <Zap className="text-yellow-500" size={24} />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-sparkle-text mb-1">Tweaks</h2>
-                <p className="text-sparkle-text-secondary text-sm">System Tweaks Status</p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <div>
-                <p className="text-sparkle-text-secondary text-xs mb-1">Available Tweaks</p>
-                <p className="text-sparkle-text font-medium">{tweakInfo?.length || "0"} Tweaks</p>
-              </div>
-              <div>
-                <p className="text-sparkle-text-secondary text-xs mb-1">Active Tweaks</p>
-                <p className="text-sparkle-text font-medium">{activeTweaks || "0"} Active</p>
-              </div>
-            </div>
-          </div>
+          <InfoCard
+            icon={Zap}
+            iconBgColor="bg-yellow-500/10"
+            iconColor="text-yellow-500"
+            title="Tweaks"
+            subtitle="System Tweaks Status"
+            items={[
+              { label: 'Available Tweaks', value: `${tweakInfo?.length || '0'} Tweaks` },
+              { label: 'Active Tweaks', value: `${activeTweaks || '0'} Active` }
+            ]}
+          />
         </div>
-        <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-3 w-full mt-5 flex gap-4 items-center ">
-          <div className="p-3 bg-yellow-500/10 rounded-lg items-center justify-center text-center ">
-            <Zap className="text-yellow-500 " size={18} />
+        <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-3 w-full mt-5 flex gap-4 items-center">
+          <div className="p-3 bg-yellow-500/10 rounded-lg items-center justify-center text-center">
+            <Zap className="text-yellow-500" size={18} />
           </div>
           <div>
             <h1 className="font-medium text-sparkle-text">PC Running slow?</h1>
@@ -276,7 +201,7 @@ function Home() {
             <Button
               variant="outline"
               className="flex items-center gap-2"
-              onClick={() => goToTweaks()}
+              onClick={goToTweaks}
             >
               <Zap size={18} /> Tweaks
             </Button>
