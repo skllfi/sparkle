@@ -4,7 +4,7 @@
   "description": "A Simple Windows Optimizer",
   "main": "./out/main/index.js",
   "author": "The Parcoil Network",
-  "homepage": "https://electron-vite.org",
+  "homepage": "https://getsparkle.net",
   "pnpm": {
     "onlyBuiltDependenciesFile": "./trusted-dependencies-scripts.json"
   },
