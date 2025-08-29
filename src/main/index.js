@@ -1,10 +1,8 @@
 import { app, shell, BrowserWindow, ipcMain, globalShortcut } from "electron"
 import path, { join } from "path"
-
 import { electronApp, optimizer, is } from "@electron-toolkit/utils"
 import * as Sentry from "@sentry/electron/main"
 import { IPCMode } from "@sentry/electron/main"
-import fs from "fs"
 import log from "electron-log"
 import "./system"
 import "./powershell"
@@ -114,7 +112,7 @@ function createWindow() {
     minHeight: 760,
     center: true,
     frame: false,
-    show: false,
+    show: true,
     autoHideMenuBar: true,
     icon: path.join(__dirname, "../../resources/sparkle2.ico"),
     webPreferences: {
@@ -122,14 +120,6 @@ function createWindow() {
       devTools: app.isPackaged ? false : true,
       sandbox: false,
     },
-  })
-
-  mainWindow.on("ready-to-show", () => {
-    mainWindow.show()
-    if (store.get("showTray")) {
-      trayInstance = createTray(mainWindow)
-    }
-    Defender()
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -147,11 +137,18 @@ function createWindow() {
 app.whenReady().then(() => {
   createWindow()
   initAutoUpdater(() => mainWindow)
-
+  if (store.get("showTray")) {
+    setTimeout(() => {
+      trayInstance = createTray(mainWindow)
+    }, 50)
+  }
   setTimeout(() => {
     void triggerAutoUpdateCheck()
   }, 1500)
-  Promise.all([setupTweaksHandlers(), setupDNSHandlers()])
+  Promise.allSettled([Defender(), setupTweaksHandlers(), setupDNSHandlers()]).then(() =>
+    console.log("Setup done"),
+  )
+
   if (app.isPackaged) {
     globalShortcut.register("CommandOrControl+R", () => {})
     globalShortcut.register("F5", () => {})
