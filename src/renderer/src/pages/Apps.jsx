@@ -17,7 +17,12 @@ function Apps() {
   const [selectedApps, setSelectedApps] = useState([])
   const [loading, setLoading] = useState("")
   const [currentApp, setCurrentApp] = useState("")
+  const [totalApps, setTotalApps] = useState(0)
   const [installedApps, setInstalledApps] = useState([])
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [importModalOpen, setImportModalOpen] = useState(false)
+  const [importedApps, setImportedApps] = useState([])
+  const [selectedImportedApps, setSelectedImportedApps] = useState(importedApps)
 
   const appsList = data.apps
   const router = useNavigate()
@@ -25,6 +30,39 @@ function Apps() {
   const filteredApps = appsList.filter((app) =>
     app.name.toLowerCase().includes(search.toLowerCase()),
   )
+
+  const exportSelectedApps = () => {
+    const blob = new Blob([JSON.stringify(selectedApps, null, 2)], { type: "application/json" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = "sparkle-apps.json"
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const importSelectedApps = (event) => {
+    const file = event.target.files[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      try {
+        const parsed = JSON.parse(e.target.result)
+        if (Array.isArray(parsed)) {
+          setImportedApps(parsed)
+          setSelectedImportedApps(parsed)
+          setImportModalOpen(true)
+        } else {
+          toast.error("Invalid import file format")
+        }
+      } catch {
+        toast.error("Failed to parse JSON file")
+      } finally {
+        event.target.value = ""
+      }
+    }
+    reader.readAsText(file)
+  }
 
   const appsByCategory = useMemo(() => {
     return filteredApps.reduce((acc, app) => {
@@ -67,10 +105,13 @@ function Apps() {
       "install-progress": (event, message) => {
         console.log(message)
         setCurrentApp(message)
+        setCurrentIndex((prev) => prev + 1)
       },
       "install-complete": () => {
         setLoading("")
         setCurrentApp("")
+        setCurrentIndex(0)
+        setTotalApps(0)
         toast.success("Operation completed successfully!")
         checkInstalledApps()
       },
@@ -106,27 +147,30 @@ function Apps() {
     }
   }, [])
 
-  const handleAppAction = async (type) => {
+  const handleAppAction = async (type, appsToUse = selectedApps) => {
     const actionVerb = type === "install" ? "Installing" : "Uninstalling"
     setLoading(type)
 
     try {
-      const commands = selectedApps.flatMap((appId) => {
+      const commands = appsToUse.flatMap((appId) => {
         const app = appsList.find(
           (a) => a.id === appId || (Array.isArray(a.id) && a.id.includes(appId)),
         )
         return app
       })
-      console.log(commands)
+
+      if (commands.length === 0) return
+
       invoke({
         channel: "handle-apps",
         payload: {
           action: type,
-          apps: selectedApps,
+          apps: appsToUse,
         },
       })
 
-      if (commands.length === 0) return
+      setTotalApps(appsToUse.length)
+      setCurrentIndex(0)
     } catch (error) {
       console.error(`Error ${actionVerb.toLowerCase()} apps:`, error)
       log.error(`Error ${actionVerb.toLowerCase()} apps:`, error)
@@ -135,6 +179,61 @@ function Apps() {
 
   return (
     <>
+      <Modal open={importModalOpen} onClose={() => setImportModalOpen(false)}>
+        <div className="bg-sparkle-card border border-sparkle-border rounded-2xl p-6 shadow-xl max-w-lg w-full mx-4">
+          <h3 className="text-xl font-semibold text-sparkle-text mb-3">
+            Import Apps ({importedApps.length})
+          </h3>
+
+          <div className="text-sparkle-text-secondary text-sm leading-6 whitespace-pre-wrap max-h-64 overflow-y-auto custom-scrollbar mb-6">
+            {importedApps.length > 0 ? (
+              <ul className="space-y-2 max-h-60 overflow-y-auto custom-scrollbar">
+                {importedApps.map((id) => {
+                  const app = appsList.find((a) => a.id === id)
+                  return (
+                    <li key={id} className="flex items-center gap-2 text-sparkle-text">
+                      <Checkbox
+                        checked={selectedImportedApps.includes(id)}
+                        onChange={(e) => {
+                          const checked = e.target.checked
+                          setSelectedImportedApps((prev) => {
+                            if (checked) {
+                              return prev.includes(id) ? prev : [...prev, id]
+                            } else {
+                              return prev.filter((x) => x !== id)
+                            }
+                          })
+                        }}
+                      />
+
+                      {app ? app.name : `Unknown App (${id})`}
+                    </li>
+                  )
+                })}
+              </ul>
+            ) : (
+              <p className="text-sparkle-text-secondary italic">No apps found in file</p>
+            )}
+          </div>
+
+          <div className="flex justify-end gap-3">
+            <Button variant="secondary" onClick={() => setImportModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              disabled={selectedImportedApps.length === 0}
+              onClick={() => {
+                setSelectedApps(selectedImportedApps)
+                setImportModalOpen(false)
+                handleAppAction("install", selectedImportedApps)
+              }}
+            >
+              Install Selected
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
       <Modal open={!!loading} onClose={() => {}}>
         <div className="bg-sparkle-card border border-sparkle-border rounded-2xl p-6 shadow-xl">
           <div className="flex items-center gap-4">
@@ -144,6 +243,9 @@ function Apps() {
             <div>
               <h3 className="text-lg font-medium text-sparkle-text">
                 {loading === "install" ? "Installing" : "Uninstalling"} {currentApp || "Apps"}
+                <p className="text-sm text-sparkle-text-secondary  mt-1 mb-1">
+                  {totalApps > 0 && ` (${currentIndex} of ${totalApps})`}
+                </p>
               </h3>
               <p className="text-sm text-sparkle-text-secondary">This may take a few moments</p>
             </div>
@@ -151,11 +253,11 @@ function Apps() {
         </div>
       </Modal>
       <RootDiv>
-        <div className="flex items-center gap-3 bg-sparkle-card border border-sparkle-border rounded-xl px-4 backdrop-blur-sm ml-1 mr-1">
+        <div className="flex items-center gap-3 bg-sparkle-card border border-sparkle-border rounded-xl px-4 backdrop-blur-sm ml-1 mr-4">
           <Search className="text-sparkle-text-secondary" />
           <input
             type="text"
-            placeholder="Search for apps..."
+            placeholder={`Search for ${appsList.length} apps...`}
             className="w-full py-3 px-0 bg-transparent border-none focus:outline-none focus:ring-0 text-sparkle-text placeholder:text-sparkle-text-secondary"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -180,6 +282,24 @@ function Apps() {
             <Trash className="w-5" />
             Uninstall Selected
           </Button>
+          <Button
+            className="flex gap-2"
+            onClick={exportSelectedApps}
+            disabled={selectedApps.length === 0}
+          >
+            Export List
+          </Button>
+
+          <label className="flex gap-2 cursor-pointer bg-sparkle-border text-sparkle-text rounded-lg font-medium px-3 py-1.5 text-sm text-center items-center active:scale-90 hover:bg-sparkle-secondary transition-all duration-200">
+            Import List
+            <input
+              type="file"
+              accept="application/json"
+              className="hidden"
+              onChange={importSelectedApps}
+            />
+          </label>
+
           {selectedApps.length > 0 && (
             <Button
               className="flex gap-2 ml-auto bg-sparkle-border text-sparkle-text"
@@ -200,7 +320,7 @@ function Apps() {
           {Object.entries(appsByCategory).map(([category, apps]) => (
             <div key={category} className="space-y-4">
               <h2 className="text-2xl text-sparkle-primary font-bold capitalize">{category}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 mr-4">
                 {apps.map((app) => (
                   <div
                     key={app.id}
@@ -209,13 +329,22 @@ function Apps() {
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
-                        <div
-                          onClick={(e) => e.stopPropagation()} // Prevent double toggle when checkbox is clicked
-                        >
+                        <div onClick={(e) => e.stopPropagation()}>
                           <Checkbox
                             checked={selectedApps.includes(app.id)}
                             onChange={() => toggleApp(app.id)}
                           />
+                        </div>
+                        <div className="min-w-10 max-w-10 max--h-10 min-h-10 rounded-lg overflow-hidden bg-sparkle-accent flex items-center justify-center">
+                          {app.icon ? (
+                            <img
+                              src={app.icon}
+                              alt={app.name}
+                              className="w-8 h-8 object-contain rounded-md"
+                            />
+                          ) : (
+                            <img src={sparkleLogo} alt="" className="w-6 h-6 opacity-50" />
+                          )}
                         </div>
                         <div>
                           <h3 className="text-sparkle-text font-medium group-hover:text-sparkle-primary transition">
