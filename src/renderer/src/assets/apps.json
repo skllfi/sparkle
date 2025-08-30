@@ -63,7 +63,7 @@
       "category": "games",
       "info": "A Games Store",
       "link": "https://us.shop.battle.net/",
-      "icon": "https://platform.polygon.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/7141739/battle_net.jpg?quality=90&strip=all&crop=7.8125,0,84.375,100"
+      "icon": "https://cdn2.steamgriddb.com/icon/937ea3f7714dc0d01475da7bff33b596/32/128x128.png"
     },
     {
       "name": "Visual Studio Code",
@@ -323,7 +323,7 @@
       "category": "utilities",
       "info": "An open source RGB lighting control software.",
       "link": "https://openrgb.org/",
-      "icon": "https://cdn2.steamgriddb.com/thumb/76b8407154bc9184dbe6c0d5fb46e30a.jpg"
+      "icon": "https://openrgb.org/apple-touch-icon.5819aa8b.png"
     },
     {
       "name": "Rust",
@@ -363,7 +363,7 @@
       "category": "VPN",
       "info": "A Great VPN service.",
       "link": "https://surfshark.com/",
-      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-zk_Mh-GULCT985gk0b-H8dGqBnXd8tavSA&s"
+      "icon": "https://static.wikia.nocookie.net/logopedia/images/a/a8/Surfshark_%28Icon%29_2023.svg"
     },
     {
       "name": "Windscribe",
@@ -387,7 +387,7 @@
       "category": "VPN",
       "info": "A VPN service.",
       "link": "https://windscribe.com/",
-      "icon": "https://upload.wikimedia.org/wikipedia/commons/3/34/ExpressVPN-logo.png"
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjwaKqGXfkKnwU7wHh8FgobPoEictiwTQ9tQ&s"
     },
     {
       "name": "Private Internet Access",
