@@ -4,7 +4,7 @@
   </a>
 
   <h3>Sparkle</h3>
-  <p>Ultimate Windows Optimizer</p>
+  <p>A Windows app to debloat and optimize your PC</p>
 
   <p>
     <img alt="React" src="https://img.shields.io/badge/React-000000?style=for-the-badge&logo=react&labelColor=0c121f&color=0c121f">
