@@ -17,13 +17,13 @@ resources/
 └── tweaks/
     └── example-tweak/
         ├── apply.ps1
-        ├── unapply.ps1   # optional if the tweak is reversible
+        ├── unapply.ps1
         └── meta.json
 ```
 
 !!! tip
 
-    If the tweak does not have an unapply script, do **not** create a `unapply.ps1`.
+    If the tweak does not have an unapply script, do **not** create a `unapply.ps1`. it will be changed from a toggle to an apply button in the UI
 
 ---
 
@@ -71,7 +71,6 @@ Here’s an example of a `meta.json` for a tweak:
 {
   "name": "disable-animations",
   "title": "Disable Animations",
-  "reversible": true,
   "modal": "Disabling animations can improve performance but may reduce visual effects.",
   "category": ["Performance", "Appearance"],
   "warning": "Some apps may not display smoothly.",

@@ -2,7 +2,9 @@
 
 # Welcome to Sparkle Docs
 
-> **Info:** Looking to install sparkle? go to [getsparkle.net](https://getsparkle.net)
+!!! info
+
+    Looking to install sparkle? go to [getsparkle.net](https://getsparkle.net)
 
 Welcome to the official documentation for **Sparkle**, the ultimate Windows optimizer. Sparkle helps you debloat and tweak your Windows PC for better performance and privacy.
 
@@ -29,7 +31,7 @@ Sparkle is a free and open-source Windows optimization tool. It provides a user-
 
 ### Website Method (recommended for most users)
 
-1. Go to [parcoil.com/sparkle](https://getsparkle.net)
+1. Go to [getsparkle.net](https://getsparkle.net)
 2. Choose your version (Portable or installer)
 3. Run Sparkle
 4. Apply Tweaks
@@ -40,7 +42,9 @@ Sparkle is a free and open-source Windows optimization tool. It provides a user-
 2. Unzip and run `sparkle-{version}-setup.exe`.
 3. Apply Tweaks
 
-> **Tip:** Always create a system restore point before making major changes.
+!!! tip
+
+    Always create a system restore point before making major changes.
 
 ## Learn More
 

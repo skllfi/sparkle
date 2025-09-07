@@ -19,7 +19,7 @@ The following system utilities can be run directly from the app:
 | **Flush DNS Cache**     | `ipconfig /flushdns`                         | Network | Clears the DNS cache.                     |
 | **Disk Cleanup**        | `cleanmgr.exe /sagerun:1`                    | System  | Launches Windows Disk Cleanup utility.    |
 
-!!! tip
+!!! info
 
     Users can choose to keep the PowerShell window open after execution via a toggle.
 

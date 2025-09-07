@@ -8,7 +8,7 @@ A collection of tweaks to customize and enhance your Windows experience using Sp
 
 _this page is auto-generated_
 
-## All Tweaks (27)
+## All Tweaks (31)
 - [align-taskbar-left](align-taskbar-left.md)
 - [debloat-windows](debloat-windows.md)
 - [detailed-bsod](detailed-bsod.md)
@@ -26,13 +26,17 @@ _this page is auto-generated_
 - [disable-wifi-sense](disable-wifi-sense.md)
 - [enable-dark-mode](enable-dark-mode.md)
 - [enable-end-task-right-click](enable-end-task-right-click.md)
+- [enable-game-mode](enable-game-mode.md)
+- [enable-hags](enable-hags.md)
 - [enable-hpet](enable-hpet.md)
+- [enable-optimization-for-windowed-games](enable-optimization-for-windowed-games.md)
 - [optimize-network-settings](optimize-network-settings.md)
 - [optimize-nvidia-settings](optimize-nvidia-settings.md)
 - [remove-gaming-apps](remove-gaming-apps.md)
 - [remove-onedrive](remove-onedrive.md)
 - [revert-context-menu](revert-context-menu.md)
 - [run-disk-cleanup](run-disk-cleanup.md)
+- [set-powershell7-default](set-powershell7-default.md)
 - [set-services-to-manual](set-services-to-manual.md)
 - [set-time-utc](set-time-utc.md)
 - [ultimate-performance-plan](ultimate-performance-plan.md)
