@@ -16,7 +16,6 @@ import RootDiv from "@/components/RootDiv"
 import Tooltip from "@/components/ui/tooltip"
 import Modal from "@/components/ui/modal"
 import { invoke } from "@/lib/electron"
-import useTweaksStore from "@/store/tweaksStore"
 import useRestartStore from "@/store/restartState"
 import Button from "@/components/ui/button"
 import Toggle from "@/components/ui/Toggle"
@@ -33,7 +32,6 @@ function Tweaks() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedTweak, setSelectedTweak] = useState(null)
 
-  const { incrementTweaks, decrementTweaks } = useTweaksStore.getState()
   const { setNeedsRestart } = useRestartStore()
 
   useEffect(() => {
@@ -103,7 +101,6 @@ function Tweaks() {
           channel: "tweak:apply",
           payload: tweak.name,
         })
-        incrementTweaks()
         if (tweak.restart) {
           setNeedsRestart(true)
         }
@@ -121,7 +118,6 @@ function Tweaks() {
           channel: "tweak:unapply",
           payload: tweak.name,
         })
-        decrementTweaks()
         if (tweak.restart) {
           setNeedsRestart(true)
         }
@@ -178,7 +174,6 @@ function Tweaks() {
         channel: "tweak:apply",
         payload: tweak.name,
       })
-      incrementTweaks()
       if (tweak.restart) {
         setNeedsRestart(true)
       }
@@ -320,7 +315,6 @@ function Tweaks() {
                     channel: "tweak:apply",
                     payload: selectedTweak.name,
                   })
-                  incrementTweaks()
                   if (selectedTweak.restart) {
                     setNeedsRestart(true)
                   }

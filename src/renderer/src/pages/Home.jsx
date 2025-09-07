@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react"
 import RootDiv from "@/components/RootDiv"
-import { Cpu, HardDrive, Zap, MemoryStick, Server, Monitor, ChevronRight } from "lucide-react"
+import { Cpu, HardDrive, Zap, MemoryStick, Server, Monitor } from "lucide-react"
 import InfoCard from "@/components/InfoCard"
 import { invoke } from "@/lib/electron"
-import useTweaksStore from "../store/tweaksStore"
 import Button from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import useSystemStore from "@/store/systemInfo"
@@ -24,12 +23,30 @@ function Home() {
   const router = useNavigate()
   const [loading, setLoading] = useState(true)
   const [usingCache, setUsingCache] = useState(false)
-  const activeTweaks = useTweaksStore((state) => state.activeTweaks)
+  const [activeTweaks, setActiveTweaks] = useState(() => {
+    try {
+      const cached = localStorage.getItem("sparkle:activeTweaks");
+      return cached ? JSON.parse(cached) : [];
+    } catch {
+      return [];
+    }
+  });
+  
 
   const goToTweaks = () => {
     router("tweaks")
   }
 
+  const fetchActiveTweaks = async () => {
+    try {
+      const active = await invoke({ channel: "tweak:active" });
+      setActiveTweaks(active);
+      localStorage.setItem("sparkle:activeTweaks", JSON.stringify(active));
+    } catch (err) {
+      console.error("Failed to fetch active tweaks:", err);
+    }
+  };
+  
   useEffect(() => {
     const idleHandle = requestIdleCallback(() => {
       const cached = localStorage.getItem("sparkle:systemInfo")
@@ -49,7 +66,7 @@ function Home() {
           setSystemInfo(info)
           localStorage.setItem("sparkle:systemInfo", JSON.stringify(info))
           setUsingCache(false)
-          log.info("Fetched system info") // logging summary only
+          log.info("Fetched system info")
         })
         .catch((err) => {
           log.error("Error fetching system info:", err)
@@ -84,6 +101,14 @@ function Home() {
 
     return () => cancelIdleCallback(idleHandle)
   }, [])
+
+  useEffect(() => {
+    const idleHandle = requestIdleCallback(() => {
+      fetchActiveTweaks();
+    });
+  
+    return () => cancelIdleCallback(idleHandle);
+  }, []);
 
   const formatBytes = (bytes) => {
     if (bytes === 0 || !bytes) return "0 GB"
@@ -175,17 +200,17 @@ function Home() {
             ]}
           />
 
-          <InfoCard
-            icon={Zap}
-            iconBgColor="bg-yellow-500/10"
-            iconColor="text-yellow-500"
-            title="Tweaks"
-            subtitle="System Tweaks Status"
-            items={[
-              { label: "Available Tweaks", value: `${tweakInfo?.length || "0"} Tweaks` },
-              { label: "Active Tweaks", value: `${activeTweaks || "0"} Active` },
-            ]}
-          />
+<InfoCard
+  icon={Zap}
+  iconBgColor="bg-yellow-500/10"
+  iconColor="text-yellow-500"
+  title="Tweaks"
+  subtitle="System Tweaks Status"
+  items={[
+    { label: "Available Tweaks", value: `${tweakInfo?.length || 0} Tweaks` },
+    { label: "Active Tweaks", value: `${activeTweaks.length || 0} Active` },
+  ]}
+/>
         </div>
         <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-3 w-full mt-5 flex gap-4 items-center">
           <div className="p-3 bg-yellow-500/10 rounded-lg items-center justify-center text-center">

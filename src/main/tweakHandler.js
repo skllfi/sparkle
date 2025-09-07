@@ -1,5 +1,6 @@
 import { ipcMain, app } from "electron"
 import fs from "fs/promises"
+import fsSync from "fs"
 import path from "path"
 import { exec } from "child_process"
 import { promisify } from "util"
@@ -165,6 +166,21 @@ export const setupTweaksHandlers = () => {
     return NvidiaProfileInspector(args)
   })
 }
+
+const getActiveTweaks = () => {
+  try {
+    const data = fsSync.readFileSync(tweaksStatePath, "utf8")
+    const parsed = JSON.parse(data)
+    return Object.keys(parsed).filter((key) => parsed[key])
+  } catch (error) {
+    console.error("Error loading tweak states:", error)
+    return {}
+  }
+}
+
+ipcMain.handle("tweak:active", () => {
+  return getActiveTweaks()
+})
 
 export const cleanupTweaksHandlers = () => {
   ipcMain.removeHandler("tweak-states:load")
