@@ -58,14 +58,10 @@ export default function UpdateManager() {
     await window.electron.ipcRenderer.invoke("updater:download")
   }
 
-  const handleRemindLater = () => {
-    setUpdateOpen(false)
-  }
-
   return (
-    <Modal open={updateOpen} onClose={() => !isDownloading && setUpdateOpen(false)}>
+    <Modal open={updateOpen} onClose={() => {}}>
       <div className="bg-sparkle-card border border-sparkle-border rounded-2xl p-6 shadow-xl max-w-lg w-full mx-4">
-        <h2 className="text-xl font-semibold mb-2 text-sparkle-text">
+        <h2 className="text-xl font-semibold mb-2 text-sparkle-primary">
           Update available{updateVersion ? ` (${updateVersion})` : ""}
         </h2>
         <p className="mb-6 text-sparkle-text">
@@ -73,14 +69,9 @@ export default function UpdateManager() {
             ? "The update has been downloaded. Restart to install now."
             : isDownloading
               ? `Downloading update… ${Math.floor(downloadPercent)}%`
-              : "A new version is available. Would you like to update now?"}
+              : "A new version is available. Please update to ensure sparkle keeps working properly."}
         </p>
         <div className="flex justify-end gap-3">
-          {!isDownloading && (
-            <Button variant="secondary" onClick={handleRemindLater}>
-              Remind me later
-            </Button>
-          )}
           <Button onClick={handleUpdateNow} disabled={isDownloading}>
             {isDownloaded ? "Restart and install" : isDownloading ? "Downloading…" : "Update now"}
           </Button>
