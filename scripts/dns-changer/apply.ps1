@@ -87,6 +87,11 @@ ipconfig /flushdns | Out-Null
 Write-Host "DNS configuration completed successfully!"
 Write-Host "Current DNS settings:"
 Get-DnsClientServerAddress | Where-Object { $_.ServerAddresses.Count -gt 0 } | ForEach-Object {
-    $adapter = Get-NetAdapter -InterfaceIndex $_.InterfaceIndex
-    Write-Host "  $($adapter.Name): $($_.ServerAddresses -join ', ')"
-} 
+    $adapter = Get-NetAdapter -InterfaceIndex $_.InterfaceIndex -ErrorAction SilentlyContinue
+    if ($adapter) {
+        $dnsList = $_.ServerAddresses | Where-Object { $_ -notmatch '^fec0' }
+        if ($dnsList) {
+            Write-Host "  $($adapter.Name): $($dnsList -join ', ')"
+        }
+    }
+}

@@ -75,12 +75,21 @@ export const setupDNSHandlers = () => {
   ipcMain.handle("dns:get-current", async () => {
     try {
       const script = `
-        Write-Host "Current DNS Settings:"
-        Get-DnsClientServerAddress | Where-Object { $_.ServerAddresses.Count -gt 0 } | ForEach-Object {
-          $adapter = Get-NetAdapter -InterfaceIndex $_.InterfaceIndex
-          Write-Host "$($adapter.Name)|$($_.ServerAddresses -join ',')"
-        }
-      `
+      Write-Host "Current DNS Settings:"
+      
+      Get-DnsClientServerAddress |
+      Where-Object { $_.ServerAddresses.Count -gt 0 } |
+      ForEach-Object {
+          $adapter = Get-NetAdapter -InterfaceIndex $_.InterfaceIndex -ErrorAction SilentlyContinue
+          if ($adapter) {
+              $dnsList = $_.ServerAddresses | Where-Object { $_ -notmatch '^fec0' }
+              if ($dnsList) {
+                  Write-Host ("{0} | {1}" -f $adapter.Name, ($dnsList -join ', '))
+              }
+          }
+      }
+      `;
+      
       const result = await executePowerShell(null, { script, name: "Get-DNS" })
 
       if (result.success) {

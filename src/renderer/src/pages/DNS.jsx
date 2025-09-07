@@ -205,7 +205,7 @@ export default function DNSPage() {
         </div>
       </Modal>
       <RootDiv>
-        <div className="bg-sparkle-bg text-sparkle-text pb-10">
+        <div className="bg-sparkle-bg text-sparkle-text pb-10 mr-4">
           <div className="bg-sparkle-card border border-sparkle-border p-4 rounded-2xl mb-6">
             <div className="flex items-center gap-3 mb-3">
               <h2 className="font-semibold">Current DNS Settings</h2>
@@ -256,13 +256,13 @@ export default function DNSPage() {
                   </div>
                 </div>
                 <p className="text-sm text-sparkle-text-secondary">{provider.description}</p>
-                {/* <div className="flex flex-wrap gap-1 mt-3">
+                <div className="flex flex-wrap gap-1 mt-3">
                 {provider.features.map((feature, index) => (
                   <span key={index} className="px-2 py-1 bg-sparkle-border text-xs rounded-md">
                     {feature}
                   </span>
                 ))}
-              </div> */}
+              </div>
               </button>
             ))}
           </div>
