@@ -1,4 +1,4 @@
-Clear-Host
+clear
 
 # GitHub config
 $repo = "Parcoil/Sparkle"
