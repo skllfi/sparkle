@@ -13,14 +13,16 @@ import { Box } from "lucide-react"
 import { Settings } from "lucide-react"
 import { RefreshCw } from "lucide-react"
 import { useRef, useEffect, useState } from "react"
+import { EthernetPort } from "lucide-react"
+import { Gauge } from "lucide-react"
 
 const tabIcons = {
-  home: <Home size={20} />,
+  home: <Gauge size={20} />,
   tweaks: <Wrench size={20} />,
   clean: <Icon iconNode={broom} size={20} />,
   backup: <Folder size={20} />,
   utilities: <Box size={20} />,
-  dns: <Globe size={20} />,
+  dns: <EthernetPort size={20} />,
   apps: <LayoutGrid size={20} />,
   settings: <Settings size={20} />,
 }
