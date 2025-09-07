@@ -118,8 +118,8 @@ function Clean() {
     <RootDiv>
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-4 p-6 rounded-2xl border border-sparkle-border bg-sparkle-card ">
-          <div className="flex items-center justify-center p-3 rounded-xl bg-green-500/10">
-            <Icon iconNode={broom} className="text-green-500" size={28} />
+          <div className="flex items-center justify-center p-3 rounded-xl bg-teal-500/10">
+            <Icon iconNode={broom} className="text-teal-500" size={28} />
           </div>
           <div className="flex-1">
             <h2 className="text-2xl font-bold text-sparkle-text mb-1">System Cleanup</h2>
