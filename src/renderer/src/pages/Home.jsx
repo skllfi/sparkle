@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import RootDiv from "@/components/RootDiv"
-import { Cpu, HardDrive, Zap, MemoryStick, Server, Monitor } from "lucide-react"
+import { Cpu, HardDrive, Zap, MemoryStick, Server, Gpu } from "lucide-react"
 import InfoCard from "@/components/InfoCard"
 import { invoke } from "@/lib/electron"
 import Button from "@/components/ui/button"
@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom"
 import useSystemStore from "@/store/systemInfo"
 import log from "electron-log/renderer"
 import Greeting from "@/components/Greeting"
+import { MonitorCog } from "lucide-react"
+import { Wrench } from "lucide-react"
 function Home() {
   const systemInfo = useSystemStore((state) => state.systemInfo)
   const setSystemInfo = useSystemStore((state) => state.setSystemInfo)
@@ -153,9 +155,9 @@ function Home() {
           />
 
           <InfoCard
-            icon={Monitor}
-            iconBgColor="bg-green-500/10"
-            iconColor="text-green-500"
+            icon={Gpu}
+            iconBgColor="bg-teal-500/10"
+            iconColor="text-teal-500"
             title="GPU"
             subtitle="Graphics Information"
             items={[
@@ -177,7 +179,7 @@ function Home() {
           />
 
           <InfoCard
-            icon={Server}
+            icon={MonitorCog}
             iconBgColor="bg-red-500/10"
             iconColor="text-red-500"
             title="System"
@@ -200,21 +202,21 @@ function Home() {
             ]}
           />
 
-<InfoCard
-  icon={Zap}
-  iconBgColor="bg-yellow-500/10"
-  iconColor="text-yellow-500"
-  title="Tweaks"
-  subtitle="System Tweaks Status"
-  items={[
-    { label: "Available Tweaks", value: `${tweakInfo?.length || 0} Tweaks` },
-    { label: "Active Tweaks", value: `${activeTweaks.length || 0} Active` },
-  ]}
-/>
+        <InfoCard
+          icon={Wrench}
+          iconBgColor="bg-green-500/10"
+          iconColor="text-green-500"
+          title="Tweaks"
+          subtitle="Tweaks Status"
+          items={[
+            { label: "Available Tweaks", value: `${tweakInfo?.length || 0} Tweaks` },
+            { label: "Active Tweaks", value: `${activeTweaks.length || 0} Active` },
+          ]}
+        />
         </div>
         <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-3 w-full mt-5 flex gap-4 items-center">
-          <div className="p-3 bg-yellow-500/10 rounded-lg items-center justify-center text-center">
-            <Zap className="text-yellow-500" size={18} />
+          <div className="p-3 bg-green-500/10 rounded-lg items-center justify-center text-center">
+            <Wrench className="text-green-500" size={24} />
           </div>
           <div>
             <h1 className="font-medium text-sparkle-text">PC Running slow?</h1>

@@ -7,6 +7,7 @@ import { toast } from "react-toastify"
 import { Globe, Shield, Settings, RefreshCw, CheckCircle, AlertCircle, Info } from "lucide-react"
 import { Cloud } from "lucide-react"
 import log from "electron-log/renderer"
+import { Check } from "lucide-react"
 
 const dnsProviders = [
   {
@@ -18,7 +19,7 @@ const dnsProviders = [
     features: ["Fast", "Privacy-focused", "Security"],
     recommended: true,
     color: "text-orange-500",
-    icon: <Globe className="w-5 h-5" />,
+    icon: <Cloud className="w-5 h-5" />,
   },
   {
     id: "google",
@@ -218,7 +219,7 @@ export default function DNSPage() {
               <div className="space-y-2">
                 {currentDNS.map((dns, index) => (
                   <div key={index} className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
+                    <Check className="w-4 h-4 text-green-500" />
                     <span className="font-medium">{dns.adapter}:</span>
                     <span className="text-sparkle-text-secondary">{dns.servers}</span>
                   </div>

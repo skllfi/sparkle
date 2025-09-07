@@ -12,6 +12,7 @@ import { toast } from "react-toastify"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import log from "electron-log/renderer"
+import { Upload } from "lucide-react"
 function Apps() {
   const [search, setSearch] = useState("")
   const [selectedApps, setSelectedApps] = useState([])
@@ -287,10 +288,12 @@ function Apps() {
             onClick={exportSelectedApps}
             disabled={selectedApps.length === 0}
           >
+            <Download className="w-5" />
             Export List
           </Button>
 
           <label className="flex gap-2 cursor-pointer bg-sparkle-border text-sparkle-text rounded-lg font-medium px-3 py-1.5 text-sm text-center items-center active:scale-90 hover:bg-sparkle-secondary transition-all duration-200">
+          <Upload className="w-5" />
             Import List
             <input
               type="file"
