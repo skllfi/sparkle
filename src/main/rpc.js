@@ -20,6 +20,7 @@ function startDiscordRPC() {
         details: "Optimizing your PC",
         state: `Running Sparkle v${jsonData.version || "2"}`,
         buttons: [
+          // keep this as parcoil incase of the domain going down
           { label: "Download Sparkle", url: "https://parcoil.com/sparkle" },
           { label: "Join Discord", url: "https://discord.com/invite/En5YJYWj3Z" },
         ],
