@@ -106,7 +106,7 @@ export let mainWindow = null
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1380,
-    backgroundColor: "#0f172a",
+    backgroundColor: "#64666b",
     height: 760,
     minWidth: 1380,
     minHeight: 760,
