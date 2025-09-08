@@ -1,5 +1,7 @@
 ---
 title: Cleaner
+hide:
+  - navigation
 ---
 
 # Sparkle Cleaner

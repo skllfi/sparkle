@@ -1,5 +1,7 @@
 ---
 title: "Utilities"
+hide:
+  - navigation
 ---
 
 # Utilities Page

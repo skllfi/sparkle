@@ -1,5 +1,7 @@
 ---
 title: Creating Tweaks
+hide:
+  - navigation
 ---
 
 # Tweak Guidelines

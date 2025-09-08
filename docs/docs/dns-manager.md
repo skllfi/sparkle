@@ -1,5 +1,7 @@
 ---
 title: "DNS Manager"
+hide:
+  - navigation
 ---
 
 # DNS Page Features

@@ -1,58 +1,106 @@
-<img src="https://raw.githubusercontent.com/Parcoil/logos/refs/heads/main/logos/sparklelogo.png" width="100px" height="100px"></img>
+---
+hide:
+  - navigation
+---
 
-# Welcome to Sparkle Docs
+<img src="https://raw.githubusercontent.com/Parcoil/logos/refs/heads/main/logos/sparklelogo.png" width="120" height="120">
 
-!!! info
+# :material-hand-wave: Welcome to the Sparkle documentation
 
-    Looking to install sparkle? go to [getsparkle.net](https://getsparkle.net)
+The ultimate Windows optimizer — fast, private, and lightweight.
 
-Welcome to the official documentation for **Sparkle**, the ultimate Windows optimizer. Sparkle helps you debloat and tweak your Windows PC for better performance and privacy.
-
-**Project links:**
-
-- GitHub: [https://github.com/Parcoil/Sparkle](https://github.com/Parcoil/Sparkle)
-- Website: [https://getsparkle.net/](https://getsparkle.net/)
-
-## What is Sparkle?
-
-Sparkle is a free and open-source Windows optimization tool. It provides a user-friendly interface to safely remove bloatware, and apply tweaks to make your PC to run smoother and remove microsoft bloat.
-
-## Key Features
-
-- **Debloat Windows:** Remove unnecessary apps and services.
-- **Privacy Controls:** Disable telemetry and tracking features.
-- **Performance Tweaks:** Optimize system settings for speed.
-- **Cleaner** Clean junk and temp files.
-- **Safe & Reversible:** All changes can be reverted\*.
-- **Modern UI**
-- **Auto Updates**
-
-## Getting Started
-
-### Website Method (recommended for most users)
-
-1. Go to [getsparkle.net](https://getsparkle.net)
-2. Choose your version (Portable or installer)
-3. Run Sparkle
-4. Apply Tweaks
-
-### Github Method
-
-1. Download the latest release from the [Sparkle GitHub Releases](https://github.com/Parcoil/Sparkle/releases).
-2. Unzip and run `sparkle-{version}-setup.exe`.
-3. Apply Tweaks
-
-!!! tip
-
-    Always create a system restore point before making major changes.
-
-## Learn More
-
-- [Tweaks & Customization](tweaks)
-- [Creating Tweaks](creating-tweaks)
-- [Official Website](https://getsparkle.net/)
-- [GitHub Repository](https://github.com/Parcoil/Sparkle)
+[:material-download: Get Sparkle](https://getsparkle.net){ .md-button .md-button--primary }
+[:material-github: GitHub](https://github.com/Parcoil/Sparkle){ .md-button }
 
 ---
 
-Need help? Visit the [official website](https://getsparkle.net/) or open an issue on [GitHub](https://github.com/Parcoil/Sparkle/issues).
+!!! info "New Here?"
+
+    Looking to install Sparkle?
+    Go to [**getsparkle.net**](https://getsparkle.net){target=\_blank}
+
+---
+
+## :octicons-sparkles-fill-24: What is Sparkle?
+
+Sparkle is a **free and open-source Windows optimization tool**.  
+It helps you:
+
+- Debloat unwanted apps
+- Improve privacy by disabling tracking
+- Boost performance
+- Keep your system clean & fast
+
+---
+
+## :material-view-grid-outline: Key Features
+
+<div class="grid cards" markdown>
+
+- :material-broom: **Debloat Windows**  
+   Remove unnecessary apps and services.
+
+- :material-shield-account: **Privacy Controls**  
+   Disable telemetry and tracking features.
+
+- :material-speedometer: **Performance Tweaks**  
+   Optimize system settings for speed.
+
+- :material-delete: **Cleaner**  
+   Remove junk and temporary files.
+
+- :material-undo: **Safe & Reversible**  
+   Every change can be rolled back\*.
+
+- :material-auto-fix: **Modern UI & Auto Updates**  
+   Stay up to date with ease.
+
+</div>
+
+---
+
+## :material-hammer-wrench: Getting Started
+
+=== "Website (Recommended)"
+
+    1. Visit [getsparkle.net](https://getsparkle.net)
+    2. Choose **Portable** or **Installer**
+    3. Run Sparkle
+    4. Apply Tweaks
+
+=== "GitHub Releases"
+
+    1. Download from [GitHub Releases](https://github.com/Parcoil/Sparkle/releases)
+    2. Extract and run `sparkle-{version}-setup.exe`
+    3. Apply Tweaks
+
+!!! tip
+
+    Always create a **System Restore Point** before making changes.
+
+---
+
+## :simple-bookstack: Learn More
+
+<div class="grid cards" markdown>
+
+- [:material-tune: **View Tweaks**](tweaks)  
+   View all of the tweaks in Dparkle
+
+- [:material-code-braces: **Creating Tweaks**](creating-tweaks)  
+   Build your own custom tweak scripts.
+
+- [:material-web: **Official Website**](https://getsparkle.net)  
+   Download The latest version of Sparkle.
+
+- [:material-github: **GitHub Repository**](https://github.com/Parcoil/Sparkle)  
+   Explore the source code.
+
+</div>
+
+---
+
+!!! question "Need Help?"
+
+    Join our [Discord Server](https://discord.gg/En5YJYWj3Z)
+    or open an issue on [GitHub](https://github.com/Parcoil/Sparkle/issues).

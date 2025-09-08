@@ -1,5 +1,7 @@
 ---
 title: "Apps"
+hide:
+  - navigation
 ---
 
 # Apps Page
