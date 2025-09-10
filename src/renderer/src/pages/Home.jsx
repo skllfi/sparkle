@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import RootDiv from "@/components/RootDiv"
-import { Cpu, HardDrive, Zap, MemoryStick, Server, Gpu } from "lucide-react"
+import { Cpu, HardDrive, Zap, MemoryStick, Gpu } from "lucide-react"
 import InfoCard from "@/components/InfoCard"
 import { invoke } from "@/lib/electron"
 import Button from "@/components/ui/button"
@@ -27,13 +27,12 @@ function Home() {
   const [usingCache, setUsingCache] = useState(false)
   const [activeTweaks, setActiveTweaks] = useState(() => {
     try {
-      const cached = localStorage.getItem("sparkle:activeTweaks");
-      return cached ? JSON.parse(cached) : [];
+      const cached = localStorage.getItem("sparkle:activeTweaks")
+      return cached ? JSON.parse(cached) : []
     } catch {
-      return [];
+      return []
     }
-  });
-  
+  })
 
   const goToTweaks = () => {
     router("tweaks")
@@ -41,14 +40,14 @@ function Home() {
 
   const fetchActiveTweaks = async () => {
     try {
-      const active = await invoke({ channel: "tweak:active" });
-      setActiveTweaks(active);
-      localStorage.setItem("sparkle:activeTweaks", JSON.stringify(active));
+      const active = await invoke({ channel: "tweak:active" })
+      setActiveTweaks(active)
+      localStorage.setItem("sparkle:activeTweaks", JSON.stringify(active))
     } catch (err) {
-      console.error("Failed to fetch active tweaks:", err);
+      console.error("Failed to fetch active tweaks:", err)
     }
-  };
-  
+  }
+
   useEffect(() => {
     const idleHandle = requestIdleCallback(() => {
       const cached = localStorage.getItem("sparkle:systemInfo")
@@ -106,11 +105,11 @@ function Home() {
 
   useEffect(() => {
     const idleHandle = requestIdleCallback(() => {
-      fetchActiveTweaks();
-    });
-  
-    return () => cancelIdleCallback(idleHandle);
-  }, []);
+      fetchActiveTweaks()
+    })
+
+    return () => cancelIdleCallback(idleHandle)
+  }, [])
 
   const formatBytes = (bytes) => {
     if (bytes === 0 || !bytes) return "0 GB"
@@ -202,17 +201,17 @@ function Home() {
             ]}
           />
 
-        <InfoCard
-          icon={Wrench}
-          iconBgColor="bg-green-500/10"
-          iconColor="text-green-500"
-          title="Tweaks"
-          subtitle="Tweaks Status"
-          items={[
-            { label: "Available Tweaks", value: `${tweakInfo?.length || 0} Tweaks` },
-            { label: "Active Tweaks", value: `${activeTweaks.length || 0} Active` },
-          ]}
-        />
+          <InfoCard
+            icon={Wrench}
+            iconBgColor="bg-green-500/10"
+            iconColor="text-green-500"
+            title="Tweaks"
+            subtitle="Tweaks Status"
+            items={[
+              { label: "Available Tweaks", value: `${tweakInfo?.length || 0} Tweaks` },
+              { label: "Active Tweaks", value: `${activeTweaks.length || 0} Active` },
+            ]}
+          />
         </div>
         <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-3 w-full mt-5 flex gap-4 items-center">
           <div className="p-3 bg-green-500/10 rounded-lg items-center justify-center text-center">

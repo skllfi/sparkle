@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { RefreshCw, PlusCircle, Shield, Clock, RotateCcw, Loader2, X, Search } from "lucide-react"
+import { RefreshCw, PlusCircle, Shield, RotateCcw, Loader2, X, Search } from "lucide-react"
 import RootDiv from "@/components/RootDiv"
 import { invoke } from "@/lib/electron"
 import Button from "@/components/ui/button"

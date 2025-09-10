@@ -3,5 +3,5 @@
   "title": "Menu Show Delay Zero",
   "deepDescription": "Reduces the menu show delay to 0ms for faster UI response by editing the 'MenuShowDelay' registry key.",
   "description": "Removes the delay when opening menus.",
-  "category": ["Performance", "UI"]
+  "category": ["Performance", "Appearance"]
 }

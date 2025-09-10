@@ -1,4 +1,4 @@
-import { Wrench, Home, Folder, LayoutGrid, Icon, Globe } from "lucide-react"
+import { Wrench, Folder, LayoutGrid, Icon } from "lucide-react"
 import { broom } from "@lucide/lab"
 import { useLocation, useNavigate } from "react-router-dom"
 import { clsx } from "clsx"

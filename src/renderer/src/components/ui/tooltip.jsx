@@ -1,30 +1,39 @@
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useRef } from "react"
 
 const Tooltip = ({ content, children, side = "top", delay = 0.5 }) => {
   const [isVisible, setIsVisible] = useState(false)
-  const [timeoutId, setTimeoutId] = useState(null)
+  const timeoutRef = useRef(null)
 
   const handleMouseEnter = () => {
-    const id = setTimeout(() => {
-      setIsVisible(true)
-    }, delay * 1000)
-    setTimeoutId(id)
+    clearTimeout(timeoutRef.current)
+    timeoutRef.current = setTimeout(() => setIsVisible(true), delay * 1000)
   }
 
   const handleMouseLeave = () => {
-    if (timeoutId) clearTimeout(timeoutId)
+    clearTimeout(timeoutRef.current)
     setIsVisible(false)
   }
 
-  const sideToPosition = {
-    top: { y: -8, x: "-50%" },
-    bottom: { y: 8, x: "-50%" },
-    left: { x: -8, y: "-50%" },
-    right: { x: 8, y: "-50%" },
+  const sideToTransform = {
+    top: "translate(-50%, -0.5rem) scale-95",
+    bottom: "translate(-50%, 0.5rem) scale-95",
+    left: "translate(-0.5rem, -50%) scale-95",
+    right: "translate(0.5rem, -50%) scale-95",
   }
 
-  const position = sideToPosition[side] || sideToPosition.top
+  const sideToPositionStyle = {
+    top: { left: "50%", bottom: "100%" },
+    bottom: { left: "50%", top: "100%" },
+    left: { right: "100%", top: "50%" },
+    right: { left: "100%", top: "50%" },
+  }
+
+  const transformStyle = isVisible
+    ? sideToTransform[side]
+        .replace("scale-95", "scale-100")
+        .replace(/-0.5rem/, "0rem")
+        .replace(/0.5rem/, "0rem")
+    : sideToTransform[side]
 
   return (
     <div
@@ -33,30 +42,16 @@ const Tooltip = ({ content, children, side = "top", delay = 0.5 }) => {
       onMouseLeave={handleMouseLeave}
     >
       {children}
-      <AnimatePresence>
-        {isVisible && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, ...position }}
-            animate={{ opacity: 1, scale: 1, ...position }}
-            exit={{ opacity: 0, scale: 0.95, ...position }}
-            transition={{ duration: 0.15 }}
-            className="absolute z-50 px-2 py-1 text-xs font-medium bg-sparkle-card text-sparkle-text rounded-md shadow-lg border border-sparkle-border whitespace-nowrap"
-            style={{
-              left: side === "top" || side === "bottom" ? "50%" : undefined,
-              bottom: side === "top" ? "100%" : undefined,
-              top:
-                side === "bottom"
-                  ? "100%"
-                  : side === "left" || side === "right"
-                    ? "50%"
-                    : undefined,
-              right: side === "left" ? "100%" : undefined,
-            }}
-          >
-            {content}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div
+        className={`absolute z-50 pointer-events-none px-2 py-1 text-xs font-medium bg-sparkle-card text-sparkle-text rounded-md shadow-lg border border-sparkle-border whitespace-nowrap transition-all duration-150 ease-out`}
+        style={{
+          ...sideToPositionStyle[side],
+          transform: transformStyle,
+          opacity: isVisible ? 1 : 0,
+        }}
+      >
+        {content}
+      </div>
     </div>
   )
 }

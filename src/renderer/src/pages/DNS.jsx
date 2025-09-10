@@ -4,7 +4,7 @@ import RootDiv from "@/components/RootDiv"
 import Button from "@/components/ui/button"
 import Modal from "@/components/ui/modal"
 import { toast } from "react-toastify"
-import { Globe, Shield, Settings, RefreshCw, CheckCircle, AlertCircle, Info } from "lucide-react"
+import { Globe, Shield, Settings, RefreshCw, AlertCircle, Info } from "lucide-react"
 import { Cloud } from "lucide-react"
 import log from "electron-log/renderer"
 import { Check } from "lucide-react"
@@ -258,12 +258,12 @@ export default function DNSPage() {
                 </div>
                 <p className="text-sm text-sparkle-text-secondary">{provider.description}</p>
                 <div className="flex flex-wrap gap-1 mt-3">
-                {provider.features.map((feature, index) => (
-                  <span key={index} className="px-2 py-1 bg-sparkle-border text-xs rounded-md">
-                    {feature}
-                  </span>
-                ))}
-              </div>
+                  {provider.features.map((feature, index) => (
+                    <span key={index} className="px-2 py-1 bg-sparkle-border text-xs rounded-md">
+                      {feature}
+                    </span>
+                  ))}
+                </div>
               </button>
             ))}
           </div>
