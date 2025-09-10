@@ -106,13 +106,13 @@ export let mainWindow = null
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1380,
-    backgroundColor: "#64666b",
+    backgroundColor: "#0c121f",
     height: 760,
     minWidth: 1380,
     minHeight: 760,
     center: true,
     frame: false,
-    show: true,
+    show: false,
     autoHideMenuBar: true,
     icon: path.join(__dirname, "../../resources/sparkle2.ico"),
     webPreferences: {
@@ -132,6 +132,10 @@ function createWindow() {
   } else {
     mainWindow.loadFile(join(__dirname, "../renderer/index.html"))
   }
+
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.show()
+  })
 }
 
 app.whenReady().then(() => {
@@ -145,9 +149,12 @@ app.whenReady().then(() => {
   setTimeout(() => {
     void triggerAutoUpdateCheck()
   }, 1500)
-  Promise.allSettled([Defender(), setupTweaksHandlers(), setupDNSHandlers()]).then(() =>
-    console.log("Setup done"),
-  )
+
+  setTimeout(() => {
+    void Defender()
+    setupTweaksHandlers()
+    setupDNSHandlers()
+  }, 0)
 
   if (app.isPackaged) {
     globalShortcut.register("CommandOrControl+R", () => {})
