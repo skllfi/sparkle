@@ -71,31 +71,41 @@ ipcMain.handle("tray:set", (event, value) => {
   return store.get("showTray")
 })
 
-if (store.get("discord-rpc") === undefined) {
-  store.set("discord-rpc", true)
-  startDiscordRPC()
-  console.log("(main.js) ", logo, "Starting Discord RPC")
+const initDiscordRPC = async () => {
+  if (store.get("discord-rpc") === undefined) {
+    store.set("discord-rpc", true)
+    console.log("(main.js) ", logo, "Starting Discord RPC")
+    await startDiscordRPC()
+  } else if (store.get("discord-rpc") === true) {
+    console.log("(main.js) ", logo, "Starting Discord RPC (from settings)")
+    await startDiscordRPC()
+  }
 }
 
-switch (store.get("discord-rpc")) {
-  case true:
-    startDiscordRPC()
-    break
-  case false:
-    break
-}
+initDiscordRPC().catch(err => {
+  console.warn("(main.js) ", "Failed to initialize Discord RPC:", err.message)
+})
 
 ipcMain.handle("discord-rpc:toggle", async (event, value) => {
-  if (value) {
-    store.set("discord-rpc", true)
-    startDiscordRPC()
-    console.log(logo, "Starting Discord RPC")
-  } else {
-    store.set("discord-rpc", false)
-    await stopDiscordRPC()
-    console.log(logo, "Stopping Discord RPC")
+  try {
+    if (value) {
+      store.set("discord-rpc", true)
+      console.log(logo, "Starting Discord RPC")
+      await startDiscordRPC()
+    } else {
+      store.set("discord-rpc", false)
+      console.log(logo, "Stopping Discord RPC")
+      await stopDiscordRPC()
+    }
+    return { success: true, enabled: store.get("discord-rpc") }
+  } catch (error) {
+    console.error(logo, "Error toggling Discord RPC:", error)
+    return { 
+      success: false, 
+      error: error.message,
+      enabled: store.get("discord-rpc") 
+    }
   }
-  return store.get("discord-rpc")
 })
 ipcMain.handle("discord-rpc:get", () => {
   return store.get("discord-rpc")

@@ -9,33 +9,46 @@ console.warn = log.warn
 const clientId = "1188686354490609754"
 let rpcClient
 
-function startDiscordRPC() {
-  try {
-    rpcClient = new discordRPC.Client({ transport: "ipc" })
+async function startDiscordRPC() {
+  setTimeout(async () => {
+    try {
+      rpcClient = new discordRPC.Client({ transport: "ipc" })
 
-    rpcClient.on("ready", () => {
-      console.log("(rpc.js) ", logo, "Discord RPC connected")
+      rpcClient.on("ready", () => {
+        console.log("(rpc.js) ", logo, "Discord RPC connected")
 
-      rpcClient.setActivity({
-        details: "Optimizing your PC",
-        state: `Running Sparkle v${jsonData.version || "2"}`,
-        buttons: [
-          // keep this as parcoil incase of the domain going down
-          { label: "Download Sparkle", url: "https://parcoil.com/sparkle" },
-          { label: "Join Discord", url: "https://discord.com/invite/En5YJYWj3Z" },
-        ],
-        largeImageKey: "sparklelogo",
-        largeImageText: "Sparkle Optimizer",
-        instance: false,
+        rpcClient.setActivity({
+          details: "Optimizing your PC",
+          state: `Running Sparkle v${jsonData.version || "2"}`,
+          buttons: [
+             // keep this as parcoil incase of the domain going down
+            { label: "Download Sparkle", url: "https://parcoil.com/sparkle" },
+            { label: "Join Discord", url: "https://discord.com/invite/En5YJYWj3Z" },
+          ],
+          largeImageKey: "sparklelogo",
+          largeImageText: "Sparkle Optimizer",
+          instance: false,
+        }).catch(err => {
+          console.warn("(rpc.js) ", "Failed to set Discord RPC activity:", err.message)
+        })
       })
-    })
 
-    rpcClient.login({ clientId }).catch(console.error)
-    return true
-  } catch (error) {
-    console.error("(rpc.js) ", "Failed to start Discord RPC:", error)
-    return false
-  }
+      rpcClient.on('error', (error) => {
+        console.warn("(rpc.js) ", "Discord RPC error:", error.message)
+        stopDiscordRPC()
+      })
+
+      await rpcClient.login({ clientId }).catch(error => {
+        console.warn("(rpc.js) ", "Discord RPC login failed:", error.message)
+        stopDiscordRPC()
+      })
+    } catch (error) {
+      console.warn("(rpc.js) ", "Failed to initialize Discord RPC:", error.message)
+      stopDiscordRPC()
+    }
+  }, 1000)
+  
+  return true
 }
 
 function stopDiscordRPC() {
