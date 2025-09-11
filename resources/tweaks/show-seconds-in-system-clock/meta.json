@@ -1,0 +1,7 @@
+{
+  "name": "show-seconds-in-taskbar-clock",
+  "title": "Show Seconds in Taskbar Clock",
+  "deepDescription": "Enables seconds display in the Windows taskbar clock by setting the 'ShowSecondsInSystemClock' registry key. Requires Explorer restart.",
+  "description": "Displays seconds in the system tray clock.",
+  "category": ["UI", "System", "Clock"]
+}
