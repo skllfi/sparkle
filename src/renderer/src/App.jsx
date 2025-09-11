@@ -19,16 +19,39 @@ function App() {
   const [theme, setTheme] = useState(localStorage.getItem("theme"))
 
   useEffect(() => {
-    const current = theme || "dark"
-    setTheme(current)
-    document.body.classList.remove("dark", "light", "purple")
-    document.body.classList.add(current)
-    document.body.setAttribute("data-theme", current)
-
+    const applyTheme = (theme) => {
+      document.body.classList.remove("light", "purple", "dark", "gray", "classic")
+      if (theme === 'system' || !theme) {
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        document.body.classList.add(systemTheme)
+        document.body.setAttribute("data-theme", systemTheme)
+      } else {
+        document.body.classList.add(theme)
+        document.body.setAttribute("data-theme", theme)
+      }
+    }
+    
+    const currentTheme = localStorage.getItem("theme") || 'system'
+    setTheme(currentTheme)
+    applyTheme(currentTheme)
+    
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const handleSystemThemeChange = (e) => {
+      if (currentTheme === 'system') {
+        applyTheme('system')
+      }
+    }
+    
+    mediaQuery.addEventListener('change', handleSystemThemeChange)
+    
     if (localStorage.getItem("posthogDisabled") === "true") {
       document.body.classList.add("ph-no-capture")
     } else {
       document.body.classList.remove("ph-no-capture")
+    }
+    
+    return () => {
+      mediaQuery.removeEventListener('change', handleSystemThemeChange)
     }
   }, [])
   return (

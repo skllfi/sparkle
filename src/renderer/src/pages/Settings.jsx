@@ -8,10 +8,10 @@ import Toggle from "@/components/ui/toggle"
 import { toast } from "react-toastify"
 
 const themes = [
-  { label: "Dark", value: "" },
+  { label: "System", value: "system" },
+  { label: "Dark", value: "dark" },
   { label: "Light", value: "light" },
   { label: "Purple", value: "purple" },
-  { label: "Green", value: "green" },
   { label: "Gray", value: "gray" },
   { label: "Classic", value: "classic" },
 ]
@@ -28,15 +28,10 @@ function Settings({ onCheckForUpdates }) {
   })
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
 
-  // useEffect(() => {
-  //   const savedTheme = localStorage.getItem('theme') || ''
-  //   setTheme(savedTheme)
-  // }, [])
-
   const checkForUpdates = async () => {
     try {
       setChecking(true)
-      const res = await window.electron.ipcRenderer.invoke("updater:check")
+      const res = await invoke({ channel: "updater:check" })
       if (res?.ok && !res.updateInfo) {
         toast.success("You're up to date")
       }
@@ -48,11 +43,16 @@ function Settings({ onCheckForUpdates }) {
   }
 
   useEffect(() => {
-    document.body.classList.remove("light", "purple", "dark", "green", "gray", "classic")
-    if (theme) {
+    document.body.classList.remove("light", "purple", "dark", "gray", "classic")
+    if (theme === 'system') {
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      document.body.classList.add(systemTheme)
+    } else if (theme) {
       document.body.classList.add(theme)
+    } else {
+      document.body.classList.add('dark')
     }
-    localStorage.setItem("theme", theme)
+    localStorage.setItem("theme", theme || 'dark')
   }, [theme])
 
   useEffect(() => {
@@ -320,7 +320,7 @@ function Settings({ onCheckForUpdates }) {
                   <div className="flex-1">
                     <h3 className="text-base font-medium text-sparkle-text mb-1">Show tray icon</h3>
                     <p className="text-sm text-sparkle-text-secondary">
-                      Enable or disable the Sparkle tray icon in the system tray.
+                      Enable or disable Sparkle running in the system tray.
                       <span className="inline-flex items-center gap-1 ml-2 text-yellow-500">
                         <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></span>
                         Requires restart

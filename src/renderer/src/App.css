@@ -68,21 +68,6 @@
   --color-accent: #341a4c;
 }
 
-.green {
-  --color-bg: #0a1a11;
-  --color-text: #cceccc;
-  --color-text-dark: #9fd9a3;
-  --color-text-darker: #76b981;
-  --color-text-secondary: #4fd19c;
-  --color-text-muted: #365542;
-  --color-card: #122c1d;
-  --color-border: #1a3f28;
-  --color-border-secondary: #153422;
-  --color-primary: #1ebd87;
-  --color-secondary: #047857;
-  --color-accent: #254335;
-}
-
 .gray {
   --color-bg: #111214;
   --color-text: #f5f6fa;

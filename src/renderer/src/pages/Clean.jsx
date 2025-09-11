@@ -155,8 +155,8 @@ function Clean() {
                 {loadingQueue.includes(id) && (
                   <div className="absolute inset-0 flex items-center justify-center z-10 rounded-xl">
                     <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-sparkle-border border border-sparkle-border-secondary">
-                      <RefreshCw className="animate-spin text-green-500" size={18} />
-                      <span className="text-sm font-medium text-green-600">Cleaning...</span>
+                      <RefreshCw className="animate-spin text-teal-500" size={18} />
+                      <span className="text-sm font-medium text-teal-600">Cleaning...</span>
                     </div>
                   </div>
                 )}

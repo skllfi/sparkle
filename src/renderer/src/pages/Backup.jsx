@@ -46,10 +46,11 @@ export default function RestorePointManager() {
         })
         setRestorePoints(sorted)
       } else {
-        toast.error("Failed to load restore points.")
+        toast.error("Failed to load restore points. Please check logs")
+        log.error("Failed to load restore points:", response)
       }
     } catch (error) {
-      toast.error("Failed to load restore points.")
+      toast.error(`Failed to load restore points. Please check logs`)
       console.error(error)
       log.error("Failed to load restore points:", error)
     } finally {
