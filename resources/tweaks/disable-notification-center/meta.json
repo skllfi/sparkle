@@ -1,0 +1,10 @@
+{
+  "name": "remove-notification-menu",
+  "title": "Remove Notification Menu",
+  "description": "Disables the Notification Center from the system tray.",
+  "deepDescription": "Disables the Windows Notification Center (Action Center) by setting the `DisableNotificationCenter` registry key under `HKCU\\Software\\Policies\\Microsoft\\Windows\\Explorer`. This removes the notification icon and blocks access to the notification sidebar. Requires Explorer restart.",
+  "category": ["Appearance", "General"],
+  "reversible": true,
+  "restart": true,
+  "warning": "Disabling the notification menu may prevent you from seeing important system messages."
+}
