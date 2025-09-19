@@ -2,13 +2,14 @@
 title: "All Tweaks"
 ---
 
-
 # Sparkle Tweaks
+
 A collection of tweaks to customize and enhance your Windows experience using Sparkle.
 
-_this page is auto-generated_
+_This page is auto-generated._
 
-## All Tweaks (31)
+## All Tweaks (32)
+
 - [align-taskbar-left](align-taskbar-left.md)
 - [debloat-windows](debloat-windows.md)
 - [detailed-bsod](detailed-bsod.md)
@@ -23,6 +24,7 @@ _this page is auto-generated_
 - [disable-location-tracking](disable-location-tracking.md)
 - [disable-lockscreen-tips](disable-lockscreen-tips.md)
 - [disable-mouse-acceleration](disable-mouse-acceleration.md)
+- [remove-notification-menu](remove-notification-menu.md)
 - [disable-wifi-sense](disable-wifi-sense.md)
 - [enable-dark-mode](enable-dark-mode.md)
 - [enable-end-task-right-click](enable-end-task-right-click.md)
@@ -30,6 +32,7 @@ _this page is auto-generated_
 - [enable-hags](enable-hags.md)
 - [enable-hpet](enable-hpet.md)
 - [enable-optimization-for-windowed-games](enable-optimization-for-windowed-games.md)
+- [menu-show-delay-zero](menu-show-delay-zero.md)
 - [optimize-network-settings](optimize-network-settings.md)
 - [optimize-nvidia-settings](optimize-nvidia-settings.md)
 - [remove-gaming-apps](remove-gaming-apps.md)
@@ -39,4 +42,6 @@ _this page is auto-generated_
 - [set-powershell7-default](set-powershell7-default.md)
 - [set-services-to-manual](set-services-to-manual.md)
 - [set-time-utc](set-time-utc.md)
+- [set-win32-priority-separation](set-win32-priority-separation.md)
+- [show-seconds-in-taskbar-clock](show-seconds-in-taskbar-clock.md)
 - [ultimate-performance-plan](ultimate-performance-plan.md)

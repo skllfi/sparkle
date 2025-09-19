@@ -1,13 +1,30 @@
-# Enable HAGS
-ID/URL: enable-hags
+---
+title: "Enable HAGS"
+description: "Enables HAGS (Hardware Accelerated GPU Scheduling)"
+hide:
+  - edit
+---
 
-Description: Enables HAGS (Hardware Accelerated GPU Scheduling)
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
+# Enable HAGS
+
+## Overview
+- **ID/URL**: `enable-hags`
+- **Description**: Enables HAGS (Hardware Accelerated GPU Scheduling)
+
+
+
+## Details
 
 - Hardware-Accelerated GPU Scheduling (HAGS) is a Windows feature that shifts more GPU management and scheduling tasks from the CPU to the GPU, reducing CPU overhead and potentially improving performance and latency
 
 
 
+
+
 ## Apply
+
 ```powershell
 $regPath = "HKLM:\System\CurrentControlSet\Control\GraphicsDrivers"
 $keyName = "HwSchMode"
@@ -24,6 +41,7 @@ Write-Host "Hardware-Accelerated GPU Scheduling enabled. A restart may be requir
 ```
 
 ## Unapply
+
 ```powershell
 $regPath = "HKLM:\System\CurrentControlSet\Control\GraphicsDrivers"
 $keyName = "HwSchMode"

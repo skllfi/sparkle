@@ -1,13 +1,30 @@
-# Enable Game Mode
-ID/URL: enable-game-mode
+---
+title: "Enable Game Mode"
+description: "Enables Game Mode on windows"
+hide:
+  - edit
+---
 
-Description: Enables Game Mode on windows
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
+# Enable Game Mode
+
+## Overview
+- **ID/URL**: `enable-game-mode`
+- **Description**: Enables Game Mode on windows
+
+
+
+## Details
 
 - Enables the game mode feature on windows to improve performance and reduce latency. altough it not all users see a performance boost or may even cause worse performance. its recommended to test with and without to see if it works for you.
 
 
 
+
+
 ## Apply
+
 ```powershell
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\GameBar" -Name "AllowAutoGameMode" -Value 1
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\GameBar" -Name "AutoGameModeEnabled" -Value 1
@@ -17,6 +34,7 @@ Write-Output "Game Mode is now ENABLED."
 ```
 
 ## Unapply
+
 ```powershell
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\GameBar" -Name "AllowAutoGameMode" -Value 0
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\GameBar" -Name "AutoGameModeEnabled" -Value 0
@@ -24,10 +42,6 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\GameBar" -Name "AutoGameModeEna
 Write-Output "Game Mode is now DISABLED."
 
 ```
-
-
-
-
 
 
 ## Links

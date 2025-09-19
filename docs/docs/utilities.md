@@ -23,7 +23,7 @@ The following system utilities can be run directly from the app:
 
 !!! info
 
-    Users can choose to keep the PowerShell window open after execution via a toggle.
+    Users can choose to keep the PowerShell window open after execution via a toggle in the ui.
 
 ---
 

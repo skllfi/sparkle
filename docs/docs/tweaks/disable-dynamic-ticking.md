@@ -1,7 +1,21 @@
-# Disable Dynamic Ticking
-ID/URL: disable-dynamic-ticking
+---
+title: "Disable Dynamic Ticking"
+description: "Improves system responsiveness and reduces latency by disabling dynamic timer ticks."
+hide:
+  - edit
+---
 
-Description: Improves system responsiveness and reduces latency by disabling dynamic timer ticks.
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
+# Disable Dynamic Ticking
+
+## Overview
+- **ID/URL**: `disable-dynamic-ticking`
+- **Description**: Improves system responsiveness and reduces latency by disabling dynamic timer ticks.
+
+
+
+## Details
 
 ## Deep Description:
 
@@ -9,11 +23,11 @@ Description: Improves system responsiveness and reduces latency by disabling dyn
 
 
 !!! warning "Tweak Warning"
-    
-
     May increase power consumption
 
+
 ## Apply
+
 ```powershell
 try {
     bcdedit /set disabledynamictick yes
@@ -24,6 +38,7 @@ try {
 ```
 
 ## Unapply
+
 ```powershell
 try {
     bcdedit /set disabledynamictick no

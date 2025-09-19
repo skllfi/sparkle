@@ -21,7 +21,7 @@ The app allows users to select and apply various DNS providers:
 
 !!! info
 
-    Users can select a provider to apply DNS changes across all active network adapters.
+    Users can select a provider to apply DNS changes the active Wifi And Ethernet adapters.
 
 ---
 
@@ -45,4 +45,4 @@ Users can optionally configure custom DNS servers:
 
 !!! info
 
-    Custom DNS changes are applied to all active adapters and flush the DNS cache.
+    Custom DNS changes are applied to The active Wifi And Ethernet adapters and flush the DNS cache.

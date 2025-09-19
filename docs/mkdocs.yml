@@ -4,6 +4,12 @@ site_url: "https://docs.getsparkle.net"
 repo_url: "https://github.com/parcoil/sparkle"
 repo_name: "Sparkle"
 
+edit_uri: edit/v2/docs/docs/
+extra_css:
+ - css/extra.css
+extra_javascript:
+ - js/extra.js
+
 theme:
   name: material
   logo: "https://raw.githubusercontent.com/Parcoil/logos/refs/heads/main/logos/sparklelogo.png"
@@ -17,7 +23,7 @@ theme:
     # Light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: blue grey
+      primary: custom
       accent: indigo
       toggle:
         icon: material/brightness-7
@@ -25,7 +31,7 @@ theme:
     # Dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: black
+      primary: custom
       toggle:
         icon: material/brightness-4
         name: Switch to system preference

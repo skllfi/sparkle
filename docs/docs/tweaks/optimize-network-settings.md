@@ -1,13 +1,30 @@
-# Optimize Network Settings
-ID/URL: optimize-network-settings
+---
+title: "Optimize Network Settings"
+description: "Changes various Windows settings to improve network latency and speeds."
+hide:
+  - edit
+---
 
-Description: Changes various Windows settings to improve network latency and speeds.
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
+# Optimize Network Settings
+
+## Overview
+- **ID/URL**: `optimize-network-settings`
+- **Description**: Changes various Windows settings to improve network latency and speeds.
+
+
+
+## Details
 
 - Applies a comprehensive set of netsh TCP/IP tweaks to disable latency-inducing features, enable fast open, offload networking tasks to hardware, fine-tune congestion control, and set optimal MTU, all to maximize speed, reduce CPU load, and improve responsiveness for gaming and high-performance internet use.
 
 
 
+
+
 ## Apply
+
 ```powershell
       Write-Host "Applying network tweaks..."
       netsh int tcp set heuristics disabled
@@ -40,6 +57,7 @@ Description: Changes various Windows settings to improve network latency and spe
 ```
 
 ## Unapply
+
 ```powershell
  Write-Host "Reverting network tweaks to defaults..."
       netsh int tcp set heuristics enabled

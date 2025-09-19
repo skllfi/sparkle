@@ -1,12 +1,24 @@
+---
+title: "Optimize Nvidia Settings"
+description: "Changes Nvidia Control Panel settings to improve performance"
+hide:
+  - edit
+---
+
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
 # Optimize Nvidia Settings
-ID/URL: optimize-nvidia-settings
 
-Description: Changes Nvidia Control Panel settings to improve performance
+## Overview
+- **ID/URL**: `optimize-nvidia-settings`
+- **Description**: Changes Nvidia Control Panel settings to improve performance
 
-!!! info
+!!! info "Irreversible"
+    This tweak cannot be reversed and must be undone manually.
 
-    This tweak cannot be reversed. Must be done manually
-  
+
+## Details
+
 ## This Changes the following NVIDIA Control Panel settings:
 
 - Image Scaling → Off

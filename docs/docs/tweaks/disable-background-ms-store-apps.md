@@ -1,13 +1,30 @@
-# Disable Background MS Store apps
-ID/URL: disable-background-ms-store-apps
+---
+title: "Disable Background MS Store apps"
+description: "Disables Microsoft Store apps from running in the background"
+hide:
+  - edit
+---
 
-Description: Disables Microsoft Store apps from running in the background
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
+# Disable Background MS Store apps
+
+## Overview
+- **ID/URL**: `disable-background-ms-store-apps`
+- **Description**: Disables Microsoft Store apps from running in the background
+
+
+
+## Details
 
 - Disables all background activity for modern UWP apps by setting 'GlobalUserDisabled' to 1 under the current user's BackgroundAccessApplications registry key, creating the key if it doesn't exist.
 
 
 
+
+
 ## Apply
+
 ```powershell
 $path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications"
 $name = "GlobalUserDisabled"
@@ -25,6 +42,7 @@ Write-Host "$name set to $newValue (Background Access Disabled)"
 ```
 
 ## Unapply
+
 ```powershell
  $path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications"
   $name = "GlobalUserDisabled"

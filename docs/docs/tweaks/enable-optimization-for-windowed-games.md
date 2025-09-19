@@ -1,13 +1,30 @@
-# Enable Optimization For Windowed Games
-ID/URL: enable-optimization-for-windowed-games
+---
+title: "Enable Optimization For Windowed Games"
+description: "Enables Optimization For Windowed Games on windows"
+hide:
+  - edit
+---
 
-Description: Enables Optimization For Windowed Games on windows
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
+# Enable Optimization For Windowed Games
+
+## Overview
+- **ID/URL**: `enable-optimization-for-windowed-games`
+- **Description**: Enables Optimization For Windowed Games on windows
+
+
+
+## Details
 
 - Enables Optimization For Windowed Games on Windows
 
 
 
+
+
 ## Apply
+
 ```powershell
 
 $regPath = "HKCU:\Software\Microsoft\DirectX\UserGpuPreferences"
@@ -25,6 +42,7 @@ Write-Host "DirectX game optimization applied."
 ```
 
 ## Unapply
+
 ```powershell
 $regPath = "HKCU:\Software\Microsoft\DirectX\UserGpuPreferences"
 $keyName = "DirectXUserGlobalSettings"

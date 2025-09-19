@@ -1,13 +1,30 @@
-# Set Services to Manual
-ID/URL: set-services-to-manual
+---
+title: "Set Services to Manual"
+description: "Sets various Windows services to Manual startup type to improve performance."
+hide:
+  - edit
+---
 
-Description: Sets various Windows services to Manual startup type to improve performance.
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
+# Set Services to Manual
+
+## Overview
+- **ID/URL**: `set-services-to-manual`
+- **Description**: Sets various Windows services to Manual startup type to improve performance.
+
+
+
+## Details
 
 - Modifies the startup type of selected Windows services using Set-Service to disable or delay non-essential processes, reducing boot time, CPU usage, RAM consumption, and background activity for improved overall performance.
 
 
 
+
+
 ## Apply
+
 ```powershell
       $services = @(
       @{ Name = "AJRouter"; StartupType = "Disabled" },
@@ -305,6 +322,7 @@ Description: Sets various Windows services to Manual startup type to improve per
 ```
 
 ## Unapply
+
 ```powershell
 $services = @(
       @{ Name = "AJRouter"; StartupType = "Manual" },

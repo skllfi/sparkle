@@ -1,13 +1,30 @@
-# Disable Core Isolation
-ID/URL: disable-core-isolation
+---
+title: "Disable Core Isolation"
+description: "Disables Core Isolation Memory Integrity to improve system performance"
+hide:
+  - edit
+---
 
-Description: Disables Core Isolation Memory Integrity to improve system performance
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
+# Disable Core Isolation
+
+## Overview
+- **ID/URL**: `disable-core-isolation`
+- **Description**: Disables Core Isolation Memory Integrity to improve system performance
+
+
+
+## Details
 
 - Creates the registry path for Hypervisor-Enforced Code Integrity under DeviceGuard if missing, and disables HVCI by setting Enabled to 0 in the system-wide registry.
 
 
 
+
+
 ## Apply
+
 ```powershell
 New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" -Force | Out-Null
 
@@ -17,6 +34,7 @@ Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scena
 ```
 
 ## Unapply
+
 ```powershell
 New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" -Force | Out-Null
 

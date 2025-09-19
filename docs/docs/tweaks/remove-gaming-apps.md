@@ -1,17 +1,30 @@
+---
+title: "Remove Gaming Apps"
+description: "Removes Xbox app, Xbox Game Bar, and Xbox Game Overlay"
+hide:
+  - edit
+---
+
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
 # Remove Gaming Apps
-ID/URL: remove-gaming-apps
 
-Description: Removes Xbox app, Xbox Game Bar, and Xbox Game Overlay
+## Overview
+- **ID/URL**: `remove-gaming-apps`
+- **Description**: Removes Xbox app, Xbox Game Bar, and Xbox Game Overlay
 
-!!! info
+!!! info "Irreversible"
+    This tweak cannot be reversed and must be undone manually.
 
-    This tweak cannot be reversed. Must be done manually
-  
+
+
+
 
 
 
 
 ## Apply
+
 ```powershell
 $appsList = 'Microsoft.GamingApp', 'Microsoft.XboxGameOverlay', 'Microsoft.XboxGamingOverlay'
 
@@ -21,10 +34,6 @@ foreach ($app in $appsList) {
 }
 
 ```
-
-
-
-
 
 
 

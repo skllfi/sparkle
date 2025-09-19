@@ -1,13 +1,28 @@
-# Set PowerShell 7 as Default
-ID/URL: set-powershell7-default
+---
+title: "Set PowerShell 7 as Default"
+description: "Sets PowerShell 7 as the default profile in Windows Terminal (installs PS7 if missing)"
+hide:
+  - edit
+---
 
-Description: Sets PowerShell 7 as the default profile in Windows Terminal (installs PS7 if missing)
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
+# Set PowerShell 7 as Default
+
+## Overview
+- **ID/URL**: `set-powershell7-default`
+- **Description**: Sets PowerShell 7 as the default profile in Windows Terminal (installs PS7 if missing)
+
+
+
+
 
 
 
 
 
 ## Apply
+
 ```powershell
 if (Test-Path -Path "$env:ProgramFiles\PowerShell\7") {
     Write-Host "PowerShell 7 is already installed."
@@ -43,6 +58,7 @@ if ($ps7Profile) {
 ```
 
 ## Unapply
+
 ```powershell
 $targetTerminalName = "Windows PowerShell"
 

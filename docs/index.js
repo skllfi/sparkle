@@ -63,51 +63,47 @@ for (const folder of subfolders) {
   const mdContent = `
 
 # ${tweak.title || folder}
-ID/URL: ${tweak.name || folder}
 
-Description: ${tweak.description || ""}
+## Overview
+- **ID/URL**: \`${tweak.name || folder}\`
+- **Description**: ${tweak.description || ""}
+
 ${
   tweak.reversible === false
-    ? `
-!!! info
-
-    This tweak cannot be reversed. Must be done manually
-  `
+    ? `!!! info "Irreversible"
+    This tweak cannot be reversed and must be undone manually.
+`
     : ""
 }
-${deepDesc}
+
+${deepDesc ? `## Details\n\n${deepDesc}` : ""}
 
 ${
   tweak.docs_warning
-    ? `!!! warning "Tweak Warning"
-    
-    
+    ? `!!! warning "Documentation Warning"
     ${tweak.docs_warning}`
     : ""
 }
 ${
   tweak.warning
     ? `!!! warning "Tweak Warning"
-    
-
-    ${tweak.warning}
-`
+    ${tweak.warning}`
     : ""
 }
 ${
   tweak.recommended
     ? `!!! tip "Recommended"
-
-    This is a recommended tweak.
+    This tweak is recommended.
 `
     : ""
-}${applyScript ? `## Apply\n\`\`\`powershell\n${applyScript}\n\`\`\`\n` : ""}
-${unapplyScript ? `## Unapply\n\`\`\`powershell\n${unapplyScript}\n\`\`\`\n` : ""}
+}
 
+${applyScript ? `## Apply\n\n\`\`\`powershell\n${applyScript}\n\`\`\`\n` : ""}
+${unapplyScript ? `## Unapply\n\n\`\`\`powershell\n${unapplyScript}\n\`\`\`\n` : ""}
 
-
-${tweak.links ? `\n\n## Links\n${tweak.links.map((link) => `- [${link.name}](${link.url})`).join("\n")}` : ""}
+${tweak.links ? `## Links\n${tweak.links.map((link) => `- [${link.name}](${link.url})`).join("\n")}` : ""}
 `
+
 
   fs.writeFileSync(mdPath, mdContent.trim() + "\n", "utf-8")
 
@@ -119,11 +115,10 @@ const tweaksIndex = `
 title: "All Tweaks"
 ---
 
-
 # Sparkle Tweaks
 A collection of tweaks to customize and enhance your Windows experience using Sparkle.
 
-_this page is auto-generated_
+_This page is auto-generated._
 
 ## All Tweaks (${tweaksList.length})
 ${tweaksList.map((t) => `- [${t.name}](${t.slug}.md)`).join("\n")}

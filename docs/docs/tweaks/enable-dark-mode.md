@@ -1,13 +1,30 @@
-# Enable Dark Mode
-ID/URL: enable-dark-mode
+---
+title: "Enable Dark Mode"
+description: "Enables dark mode for Windows. Great for unactivated systems."
+hide:
+  - edit
+---
 
-Description: Enables dark mode for Windows. Great for unactivated systems.
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
+# Enable Dark Mode
+
+## Overview
+- **ID/URL**: `enable-dark-mode`
+- **Description**: Enables dark mode for Windows. Great for unactivated systems.
+
+
+
+## Details
 
 - Enables dark mode for system UI and apps by setting theme values to 0, then restarts Explorer to apply the change — also works on unactivated Windows systems where personalization settings are normally locked.
 
 
 
+
+
 ## Apply
+
 ```powershell
 $Path = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"
 Set-ItemProperty -Path $Path -Name AppsUseLightTheme -Value 0
@@ -18,6 +35,7 @@ Start-Process explorer.exe
 ```
 
 ## Unapply
+
 ```powershell
 $Path = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"
 Set-ItemProperty -Path $Path -Name AppsUseLightTheme -Value 1

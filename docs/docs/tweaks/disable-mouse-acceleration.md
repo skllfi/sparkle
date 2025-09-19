@@ -1,13 +1,30 @@
-# Disable Mouse Acceleration
-ID/URL: disable-mouse-acceleration
+---
+title: "Disable Mouse Acceleration"
+description: "Disables mouse acceleration for a more consistent and precise mouse movement experience. Great for gaming"
+hide:
+  - edit
+---
 
-Description: Disables mouse acceleration for a more consistent and precise mouse movement experience. Great for gaming
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
+# Disable Mouse Acceleration
+
+## Overview
+- **ID/URL**: `disable-mouse-acceleration`
+- **Description**: Disables mouse acceleration for a more consistent and precise mouse movement experience. Great for gaming
+
+
+
+## Details
 
 - Disables Windows mouse acceleration by setting MouseSpeed, MouseThreshold1, and MouseThreshold2 to 0, enabling consistent and linear cursor movement for improved precision.
 
 
 
+
+
 ## Apply
+
 ```powershell
 Set-ItemProperty -Path "HKCU:\Control Panel\Mouse" -Name "MouseSpeed" -Value "0"
 Set-ItemProperty -Path "HKCU:\Control Panel\Mouse" -Name "MouseThreshold1" -Value "0"
@@ -16,6 +33,7 @@ Set-ItemProperty -Path "HKCU:\Control Panel\Mouse" -Name "MouseThreshold2" -Valu
 ```
 
 ## Unapply
+
 ```powershell
 Set-ItemProperty -Path "HKCU:\Control Panel\Mouse" -Name "MouseSpeed" -Value "1"
 Set-ItemProperty -Path "HKCU:\Control Panel\Mouse" -Name "MouseThreshold1" -Value "6"

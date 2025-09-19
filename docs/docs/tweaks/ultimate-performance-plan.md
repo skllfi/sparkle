@@ -1,16 +1,32 @@
-# Ultimate Performance Power Plan
-ID/URL: ultimate-performance-plan
+---
+title: "Ultimate Performance Power Plan"
+description: "Enables And Applys The Windows Ultimate Powerplan for better performance"
+hide:
+  - edit
+---
 
-Description: Enables And Applys The Windows Ultimate Powerplan for better performance
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
+# Ultimate Performance Power Plan
+
+## Overview
+- **ID/URL**: `ultimate-performance-plan`
+- **Description**: Enables And Applys The Windows Ultimate Powerplan for better performance
+
+
+
+## Details
 
 - Enables the Ultimate Performance power plan by creating it if missing, retrieving its GUID, and activating it to maximize system responsiveness and performance by preventing power-saving limitations.
 
 
 
 !!! tip "Recommended"
+    This tweak is recommended.
 
-    This is a recommended tweak.
+
 ## Apply
+
 ```powershell
 $ultimatePlan = powercfg -l | Select-String "Ultimate Performance"
   
@@ -31,6 +47,7 @@ $ultimatePlan = powercfg -l | Select-String "Ultimate Performance"
 ```
 
 ## Unapply
+
 ```powershell
 $balancedGUID = "381b4222-f694-41f0-9685-ff5bb260df2e"
   

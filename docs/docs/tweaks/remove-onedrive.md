@@ -1,13 +1,30 @@
-# Remove OneDrive
-ID/URL: remove-onedrive
+---
+title: "Remove OneDrive"
+description: "Removes OneDrive from the system"
+hide:
+  - edit
+---
 
-Description: Removes OneDrive from the system
+<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
+
+# Remove OneDrive
+
+## Overview
+- **ID/URL**: `remove-onedrive`
+- **Description**: Removes OneDrive from the system
+
+
+
+## Details
 
 - Uses registry, file system, and process commands to uninstall OneDrive, clean leftovers, and restore defaults—freeing RAM, CPU, and I/O by eliminating its background sync and startup tasks.
 
 
 
+
+
 ## Apply
+
 ```powershell
 $OneDrivePath = $($env:OneDrive)
         Write-Host "Removing OneDrive"
@@ -89,6 +106,7 @@ $OneDrivePath = $($env:OneDrive)
 ```
 
 ## Unapply
+
 ```powershell
 Write-Host "Install OneDrive"
 Start-Process -FilePath winget -ArgumentList "install -e --accept-source-agreements --accept-package-agreements --silent Microsoft.OneDrive " -NoNewWindow -Wait
