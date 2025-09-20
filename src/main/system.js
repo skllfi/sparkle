@@ -6,23 +6,40 @@ import fs from "fs"
 import path from "path"
 import log from "electron-log"
 import { shell } from "electron"
+import { executePowerShell } from "./powershell"
 console.log = log.log
 console.error = log.error
 console.warn = log.warn
 async function getSystemInfo() {
   try {
-    const [cpuData, graphicsData, osInfo, memLayout, diskLayout] = await Promise.all([
-      si.cpu(),
-      si.graphics(),
-      si.osInfo(),
-      si.memLayout(),
-      si.diskLayout(),
-    ])
+    const [cpuData, graphicsData, osInfo, memLayout, diskLayout, fsSize, blockDevices] =
+      await Promise.all([
+        si.cpu(),
+        si.graphics(),
+        si.osInfo(),
+        si.memLayout(),
+        si.diskLayout(),
+        si.fsSize(),
+        si.blockDevices(),
+      ])
 
     let totalMemory = os.totalmem()
     const memoryType = memLayout.length > 0 ? memLayout[0].type : "Unknown"
+    const cDrive = fsSize.find((d) => d.mount.toUpperCase().startsWith("C:"))
 
-    const primaryDisk = diskLayout.length > 0 ? diskLayout[0] : null
+    let primaryDisk = null
+    if (cDrive) {
+      const cBlock = blockDevices.find((b) => b.mount && b.mount.toUpperCase().startsWith("C:"))
+
+      if (cBlock) {
+        primaryDisk =
+          diskLayout.find(
+            (disk) =>
+              disk.device?.toLowerCase() === cBlock.device?.toLowerCase() ||
+              disk.name?.toLowerCase().includes(cBlock.name?.toLowerCase()),
+          ) || null
+      }
+    }
 
     let gpuInfo = { model: "GPU not found", vram: "N/A" }
 
@@ -59,6 +76,13 @@ async function getSystemInfo() {
       }
     }
 
+    const versionScript = `(Get-ItemProperty -Path "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion").DisplayVersion`
+    const versionPsResult = await executePowerShell(null, {
+      script: versionScript,
+      name: "GetWindowsVersion",
+    })
+    const windowsVersion = versionPsResult.success ? versionPsResult.output.trim() : "Unknown"
+
     return {
       cpu_model: cpuData.brand,
       cpu_cores: cpuData.cores,
@@ -71,11 +95,11 @@ async function getSystemInfo() {
       memory_type: memoryType,
 
       os: osInfo.distro || "Windows",
-      os_version: osInfo.release || "Unknown",
+      os_version: windowsVersion || "Unknown",
 
-      disk_model: primaryDisk?.name || "Unknown Storage",
-      disk_size: primaryDisk?.size
-        ? `${Math.round(primaryDisk.size / 1024 / 1024 / 1024)} GB`
+      disk_model: primaryDisk?.name || primaryDisk?.device || "Unknown Storage",
+      disk_size: cDrive?.size
+        ? `${Math.round(cDrive.size / 1024 / 1024 / 1024).toFixed(1)} GB`
         : "Unknown",
     }
   } catch (error) {

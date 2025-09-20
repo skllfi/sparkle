@@ -21,6 +21,7 @@ import Button from "@/components/ui/button"
 import Toggle from "@/components/ui/Toggle"
 import log from "electron-log/renderer"
 import posthog from "posthog-js"
+import { Gpu } from "lucide-react"
 
 function Tweaks() {
   const [tweaks, setTweaks] = useState([])
@@ -254,13 +255,13 @@ function Tweaks() {
   }, [filteredTweaks])
 
   const categoryIcons = {
-    Performance: <Zap className="w-4 h-4  text-yellow-400" />,
-    GPU: <Monitor className="w-4 h-4 text-purple-400" />,
+    Performance: <Zap className="w-4 h-4  text-yellow-500" />,
+    GPU: <Gpu className="w-4 h-4 text-red-500" />,
     Privacy: <Shield className="w-4 h-4 text-green-500" />,
-    Network: <Network className="w-4 h-4 text-orange-400" />,
+    Network: <Network className="w-4 h-4 text-orange-500" />,
     Appearance: <Paintbrush className="w-4 h-4 text-sparkle-primary" />,
-    Gaming: <Gamepad className="w-4 h-4 text-teal-400" />,
-    General: <Wrench className="w-4 h-4 text-blue-400" />,
+    Gaming: <Gamepad className="w-4 h-4 text-teal-500" />,
+    General: <Wrench className="w-4 h-4 text-blue-500" />,
   }
 
   if (isLoading) {
