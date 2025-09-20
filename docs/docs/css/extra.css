@@ -25,8 +25,13 @@
 .md-container {
     background-color: #0c121f;
 }
+table, code {
+    background-color: #131c2c !important;
 }
-
+}
+table, code {
+      border-radius: 10px !important;
+}
 nav label {
     box-shadow: none !important;
     background-color: transparent !important;
@@ -48,8 +53,17 @@ nav label {
  
 }
 
-
 .md-button:active {
     transform: scale(0.95);
 }
 
+.admonition {
+border-radius: 10px !important;
+overflow: hidden;
+}
+.grid.cards ul li {
+    border-radius: 10px !important;
+}
+.grid.cards ul li:hover {
+    border-color: #3b82f6 !important;
+}
