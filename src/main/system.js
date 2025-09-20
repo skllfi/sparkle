@@ -85,7 +85,7 @@ async function getSystemInfo() {
 
     return {
       cpu_model: cpuData.brand,
-      cpu_cores: cpuData.cores,
+      cpu_cores: cpuData.physicalCores,
       cpu_threads: cpuData.threads,
 
       gpu_model: gpuInfo.model,
