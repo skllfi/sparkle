@@ -1,12 +1,3 @@
----
-title: "Disable Background MS Store apps"
-description: "Disables Microsoft Store apps from running in the background"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Disable Background MS Store apps
 
 ## Overview

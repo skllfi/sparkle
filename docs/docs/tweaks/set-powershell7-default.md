@@ -1,12 +1,3 @@
----
-title: "Set PowerShell 7 as Default"
-description: "Sets PowerShell 7 as the default profile in Windows Terminal (installs PS7 if missing)"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Set PowerShell 7 as Default
 
 ## Overview

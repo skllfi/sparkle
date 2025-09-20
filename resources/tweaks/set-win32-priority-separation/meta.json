@@ -3,5 +3,5 @@
   "title": "Set Win32 Priority Separation",
   "deepDescription": "Sets the 'Win32PrioritySeparation' registry key to optimize foreground process priority, improving perceived responsiveness.",
   "description": "Optimizes foreground app performance by modifying system process priority behavior.",
-  "category": ["Performance", "System"]
+  "category": ["Performance"]
 }

@@ -1,12 +1,3 @@
----
-title: "Optimize Network Settings"
-description: "Changes various Windows settings to improve network latency and speeds."
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Optimize Network Settings
 
 ## Overview

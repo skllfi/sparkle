@@ -1,12 +1,3 @@
----
-title: "Disable Dynamic Ticking"
-description: "Improves system responsiveness and reduces latency by disabling dynamic timer ticks."
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Disable Dynamic Ticking
 
 ## Overview

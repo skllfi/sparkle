@@ -1,12 +1,3 @@
----
-title: "Debloat Windows"
-description: "Removes Unnecessary Windows Features And Apps (RECOMMENDED)"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Debloat Windows
 
 ## Overview

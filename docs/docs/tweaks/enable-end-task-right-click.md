@@ -1,12 +1,3 @@
----
-title: "Enable End Task With Right Click"
-description: "Enables the "End Task" option in the taskbar context menu"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Enable End Task With Right Click
 
 ## Overview

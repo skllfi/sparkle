@@ -1,12 +1,3 @@
----
-title: "Align Taskbar Left"
-description: "Aligns the taskbar to the left side of the screen."
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Align Taskbar Left
 
 ## Overview

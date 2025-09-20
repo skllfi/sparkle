@@ -1,12 +1,3 @@
----
-title: "Set Time To UTC"
-description: "Sets the system time to UTC, Great for dual booting"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Set Time To UTC
 
 ## Overview

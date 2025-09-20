@@ -1,12 +1,3 @@
----
-title: "Enable HPET (High Precision Event Timer)"
-description: "Forces use of the High Precision Event Timer (HPET), which can reduce stuttering and improve timing accuracy on some hardware."
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Enable HPET (High Precision Event Timer)
 
 ## Overview

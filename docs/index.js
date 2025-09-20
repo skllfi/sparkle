@@ -3,9 +3,9 @@
 import fs from "fs"
 import path from "path"
 
-const tweaksDir = "./resources/tweaks"
-const docsDir = "./docs/docs/tweaks"
-const tweaksIndexFile = "./docs/docs/tweaks/index.md"
+const tweaksDir = "../resources/tweaks"
+const docsDir = "./docs/tweaks"
+const tweaksIndexFile = "./docs/tweaks/index.md"
 
 fs.mkdirSync(docsDir, { recursive: true })
 

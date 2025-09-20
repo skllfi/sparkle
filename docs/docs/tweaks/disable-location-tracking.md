@@ -1,12 +1,3 @@
----
-title: "Disable Location Tracking"
-description: "Disables Windows location tracking."
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Disable Location Tracking
 
 ## Overview

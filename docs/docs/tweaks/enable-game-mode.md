@@ -1,12 +1,3 @@
----
-title: "Enable Game Mode"
-description: "Enables Game Mode on windows"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Enable Game Mode
 
 ## Overview

@@ -1,12 +1,3 @@
----
-title: "Disable Gamebar"
-description: "Disables The Xbox gamebar "
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Disable Gamebar
 
 ## Overview

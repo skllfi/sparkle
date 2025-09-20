@@ -1,12 +1,3 @@
----
-title: "Enable Dark Mode"
-description: "Enables dark mode for Windows. Great for unactivated systems."
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Enable Dark Mode
 
 ## Overview

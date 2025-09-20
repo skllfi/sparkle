@@ -1,12 +1,3 @@
----
-title: "Set Services to Manual"
-description: "Sets various Windows services to Manual startup type to improve performance."
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Set Services to Manual
 
 ## Overview

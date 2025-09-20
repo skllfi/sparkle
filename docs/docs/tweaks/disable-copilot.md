@@ -1,12 +1,3 @@
----
-title: "Disable Copilot"
-description: "Removes Microsoft's Copilot feature. (will fail if copilot is not installed)"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Disable Copilot
 
 ## Overview

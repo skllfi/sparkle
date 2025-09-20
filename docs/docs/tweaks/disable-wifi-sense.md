@@ -1,12 +1,3 @@
----
-title: "Disable Wifi Sense"
-description: "Disables Wifi Sense to prevent sharing of Wi-Fi networks with contacts"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Disable Wifi Sense
 
 ## Overview

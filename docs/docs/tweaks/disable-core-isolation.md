@@ -1,12 +1,3 @@
----
-title: "Disable Core Isolation"
-description: "Disables Core Isolation Memory Integrity to improve system performance"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Disable Core Isolation
 
 ## Overview

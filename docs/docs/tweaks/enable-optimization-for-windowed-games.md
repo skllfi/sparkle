@@ -1,12 +1,3 @@
----
-title: "Enable Optimization For Windowed Games"
-description: "Enables Optimization For Windowed Games on windows"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Enable Optimization For Windowed Games
 
 ## Overview

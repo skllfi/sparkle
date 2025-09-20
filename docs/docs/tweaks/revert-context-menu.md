@@ -1,12 +1,3 @@
----
-title: "Revert Context Menu"
-description: "Reverts the context menu to the default Windows 10 context menu."
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Revert Context Menu
 
 ## Overview

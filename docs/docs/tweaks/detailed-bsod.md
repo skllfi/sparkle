@@ -1,12 +1,3 @@
----
-title: "Detailed BSOD"
-description: "Adds detailed information to the Blue Screen of Death (BSOD) screen"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Detailed BSOD
 
 ## Overview

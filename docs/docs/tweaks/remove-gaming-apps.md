@@ -1,12 +1,3 @@
----
-title: "Remove Gaming Apps"
-description: "Removes Xbox app, Xbox Game Bar, and Xbox Game Overlay"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Remove Gaming Apps
 
 ## Overview

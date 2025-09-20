@@ -1,12 +1,3 @@
----
-title: "Run Disk Cleanup"
-description: "Runs disk cleanup on your C: drive. also removes old windows update cache"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Run Disk Cleanup
 
 ## Overview

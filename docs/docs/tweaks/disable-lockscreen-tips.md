@@ -1,12 +1,3 @@
----
-title: "Disable Lockscreen Tips"
-description: "Disables tips on the lockscreen."
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Disable Lockscreen Tips
 
 ## Overview

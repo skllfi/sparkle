@@ -1,12 +1,3 @@
----
-title: "Disable Mouse Acceleration"
-description: "Disables mouse acceleration for a more consistent and precise mouse movement experience. Great for gaming"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Disable Mouse Acceleration
 
 ## Overview

@@ -1,12 +1,3 @@
----
-title: "Remove OneDrive"
-description: "Removes OneDrive from the system"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Remove OneDrive
 
 ## Overview

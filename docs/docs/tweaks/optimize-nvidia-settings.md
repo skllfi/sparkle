@@ -1,12 +1,3 @@
----
-title: "Optimize Nvidia Settings"
-description: "Changes Nvidia Control Panel settings to improve performance"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Optimize Nvidia Settings
 
 ## Overview

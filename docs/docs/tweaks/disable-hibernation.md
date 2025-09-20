@@ -1,12 +1,3 @@
----
-title: "Disable Hibernation"
-description: "Disables the hibernation feature to free up disk space and improve shutdown speed"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Disable Hibernation
 
 ## Overview

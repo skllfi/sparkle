@@ -3,13 +3,11 @@ title: "All Tweaks"
 ---
 
 # Sparkle Tweaks
-
 A collection of tweaks to customize and enhance your Windows experience using Sparkle.
 
 _This page is auto-generated._
 
-## All Tweaks (32)
-
+## All Tweaks (34)
 - [align-taskbar-left](align-taskbar-left.md)
 - [debloat-windows](debloat-windows.md)
 - [detailed-bsod](detailed-bsod.md)
@@ -24,7 +22,6 @@ _This page is auto-generated._
 - [disable-location-tracking](disable-location-tracking.md)
 - [disable-lockscreen-tips](disable-lockscreen-tips.md)
 - [disable-mouse-acceleration](disable-mouse-acceleration.md)
-- [remove-notification-menu](remove-notification-menu.md)
 - [disable-wifi-sense](disable-wifi-sense.md)
 - [enable-dark-mode](enable-dark-mode.md)
 - [enable-end-task-right-click](enable-end-task-right-click.md)

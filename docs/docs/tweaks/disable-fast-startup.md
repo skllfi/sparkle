@@ -1,12 +1,3 @@
----
-title: "Disable Fast Startup"
-description: "Disables Windows Fast Startup to improve system stability"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Disable Fast Startup
 
 ## Overview

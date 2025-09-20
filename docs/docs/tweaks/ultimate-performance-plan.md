@@ -1,12 +1,3 @@
----
-title: "Ultimate Performance Power Plan"
-description: "Enables And Applys The Windows Ultimate Powerplan for better performance"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Ultimate Performance Power Plan
 
 ## Overview

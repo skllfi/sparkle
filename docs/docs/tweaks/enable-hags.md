@@ -1,12 +1,3 @@
----
-title: "Enable HAGS"
-description: "Enables HAGS (Hardware Accelerated GPU Scheduling)"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Enable HAGS
 
 ## Overview

@@ -1,12 +1,3 @@
----
-title: "Disable Defender RTP"
-description: "Disables Defender Real-time Protection"
-hide:
-  - edit
----
-
-<!-- ⚠️ This file is auto-generated. Do not edit manually. -->
-
 # Disable Defender RTP
 
 ## Overview
