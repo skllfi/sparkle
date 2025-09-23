@@ -4,9 +4,9 @@
       "name": "Firefox",
       "id": "Mozilla.Firefox",
       "category": "browsers",
-      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1024px-Firefox_logo%2C_2019.svg.png",
       "info": "A fast, private and secure web browsers.",
       "link": "https://www.mozilla.org/en-US/firefox/new/"
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1024px-Firefox_logo%2C_2019.svg.png",
     },
     {
       "name": "Google Chrome",
@@ -190,7 +190,7 @@
       "id": "Logitech.GHUB",
       "category": "peripherals",
       "info": "App to Manage your logitech peripherals.",
-      "link": "https://desktop.github.com/",
+      "link": "https://www.logitechg.com/en-us/software/ghub",
       "icon": "https://i.namu.wiki/i/Ir-1SJ90LXrO3e-1HxA91jVVUbU7LSStrb62bfwdndtnHwzENnyVNvJU2z8d8WYqPLcdA2f8zG-SHwHnzA9IrQ.webp"
     },
     {
@@ -378,7 +378,7 @@
       "id": "Proton.ProtonVPN",
       "category": "VPN",
       "info": "A Free VPN service.",
-      "link": "https://windscribe.com/",
+      "link": "https://protonvpn.com/",
       "icon": "https://seeklogo.com/images/P/proton-vpn-logo-A50452564D-seeklogo.com.png"
     },
     {
@@ -386,7 +386,7 @@
       "id": "ExpressVPN.ExpressVPN",
       "category": "VPN",
       "info": "A VPN service.",
-      "link": "https://windscribe.com/",
+      "link": "https://www.expressvpn.com/",
       "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjwaKqGXfkKnwU7wHh8FgobPoEictiwTQ9tQ&s"
     },
     {
@@ -450,6 +450,7 @@
       "id": "Microsoft.PowerToys",
       "category": "utilities",
       "info": "A set of utilities for power users to tune and streamline their Windows experience.",
+      "link": "https://learn.microsoft.com/en-us/windows/powertoys/",
       "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzPf7vMthKRCgjSxB6bxmJTypARbHiPoFgFg&s"
     },
     {
@@ -457,6 +458,7 @@
       "id": "PuTTY.PuTTY",
       "category": "utilities",
       "info": "A free implementation of SSH and Telnet for Windows and Unix platforms.",
+      "link": "https://www.vrdesktop.net/",
       "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/PuTTY_Icon.svg/2048px-PuTTY_Icon.svg.png"
     },
     {
@@ -464,6 +466,7 @@
       "id": "VirtualDesktop.Streamer",
       "category": "games",
       "info": "Streams Your PC Games to Your Oculus Quest.",
+      "link": "https://www.vrdesktop.net/",
       "icon": "https://cdn2.steamgriddb.com/icon/acac6e55a8890cb2666e7352729b18f1.ico"
     },
     {
@@ -471,6 +474,7 @@
       "id": "Cemu.Cemu",
       "category": "games",
       "info": "A Wii U emulator.",
+      "link": "https://cemu.info/",
       "icon": "https://external-preview.redd.it/770b9ca5I7WcAmAl8nE9hYWVbLgGqfrO9qaBKD_8h8M.jpg?auto=webp&s=32184e918495d73cc58bf8971c979314e6a8c3d6"
     },
     {
@@ -478,6 +482,7 @@
       "id": "TorProject.TorBrowser",
       "category": "browsers",
       "info": "A web browser that protects your privacy.",
+      "link": "https://www.torproject.org/",
       "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Tor-logo-2011-flat.svg/2048px-Tor-logo-2011-flat.svg.png"
     },
     {
@@ -485,6 +490,7 @@
       "id": "Wagnardsoft.DisplayDriverUninstaller",
       "category": "utilities",
       "info": "A driver uninstaller.",
+      "link": "https://www.guru3d.com/download/display-driver-uninstaller-download/",
       "icon": "https://img.utdstc.com/icon/d9b/bb3/d9bbb3fecc888b09380d5d01e21b615dc5844e92236c90d6fd852116d294d944:200"
     },
     {
@@ -492,13 +498,15 @@
       "id": "WhirlwindFX.SignalRgb",
       "category": "utilities",
       "info": "A RGB lighting control software.",
+      "link": "https://signalrgb.com/",
       "icon": "https://mp-cdn.elgato.com/media/ab8fd021-8038-4b26-8192-191cce9c9e6b/3c114a0a-d42a-4a5a-8ca4-840f7ef07879/SignalRGB-Deck-app-icon-optimized-ba4f4aa2-85b6-4cc2-b448-eb20786ef85a.png"
     },
     {
       "name": "Flow Launcher",
       "id": "Flow-Launcher.Flow-Launcher",
       "category": "utilities",
-      "info": "Keystroke launcher for Windows to search, manage and launch files, folders bookmarks, websites and more.",
+      "info": "Keystroke launcher for Windows to search, and much more.",
+      "link": "https://www.flowlauncher.com/",
       "icon": "https://styles.redditmedia.com/t5_5fx8y0/styles/communityIcon_lbbwa21m92w81.png"
     },
     {
@@ -546,6 +554,7 @@
       "id": "LizardByte.Sunshine",
       "category": "games",
       "info": "A self-hosted game streaming server.",
+      "link": "https://app.lizardbyte.dev/Sunshine/",
       "icon": "https://github.com/LizardByte/Sunshine/raw/master/sunshine.png"
     },
     {
@@ -553,6 +562,7 @@
       "id": "MoonlightGameStreamingProject.Moonlight",
       "category": "games",
       "info": "A game streaming client.",
+      "link": "https://moonlight-stream.org/",
       "icon": "https://play-lh.googleusercontent.com/QGBq_X2ewz_3HUR9AUI3NXcOjfVJd-Mf1l66-3D6zMzF-HN81f_KeZ-shqxRE633I3M"
     },
     {
@@ -560,6 +570,7 @@
       "id": "Playnite.Playnite",
       "category": "games",
       "info": "A video game library manager and launcher with support for 3rd party libraries.",
+      "link": "https://playnite.link/",
       "icon": "https://cdn2.steamgriddb.com/icon_thumb/f9ab9a0f7c56435e35dc4dadf0eb6945.png"
     },
     {
@@ -567,6 +578,7 @@
       "id": "pizzaboxer.Bloxstrap",
       "category": "games",
       "info": "A Alternative Roblox launcher.",
+      "link": "https://bloxstraplabs.com/",
       "icon": "https://avatars.githubusercontent.com/u/147950331?s=48&v=4"
     },
     {
@@ -574,6 +586,7 @@
       "id": "GoLang.Go",
       "category": "development",
       "info": "A Fast programming language.",
+      "link": "https://go.dev/",
       "icon": "https://go.dev/blog/go-brand/Go-Logo/PNG/Go-Logo_Blue.png"
     },
     {
@@ -581,6 +594,7 @@
       "id": "Klocman.BulkCrapUninstaller",
       "category": "utilities",
       "info": "A powerful uninstaller for Windows.",
+      "link": "https://www.bcuninstaller.com/",
       "icon": "https://raw.githubusercontent.com/Klocman/Bulk-Crap-Uninstaller/refs/heads/master/source/BulkCrapUninstaller/logo.ico"
     },
     {
@@ -724,7 +738,7 @@
       "id": "Vencord.Vesktop",
       "category": "communication",
       "info": "A Modded Discord client for Windows.",
-      "link": "https://vencord.dev/",
+      "link": "https://github.com/Vencord/Vesktop",
       "icon": "https://raw.githubusercontent.com/Vencord/Vesktop/refs/heads/main/static/icon.png"
     },
     {
@@ -756,7 +770,7 @@
       "id": "TeamViewer.TeamViewer",
       "category": "utilities",
       "info": "A remote desktop app.",
-      "link": "https://www.virtualbox.org/",
+      "link": "https://www.teamviewer.com/en-ca/",
       "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/TeamViewer_Logo_Icon_Only.svg/1024px-TeamViewer_Logo_Icon_Only.svg.png"
     },
     {
@@ -796,7 +810,7 @@
       "id": "ZeroTier.ZeroTierOne",
       "category": "utilities",
       "info": "A softwarethat allows you to virtual networks.",
-      "link": "https://github.com/fastfetch-cli/fastfetch",
+      "link": "https://www.zerotier.com/",
       "icon": "https://avatars.githubusercontent.com/u/4173285?v=4"
     }
   ]
