@@ -458,7 +458,7 @@
       "id": "PuTTY.PuTTY",
       "category": "utilities",
       "info": "A free implementation of SSH and Telnet for Windows and Unix platforms.",
-      "link": "https://www.vrdesktop.net/",
+      "link": "https://www.putty.org/",
       "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/PuTTY_Icon.svg/2048px-PuTTY_Icon.svg.png"
     },
     {
@@ -738,7 +738,7 @@
       "id": "Vencord.Vesktop",
       "category": "communication",
       "info": "A Modded Discord client for Windows.",
-      "link": "https://github.com/Vencord/Vesktop",
+      "link": "https://vencord.dev/",
       "icon": "https://raw.githubusercontent.com/Vencord/Vesktop/refs/heads/main/static/icon.png"
     },
     {
