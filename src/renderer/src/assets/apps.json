@@ -5,8 +5,8 @@
       "id": "Mozilla.Firefox",
       "category": "browsers",
       "info": "A fast, private and secure web browsers.",
-      "link": "https://www.mozilla.org/en-US/firefox/new/"
-      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1024px-Firefox_logo%2C_2019.svg.png",
+      "link": "https://www.mozilla.org/en-US/firefox/new/",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1024px-Firefox_logo%2C_2019.svg.png"
     },
     {
       "name": "Google Chrome",
