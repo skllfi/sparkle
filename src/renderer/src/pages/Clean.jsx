@@ -37,7 +37,7 @@ const cleanups = [
   },
   {
     id: "recyclebin",
-    label: "Empty Recycle Bin",
+    label: "Empty Recycle Bin (Dangerous)",
     description: "Permanently remove files from the Recycle Bin.",
     script: `Clear-RecycleBin -Force -ErrorAction SilentlyContinue`,
   },
