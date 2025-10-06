@@ -198,20 +198,15 @@
       "id": "Python.Python.3.10",
       "category": "development",
       "info": "Programming language",
+      "link": "https://www.python.org",
       "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png"
     },
     {
-      "name": "Python 3",
+      "name": "Python 3.9",
       "id": "Python.Python.3.9",
       "category": "development",
       "info": "Programming language",
-      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png"
-    },
-    {
-      "name": "Python 2",
-      "id": "Python.Python.2",
-      "category": "development",
-      "info": "Programming language",
+      "link": "https://www.python.org",
       "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png"
     },
     {
@@ -812,6 +807,102 @@
       "info": "A softwarethat allows you to virtual networks.",
       "link": "https://www.zerotier.com/",
       "icon": "https://avatars.githubusercontent.com/u/4173285?v=4"
+    },
+    {
+      "name": "WinMerge",
+      "id": "WinMerge.WinMerge",
+      "category": "utilities",
+      "info": "A software that allows you to compare and merge files.",
+      "link": "https://winmerge.org/",
+      "icon": "https://winmerge.org/apple-touch-icon-precomposed.png"
+    },
+    {
+      "name": "AIMP",
+      "id": "AIMP.AIMP",
+      "category": "multimedia",
+      "info": "A music player for Windows",
+      "link": "https://www.aimp.ru/",
+      "icon": "https://www.aimp.ru/favicon.ico"
+    },
+    {
+      "name": "CopyQ",
+      "id": "hluk.copyq",
+      "category": "utilities",
+      "info": "A clipboard manager with advanced features.",
+      "link": "https://hluk.github.io/CopyQ/",
+      "icon": "https://hluk.github.io/CopyQ/images/logo.png"
+    },
+    {
+      "name": "Krita",
+      "id": "KDE.Krita",
+      "category": "multimedia",
+      "info": "A free and open source digital painting application.",
+      "link": "https://krita.org/en/",
+      "icon": "https://krita.org/images/favicon.ico"
+    },
+    {
+      "name": "Paint.NET",
+      "id": "dotPDN.PaintDotNet",
+      "category": "multimedia",
+      "info": "A free image and photo editing software for Windows.",
+      "link": "https://www.getpaint.net/",
+      "icon": "https://www.getpaint.net/favicon.ico"
+    },
+    {
+      "name": "IrfanView",
+      "id": "IrfanSkiljan.IrfanView",
+      "category": "multimedia",
+      "info": "A fast and compact image viewer/converter.",
+      "link": "https://www.irfanview.com/",
+      "icon": "https://www.irfanview.com/favicon.ico"
+    },
+    {
+      "name": "AB Download Manager",
+      "id": "ABDownloadManager.ABDownloadManager",
+      "category": "utilities",
+      "info": "A powerful download manager for Windows.",
+      "link": "https://abdownloadmanager.com/",
+      "icon": "https://abdownloadmanager.com/assets/app_icon_simple-DyQVbx7O.svg"
+    },
+    {
+      "name": "Total Commander",
+      "id": "Ghisler.TotalCommander",
+      "category": "utilities",
+      "info": "A file manager for Windows.",
+      "link": "https://www.ghisler.com/",
+      "icon": "https://www.ghisler.com/favicon.ico"
+    },
+    {
+      "name": "Python 3.10",
+      "id": "Python.Python.3.10",
+      "category": "development",
+      "info": "Python 3.10 programming language.",
+      "link": "https://www.python.org",
+      "icon": "https://www.python.org/favicon.ico"
+    },
+    {
+      "name": "Python 3.11",
+      "id": "Python.Python.3.11",
+      "category": "development",
+      "info": "Python 3.11 programming language.",
+      "link": "https://www.python.org",
+      "icon": "https://www.python.org/favicon.ico"
+    },
+    {
+      "name": "Python 3.12",
+      "id": "Python.Python.3.12",
+      "category": "development",
+      "info": "Python 3.12 programming language.",
+      "link": "https://www.python.org",
+      "icon": "https://www.python.org/favicon.ico"
+    },
+    {
+      "name": "Python 3.13",
+      "id": "Python.Python.3.13",
+      "category": "development",
+      "info": "Python 3.13 programming language.",
+      "link": "https://www.python.org",
+      "icon": "https://www.python.org/favicon.ico"
     }
   ]
 }
