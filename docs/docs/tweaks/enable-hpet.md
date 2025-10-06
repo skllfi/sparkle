@@ -2,7 +2,7 @@
 
 ## Overview
 - **ID/URL**: `enable-hpet`
-- **Description**: Forces use of the High Precision Event Timer (HPET), which can reduce stuttering and improve timing accuracy on some hardware.
+- **Description**: Forces use of the High Precision Event Timer, which can reduce stuttering and improve timing accuracy on some hardware.
 
 
 

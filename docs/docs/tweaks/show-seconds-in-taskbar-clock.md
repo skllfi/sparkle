@@ -2,7 +2,7 @@
 
 ## Overview
 - **ID/URL**: `show-seconds-in-taskbar-clock`
-- **Description**: 
+- **Description**: Enables the seconds next to the clock in the taskbar
 
 
 
