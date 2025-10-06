@@ -11,8 +11,9 @@ param(
 
 $version = "1.0.0"
 
-Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Drawing
+Add-Type -AssemblyName PresentationFramework
+Add-Type -AssemblyName PresentationCore
+Add-Type -AssemblyName WindowsBase
 
 # list of apps to remove
 # 3rd party apps is to be added later
@@ -81,157 +82,182 @@ $defaultApps = @(
 )
 
 function Show-ScriptSelectionDialog {
-    $form = New-Object System.Windows.Forms.Form
-    $form.Text = "(Sparkle) Debloat Script v$version"
-    $form.Size = New-Object System.Drawing.Size(500, 200)
-    $form.StartPosition = 'CenterScreen'
-    $form.FormBorderStyle = 'FixedDialog'
-    $form.MaximizeBox = $false
+    [xml]$xaml = @"
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="(Sparkle) Debloat Script v$version" 
+        Height="220" Width="550" 
+        WindowStartupLocation="CenterScreen"
+        Topmost="True"
+        ResizeMode="NoResize">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Text="Choose your debloat approach:" 
+                   FontSize="14" FontWeight="Bold" Margin="0,0,0,15"/>
+        
+        <StackPanel Grid.Row="1" Margin="10,0,0,0">
+            <RadioButton x:Name="RadioSparkle" Content="Sparkle Debloat Script (You can choose which apps to keep) (Recommended)" 
+                        Margin="0,0,0,10" IsChecked="True" FontSize="12"/>
+            <RadioButton x:Name="RadioRaphire" Content="Raphire's Win11Debloat Script (Comprehensive, read docs for details)" 
+                        FontSize="12"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button x:Name="BtnOK" Content="OK" Width="80" Height="28" Margin="0,0,10,0" IsDefault="True"/>
+            <Button x:Name="BtnCancel" Content="Cancel" Width="80" Height="28" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>
+"@
 
-    $label = New-Object System.Windows.Forms.Label
-    $label.Location = New-Object System.Drawing.Point(10, 20)
-    $label.Size = New-Object System.Drawing.Size(460, 40)
-    $label.Text = 'Choose your debloat approach:'
-    $label.Font = New-Object System.Drawing.Font('Microsoft Sans Serif', 10, [System.Drawing.FontStyle]::Bold)
-    $form.Controls.Add($label)
-
-    $radioButton1 = New-Object System.Windows.Forms.RadioButton
-    $radioButton1.Location = New-Object System.Drawing.Point(20, 85)
-    $radioButton1.Size = New-Object System.Drawing.Size(450, 20)
-    $radioButton1.Text = "Raphire's Win11Debloat Script (Comprehensive, read docs for details)"
-    $form.Controls.Add($radioButton1)
-
-    $radioButton2 = New-Object System.Windows.Forms.RadioButton
-    $radioButton2.Location = New-Object System.Drawing.Point(20, 60)
-    $radioButton2.Checked = $true
-    $radioButton2.Size = New-Object System.Drawing.Size(450, 20)
-    $radioButton2.Text = "Sparkle Debloat Script (You can choose which apps to keep)"
-    $form.Controls.Add($radioButton2)
-
-    $okButton = New-Object System.Windows.Forms.Button
-    $okButton.Location = New-Object System.Drawing.Point(320, 120)
-    $okButton.Size = New-Object System.Drawing.Size(75, 23)
-    $okButton.Text = 'OK'
-    $okButton.DialogResult = [System.Windows.Forms.DialogResult]::OK
-    $form.AcceptButton = $okButton
-    $form.Controls.Add($okButton)
-
-    $cancelButton = New-Object System.Windows.Forms.Button
-    $cancelButton.Location = New-Object System.Drawing.Point(400, 120)
-    $cancelButton.Size = New-Object System.Drawing.Size(75, 23)
-    $cancelButton.Text = 'Cancel'
-    $cancelButton.DialogResult = [System.Windows.Forms.DialogResult]::Cancel
-    $form.CancelButton = $cancelButton
-    $form.Controls.Add($cancelButton)
-
-    $result = $form.ShowDialog()
-
-    if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
-        if ($radioButton1.Checked) {
-            return "raphire"
-        }
-        else {
-            return "custom"
-        }
-    }
-    else {
-        return "cancel"
-    }
+    $reader = New-Object System.Xml.XmlNodeReader $xaml
+    $window = [Windows.Markup.XamlReader]::Load($reader)
+    
+    $radioSparkle = $window.FindName("RadioSparkle")
+    $radioRaphire = $window.FindName("RadioRaphire")
+    $btnOK = $window.FindName("BtnOK")
+    $btnCancel = $window.FindName("BtnCancel")
+    
+    $script:dialogResult = $null
+    
+    $btnOK.Add_Click({
+            if ($radioRaphire.IsChecked) {
+                $script:dialogResult = "raphire"
+            }
+            else {
+                $script:dialogResult = "custom"
+            }
+            $window.Close()
+        })
+    
+    $btnCancel.Add_Click({
+            $script:dialogResult = "cancel"
+            $window.Close()
+        })
+    
+    $window.ShowDialog() | Out-Null
+    return $script:dialogResult
 }
 
-function Show-AppSelectionDialog {
 
+
+function Show-AppSelectionDialog {
     # generate friendly names for display
     $apps = @()
     foreach ($pkg in $allAppsToRemove) {
-        $name = $pkg -replace "Microsoft\.CorporationII\.", "" -replace "Microsoft\.", "" -replace "\.", " "
-        $apps += @{ Name = $name; Package = $pkg }
+        $name = $pkg -replace "MicrosoftCorporationII\.", "" -replace "Microsoft\.", "" -replace "\.", " "
+        $apps += @{ Name = $name; Package = $pkg; IsChecked = ($defaultApps -contains $pkg) }
     }
     
-    $form = New-Object System.Windows.Forms.Form
-    $form.Text = "(Sparkle) Select Apps to Keep v$version"
-    $form.Size = New-Object System.Drawing.Size(500, 600)
-    $form.StartPosition = 'CenterScreen'
-    $form.FormBorderStyle = 'FixedDialog'
-    $form.MaximizeBox = $false
-    $label = New-Object System.Windows.Forms.Label
-    $label.Location = New-Object System.Drawing.Point(10, 10)
-    $label.Size = New-Object System.Drawing.Size(460, 40)
-    $label.Text = 'Select the apps you want to KEEP (uncheck to remove):'
-    $label.Font = New-Object System.Drawing.Font('Microsoft Sans Serif', 10, [System.Drawing.FontStyle]::Bold)
-    $form.Controls.Add($label)
+    [xml]$xaml = @"
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="(Sparkle) Select Apps to Keep v$version" 
+    Height="650" Width="550" 
+    WindowStartupLocation="CenterScreen"
+    ResizeMode="NoResize">
+    <Grid Margin="15">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>   <!-- Title -->
+        <RowDefinition Height="Auto"/>   <!-- Warning -->
+        <RowDefinition Height="*"/>      <!-- List -->
+        <RowDefinition Height="Auto"/>   <!-- Select/Deselect -->
+        <RowDefinition Height="Auto"/>   <!-- OK/Cancel -->
+    </Grid.RowDefinitions>
+    
+    <TextBlock Grid.Row="0" Text="Select the apps you want to KEEP (uncheck to remove):" 
+           FontSize="14" FontWeight="Bold" Margin="0,0,0,10" TextWrapping="Wrap"/>
+    <TextBlock Grid.Row="1" Text="Ensure you have a restore point before proceeding." 
+           FontSize="12"  Margin="0,0,0,10"/>
 
-    $checkedListBox = New-Object System.Windows.Forms.CheckedListBox
-    $checkedListBox.Location = New-Object System.Drawing.Point(10, 50)
-    $checkedListBox.Size = New-Object System.Drawing.Size(460, 400)
-    $checkedListBox.CheckOnClick = $true
+    <Border Grid.Row="2" BorderBrush="#CCCCCC" BorderThickness="1" Margin="0,0,0,10">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" >
+        <ItemsControl x:Name="AppsList" Margin="5">
+            <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}" 
+                     Margin="5,3" FontSize="11"/>
+            </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        </ScrollViewer>
+    </Border>
+    
+    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,0,0,10">
+        <Button x:Name="BtnSelectAll" Content="Select All" Width="100" Height="28" Margin="0,0,10,0"/>
+        <Button x:Name="BtnDeselectAll" Content="Deselect All" Width="100" Height="28"/>
+    </StackPanel>
+    
+    <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+        <Button x:Name="BtnOK" Content="OK" Width="80" Height="28" Margin="0,0,10,0" IsDefault="True"/>
+        <Button x:Name="BtnCancel" Content="Cancel" Width="80" Height="28" IsCancel="True"/>
+    </StackPanel>
+    </Grid>
+</Window>
+"@
 
+    $reader = New-Object System.Xml.XmlNodeReader $xaml
+    $window = [Windows.Markup.XamlReader]::Load($reader)
+    
+    $appsList = $window.FindName("AppsList")
+    $btnSelectAll = $window.FindName("BtnSelectAll")
+    $btnDeselectAll = $window.FindName("BtnDeselectAll")
+    $btnOK = $window.FindName("BtnOK")
+    $btnCancel = $window.FindName("BtnCancel")
+    
+    # create observable collection for data binding
+    $observableApps = New-Object System.Collections.ObjectModel.ObservableCollection[Object]
     foreach ($app in $apps) {
-        $isChecked = $defaultApps -contains $app.Package
-        $checkedListBox.Items.Add($app.Name, $isChecked)
+        $observableApps.Add((New-Object PSObject -Property $app))
     }
-    $form.Controls.Add($checkedListBox)
-
-    $selectAllButton = New-Object System.Windows.Forms.Button
-    $selectAllButton.Location = New-Object System.Drawing.Point(10, 460)
-    $selectAllButton.Size = New-Object System.Drawing.Size(100, 23)
-    $selectAllButton.Text = 'Select All'
-    $selectAllButton.Add_Click({
-            for ($i = 0; $i -lt $checkedListBox.Items.Count; $i++) {
-                $checkedListBox.SetItemChecked($i, $true)
+    $appsList.ItemsSource = $observableApps
+    
+    $script:dialogResult = $null
+    
+    $btnSelectAll.Add_Click({
+            foreach ($item in $observableApps) {
+                $item.IsChecked = $true
             }
+            $appsList.Items.Refresh()
         })
-    $form.Controls.Add($selectAllButton)
-
-    $deselectAllButton = New-Object System.Windows.Forms.Button
-    $deselectAllButton.Location = New-Object System.Drawing.Point(120, 460)
-    $deselectAllButton.Size = New-Object System.Drawing.Size(100, 23)
-    $deselectAllButton.Text = 'Deselect All'
-    $deselectAllButton.Add_Click({
-            for ($i = 0; $i -lt $checkedListBox.Items.Count; $i++) {
-                $checkedListBox.SetItemChecked($i, $false)
+    
+    $btnDeselectAll.Add_Click({
+            foreach ($item in $observableApps) {
+                $item.IsChecked = $false
             }
+            $appsList.Items.Refresh()
         })
-    $form.Controls.Add($deselectAllButton)
-
-    $okButton = New-Object System.Windows.Forms.Button
-    $okButton.Location = New-Object System.Drawing.Point(320, 520)
-    $okButton.Size = New-Object System.Drawing.Size(75, 23)
-    $okButton.Text = 'OK'
-    $okButton.DialogResult = [System.Windows.Forms.DialogResult]::OK
-    $form.AcceptButton = $okButton
-    $form.Controls.Add($okButton)
-
-    $cancelButton = New-Object System.Windows.Forms.Button
-    $cancelButton.Location = New-Object System.Drawing.Point(400, 520)
-    $cancelButton.Size = New-Object System.Drawing.Size(75, 23)
-    $cancelButton.Text = 'Cancel'
-    $cancelButton.DialogResult = [System.Windows.Forms.DialogResult]::Cancel
-    $form.CancelButton = $cancelButton
-    $form.Controls.Add($cancelButton)
-
-    $result = $form.ShowDialog()
-
-    if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
-        $appsToKeep = @()
-        for ($i = 0; $i -lt $checkedListBox.Items.Count; $i++) {
-            if ($checkedListBox.GetItemChecked($i)) {
-                $appsToKeep += $apps[$i].Package
+    
+    $btnOK.Add_Click({
+            $script:dialogResult = @()
+            foreach ($item in $observableApps) {
+                if ($item.IsChecked) {
+                    $script:dialogResult += $item.Package
+                }
             }
-        }
-        return $appsToKeep
-    }
-    else {
-        return $null
-    }
+            $window.Close()
+        })
+    
+    $btnCancel.Add_Click({
+            $script:dialogResult = $null
+            $window.Close()
+            
+        })
+    
+    $window.ShowDialog() | Out-Null
+    return $script:dialogResult
 }
-
 
 function Remove-SelectedApps {
     param([string[]]$AppsToKeep)
-    
-    Write-Host "Starting custom debloat process..." -ForegroundColor Green
-     
+
+    Write-Host "Starting Sparkle debloat..." -ForegroundColor Green
+
     $appsToRemove = $allAppsToRemove | Where-Object { $_ -notin $AppsToKeep }
     
     Write-Host "Apps that will be kept: $($AppsToKeep -join ', ')" -ForegroundColor Yellow
@@ -249,12 +275,12 @@ function Remove-SelectedApps {
         }
     }
     
-    Write-Host "Custom debloat completed!" -ForegroundColor Green
+    Write-Host "Sparkle debloat completed!" -ForegroundColor Green
 }
 
 # logic starts here
 try {
-    Write-Host "Starting Advanced Debloat Windows script..." -ForegroundColor Green
+    Write-Host "Starting Debloat Windows script..." -ForegroundColor Green
     Write-Host "Script Choice: '$ScriptChoice'" -ForegroundColor Yellow
     Write-Host "Apps to Keep Count: $($AppsToKeep.Count)" -ForegroundColor Yellow
     
@@ -266,7 +292,7 @@ try {
     }
     elseif ($ScriptChoice -eq "custom") {
         if ($AppsToKeep.Count -gt 0) {
-            Write-Host "Running custom debloat with $($AppsToKeep.Count) apps to keep..." -ForegroundColor Green
+            Write-Host "Running Sparkle debloat with $($AppsToKeep.Count) apps to keep..." -ForegroundColor Green
             Remove-SelectedApps -AppsToKeep $AppsToKeep
         }
         else {
@@ -310,8 +336,8 @@ try {
         Write-Host "Unknown script choice '$ScriptChoice', defaulting to Raphire's script..." -ForegroundColor Yellow
         & ([scriptblock]::Create((Invoke-RestMethod 'https://debloat.raphi.re/'))) -Silent -RemoveApps
     }
-    
-    Write-Host "Advanced debloat process completed successfully!" -ForegroundColor Green
+
+    Write-Host "Debloat completed successfully!" -ForegroundColor Green
 }
 catch {
     Write-Host "Error during debloat process: $_" -ForegroundColor Red
