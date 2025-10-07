@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, Suspense } from "react"
 import data from "../assets/apps.json"
 import RootDiv from "@/components/RootDiv"
 import { Search } from "lucide-react"
@@ -24,8 +24,9 @@ function Apps() {
   const [importModalOpen, setImportModalOpen] = useState(false)
   const [importedApps, setImportedApps] = useState([])
   const [selectedImportedApps, setSelectedImportedApps] = useState(importedApps)
+  const [appsList, setAppsList] = useState([])
 
-  const appsList = data.apps
+  // const appsList = data.apps
   const router = useNavigate()
 
   const filteredApps = appsList.filter((app) =>
@@ -89,6 +90,25 @@ function Apps() {
   }
 
   useEffect(() => {
+    const loadApps = async () => {
+      try {
+        let appsData;
+        if (import.meta.env.DEV) {
+          appsData = data;
+        } else {
+          const response = await fetch("https://raw.githubusercontent.com/parcoil/sparkle/refs/heads/v2/src/renderer/src/assets/apps.json");
+          appsData = await response.json();
+        }
+        setAppsList(appsData.apps || []);
+      } catch (error) {
+        console.error("Failed to load apps list", error);
+        toast.error("Failed to fetch apps list (Using local apps.json)");
+        setAppsList(data.apps || []);
+      }
+    };
+
+    loadApps();
+
     const idleHandle = requestIdleCallback(() => {
       try {
         const item = window.localStorage.getItem("installedApps")
@@ -177,6 +197,8 @@ function Apps() {
       log.error(`Error ${actionVerb.toLowerCase()} apps:`, error)
     }
   }
+
+
 
   return (
     <>
@@ -313,13 +335,19 @@ function Apps() {
             </Button>
           )}
         </div>
-        <p className="mb-5 mt-2 text-sparkle-text-muted font-medium">
+        <p className="mb-2 mt-2 text-sparkle-text-muted font-medium">
           Looking to debloat windows? its located in {""}
           <a className="text-sparkle-primary cursor-pointer" onClick={() => router("/tweaks")}>
             Tweaks
           </a>
         </p>
+        {import.meta.env.DEV && (
+          <p className=" text-red-500 font-medium">
+            You are in development mode, using local apps.json
+          </p>
+        )}
         <div className="space-y-10 mb-10">
+          <Suspense fallback={<div className="text-center text-sparkle-text-secondary">Loading...</div>}>
           {Object.entries(appsByCategory).map(([category, apps]) => (
             <div key={category} className="space-y-4">
               <h2 className="text-2xl text-sparkle-primary font-bold capitalize">{category}</h2>
@@ -372,6 +400,7 @@ function Apps() {
               </div>
             </div>
           ))}
+          </Suspense>
           <p className="text-center text-sparkle-text-muted">
             Request more apps or make a pull request on{" "}
             <a

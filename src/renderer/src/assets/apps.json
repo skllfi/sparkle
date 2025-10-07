@@ -194,14 +194,6 @@
       "icon": "https://i.namu.wiki/i/Ir-1SJ90LXrO3e-1HxA91jVVUbU7LSStrb62bfwdndtnHwzENnyVNvJU2z8d8WYqPLcdA2f8zG-SHwHnzA9IrQ.webp"
     },
     {
-      "name": "Python 3.10",
-      "id": "Python.Python.3.10",
-      "category": "development",
-      "info": "Programming language",
-      "link": "https://www.python.org",
-      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png"
-    },
-    {
       "name": "Python 3.9",
       "id": "Python.Python.3.9",
       "category": "development",
@@ -734,7 +726,7 @@
       "category": "communication",
       "info": "A Modded Discord client for Windows.",
       "link": "https://vencord.dev/",
-      "icon": "https://raw.githubusercontent.com/Vencord/Vesktop/refs/heads/main/static/icon.png"
+      "icon": "https://avatars.githubusercontent.com/u/113042587?s=300&v=4"
     },
     {
       "name": "Prism Launcher",
