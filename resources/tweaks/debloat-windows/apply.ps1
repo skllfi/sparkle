@@ -276,35 +276,45 @@ function Show-AppSelectionDialog {
 function Remove-SelectedApps {
     param([string[]]$AppsToKeep)
 
-    $allAppxPackages = Get-AppxPackage -AllUsers
-    $allProvisioned = Get-AppxProvisionedPackage -Online
-
     Write-Host "Starting Sparkle debloat..." -ForegroundColor Green
 
     $appsToRemove = $allAppsToRemove | Where-Object { $_ -notin $AppsToKeep }
-    
+
     Write-Host "Apps that will be kept: $($AppsToKeep -join ', ')" -ForegroundColor Yellow
     Write-Host "Apps that will be removed: $($appsToRemove.Count)" -ForegroundColor Red
-    # remove apps logic
+    # better method to get all of the apps properly
     foreach ($app in $appsToRemove) {
         try {
-            Write-Host "Removing Appx $app..." -ForegroundColor Yellow
-    
-            $pkg = $allAppxPackages | Where-Object Name -eq $app
-            if ($pkg) { $pkg | Remove-AppxPackage -ErrorAction SilentlyContinue }
-    
-            $prov = $allProvisioned | Where-Object DisplayName -eq $app
-            if ($prov) { $prov | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue }
-    
-            Write-Host "Removed Appx $app" -ForegroundColor Green
+            Write-Host "Checking for installed package $app..." -ForegroundColor Yellow
+
+            $pkg = Get-AppxPackage -Name *$app* -ErrorAction SilentlyContinue
+            if ($pkg) {
+                $pkg | ForEach-Object {
+                    Write-Host "Removing Appx package $($_.Name)..." -ForegroundColor Yellow
+                    Remove-AppxPackage -Package $_.PackageFullName -ErrorAction SilentlyContinue
+                }
+                Write-Host "Removed $app" -ForegroundColor Green
+            }
+            else {
+                Write-Host "$app is not installed" -ForegroundColor Gray
+            }
+
+            $prov = Get-AppxProvisionedPackage -Online | Where-Object DisplayName -like "*$app*"
+            if ($prov) {
+                $prov | ForEach-Object {
+                    Write-Host "Removing provisioned package $($_.DisplayName)..." -ForegroundColor Yellow
+                    Remove-AppxProvisionedPackage -Online -PackageName $_.PackageName -ErrorAction SilentlyContinue
+                }
+            }
         }
         catch {
-            Write-Host "Could not remove Appx $app : $_" -ForegroundColor Red
+            Write-Host "Could not remove $app : $_" -ForegroundColor Red
         }
     }
-    
+
     Write-Host "Sparkle debloat completed!" -ForegroundColor Green
 }
+
 
 try {
     Write-Host "Starting Sparkle Debloat script..." -ForegroundColor Green
@@ -363,7 +373,6 @@ try {
         Write-Host "Unknown script choice '$ScriptChoice', defaulting to Raphire's script..." -ForegroundColor Yellow
         & ([scriptblock]::Create((Invoke-RestMethod 'https://debloat.raphi.re/'))) -Silent -RemoveApps
     }
-    Write-Host "Sparkle debloat completed!" -ForegroundColor Green
     Write-Host "Debloat Script From https://getsparkle.net" -ForegroundColor Cyan
 
     if (-not (Get-Process -Name "Sparkle" -ErrorAction SilentlyContinue)) {
