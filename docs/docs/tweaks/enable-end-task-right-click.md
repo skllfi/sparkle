@@ -18,7 +18,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
 $regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings"
 $valueName = "TaskbarEndTask"
 

@@ -20,7 +20,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
 $ultimatePlan = powercfg -l | Select-String "Ultimate Performance"
   
   if (-not $ultimatePlan) {

@@ -18,7 +18,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
       $services = @(
       @{ Name = "AJRouter"; StartupType = "Disabled" },
       @{ Name = "ALG"; StartupType = "Manual" },

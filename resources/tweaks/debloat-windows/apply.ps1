@@ -1,8 +1,7 @@
 # Sparkle Debloat Script
 # This script provides options for different debloat methods
 # Made by Parcoil
-# Credits to Raphire for his debloat script: https://debloat.raphi.re/
-# 3rd party apps is to be added later
+# Credits to Raphire for his debloat script: https://github.com/Raphire
 
 param(
     [string]$ScriptChoice = "",
@@ -16,7 +15,6 @@ Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName WindowsBase
 
 # list of apps to remove
-# 3rd party apps is to be added later
 $allAppsToRemove = @(
     "Clipchamp.Clipchamp",
     "Microsoft.3DBuilder",
@@ -66,7 +64,7 @@ $allAppsToRemove = @(
     "Microsoft.XboxIdentityProvider",
     "Microsoft.XboxSpeechToTextOverlay",
     "Microsoft.OneDrive",
-    # 3rd party apps
+    # 3rd party apps start here
     "Amazon.com.Amazon",
     "AmazonVideo.PrimeVideo",
     "Disney",

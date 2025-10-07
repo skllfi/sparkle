@@ -18,7 +18,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
 $appsList = 'Microsoft.GamingApp', 'Microsoft.XboxGameOverlay', 'Microsoft.XboxGamingOverlay'
 
 foreach ($app in $appsList) {

@@ -18,7 +18,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
 $OneDrivePath = $($env:OneDrive)
         Write-Host "Removing OneDrive"
         $regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\OneDriveSetup.exe"

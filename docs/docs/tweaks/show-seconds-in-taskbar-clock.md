@@ -16,7 +16,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowSecondsInSystemClock" -Type DWord -Value 1
 
 # Restart Explorer to apply changes

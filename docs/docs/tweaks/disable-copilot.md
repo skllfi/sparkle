@@ -18,7 +18,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
 Get-AppxPackage -AllUsers | Where-Object {$_.Name -Like '*Microsoft.Copilot*'} | Remove-AppxPackage -ErrorAction Continue
 ```
 

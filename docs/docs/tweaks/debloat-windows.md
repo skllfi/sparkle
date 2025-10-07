@@ -8,7 +8,7 @@
     This tweak cannot be reversed and must be undone manually.
 
 
-!!! info "Updated"
+!!! note 
     This tweak was last updated in 2.9.0
   
 
@@ -18,7 +18,7 @@
 
 ## 1. Sparkle Custom Selective Script:
 
-- This method allows users to select which built-in Windows apps they want to keep. A graphical interface is presented where users can check or uncheck apps from a list.
+- This method allows users to select which apps they want to keep. A WPF Window is presented where users can check or uncheck apps from a list.
 
 ##  2. Raphire's Win11Debloat Script:
 
@@ -34,12 +34,11 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
 # Sparkle Debloat Script
 # This script provides options for different debloat methods
 # Made by Parcoil
-# Credits to Raphire for his debloat script: https://debloat.raphi.re/
-# 3rd party apps is to be added later
+# Credits to Raphire for his debloat script: https://github.com/Raphire
 
 param(
     [string]$ScriptChoice = "",
@@ -53,7 +52,6 @@ Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName WindowsBase
 
 # list of apps to remove
-# 3rd party apps is to be added later
 $allAppsToRemove = @(
     "Clipchamp.Clipchamp",
     "Microsoft.3DBuilder",
@@ -102,7 +100,27 @@ $allAppsToRemove = @(
     "Microsoft.XboxGamingOverlay",
     "Microsoft.XboxIdentityProvider",
     "Microsoft.XboxSpeechToTextOverlay",
-    "Microsoft.OneDrive"
+    "Microsoft.OneDrive",
+    # 3rd party apps start here
+    "Amazon.com.Amazon",
+    "AmazonVideo.PrimeVideo",
+    "Disney",
+    "Duolingo-LearnLanguagesforFree",
+    "Facebook",
+    "FarmVille2CountryEscape",
+    "Instagram",
+    "Netflix",
+    "PandoraMediaInc.Pandora",
+    "Spotify",
+    "Twitter",
+    "TwitterUniversal",
+    "YouTube",
+    "Plex",
+    "TikTok",
+    "TuneInRadio",
+    "king.com.BubbleWitch3Saga",               
+    "king.com.CandyCrushSaga",                       
+    "king.com.CandyCrushSodaSaga"
 )
 
 # default apps to pre-check (these will be kept)
@@ -296,28 +314,45 @@ function Remove-SelectedApps {
     Write-Host "Starting Sparkle debloat..." -ForegroundColor Green
 
     $appsToRemove = $allAppsToRemove | Where-Object { $_ -notin $AppsToKeep }
-    
+
     Write-Host "Apps that will be kept: $($AppsToKeep -join ', ')" -ForegroundColor Yellow
     Write-Host "Apps that will be removed: $($appsToRemove.Count)" -ForegroundColor Red
-    
+    # better method to get all of the apps properly
     foreach ($app in $appsToRemove) {
         try {
-            Write-Host "Removing $app..." -ForegroundColor Yellow
-            Get-AppxPackage -Name $app -AllUsers | Remove-AppxPackage -ErrorAction SilentlyContinue
-            Get-AppxProvisionedPackage -Online | Where-Object DisplayName -eq $app | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue
-            Write-Host "Removed $app" -ForegroundColor Green
+            Write-Host "Checking for installed package $app..." -ForegroundColor Yellow
+
+            $pkg = Get-AppxPackage -Name *$app* -ErrorAction SilentlyContinue
+            if ($pkg) {
+                $pkg | ForEach-Object {
+                    Write-Host "Removing Appx package $($_.Name)..." -ForegroundColor Yellow
+                    Remove-AppxPackage -Package $_.PackageFullName -ErrorAction SilentlyContinue
+                }
+                Write-Host "Removed $app" -ForegroundColor Green
+            }
+            else {
+                Write-Host "$app is not installed" -ForegroundColor Gray
+            }
+
+            $prov = Get-AppxProvisionedPackage -Online | Where-Object DisplayName -like "*$app*"
+            if ($prov) {
+                $prov | ForEach-Object {
+                    Write-Host "Removing provisioned package $($_.DisplayName)..." -ForegroundColor Yellow
+                    Remove-AppxProvisionedPackage -Online -PackageName $_.PackageName -ErrorAction SilentlyContinue
+                }
+            }
         }
         catch {
             Write-Host "Could not remove $app : $_" -ForegroundColor Red
         }
     }
-    
+
     Write-Host "Sparkle debloat completed!" -ForegroundColor Green
 }
 
-# logic starts here
+
 try {
-    Write-Host "Starting Debloat Windows script..." -ForegroundColor Green
+    Write-Host "Starting Sparkle Debloat script..." -ForegroundColor Green
     Write-Host "Script Choice: '$ScriptChoice'" -ForegroundColor Yellow
     Write-Host "Apps to Keep Count: $($AppsToKeep.Count)" -ForegroundColor Yellow
     
@@ -373,8 +408,52 @@ try {
         Write-Host "Unknown script choice '$ScriptChoice', defaulting to Raphire's script..." -ForegroundColor Yellow
         & ([scriptblock]::Create((Invoke-RestMethod 'https://debloat.raphi.re/'))) -Silent -RemoveApps
     }
+    Write-Host "Debloat Script From https://getsparkle.net" -ForegroundColor Cyan
 
-    Write-Host "Debloat completed successfully!" -ForegroundColor Green
+    if (-not (Get-Process -Name "Sparkle" -ErrorAction SilentlyContinue)) {
+        Add-Type -AssemblyName PresentationFramework
+        
+        [xml]$xaml = @"
+<Window 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Sparkle - Debloat Complete" 
+    Height="150" 
+    Width="400"
+    WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" 
+                  Text="Debloat completed successfully!" 
+                  FontSize="16"
+                  TextWrapping="Wrap"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  TextAlignment="Center"/>
+                  
+        <Button Grid.Row="1" 
+               x:Name="BtnOK" 
+               Content="OK" 
+               Width="80" 
+               Margin="15"
+               HorizontalAlignment="Center"/>
+    </Grid>
+</Window>
+"@
+
+        $reader = New-Object System.Xml.XmlNodeReader $xaml
+        $window = [Windows.Markup.XamlReader]::Load($reader)
+        
+        $btnOK = $window.FindName("BtnOK")
+        $btnOK.Add_Click({ $window.Close() })
+        
+        $window.ShowDialog() | Out-Null
+    }
+
 }
 catch {
     Write-Host "Error during debloat process: $_" -ForegroundColor Red

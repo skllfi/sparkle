@@ -20,7 +20,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
 try {
     winget uninstall 9nzkpstsnw4p --silent --accept-source-agreements 
         Get-AppxPackage Microsoft.XboxGamingOverlay | Remove-AppxPackage -ErrorAction Stop

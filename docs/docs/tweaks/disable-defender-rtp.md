@@ -18,7 +18,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
 Set-MpPreference -DisableRealtimeMonitoring $true
 ```
 

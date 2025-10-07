@@ -78,14 +78,14 @@ ${
 
 ${
   tweak.updatedversion 
-  ? `!!! info "Updated"
+  ? `!!! note 
     This tweak was last updated in ${tweak.updatedversion}
   ` 
   : ""
 }
 ${
   tweak.addedversion 
-  ? `!!! info "Added"
+  ? `!!! note 
     This tweak was added in ${tweak.addedversion}, Sparkle ${tweak.addedversion}+ is required.
   ` 
   : ""
@@ -112,7 +112,7 @@ ${
     : ""
 }
 
-${applyScript ? `## Apply\n\n\`\`\`powershell\n${applyScript}\n\`\`\`\n` : ""}
+${applyScript ? `## Apply\n\n\`\`\`powershell { .no-copy }  \n${applyScript}\n\`\`\`\n` : ""}
 ${unapplyScript ? `## Unapply\n\n\`\`\`powershell\n${unapplyScript}\n\`\`\`\n` : ""}
 
 ${tweak.links ? `## Links\n${tweak.links.map((link) => `- [${link.name}](${link.url})`).join("\n")}` : ""}

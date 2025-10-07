@@ -16,7 +16,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
 if (Test-Path -Path "$env:ProgramFiles\PowerShell\7") {
     Write-Host "PowerShell 7 is already installed."
 } else {

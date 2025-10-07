@@ -18,7 +18,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
       Write-Host "Applying network tweaks..."
       netsh int tcp set heuristics disabled
       netsh int tcp set supp internet congestionprovider=ctcp

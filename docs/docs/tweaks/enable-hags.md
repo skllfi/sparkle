@@ -18,7 +18,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
 $regPath = "HKLM:\System\CurrentControlSet\Control\GraphicsDrivers"
 $keyName = "HwSchMode"
 $value = 2

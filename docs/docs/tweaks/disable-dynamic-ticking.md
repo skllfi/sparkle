@@ -21,7 +21,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
 try {
     bcdedit /set disabledynamictick yes
     Write-Host "Dynamic Ticking disabled successfully"

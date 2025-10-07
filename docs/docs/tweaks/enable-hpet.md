@@ -19,7 +19,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
 try {
     bcdedit /set useplatformclock true
     Write-Host "HPET enabled successfully"

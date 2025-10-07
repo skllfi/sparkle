@@ -19,7 +19,7 @@
 
 ## Apply
 
-```powershell
+```powershell { .no-copy }  
 powercfg.exe /hibernate off
 ```
 
