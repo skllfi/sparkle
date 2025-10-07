@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react"
-import RootDiv from "@/components/RootDiv"
+import RootDiv from "@/components/rootdiv"
 import { Cpu, HardDrive, Zap, MemoryStick, Gpu } from "lucide-react"
-import InfoCard from "@/components/InfoCard"
+import InfoCard from "@/components/infocard"
 import { invoke } from "@/lib/electron"
 import Button from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import useSystemStore from "@/store/systemInfo"
 import log from "electron-log/renderer"
-import Greeting from "@/components/Greeting"
+import Greeting from "@/components/greeting"
 import { MonitorCog } from "lucide-react"
 import { Wrench } from "lucide-react"
+import Card from "@/components/ui/Card"
 function Home() {
   const systemInfo = useSystemStore((state) => state.systemInfo)
   const setSystemInfo = useSystemStore((state) => state.setSystemInfo)
@@ -213,7 +214,7 @@ function Home() {
             ]}
           />
         </div>
-        <div className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-3 w-full mt-5 flex gap-4 items-center">
+        <Card className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-3 w-full mt-5 flex gap-4 items-center">
           <div className="p-3 bg-green-500/10 rounded-lg items-center justify-center text-center">
             <Wrench className="text-green-500" size={24} />
           </div>
@@ -228,7 +229,7 @@ function Home() {
               <Zap size={18} /> Tweaks
             </Button>
           </div>
-        </div>
+        </Card>
         <p className="text-xs text-sparkle-text-secondary text-center mt-4">
           {usingCache ? "Loading latest system data..." : ""}
         </p>

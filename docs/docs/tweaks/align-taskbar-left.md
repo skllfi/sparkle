@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Forces the Windows taskbar to align left by editing the system registry. by setting the 'TaskbarAl' registry value to 0

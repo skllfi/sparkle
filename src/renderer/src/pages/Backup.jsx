@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
-import { RefreshCw, PlusCircle, Shield, RotateCcw, Loader2, X, Search } from "lucide-react"
-import RootDiv from "@/components/RootDiv"
+import { RefreshCw, PlusCircle, Shield, RotateCcw, Loader2, Search } from "lucide-react"
+import RootDiv from "@/components/rootdiv"
 import { invoke } from "@/lib/electron"
 import Button from "@/components/ui/button"
 import Modal from "@/components/ui/modal"
 import { toast } from "react-toastify"
 import { Trash } from "lucide-react"
 import log from "electron-log/renderer"
+import { LargeInput } from "@/components/ui/input"
 
 export default function RestorePointManager() {
   const [restorePoints, setRestorePoints] = useState([])
@@ -125,39 +126,18 @@ export default function RestorePointManager() {
     (rp.Description || "").toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    })
-  }
-
-  const formatTime = (dateString) => {
-    const date = new Date(dateString)
-    return date.toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-    })
-  }
-
   return (
     <>
       <RootDiv>
         <div className="h-full max-w-full space-y-6">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="relative w-full md:w-64 ml-1 mt-1">
-              <Search
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sparkle-text-secondary"
-                size={16}
-              />
-              <input
+              <LargeInput
                 type="text"
                 placeholder="Search Restore Points..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-sparkle-card border border-sparkle-border rounded-lg text-sparkle-text placeholder-sparkle-text-secondary focus:outline-none focus:ring-2 focus:ring-sparkle-primary focus:border-transparent transition-colors"
+                icon={Search}
               />
             </div>
 

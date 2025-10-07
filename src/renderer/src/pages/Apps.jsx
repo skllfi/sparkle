@@ -1,6 +1,6 @@
 import { useState, useMemo, Suspense } from "react"
 import data from "../assets/apps.json"
-import RootDiv from "@/components/RootDiv"
+import RootDiv from "@/components/rootdiv"
 import { Search } from "lucide-react"
 import Button from "@/components/ui/button"
 import Checkbox from "@/components/ui/Checkbox"
@@ -13,6 +13,8 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import log from "electron-log/renderer"
 import { Upload } from "lucide-react"
+import Card from "@/components/ui/Card"
+import { LargeInput } from "@/components/ui/input"
 function Apps() {
   const [search, setSearch] = useState("")
   const [selectedApps, setSelectedApps] = useState([])
@@ -276,16 +278,13 @@ function Apps() {
         </div>
       </Modal>
       <RootDiv>
-        <div className="flex items-center gap-3 bg-sparkle-card border border-sparkle-border rounded-xl px-4 backdrop-blur-sm ml-1 mr-4">
-          <Search className="text-sparkle-text-secondary" />
-          <input
-            type="text"
-            placeholder={`Search for ${appsList.length} apps...`}
-            className="w-full py-3 px-0 bg-transparent border-none focus:outline-none focus:ring-0 text-sparkle-text placeholder:text-sparkle-text-secondary"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
+        <LargeInput
+          type="text"
+          icon={Search}
+          placeholder={`Search for ${appsList.length} apps...`}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
 
         <div className="flex gap-3 mt-5 w-auto ml-1 mr-1">
           <Button
@@ -353,10 +352,10 @@ function Apps() {
               <h2 className="text-2xl text-sparkle-primary font-bold capitalize">{category}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 mr-4">
                 {apps.map((app) => (
-                  <div
+                  <Card
                     key={app.id}
-                    className="bg-sparkle-card border border-sparkle-border rounded-lg p-4 hover:border-sparkle-primary transition group cursor-pointer"
                     onClick={() => toggleApp(app.id)}
+                    className="p-4"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
@@ -395,7 +394,7 @@ function Apps() {
                         </div>
                       )}
                     </div>
-                  </div>
+                  </Card>
                 ))}
               </div>
             </div>

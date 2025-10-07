@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Enables the Ultimate Performance power plan by creating it if missing, retrieving its GUID, and activating it to maximize system responsiveness and performance by preventing power-saving limitations.

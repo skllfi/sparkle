@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Disables Windows mouse acceleration by setting MouseSpeed, MouseThreshold1, and MouseThreshold2 to 0, enabling consistent and linear cursor movement for improved precision.

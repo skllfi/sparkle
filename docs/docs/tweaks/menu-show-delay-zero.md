@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Reduces the menu show delay to 0ms for faster UI response by editing the 'MenuShowDelay' registry key.

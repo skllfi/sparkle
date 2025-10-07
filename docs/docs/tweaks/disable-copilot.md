@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Finds and removes all installed Microsoft Copilot-related AppX packages for all users by filtering package names with 'Microsoft.Copilot'

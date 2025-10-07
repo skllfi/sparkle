@@ -2,11 +2,12 @@ import Button from "@/components/ui/button"
 import Toggle from "@/components/ui/toggle"
 import { useState } from "react"
 import { invoke } from "@/lib/electron"
-import RootDiv from "@/components/RootDiv"
+import RootDiv from "@/components/rootdiv"
 import { RefreshCw, Icon } from "lucide-react"
 import { broom } from "@lucide/lab"
 import { toast } from "react-toastify"
 import log from "electron-log/renderer"
+import Card from "@/components/ui/Card"
 
 const cleanups = [
   {
@@ -117,7 +118,7 @@ function Clean() {
   return (
     <RootDiv>
       <div className="flex flex-col gap-6">
-        <div className="flex items-center gap-4 p-6 rounded-2xl border border-sparkle-border bg-sparkle-card ">
+        <Card className="flex items-center gap-4 p-4">
           <div className="flex items-center justify-center p-3 rounded-xl bg-teal-500/10">
             <Icon iconNode={broom} className="text-teal-500" size={28} />
           </div>
@@ -127,9 +128,9 @@ function Clean() {
               Last cleaned: <span className="font-medium">{lastClean}</span>
             </p>
           </div>
-        </div>
+        </Card>
 
-        <div className="flex flex-col divide-y divide-sparkle-border bg-sparkle-card rounded-xl border border-sparkle-border">
+        <Card className="flex flex-col divide-y divide-sparkle-border p-0">
           {cleanups.map(({ id, label, description }, idx) => {
             const isSelected = selected.includes(id)
             return (
@@ -163,7 +164,7 @@ function Clean() {
               </div>
             )
           })}
-        </div>
+        </Card>
 
         <div className="flex justify-end mt-2">
           <Button

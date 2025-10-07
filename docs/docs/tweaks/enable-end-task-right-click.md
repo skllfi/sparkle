@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Enables the "End Task" option in the Windows 11 taskbar right-click menu by setting TaskbarEndTask to 1, allowing users to kill unresponsive apps directly from the taskbar without opening Task Manager.

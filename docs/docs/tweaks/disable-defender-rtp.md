@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Sets the Defender policy DisableRealtimeMonitoring to true, instructing Windows Security to stop actively scanning files and processes in real time. For better performance

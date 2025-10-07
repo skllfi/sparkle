@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Enables Optimization For Windowed Games on Windows

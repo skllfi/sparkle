@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+import Card from "./ui/Card"
 
 const InfoCard = ({
   icon: Icon,
@@ -11,7 +12,7 @@ const InfoCard = ({
   ...props
 }) => {
   return (
-    <div
+    <Card
       className={cn(
         "bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5",
         className,
@@ -35,7 +36,7 @@ const InfoCard = ({
           </div>
         ))}
       </div>
-    </div>
+    </Card>
   )
 }
 

@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Disables Wi-Fi Sense features by setting related policy values to 0, preventing automatic connection to open hotspots and blocking location-based Wi-Fi hotspot reporting to enhance privacy and reduce unwanted background activity

@@ -12,7 +12,7 @@ import {
   ExternalLink,
 } from "lucide-react"
 import { toast } from "react-toastify"
-import RootDiv from "@/components/RootDiv"
+import RootDiv from "@/components/rootdiv"
 import Tooltip from "@/components/ui/tooltip"
 import Modal from "@/components/ui/modal"
 import { invoke } from "@/lib/electron"
@@ -21,7 +21,10 @@ import Button from "@/components/ui/button"
 import Toggle from "@/components/ui/Toggle"
 import log from "electron-log/renderer"
 import posthog from "posthog-js"
-import { Gpu } from "lucide-react"
+import Card from "@/components/ui/Card"
+import { Gpu, Plus, RefreshCw } from "lucide-react"
+import { LargeInput } from "@/components/ui/input"
+import { isNewInCurrentVersion, isUpdatedInCurrentVersion, CURRENT_VERSION } from "@/lib/version"
 
 function Tweaks() {
   const [tweaks, setTweaks] = useState([])
@@ -350,16 +353,13 @@ function Tweaks() {
         <div className="max-w-[1800px] mx-auto mr-4">
           <div className="mb-4">
             <div className="space-y-4">
-              <div className="flex items-center gap-3 bg-sparkle-card border border-sparkle-border rounded-xl px-4 backdrop-blur-sm">
-                <Search className="text-sparkle-text-secondary" />
-                <input
-                  type="text"
-                  placeholder="Search tweaks by name or description..."
-                  className="w-full py-3 px-0 bg-transparent border-none focus:outline-none focus:ring-0 text-sparkle-text placeholder:text-sparkle-text-secondary"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
+              <LargeInput
+                type="text"
+                icon={Search}
+                placeholder="Search tweaks by name or description..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
 
               <div className="flex flex-wrap items-center gap-2">
                 {categories.map((category) => (
@@ -384,10 +384,7 @@ function Tweaks() {
               sortedTweaks.map((tweak, index) => {
                 const originalIndex = tweaks.indexOf(tweak)
                 return (
-                  <div
-                    key={originalIndex}
-                    className="group bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm hover:border-sparkle-border-secondary transition-all duration-300 overflow-hidde h-52 "
-                  >
+                  <Card key={originalIndex} className=" p-0 h-52">
                     <div className="p-5 flex flex-col h-[260px]">
                       <div className="flex items-center justify-between mb-3">
                         {tweak.category && (
@@ -397,6 +394,20 @@ function Tweaks() {
                                 <Tooltip content={tweak.warning} delay={0.3} side="right">
                                   <div className="p-1.5 bg-red-900/50 rounded-lg hover:bg-red-900/80 transition-colors">
                                     <AlertTriangle className="w-4 h-4 text-red-400" />
+                                  </div>
+                                </Tooltip>
+                              )}
+                              {tweak.addedversion && isNewInCurrentVersion(tweak.addedversion, CURRENT_VERSION) && (
+                                <Tooltip content={`New in Sparkle ${tweak.addedversion}`} delay={0.3} side="right">
+                                  <div className="p-1.5 bg-pink-500/50 rounded-lg hover:bg-pink-500/80 transition-colors">
+                                    <Plus className="w-4 h-4 text-white" />
+                                  </div>
+                                </Tooltip>
+                              )}
+                              {tweak.updatedversion && isUpdatedInCurrentVersion(tweak.updatedversion, CURRENT_VERSION) && (
+                                <Tooltip content={`Updated in Sparkle ${tweak.updatedversion}`} delay={0.3} side="right">
+                                  <div className="p-1.5 bg-blue-500/50 rounded-lg hover:bg-blue-500/80 transition-colors">
+                                    <RefreshCw className="w-4 h-4 text-white" />
                                   </div>
                                 </Tooltip>
                               )}
@@ -426,6 +437,7 @@ function Tweaks() {
                             onClick={(e) => {
                               e.preventDefault()
                               e.stopPropagation()
+
                               const url = `https://docs.getsparkle.net/tweaks/${tweak.name}`
                               window.open(url, "_blank")
                             }}
@@ -466,7 +478,7 @@ function Tweaks() {
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </Card>
                 )
               })
             ) : (

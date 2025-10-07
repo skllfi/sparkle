@@ -8,6 +8,8 @@
     This tweak cannot be reversed and must be undone manually.
 
 
+
+
 ## Details
 
 ## This Changes the following NVIDIA Control Panel settings:

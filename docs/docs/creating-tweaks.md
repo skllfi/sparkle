@@ -34,7 +34,7 @@ resources/
 Each tweak **must** have a `meta.json`. The available properties are:
 
 | Property             | Type                               | Description                                                                      |
-| -------------------- | ---------------------------------- | -------------------------------------------------------------------------------- |
+| -------------------- | ---------------------------------- |--------------------------------------------------------------------------------|
 | **name**             | `string`                           | Folder name of the tweak.                                                        |
 | **title**            | `string`                           | Text displayed in the UI.                                                        |
 | **reversible**       | `bool` (optional, defaults `true`) | If false, the UI shows an "Apply" button instead of a toggle.                    |
@@ -44,6 +44,8 @@ Each tweak **must** have a `meta.json`. The available properties are:
 | **restart**          | `bool` (optional)                  | Shows a message that a restart is required.                                      |
 | **deep-description** | `string` (optional)                | Detailed description of the tweak. used for documentation. and supports markdown |
 | **links**            | `string[]` (optional)              | Related resources or references.                                                 |
+| **updatedversion**  | `string` (optional)              | Version string when the tweak was last updated. appears in the ui                                           |
+| **addedversion**     | `string` (optional)              | Version string when the tweak was added. appears in the ui                                            |
 
 ---
 

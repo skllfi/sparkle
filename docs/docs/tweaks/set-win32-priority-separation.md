@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Sets the 'Win32PrioritySeparation' registry key to optimize foreground process priority, improving perceived responsiveness.

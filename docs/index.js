@@ -76,6 +76,20 @@ ${
     : ""
 }
 
+${
+  tweak.updatedversion 
+  ? `!!! info "Updated"
+    This tweak was last updated in ${tweak.updatedversion}
+  ` 
+  : ""
+}
+${
+  tweak.addedversion 
+  ? `!!! info "Added"
+    This tweak was added in ${tweak.addedversion}, Sparkle ${tweak.addedversion}+ is required.
+  ` 
+  : ""
+}
 ${deepDesc ? `## Details\n\n${deepDesc}` : ""}
 
 ${

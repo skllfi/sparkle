@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { invoke } from "@/lib/electron"
-import RootDiv from "@/components/RootDiv"
+import RootDiv from "@/components/rootdiv"
 import Button from "@/components/ui/button"
 import Modal from "@/components/ui/modal"
 import { toast } from "react-toastify"
@@ -8,6 +8,7 @@ import { Globe, Shield, Settings, RefreshCw, AlertCircle, Info } from "lucide-re
 import { Cloud } from "lucide-react"
 import log from "electron-log/renderer"
 import { Check } from "lucide-react"
+import Card from "@/components/ui/Card"
 
 const dnsProviders = [
   {
@@ -206,8 +207,8 @@ export default function DNSPage() {
         </div>
       </Modal>
       <RootDiv>
-        <div className="bg-sparkle-bg text-sparkle-text pb-10 mr-4">
-          <div className="bg-sparkle-card border border-sparkle-border p-4 rounded-2xl mb-6">
+        <div className="pb-10 mr-4">
+          <Card className="p-4 mb-4">
             <div className="flex items-center gap-3 mb-3">
               <h2 className="font-semibold">Current DNS Settings</h2>
               <Button onClick={getCurrentDNS} variant="" size="sm" className="ml-auto">
@@ -231,10 +232,10 @@ export default function DNSPage() {
                 <span>Loading Network Info, this may take a while...</span>
               </div>
             )}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
             {dnsProviders.map((provider) => (
-              <button
+              <Card
                 key={provider.id}
                 onClick={() => openConfirmationModal(provider)}
                 disabled={loading}
@@ -264,11 +265,11 @@ export default function DNSPage() {
                     </span>
                   ))}
                 </div>
-              </button>
+              </Card>
             ))}
           </div>
 
-          <div className="bg-sparkle-card border border-sparkle-border p-4 rounded-2xl mb-6">
+          <Card className="p-4 mb-6">
             <div className="flex items-center gap-3 ">
               <Settings className="w-5 h-5 text-purple-500" />
               <h2 className="font-semibold">Custom DNS</h2>
@@ -329,7 +330,7 @@ export default function DNSPage() {
                 </Button>
               </div>
             )}
-          </div>
+          </Card>
         </div>
       </RootDiv>
     </>

@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Disables telemetry, location access, diagnostic tracking, and automatic Windows updates by setting related registry values, reducing background data collection and improving system privacy and performance.

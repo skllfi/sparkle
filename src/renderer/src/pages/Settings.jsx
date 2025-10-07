@@ -1,4 +1,4 @@
-import RootDiv from "@/components/RootDiv"
+import RootDiv from "@/components/rootdiv"
 import { useEffect, useState } from "react"
 import jsonData from "../../../../package.json"
 import { invoke } from "@/lib/electron"
@@ -6,6 +6,7 @@ import Button from "@/components/ui/button"
 import Modal from "@/components/ui/modal"
 import Toggle from "@/components/ui/toggle"
 import { toast } from "react-toastify"
+import Card from "@/components/ui/Card"
 
 const themes = [
   { label: "System", value: "system" },
@@ -245,9 +246,9 @@ function Settings({ onCheckForUpdates }) {
               <SettingCard>
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <h3 className="text-base font-medium text-sparkle-text mb-1">Analytics</h3>
+                    <h3 className="text-base font-medium text-sparkle-text mb-1">Disable Analytics</h3>
                     <p className="text-sm text-sparkle-text-secondary">
-                      Posthog analytics
+                      Disables Posthog analytics
                       <span className="inline-flex items-center gap-1 ml-2 text-yellow-500">
                         <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></span>
                         Requires restart
@@ -372,14 +373,14 @@ function Settings({ onCheckForUpdates }) {
 }
 // this saves alot of time
 const SettingCard = ({ children, className = "" }) => (
-  <div className={`bg-sparkle-card border border-sparkle-border rounded-lg p-4 ${className}`}>
+  <Card className={`p-4 ${className}`}>
     {children}
-  </div>
+  </Card>
 )
 
 const SettingSection = ({ title, children }) => (
   <div className="space-y-4">
-    <h2 className="text-lg font-semibold text-sparkle-text">{title}</h2>
+    <h2 className="text-xl font-semibold text-sparkle-primary">{title}</h2>
     {children}
   </div>
 )

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { invoke } from "@/lib/electron"
-import RootDiv from "@/components/RootDiv"
+import RootDiv from "@/components/rootdiv"
 import Modal from "@/components/ui/modal"
 import { toast } from "react-toastify"
 import Button from "@/components/ui/button"
@@ -209,7 +209,7 @@ export default function UtilitiesPage() {
         </div>
       </Modal>
       <RootDiv>
-        <div className="bg-sparkle-bg text-sparkle-text pb-10">
+        <div className="pb-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {utilities.map((util) => (
               <button

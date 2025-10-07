@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Enables detailed technical information on the Blue Screen of Death by setting DisplayParameters to 1 in the CrashControl registry.

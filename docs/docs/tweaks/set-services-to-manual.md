@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Modifies the startup type of selected Windows services using Set-Service to disable or delay non-essential processes, reducing boot time, CPU usage, RAM consumption, and background activity for improved overall performance.

@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Disables hibernation by turning it off at the system level with powercfg.exe, which frees up disk space by deleting hiberfil.sys and can improve shutdown speed.

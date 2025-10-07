@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Enables the High Precision Event Timer (HPET) by setting useplatformclock to true via bcdedit, which can improve timing accuracy and reduce stuttering on some systems, though may increase input latency in others.

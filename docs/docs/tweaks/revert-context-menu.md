@@ -6,6 +6,8 @@
 
 
 
+
+
 ## Details
 
 - Creates a blank InprocServer32 key under a specific CLSID to disable the modern right-click context menu in Windows 11, restoring the classic one and improving responsiveness in File Explorer.
