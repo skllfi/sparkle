@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { Routes, Route, Navigate } from "react-router-dom"
-import TitleBar from "./components/Titlebar"
-import Nav from "./components/Nav"
+import TitleBar from "./components/titlebar"
+import Nav from "./components/nav"
 import "./app.css"
 import { ToastContainer, Slide } from "react-toastify"
 import Home from "./pages/Home"
@@ -12,8 +12,8 @@ import Utilities from "./pages/Utilities"
 import DNS from "./pages/DNS"
 import Settings from "./pages/Settings"
 import Backup from "./pages/Backup"
-import FirstTime from "./components/FirstTime"
-import UpdateManager from "./components/UpdateManager"
+import FirstTime from "./components/firsttime"
+import UpdateManager from "./components/updatemanager"
 
 function App() {
   const [theme, setTheme] = useState(localStorage.getItem("theme"))
