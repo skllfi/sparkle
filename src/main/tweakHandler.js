@@ -16,7 +16,7 @@ const userDataPath = app.getPath("userData")
 const tweaksStatePath = path.join(userDataPath, "tweakStates.json")
 const isDev = !app.isPackaged
 const tweaksDir = isDev
-  ? path.join(process.cwd(), "resources", "tweaks")
+  ? path.join(process.cwd(), "tweaks")
   : path.join(process.resourcesPath, "tweaks")
 
 const getExePath = (exeName) => {

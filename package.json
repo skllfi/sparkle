@@ -12,7 +12,9 @@
     "format": "prettier --write .",
     "start": "electron-vite preview",
     "dev": "electron-vite dev -w",
-    "build": "npm run build:vite && electron-builder",
+    "build": "node build.js",
+    "build:registry": "npm run build -- --registry",
+    "build:electron": "npm run build:vite && electron-builder",
     "build:vite": "electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir"
@@ -72,7 +74,7 @@
         ]
       },
       {
-        "from": "resources/tweaks",
+        "from": "tweaks",
         "to": "tweaks"
       },
       {
