@@ -63,7 +63,7 @@ function App() {
       <Nav />
       <div className="flex flex-1 pt-[50px] relative">
         <>
-          <main className="flex-1 ml-52 p-6 ">
+          <main className="flex-1 ml-52 p-6 rounded-tl-2xl border-t border-l border-sparkle-border">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/tweaks" element={<Tweaks />} />

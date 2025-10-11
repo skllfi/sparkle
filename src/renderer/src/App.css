@@ -67,14 +67,14 @@ layer(base);
     background: var(--color-secondary);
   }
   .light {
-    --color-sparkle-bg: #f9fafb;
+    --color-sparkle-bg: #f0f0f0;
     --color-sparkle-text: #1e293b;
     --color-sparkle-text-dark: #334155;
     --color-sparkle-text-darker: #475569;
     --color-sparkle-text-secondary: #64748b;
     --color-sparkle-text-muted: #94a3b8;
     --color-sparkle-card: #ffffff;
-    --color-sparkle-border: #e2e8f0;
+    --color-sparkle-border: #d5dae2;
     --color-sparkle-border-secondary: #cbd5e1;
     --color-sparkle-primary: #3b82f6;
     --color-sparkle-secondary: #2dac7d;

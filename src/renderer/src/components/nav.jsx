@@ -76,7 +76,7 @@ function Nav() {
   }, [activeTab])
 
   return (
-    <nav className="h-screen w-52 text-sparkle-text fixed left-0 top-0 flex flex-col py-6 border-r border-sparkle-border-secondary z-40">
+    <nav className="h-screen w-52 text-sparkle-text fixed left-0 top-0 flex flex-col py-6 z-40 bg-sparkle-bg">
       <div className="flex-1 flex flex-col gap-2 px-3 mt-10 relative" ref={containerRef}>
         <div
           className="absolute left-0 w-1 bg-sparkle-primary rounded-sm transition-all duration-300"

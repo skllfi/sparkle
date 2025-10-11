@@ -45,15 +45,17 @@ function Settings({ onCheckForUpdates }) {
 
   useEffect(() => {
     document.body.classList.remove("light", "purple", "dark", "gray", "classic")
-    if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    if (theme === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light"
       document.body.classList.add(systemTheme)
     } else if (theme) {
       document.body.classList.add(theme)
     } else {
-      document.body.classList.add('dark')
+      document.body.classList.add("dark")
     }
-    localStorage.setItem("theme", theme || 'dark')
+    localStorage.setItem("theme", theme || "dark")
   }, [theme])
 
   useEffect(() => {
@@ -140,8 +142,8 @@ function Settings({ onCheckForUpdates }) {
         </div>
       </Modal>
       <RootDiv>
-        <div className="min-h-screen w-full pb-24 overflow-y-auto">
-          <div className="space-y-8 mr-4">
+        <div className="min-h-screen w-full pb-16 overflow-y-auto">
+          <div className="space-y-8 ">
             <SettingSection title="Appearance">
               <SettingCard>
                 <div className="space-y-4">
@@ -246,7 +248,9 @@ function Settings({ onCheckForUpdates }) {
               <SettingCard>
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <h3 className="text-base font-medium text-sparkle-text mb-1">Disable Analytics</h3>
+                    <h3 className="text-base font-medium text-sparkle-text mb-1">
+                      Disable Analytics
+                    </h3>
                     <p className="text-sm text-sparkle-text-secondary">
                       Disables Posthog analytics
                       <span className="inline-flex items-center gap-1 ml-2 text-yellow-500">
@@ -373,9 +377,7 @@ function Settings({ onCheckForUpdates }) {
 }
 // this saves alot of time
 const SettingCard = ({ children, className = "" }) => (
-  <Card className={`p-4 ${className}`}>
-    {children}
-  </Card>
+  <Card className={`p-4 ${className}`}>{children}</Card>
 )
 
 const SettingSection = ({ title, children }) => (

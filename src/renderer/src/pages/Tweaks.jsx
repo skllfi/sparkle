@@ -350,7 +350,7 @@ function Tweaks() {
         </div>
       </Modal>
       <RootDiv>
-        <div className="max-w-[1800px] mx-auto mr-4">
+        <div className="max-w-[1800px] mx-auto ">
           <div className="mb-4">
             <div className="space-y-4">
               <LargeInput
@@ -397,20 +397,33 @@ function Tweaks() {
                                   </div>
                                 </Tooltip>
                               )}
-                              {tweak.addedversion && isNewInCurrentVersion(tweak.addedversion, CURRENT_VERSION) && (
-                                <Tooltip content={`New in Sparkle ${tweak.addedversion}`} delay={0.3} side="right">
-                                  <div className="p-1.5 bg-pink-500/50 rounded-lg hover:bg-pink-500/80 transition-colors">
-                                    <Plus className="w-4 h-4 text-white" />
-                                  </div>
-                                </Tooltip>
-                              )}
-                              {tweak.updatedversion && isUpdatedInCurrentVersion(tweak.updatedversion, CURRENT_VERSION) && (
-                                <Tooltip content={`Updated in Sparkle ${tweak.updatedversion}`} delay={0.3} side="right">
-                                  <div className="p-1.5 bg-blue-500/50 rounded-lg hover:bg-blue-500/80 transition-colors">
-                                    <RefreshCw className="w-4 h-4 text-white" />
-                                  </div>
-                                </Tooltip>
-                              )}
+                              {tweak.addedversion &&
+                                isNewInCurrentVersion(tweak.addedversion, CURRENT_VERSION) && (
+                                  <Tooltip
+                                    content={`New in Sparkle ${tweak.addedversion}`}
+                                    delay={0.3}
+                                    side="right"
+                                  >
+                                    <div className="p-1.5 bg-pink-500/50 rounded-lg hover:bg-pink-500/80 transition-colors">
+                                      <Plus className="w-4 h-4 text-white" />
+                                    </div>
+                                  </Tooltip>
+                                )}
+                              {tweak.updatedversion &&
+                                isUpdatedInCurrentVersion(
+                                  tweak.updatedversion,
+                                  CURRENT_VERSION,
+                                ) && (
+                                  <Tooltip
+                                    content={`Updated in Sparkle ${tweak.updatedversion}`}
+                                    delay={0.3}
+                                    side="right"
+                                  >
+                                    <div className="p-1.5 bg-blue-500/50 rounded-lg hover:bg-blue-500/80 transition-colors">
+                                      <RefreshCw className="w-4 h-4 text-white" />
+                                    </div>
+                                  </Tooltip>
+                                )}
                               {(Array.isArray(tweak.category)
                                 ? tweak.category
                                 : [tweak.category]
