@@ -1,5 +1,5 @@
 {
-  "version": "2025-10-11T04:18:06.345Z",
+  "version": "2025-10-11T04:38:22.013Z",
   "tweaks": [
     {
       "id": "align-taskbar-left",
@@ -11,11 +11,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/align-taskbar-left/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/align-taskbar-left/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/align-taskbar-left/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/align-taskbar-left",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/align-taskbar-left/meta.json"
     },
     {
       "id": "debloat-windows",
@@ -28,11 +25,8 @@
       "recommended": true,
       "reversible": false,
       "updatedversion": "2.9.0",
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/debloat-windows/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/debloat-windows/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/debloat-windows/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/debloat-windows",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/debloat-windows/meta.json"
     },
     {
       "id": "detailed-bsod",
@@ -43,11 +37,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/detailed-bsod/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/detailed-bsod/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/detailed-bsod/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/detailed-bsod",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/detailed-bsod/meta.json"
     },
     {
       "id": "disable-background-ms-store-apps",
@@ -59,11 +50,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-background-ms-store-apps/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-background-ms-store-apps/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-background-ms-store-apps/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/disable-background-ms-store-apps",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-background-ms-store-apps/meta.json"
     },
     {
       "id": "disable-copilot",
@@ -75,11 +63,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-copilot/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-copilot/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-copilot/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/disable-copilot",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-copilot/meta.json"
     },
     {
       "id": "disable-core-isolation",
@@ -91,11 +76,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-core-isolation/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-core-isolation/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-core-isolation/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/disable-core-isolation",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-core-isolation/meta.json"
     },
     {
       "id": "disable-defender-rtp",
@@ -107,11 +89,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-defender-rtp/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-defender-rtp/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-defender-rtp/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/disable-defender-rtp",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-defender-rtp/meta.json"
     },
     {
       "id": "disable-dynamic-ticking",
@@ -122,11 +101,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-dynamic-ticking/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-dynamic-ticking/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-dynamic-ticking/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/disable-dynamic-ticking",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-dynamic-ticking/meta.json"
     },
     {
       "id": "disable-fast-startup",
@@ -138,11 +114,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-fast-startup/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-fast-startup/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-fast-startup/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/disable-fast-startup",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-fast-startup/meta.json"
     },
     {
       "id": "disable-gamebar",
@@ -153,11 +126,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-gamebar/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-gamebar/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-gamebar/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/disable-gamebar",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-gamebar/meta.json"
     },
     {
       "id": "disable-hibernation",
@@ -169,11 +139,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-hibernation/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-hibernation/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-hibernation/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/disable-hibernation",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-hibernation/meta.json"
     },
     {
       "id": "disable-location-tracking",
@@ -184,11 +151,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-location-tracking/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-location-tracking/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-location-tracking/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/disable-location-tracking",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-location-tracking/meta.json"
     },
     {
       "id": "disable-lockscreen-tips",
@@ -199,11 +163,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-lockscreen-tips/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-lockscreen-tips/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-lockscreen-tips/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/disable-lockscreen-tips",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-lockscreen-tips/meta.json"
     },
     {
       "id": "disable-mouse-acceleration",
@@ -215,11 +176,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-mouse-acceleration/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-mouse-acceleration/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-mouse-acceleration/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/disable-mouse-acceleration",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-mouse-acceleration/meta.json"
     },
     {
       "id": "disable-wifi-sense",
@@ -232,11 +190,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-wifi-sense/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-wifi-sense/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/disable-wifi-sense/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/disable-wifi-sense",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-wifi-sense/meta.json"
     },
     {
       "id": "enable-dark-mode",
@@ -248,11 +203,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/enable-dark-mode/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/enable-dark-mode/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/enable-dark-mode/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/enable-dark-mode",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/enable-dark-mode/meta.json"
     },
     {
       "id": "enable-end-task-right-click",
@@ -263,11 +215,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/enable-end-task-right-click/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/enable-end-task-right-click/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/enable-end-task-right-click/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/enable-end-task-right-click",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/enable-end-task-right-click/meta.json"
     },
     {
       "id": "enable-game-mode",
@@ -280,11 +229,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/enable-game-mode/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/enable-game-mode/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/enable-game-mode/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/enable-game-mode",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/enable-game-mode/meta.json"
     },
     {
       "id": "enable-hags",
@@ -297,11 +243,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/enable-hags/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/enable-hags/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/enable-hags/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/enable-hags",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/enable-hags/meta.json"
     },
     {
       "id": "enable-hpet",
@@ -312,11 +255,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/enable-hpet/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/enable-hpet/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/enable-hpet/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/enable-hpet",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/enable-hpet/meta.json"
     },
     {
       "id": "enable-optimization-for-windowed-games",
@@ -329,11 +269,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/enable-optimization-for-windowed-games/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/enable-optimization-for-windowed-games/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/enable-optimization-for-windowed-games/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/enable-optimization-for-windowed-games",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/enable-optimization-for-windowed-games/meta.json"
     },
     {
       "id": "menu-show-delay-zero",
@@ -345,11 +282,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/menu-show-delay-zero/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/menu-show-delay-zero/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/menu-show-delay-zero/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/menu-show-delay-zero",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/menu-show-delay-zero/meta.json"
     },
     {
       "id": "optimize-network-settings",
@@ -361,11 +295,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/optimize-network-settings/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/optimize-network-settings/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/optimize-network-settings/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/optimize-network-settings",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/optimize-network-settings/meta.json"
     },
     {
       "id": "optimize-nvidia-settings",
@@ -378,11 +309,8 @@
       ],
       "recommended": false,
       "reversible": false,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/optimize-nvidia-settings/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/optimize-nvidia-settings/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/optimize-nvidia-settings/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/optimize-nvidia-settings",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/optimize-nvidia-settings/meta.json"
     },
     {
       "id": "remove-gaming-apps",
@@ -394,11 +322,8 @@
       ],
       "recommended": false,
       "reversible": false,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/remove-gaming-apps/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/remove-gaming-apps/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/remove-gaming-apps/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/remove-gaming-apps",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/remove-gaming-apps/meta.json"
     },
     {
       "id": "remove-onedrive",
@@ -411,11 +336,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/remove-onedrive/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/remove-onedrive/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/remove-onedrive/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/remove-onedrive",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/remove-onedrive/meta.json"
     },
     {
       "id": "revert-context-menu",
@@ -427,11 +349,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/revert-context-menu/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/revert-context-menu/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/revert-context-menu/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/revert-context-menu",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/revert-context-menu/meta.json"
     },
     {
       "id": "run-disk-cleanup",
@@ -443,11 +362,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/run-disk-cleanup/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/run-disk-cleanup/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/run-disk-cleanup/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/run-disk-cleanup",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/run-disk-cleanup/meta.json"
     },
     {
       "id": "set-powershell7-default",
@@ -458,11 +374,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/set-powershell7-default/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/set-powershell7-default/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/set-powershell7-default/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/set-powershell7-default",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/set-powershell7-default/meta.json"
     },
     {
       "id": "set-services-to-manual",
@@ -474,11 +387,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/set-services-to-manual/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/set-services-to-manual/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/set-services-to-manual/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/set-services-to-manual",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/set-services-to-manual/meta.json"
     },
     {
       "id": "set-time-utc",
@@ -489,11 +399,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/set-time-utc/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/set-time-utc/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/set-time-utc/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/set-time-utc",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/set-time-utc/meta.json"
     },
     {
       "id": "set-win32-priority-separation",
@@ -504,11 +411,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/set-win32-priority-separation/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/set-win32-priority-separation/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/set-win32-priority-separation/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/set-win32-priority-separation",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/set-win32-priority-separation/meta.json"
     },
     {
       "id": "show-seconds-in-taskbar-clock",
@@ -520,11 +424,8 @@
       ],
       "recommended": false,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/show-seconds-in-system-clock/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/show-seconds-in-system-clock/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/show-seconds-in-system-clock/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/show-seconds-in-system-clock",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/show-seconds-in-system-clock/meta.json"
     },
     {
       "id": "ultimate-performance-plan",
@@ -536,11 +437,8 @@
       ],
       "recommended": true,
       "reversible": true,
-      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/ultimate-performance-plan/meta.json",
-      "sourceUrl": {
-        "apply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/ultimate-performance-plan/apply.ps1",
-        "unapply": "https://raw.githubusercontent.com/Parcoil/Sparkle/v2/tweaks/ultimate-performance-plan/unapply.ps1"
-      }
+      "docsurl": "https://docs.getsparkle.net/tweaks/ultimate-performance-plan",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/ultimate-performance-plan/meta.json"
     }
   ]
 }
