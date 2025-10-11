@@ -117,7 +117,7 @@ function Settings({ onCheckForUpdates }) {
             <p className="text-gray-300 text-sm leading-relaxed">
               Are you sure you want to delete all legacy registry backups? This will permanently
               remove the{" "}
-              <code className="bg-sparkle-border-secondary/20 px-1 py-0.5 rounded text-xs">
+              <code className="bg-sparkle-border-secondary/20 px-1 py-0.5 rounded-sm text-xs">
                 C:\Sparkle\Backup
               </code>{" "}
               folder and all its contents.
@@ -223,7 +223,7 @@ function Settings({ onCheckForUpdates }) {
                     type="text"
                     defaultValue={localStorage.getItem("sparkle:user") || ""}
                     onChange={(e) => localStorage.setItem("sparkle:user", e.target.value)}
-                    className="w-full bg-sparkle-card border border-sparkle-border rounded-lg px-3 py-2 text-sparkle-text focus:ring-0 focus:outline-none"
+                    className="w-full bg-sparkle-card border border-sparkle-border rounded-lg px-3 py-2 text-sparkle-text focus:ring-0 focus:outline-hidden"
                     placeholder="Enter your name"
                   />
                   <div className="flex gap-2">
@@ -281,7 +281,7 @@ function Settings({ onCheckForUpdates }) {
                     <h3 className="text-base font-medium text-sparkle-text mb-1">Legacy Backups</h3>
                     <p className="text-sm text-sparkle-text-secondary">
                       Remove old backup files stored in{" "}
-                      <code className="bg-sparkle-border-secondary/20 px-1 py-0.5 rounded text-xs">
+                      <code className="bg-sparkle-border-secondary/20 px-1 py-0.5 rounded-sm text-xs">
                         C:\Sparkle\Backup
                       </code>
                     </p>

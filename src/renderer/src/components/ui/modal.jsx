@@ -14,7 +14,7 @@ export default function Modal({ open, onClose, children }) {
       onClick={onClose}
       className={`
         fixed inset-0 flex justify-center items-center z-50 transition-all
-        ${open ? "visible bg-black/60 backdrop-blur-sm" : "invisible bg-black/0"}
+        ${open ? "visible bg-black/60 backdrop-blur-xs" : "invisible bg-black/0"}
       `}
     >
       <div

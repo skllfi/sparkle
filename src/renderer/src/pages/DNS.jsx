@@ -290,7 +290,7 @@ export default function DNSPage() {
                         setCustomDNS((prev) => ({ ...prev, primary: e.target.value }))
                       }
                       placeholder="e.g., 1.1.1.1"
-                      className="w-full px-3 py-2 bg-sparkle-border border border-sparkle-border-secondary rounded-lg text-sparkle-text focus:outline-none focus:border-sparkle-primary"
+                      className="w-full px-3 py-2 bg-sparkle-border border border-sparkle-border-secondary rounded-lg text-sparkle-text focus:outline-hidden focus:border-sparkle-primary"
                     />
                   </div>
                   <div>
@@ -304,7 +304,7 @@ export default function DNSPage() {
                         setCustomDNS((prev) => ({ ...prev, secondary: e.target.value }))
                       }
                       placeholder="e.g., 1.0.0.1"
-                      className="w-full px-3 py-2 bg-sparkle-border border border-sparkle-border-secondary rounded-lg text-sparkle-text focus:outline-none focus:border-sparkle-primary"
+                      className="w-full px-3 py-2 bg-sparkle-border border border-sparkle-border-secondary rounded-lg text-sparkle-text focus:outline-hidden focus:border-sparkle-primary"
                     />
                   </div>
                 </div>

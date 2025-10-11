@@ -9,7 +9,7 @@ function Input({ type, defaultValue, onChange, className, placeholder, ...props 
       onChange={onChange}
       className={cn(
         "w-full bg-sparkle-card border border-sparkle-border rounded-lg px-3 py-2 text-sparkle-text",
-        "focus:ring-0 focus:outline-none focus:border-sparkle-primary transition-colors",
+        "focus:ring-0 focus:outline-hidden focus:border-sparkle-primary transition-colors",
         className
       )}
       placeholder={placeholder}
@@ -23,7 +23,7 @@ function LargeInput({ placeholder, value, onChange, icon: Icon, className, ...pr
   return (
     <div className={cn(
       "flex items-center gap-3 bg-sparkle-card border border-sparkle-border",
-      "rounded-xl px-4 backdrop-blur-sm transition-colors",
+      "rounded-xl px-4 backdrop-blur-xs transition-colors",
       "focus-within:border-sparkle-primary",
       className
     )}>
@@ -33,7 +33,7 @@ function LargeInput({ placeholder, value, onChange, icon: Icon, className, ...pr
         placeholder={placeholder}
         className={cn(
           "w-full py-3 px-0 bg-transparent border-none",
-          "focus:outline-none focus:ring-0 text-sparkle-text",
+          "focus:outline-hidden focus:ring-0 text-sparkle-text",
           "placeholder:text-sparkle-text-secondary"
         )}
         value={value}

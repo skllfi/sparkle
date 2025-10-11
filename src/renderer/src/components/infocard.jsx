@@ -14,7 +14,7 @@ const InfoCard = ({
   return (
     <Card
       className={cn(
-        "bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-5",
+        "bg-sparkle-card backdrop-blur-xs rounded-xl border border-sparkle-border hover:shadow-xs overflow-hidden p-5",
         className,
       )}
       {...props}

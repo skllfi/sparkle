@@ -228,7 +228,7 @@ export default function RestorePointManager() {
                         <td className="px-14 py-4 text-center">
                           <Button
                             variant="ghost"
-                            className="!p-2 hover:bg-sparkle-accent"
+                            className="p-2! hover:bg-sparkle-accent"
                             onClick={() => handleRestore(rp)}
                             disabled={processing}
                             title="Restore System"
@@ -298,7 +298,7 @@ export default function RestorePointManager() {
               value={customName}
               onChange={(e) => setCustomName(e.target.value)}
               placeholder="Enter restore point name"
-              className="w-full px-3 py-2 bg-sparkle-card border border-sparkle-border rounded-lg text-sparkle-text placeholder-sparkle-text-secondary focus:outline-none focus:ring-2 focus:ring-sparkle-primary focus:border-transparent transition-colors"
+              className="w-full px-3 py-2 bg-sparkle-card border border-sparkle-border rounded-lg text-sparkle-text placeholder-sparkle-text-secondary focus:outline-hidden focus:ring-2 focus:ring-sparkle-primary focus:border-transparent transition-colors"
               disabled={processing}
             />
             <div className="flex justify-end gap-3">

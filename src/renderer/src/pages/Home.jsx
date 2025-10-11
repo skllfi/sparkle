@@ -214,7 +214,7 @@ function Home() {
             ]}
           />
         </div>
-        <Card className="bg-sparkle-card backdrop-blur-sm rounded-xl border border-sparkle-border hover:shadow-sm overflow-hidden p-3 w-full mt-5 flex gap-4 items-center">
+        <Card className="bg-sparkle-card backdrop-blur-xs rounded-xl border border-sparkle-border hover:shadow-xs overflow-hidden p-3 w-full mt-5 flex gap-4 items-center">
           <div className="p-3 bg-green-500/10 rounded-lg items-center justify-center text-center">
             <Wrench className="text-green-500" size={24} />
           </div>

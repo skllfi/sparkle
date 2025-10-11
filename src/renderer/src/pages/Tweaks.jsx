@@ -432,7 +432,7 @@ function Tweaks() {
                         <div className="flex items-center m-0 gap-2">
                           <Button
                             variant="secondary"
-                            className="!px-2 !py-1 text-xs flex items-center gap-1"
+                            className="px-2! py-1! text-xs flex items-center gap-1"
                             title="Open Docs"
                             onClick={(e) => {
                               e.preventDefault()
