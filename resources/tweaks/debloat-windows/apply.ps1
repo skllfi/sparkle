@@ -66,6 +66,8 @@ $allAppsToRemove = @(
     "Microsoft.OneDrive",
     # 3rd party apps start here
     "Amazon.com.Amazon",
+    # Clipchamp 
+    "9P1J8S7CCWWT"
     "AmazonVideo.PrimeVideo",
     "Disney",
     "Duolingo-LearnLanguagesforFree",
