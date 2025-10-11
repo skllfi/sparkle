@@ -56,7 +56,7 @@ irm https://getsparkle.net/get | iex
       <a href="https://github.com/ChrisTitusTech/winutil">CTT's WinUtil (Some of the tweaks & part of the inspo for making this v2 of this project)</a>
     </li>
     <li>
-      <a href="https://github.com/Raphire/Win11Debloat">Win11Debloat (Main windows debloat script)</a>
+      <a href="https://github.com/Raphire/Win11Debloat">Raphire Win11Debloat ( Debloat script offered in Sparkle debloat script)</a>
     </li>
   </ul>
 
