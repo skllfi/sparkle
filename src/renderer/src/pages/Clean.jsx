@@ -18,11 +18,17 @@ const cleanups = [
       $systemTemp = "$env:SystemRoot\\Temp"
       $userTemp = [System.IO.Path]::GetTempPath()
       $foldersToClean = @($systemTemp, $userTemp)
+      $totalSizeBefore = 0
+      
       foreach ($folder in $foldersToClean) {
           if (Test-Path $folder) {
+              $folderSize = (Get-ChildItem -Path $folder -Recurse -Force -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum -ErrorAction SilentlyContinue).Sum
+              $totalSizeBefore += if ($folderSize) { $folderSize } else { 0 }
               Get-ChildItem -Path $folder -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
           }
       }
+      
+      Write-Output $totalSizeBefore
     `,
   },
   {
@@ -31,16 +37,26 @@ const cleanups = [
     description: "Delete files from the Windows Prefetch folder.",
     script: `
       $prefetch = "$env:SystemRoot\\Prefetch"
+      $totalSizeBefore = 0
       if (Test-Path $prefetch) {
+          $totalSizeBefore = (Get-ChildItem -Path "$prefetch\\*" -Force -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum -ErrorAction SilentlyContinue).Sum
           Remove-Item "$prefetch\\*" -Force -Recurse -ErrorAction SilentlyContinue
       }
+      Write-Output $totalSizeBefore
     `,
   },
   {
     id: "recyclebin",
     label: "Empty Recycle Bin (Dangerous)",
     description: "Permanently remove files from the Recycle Bin.",
-    script: `Clear-RecycleBin -Force -ErrorAction SilentlyContinue`,
+    script: `
+      $recycleBinSize = 0
+      $shell = New-Object -ComObject Shell.Application
+      $recycleBin = $shell.Namespace(0xA)
+      $recycleBinSize = ($recycleBin.Items() | Measure-Object -Property Size -Sum).Sum
+      Clear-RecycleBin -Force -ErrorAction SilentlyContinue
+      Write-Output $recycleBinSize
+    `,
   },
   {
     id: "windows-update",
@@ -48,9 +64,12 @@ const cleanups = [
     description: "Remove Windows Update downloaded installation files.",
     script: `
       $windowsUpdateDownload = "$env:SystemRoot\\SoftwareDistribution\\Download"
+      $totalSizeBefore = 0
       if (Test-Path $windowsUpdateDownload) {
+          $totalSizeBefore = (Get-ChildItem -Path "$windowsUpdateDownload\\*" -Recurse -Force -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum -ErrorAction SilentlyContinue).Sum
           Remove-Item "$windowsUpdateDownload\\*" -Force -Recurse -ErrorAction SilentlyContinue
       }
+      Write-Output $totalSizeBefore
     `,
   },
   {
@@ -59,7 +78,13 @@ const cleanups = [
     description: "Remove cached thumbnail images used by File Explorer.",
     script: `
       $thumbCache = "$env:LOCALAPPDATA\\Microsoft\\Windows\\Explorer"
-      Get-ChildItem "$thumbCache\\thumbcache_*.db" -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
+      $totalSizeBefore = 0
+      $thumbFiles = Get-ChildItem "$thumbCache\\thumbcache_*.db" -ErrorAction SilentlyContinue
+      if ($thumbFiles) {
+          $totalSizeBefore = ($thumbFiles | Measure-Object -Property Length -Sum -ErrorAction SilentlyContinue).Sum
+          Remove-Item "$thumbCache\\thumbcache_*.db" -Force -ErrorAction SilentlyContinue
+      }
+      Write-Output $totalSizeBefore
     `,
   },
 ]
@@ -71,26 +96,42 @@ function Clean() {
     localStorage.getItem("last-clean") || "Not cleaned yet.",
   )
   const [isCleaning, setIsCleaning] = useState(false)
+  const [cleanupResults, setCleanupResults] = useState({})
 
   const toggleCleanup = (id) => {
     setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]))
   }
 
+  const formatBytes = (bytes) => {
+    if (bytes === 0 || !bytes) return "0 B"
+    const sizes = ["B", "KB", "MB", "GB", "TB"]
+    const i = Math.floor(Math.log(bytes) / Math.log(1024))
+    return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sizes[i]}`
+  }
+
   async function runSelectedCleanups() {
     setIsCleaning(true)
     setLoadingQueue([])
+    setCleanupResults({})
     let anySuccess = false
+    let newResults = {}
+
     for (const cleanup of cleanups) {
       if (!selected.includes(cleanup.id)) continue
       setLoadingQueue((q) => [...q, cleanup.id])
       const toastId = toast.loading(`Running ${cleanup.label}...`)
       try {
-        await invoke({
+        const result = await invoke({
           channel: "run-powershell",
           payload: { script: cleanup.script, name: `cleanup-${cleanup.id}` },
         })
+
+        const resultStr = result?.output || "0"
+        const freedSpace = parseInt(resultStr.trim(), 10) || 0
+        newResults[cleanup.id] = freedSpace
+
         toast.update(toastId, {
-          render: `${cleanup.label} completed!`,
+          render: `${cleanup.label} completed! ${formatBytes(freedSpace)} cleared.`,
           type: "success",
           isLoading: false,
           autoClose: 3000,
@@ -106,11 +147,14 @@ function Clean() {
         log.error(`Failed to run ${cleanup.id} cleanup: ${err.message || err}`)
       }
     }
+
     if (anySuccess) {
       const now = new Date().toLocaleString()
       setLastClean(now)
       localStorage.setItem("last-clean", now)
+      setCleanupResults(newResults)
     }
+
     setLoadingQueue([])
     setIsCleaning(false)
   }
@@ -144,6 +188,7 @@ function Clean() {
                   </span>
                   <span className="text-xs text-sparkle-text-secondary mt-0.5 truncate">
                     {description}
+                    {cleanupResults[id] ? ` (${formatBytes(cleanupResults[id])} cleared)` : ""}
                   </span>
                 </div>
                 <div className="ml-4 flex items-center">
