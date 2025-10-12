@@ -18,7 +18,7 @@ const themes = [
 ]
 
 function Settings({ onCheckForUpdates }) {
-  const [theme, setTheme] = useState(localStorage.getItem("theme"))
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "system")
   const [checking, setChecking] = useState(false)
   const [discordEnabled, setDiscordEnabled] = useState(true)
   const [discordLoading, setDiscordLoading] = useState(false)
