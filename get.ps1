@@ -1,4 +1,5 @@
-clear
+
+Clear-Host
 
 # GitHub config
 $repo = "Parcoil/Sparkle"
@@ -14,7 +15,8 @@ $downloadFolder = if ($PSScriptRoot) { $PSScriptRoot } else { Get-Location }
 # Fetch latest release info
 try {
     $release = Invoke-RestMethod -Uri $apiUrl -Headers $headers
-} catch {
+}
+catch {
     Write-Host "[X] Failed to contact GitHub API." -ForegroundColor Red
     exit 1
 }
@@ -57,7 +59,8 @@ Write-Host "[>] Downloading to: $downloadPath" -ForegroundColor Cyan
 try {
     Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $downloadPath -UseBasicParsing
     Write-Host "`n[✔] Download complete!" -ForegroundColor Green
-} catch {
+}
+catch {
     Write-Host "[X] Failed to download installer." -ForegroundColor Red
     exit 1
 }
@@ -70,7 +73,8 @@ try {
     Remove-Item -Path $downloadPath -Force
     Write-Host "[🗑️] Deleted installer after installer exited." -ForegroundColor DarkYellow
     Write-Host "[>] Thanks For using Sparkle" -ForegroundColor Magenta
-} catch {
+}
+catch {
     Write-Host "[X] Failed to launch installer or delete file." -ForegroundColor Red
     exit 1
 }
