@@ -5,12 +5,10 @@ import { execSync } from "child_process"
 const root = process.cwd()
 const tweaksDir = path.join(root, "tweaks")
 const registryPath = path.join(tweaksDir, "registry.json")
-const registryScriptsPath = path.join(tweaksDir, "registry-scripts.json")
 
 async function buildRegistry() {
   const folders = await fs.readdir(tweaksDir)
   const registryNormal = []
-  const registryWithScripts = []
 
   for (const folder of folders) {
     const tweakPath = path.join(tweaksDir, folder)
@@ -18,15 +16,10 @@ async function buildRegistry() {
     if (!stat?.isDirectory()) continue
 
     const metaPath = path.join(tweakPath, "meta.json")
-    const applyPath = path.join(tweakPath, "apply.ps1")
-    const unapplyPath = path.join(tweakPath, "unapply.ps1")
 
     try {
       const metaRaw = await fs.readFile(metaPath, "utf8")
       const meta = JSON.parse(metaRaw)
-
-      const applyScript = await fs.readFile(applyPath, "utf8").catch(() => "")
-      const unapplyScript = await fs.readFile(unapplyPath, "utf8").catch(() => "")
 
       const baseTweak = {
         id: meta.name || folder,
@@ -42,20 +35,14 @@ async function buildRegistry() {
       }
 
       registryNormal.push(baseTweak)
-
-      registryWithScripts.push({ ...baseTweak, apply: applyScript, unapply: unapplyScript })
     } catch (e) {
       console.error(`⚠️ Failed to read tweak in ${folder}: ${e.message}`)
     }
   }
 
   const normalOutput = { version: new Date().toISOString(), tweaks: registryNormal }
-  const scriptsOutput = { version: new Date().toISOString(), tweaks: registryWithScripts }
-
   await fs.writeFile(registryPath, JSON.stringify(normalOutput, null, 2))
-  await fs.writeFile(registryScriptsPath, JSON.stringify(scriptsOutput, null, 2))
   console.log(`✅ registry.json created at ${registryPath}`)
-  console.log(`✅ registry-scripts.json created at ${registryScriptsPath}`)
 }
 
 function buildElectron() {
