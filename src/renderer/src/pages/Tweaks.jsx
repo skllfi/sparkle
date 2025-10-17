@@ -25,6 +25,7 @@ import Card from "@/components/ui/Card"
 import { Gpu, Plus, RefreshCw } from "lucide-react"
 import { LargeInput } from "@/components/ui/input"
 import { isNewInCurrentVersion, isUpdatedInCurrentVersion, CURRENT_VERSION } from "@/lib/version"
+import { Star } from "lucide-react"
 
 function Tweaks() {
   const [tweaks, setTweaks] = useState([])
@@ -251,8 +252,8 @@ function Tweaks() {
   // sort this so recommended tweaks are at the top
   const sortedTweaks = useMemo(() => {
     return [...filteredTweaks].sort((a, b) => {
-      const aRec = !!a.recommended
-      const bRec = !!b.recommended
+      const aRec = !!a.top
+      const bRec = !!b.top
       return bRec - aRec
     })
   }, [filteredTweaks])
@@ -394,6 +395,13 @@ function Tweaks() {
                                 <Tooltip content={tweak.warning} delay={0.3} side="right">
                                   <div className="p-1.5 bg-red-900/50 rounded-lg hover:bg-red-900/80 transition-colors">
                                     <AlertTriangle className="w-4 h-4 text-red-400" />
+                                  </div>
+                                </Tooltip>
+                              )}
+                              {tweak.recommended && (
+                                <Tooltip content={"Recommended Tweak"} delay={0.3} side="right">
+                                  <div className="p-1.5 bg-green-500/50 rounded-lg hover:bg-green-500/80 transition-colors">
+                                    <Star className="w-4 h-4 text-white fill-white" />
                                   </div>
                                 </Tooltip>
                               )}

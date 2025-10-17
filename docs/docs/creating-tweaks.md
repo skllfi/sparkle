@@ -40,6 +40,7 @@ Each tweak **must** have a `meta.json`. The available properties are:
 | **reversible**       | `bool` (optional, defaults `true`) | If false, the UI shows an "Apply" button instead of a toggle.                    |
 | **modal**            | `string` (optional)                | Text shown in a modal before applying the tweak.                                 |
 | **category**         | `string[]`                         | Used to sort tweaks in the UI.                                                   |
+| **recommended**      | `string`  (optional)                           | Shows the user a recommended icon in the ui
 | **warning**          | `string` (optional)                | Displays an icon in the UI; hover to see the warning.                            |
 | **restart**          | `bool` (optional)                  | Shows a message that a restart is required.                                      |
 | **deep-description** | `string` (optional)                | Detailed description of the tweak. used for documentation. and supports markdown |
@@ -51,7 +52,7 @@ Each tweak **must** have a `meta.json`. The available properties are:
 
 !!! note
 
-    `updatedversion` and `addedversion` are required for all new tweaks
+    `updatedversion` and `addedversion` are required for all new tweaks. or when you update a tweak.
 
 ## Tweak Categories
 

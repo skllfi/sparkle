@@ -3,7 +3,7 @@
 import fs from "fs"
 import path from "path"
 
-const tweaksDir = "../resources/tweaks"
+const tweaksDir = "../tweaks"
 const docsDir = "./docs/tweaks"
 const tweaksIndexFile = "./docs/tweaks/index.md"
 
