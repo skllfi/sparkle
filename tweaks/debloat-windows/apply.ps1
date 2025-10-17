@@ -15,78 +15,77 @@ Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName WindowsBase
 
 # list of apps to remove
-$allAppsToRemove = @(
-    "Clipchamp.Clipchamp",
-    "Microsoft.3DBuilder",
-    # this is cortana
-    "Microsoft.549981C3F5F10",
-    "Microsoft.BingFinance",
-    "Microsoft.BingFoodAndDrink",
-    "Microsoft.BingHealthAndFitness",
-    "Microsoft.BingNews",
-    "Microsoft.BingSports",
-    "Microsoft.BingTranslator",
-    "Microsoft.BingTravel",
-    "Microsoft.BingWeather",
-    "Microsoft.Copilot",
-    "Microsoft.Getstarted",
-    "Microsoft.Messaging",
-    "Microsoft.Microsoft3DViewer",
-    "Microsoft.MicrosoftJournal",
-    "Microsoft.MicrosoftOfficeHub",
-    "Microsoft.MicrosoftPowerBIForWindows",
-    "Microsoft.MicrosoftSolitaireCollection",
-    "Microsoft.MicrosoftStickyNotes",
-    "Microsoft.MixedReality.Portal",
-    "Microsoft.News",
-    "Microsoft.Office.OneNote",
-    "Microsoft.Office.Sway",
-    "Microsoft.OneConnect",
-    "Microsoft.Paint",
-    "Microsoft.Print3D",
-    "Microsoft.SkypeApp",
-    "Microsoft.Todos",
-    "Microsoft.WindowsAlarms",
-    "Microsoft.WindowsCamera",
-    "Microsoft.WindowsFeedbackHub",
-    "Microsoft.WindowsMaps",
-    "Microsoft.WindowsNotepad",
-    "Microsoft.WindowsSoundRecorder",
-    "Microsoft.XboxApp",
-    "Microsoft.ZuneVideo",
-    "MicrosoftCorporationII.MicrosoftFamily",
-    "MicrosoftTeams",
-    "MSTeams",
-    "Microsoft.WindowsCalculator",
-    "Microsoft.Windows.Photos",
-    "microsoft.windowscommunicationsapps",
-    "Microsoft.XboxGamingOverlay",
-    "Microsoft.XboxIdentityProvider",
-    "Microsoft.XboxSpeechToTextOverlay",
-    "Microsoft.OneDrive",
-    # 3rd party apps start here
-    "Amazon.com.Amazon",
-    # Clipchamp 
-    "9P1J8S7CCWWT"
-    "AmazonVideo.PrimeVideo",
-    "Disney",
-    "Duolingo-LearnLanguagesforFree",
-    "Facebook",
-    "FarmVille2CountryEscape",
-    "Instagram",
-    "Netflix",
-    "PandoraMediaInc.Pandora",
-    "Spotify",
-    "Twitter",
-    "TwitterUniversal",
-    "YouTube",
-    "Plex",
-    "TikTok",
-    "TuneInRadio",
-    "king.com.BubbleWitch3Saga",               
-    "king.com.CandyCrushSaga",                       
-    "king.com.CandyCrushSodaSaga"
+$appDefinitions = @(
+    @{ Package = "Clipchamp.Clipchamp"; FriendlyName = "Clipchamp Video Editor" },
+    @{ Package = "Microsoft.3DBuilder"; FriendlyName = "3D Builder" },
+    @{ Package = "Microsoft.549981C3F5F10"; FriendlyName = "Cortana" },
+    @{ Package = "Microsoft.BingFinance"; FriendlyName = "Bing Finance" },
+    @{ Package = "Microsoft.BingFoodAndDrink"; FriendlyName = "Bing Food & Drink" },
+    @{ Package = "Microsoft.BingHealthAndFitness"; FriendlyName = "Bing Health & Fitness" },
+    @{ Package = "Microsoft.BingNews"; FriendlyName = "Bing News" },
+    @{ Package = "Microsoft.BingSports"; FriendlyName = "Bing Sports" },
+    @{ Package = "Microsoft.BingTranslator"; FriendlyName = "Bing Translator" },
+    @{ Package = "Microsoft.BingTravel"; FriendlyName = "Bing Travel" },
+    @{ Package = "Microsoft.BingWeather"; FriendlyName = "Bing Weather" },
+    @{ Package = "Microsoft.Copilot"; FriendlyName = "Microsoft Copilot" },
+    @{ Package = "Microsoft.Getstarted"; FriendlyName = "Get Started (Tips)" },
+    @{ Package = "Microsoft.Messaging"; FriendlyName = "Microsoft Messaging" },
+    @{ Package = "Microsoft.Microsoft3DViewer"; FriendlyName = "3D Viewer" },
+    @{ Package = "Microsoft.MicrosoftJournal"; FriendlyName = "Microsoft Journal" },
+    @{ Package = "Microsoft.MicrosoftOfficeHub"; FriendlyName = "Office Hub" },
+    @{ Package = "Microsoft.MicrosoftPowerBIForWindows"; FriendlyName = "Power BI" },
+    @{ Package = "Microsoft.MicrosoftSolitaireCollection"; FriendlyName = "Solitaire Collection" },
+    @{ Package = "Microsoft.MicrosoftStickyNotes"; FriendlyName = "Sticky Notes" },
+    @{ Package = "Microsoft.MixedReality.Portal"; FriendlyName = "Mixed Reality Portal" },
+    @{ Package = "Microsoft.News"; FriendlyName = "Microsoft News" },
+    @{ Package = "Microsoft.Office.OneNote"; FriendlyName = "OneNote" },
+    @{ Package = "Microsoft.Office.Sway"; FriendlyName = "Office Sway" },
+    @{ Package = "Microsoft.OneConnect"; FriendlyName = "OneConnect" },
+    @{ Package = "Microsoft.Paint"; FriendlyName = "Paint" },
+    @{ Package = "Microsoft.Print3D"; FriendlyName = "Print 3D" },
+    @{ Package = "Microsoft.SkypeApp"; FriendlyName = "Skype" },
+    @{ Package = "Microsoft.Todos"; FriendlyName = "Microsoft To Do" },
+    @{ Package = "Microsoft.WindowsAlarms"; FriendlyName = "Alarms & Clock" },
+    @{ Package = "Microsoft.WindowsCamera"; FriendlyName = "Camera" },
+    @{ Package = "Microsoft.WindowsFeedbackHub"; FriendlyName = "Feedback Hub" },
+    @{ Package = "Microsoft.WindowsMaps"; FriendlyName = "Maps" },
+    @{ Package = "Microsoft.WindowsNotepad"; FriendlyName = "Notepad" },
+    @{ Package = "Microsoft.WindowsSoundRecorder"; FriendlyName = "Sound Recorder" },
+    @{ Package = "Microsoft.XboxApp"; FriendlyName = "Xbox Console Companion" },
+    @{ Package = "Microsoft.ZuneVideo"; FriendlyName = "Movies & TV" },
+    @{ Package = "MicrosoftCorporationII.MicrosoftFamily"; FriendlyName = "Microsoft Family" },
+    @{ Package = "MicrosoftTeams"; FriendlyName = "Microsoft Teams" },
+    @{ Package = "MSTeams"; FriendlyName = "Teams" },
+    @{ Package = "Microsoft.WindowsCalculator"; FriendlyName = "Calculator" },
+    @{ Package = "Microsoft.Windows.Photos"; FriendlyName = "Photos" },
+    @{ Package = "microsoft.windowscommunicationsapps"; FriendlyName = "Mail & Calendar" },
+    @{ Package = "Microsoft.XboxGamingOverlay"; FriendlyName = "Xbox Game Bar" },
+    @{ Package = "Microsoft.XboxIdentityProvider"; FriendlyName = "Xbox Identity Provider" },
+    @{ Package = "Microsoft.XboxSpeechToTextOverlay"; FriendlyName = "Xbox Speech to Text" },
+    @{ Package = "Microsoft.OneDrive"; FriendlyName = "OneDrive" },
+    @{ Package = "Amazon.com.Amazon"; FriendlyName = "Amazon" },
+    @{ Package = "9P1J8S7CCWWT"; FriendlyName = "Clipchamp (Store)" },
+    @{ Package = "AmazonVideo.PrimeVideo"; FriendlyName = "Prime Video" },
+    @{ Package = "Disney"; FriendlyName = "Disney+" },
+    @{ Package = "Duolingo-LearnLanguagesforFree"; FriendlyName = "Duolingo" },
+    @{ Package = "Facebook"; FriendlyName = "Facebook" },
+    @{ Package = "FarmVille2CountryEscape"; FriendlyName = "FarmVille 2" },
+    @{ Package = "Instagram"; FriendlyName = "Instagram" },
+    @{ Package = "Netflix"; FriendlyName = "Netflix" },
+    @{ Package = "PandoraMediaInc.Pandora"; FriendlyName = "Pandora" },
+    @{ Package = "Spotify"; FriendlyName = "Spotify" },
+    @{ Package = "Twitter"; FriendlyName = "Twitter" },
+    @{ Package = "TwitterUniversal"; FriendlyName = "Twitter (Universal)" },
+    @{ Package = "YouTube"; FriendlyName = "YouTube" },
+    @{ Package = "Plex"; FriendlyName = "Plex" },
+    @{ Package = "TikTok"; FriendlyName = "TikTok" },
+    @{ Package = "TuneInRadio"; FriendlyName = "TuneIn Radio" },
+    @{ Package = "king.com.BubbleWitch3Saga"; FriendlyName = "Bubble Witch 3 Saga" },
+    @{ Package = "king.com.CandyCrushSaga"; FriendlyName = "Candy Crush Saga" },
+    @{ Package = "king.com.CandyCrushSodaSaga"; FriendlyName = "Candy Crush Soda Saga" }
 )
+
+$allAppsToRemove = $appDefinitions | ForEach-Object { $_.Package }
 
 # default apps to pre-check (these will be kept)
 $defaultApps = @(
@@ -100,6 +99,18 @@ $defaultApps = @(
     "Microsoft.XboxSpeechToTextOverlay",
     "Microsoft.XboxApp"
 )
+
+function Get-FriendlyName {
+    param([string]$PackageName)
+    
+    $def = $appDefinitions | Where-Object { $_.Package -eq $PackageName }
+    if ($def) {
+        return $def.FriendlyName
+    }
+    
+    # fallback to auto-generated name
+    return $PackageName -replace "MicrosoftCorporationII\.", "" -replace "Microsoft\.", "" -replace "\.", " "
+}
 
 function Show-ScriptSelectionDialog {
     [xml]$xaml = @"
@@ -164,15 +175,19 @@ function Show-ScriptSelectionDialog {
     return $script:dialogResult
 }
 
-
-
 function Show-AppSelectionDialog {
-    # generate friendly names for display
+    # generate apps list with friendly names
     $apps = @()
-    foreach ($pkg in $allAppsToRemove) {
-        $name = $pkg -replace "MicrosoftCorporationII\.", "" -replace "Microsoft\.", "" -replace "\.", " "
-        $apps += @{ Name = $name; Package = $pkg; IsChecked = ($defaultApps -contains $pkg) }
+    foreach ($appDef in $appDefinitions) {
+        $apps += @{ 
+            Name      = $appDef.FriendlyName
+            Package   = $appDef.Package
+            IsChecked = ($defaultApps -contains $appDef.Package) 
+        }
     }
+    
+    # sort by friendly name for better UX
+    $apps = $apps | Sort-Object { $_.Name }
     
     [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -280,12 +295,15 @@ function Remove-SelectedApps {
 
     $appsToRemove = $allAppsToRemove | Where-Object { $_ -notin $AppsToKeep }
 
-    Write-Host "Apps that will be kept: $($AppsToKeep -join ', ')" -ForegroundColor Yellow
+    # display friendly names in console output
+    $keptNames = $AppsToKeep | ForEach-Object { Get-FriendlyName $_ }
+    Write-Host "Apps that will be kept: $($keptNames -join ', ')" -ForegroundColor Yellow
     Write-Host "Apps that will be removed: $($appsToRemove.Count)" -ForegroundColor Red
-    # better method to get all of the apps properly
+    
     foreach ($app in $appsToRemove) {
         try {
-            Write-Host "Checking for installed package $app..." -ForegroundColor Yellow
+            $friendlyName = Get-FriendlyName $app
+            Write-Host "Checking for $friendlyName ($app)..." -ForegroundColor Yellow
 
             $pkg = Get-AppxPackage -Name *$app* -ErrorAction SilentlyContinue
             if ($pkg) {
@@ -293,10 +311,10 @@ function Remove-SelectedApps {
                     Write-Host "Removing Appx package $($_.Name)..." -ForegroundColor Yellow
                     Remove-AppxPackage -Package $_.PackageFullName -ErrorAction SilentlyContinue
                 }
-                Write-Host "Removed $app" -ForegroundColor Green
+                Write-Host "Removed $friendlyName" -ForegroundColor Green
             }
             else {
-                Write-Host "$app is not installed" -ForegroundColor Gray
+                Write-Host "$friendlyName is not installed" -ForegroundColor Gray
             }
 
             $prov = Get-AppxProvisionedPackage -Online | Where-Object DisplayName -like "*$app*"
@@ -308,13 +326,12 @@ function Remove-SelectedApps {
             }
         }
         catch {
-            Write-Host "Could not remove $app : $_" -ForegroundColor Red
+            Write-Host "Could not remove $friendlyName : $_" -ForegroundColor Red
         }
     }
 
     Write-Host "Sparkle debloat completed!" -ForegroundColor Green
 }
-
 
 try {
     Write-Host "Starting Sparkle Debloat script..." -ForegroundColor Green
