@@ -1,5 +1,5 @@
 {
-  "version": "2025-10-13T04:54:25.437Z",
+  "version": "2025-10-17T02:35:10.068Z",
   "tweaks": [
     {
       "id": "align-taskbar-left",
@@ -61,7 +61,7 @@
         "Performance",
         "Privacy"
       ],
-      "recommended": false,
+      "recommended": true,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/disable-copilot",
       "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/disable-copilot/meta.json"
@@ -213,7 +213,7 @@
       "category": [
         "General"
       ],
-      "recommended": false,
+      "recommended": true,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/enable-end-task-right-click",
       "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/enable-end-task-right-click/meta.json"
@@ -295,13 +295,14 @@
       ],
       "recommended": false,
       "reversible": true,
+      "updatedversion": "2.9.0",
       "docsurl": "https://docs.getsparkle.net/tweaks/optimize-network-settings",
       "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/optimize-network-settings/meta.json"
     },
     {
       "id": "optimize-nvidia-settings",
       "title": "Optimize Nvidia Settings",
-      "description": "Changes Nvidia Control Panel settings to improve performance",
+      "description": "Changes Nvidia Control Panel settings to improve gaming performance",
       "category": [
         "Performance",
         "GPU",
@@ -347,7 +348,7 @@
         "General",
         "Appearance"
       ],
-      "recommended": false,
+      "recommended": true,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/revert-context-menu",
       "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/revert-context-menu/meta.json"
@@ -385,7 +386,7 @@
         "Performance",
         "Gaming"
       ],
-      "recommended": false,
+      "recommended": true,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/set-services-to-manual",
       "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/set-services-to-manual/meta.json"
