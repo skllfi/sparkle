@@ -17,6 +17,7 @@ import { setupDNSHandlers } from "./dnsHandler"
 import Store from "electron-store"
 import { startDiscordRPC, stopDiscordRPC } from "./rpc"
 import { initAutoUpdater, triggerAutoUpdateCheck } from "./updates.js"
+import { ensureWinget } from "./system"
 Sentry.init({
   dsn: "https://d1e8991c715dd717e6b7b44dbc5c43dd@o4509167771648000.ingest.us.sentry.io/4509167772958720",
   ipcMode: IPCMode.Both,
@@ -82,7 +83,7 @@ const initDiscordRPC = async () => {
   }
 }
 
-initDiscordRPC().catch(err => {
+initDiscordRPC().catch((err) => {
   console.warn("(main.js) ", "Failed to initialize Discord RPC:", err.message)
 })
 
@@ -100,10 +101,10 @@ ipcMain.handle("discord-rpc:toggle", async (event, value) => {
     return { success: true, enabled: store.get("discord-rpc") }
   } catch (error) {
     console.error(logo, "Error toggling Discord RPC:", error)
-    return { 
-      success: false, 
+    return {
+      success: false,
       error: error.message,
-      enabled: store.get("discord-rpc") 
+      enabled: store.get("discord-rpc"),
     }
   }
 })
@@ -162,6 +163,7 @@ app.whenReady().then(() => {
 
   setTimeout(() => {
     void Defender()
+    void ensureWinget()
     setupTweaksHandlers()
     setupDNSHandlers()
   }, 0)

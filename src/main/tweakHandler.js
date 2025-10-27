@@ -122,9 +122,8 @@ async function detectGPU() {
       )
     })
 
-    const gpu = dedicatedGPU || graphicsData.controllers[0]
-    const hasGPU = !!gpu
-    const isNvidia = hasGPU && gpu.model.toLowerCase().includes("nvidia")
+    const hasGPU = !!dedicatedGPU
+    const isNvidia = hasGPU && dedicatedGPU.model.toLowerCase().includes("nvidia")
 
     return {
       hasGPU,
