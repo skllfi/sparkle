@@ -41,7 +41,7 @@ async function getSystemInfo() {
       }
     }
 
-    let gpuInfo = { model: "GPU not found", vram: "N/A" }
+    let gpuInfo = { model: "GPU not found", vram: "N/A", hasGPU: false, isNvidia: false }
 
     if (graphicsData.controllers && graphicsData.controllers.length > 0) {
       const dedicatedGPU = graphicsData.controllers.find((controller) => {
@@ -69,9 +69,13 @@ async function getSystemInfo() {
       const gpu = dedicatedGPU || graphicsData.controllers[0]
 
       if (gpu) {
+        const hasGPU = !!gpu
+        const isNvidia = hasGPU && gpu.model.toLowerCase().includes("nvidia")
         gpuInfo = {
           model: gpu.model || "Unknown GPU",
           vram: gpu.vram ? `${Math.round(gpu.vram / 1024)} GB` : "Unknown",
+          hasGPU,
+          isNvidia,
         }
       }
     }
@@ -90,6 +94,8 @@ async function getSystemInfo() {
 
       gpu_model: gpuInfo.model,
       vram: gpuInfo.vram,
+      hasGPU: gpuInfo.hasGPU,
+      isNvidia: gpuInfo.isNvidia,
 
       memory_total: totalMemory,
       memory_type: memoryType,

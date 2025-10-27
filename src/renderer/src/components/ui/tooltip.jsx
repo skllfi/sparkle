@@ -5,6 +5,7 @@ const Tooltip = ({ content, children, side = "top", delay = 0.5 }) => {
   const timeoutRef = useRef(null)
 
   const handleMouseEnter = () => {
+    if (!content) return
     clearTimeout(timeoutRef.current)
     timeoutRef.current = setTimeout(() => setIsVisible(true), delay * 1000)
   }
@@ -34,6 +35,10 @@ const Tooltip = ({ content, children, side = "top", delay = 0.5 }) => {
         .replace(/-0.5rem/, "0rem")
         .replace(/0.5rem/, "0rem")
     : sideToTransform[side]
+
+  if (!content) {
+    return children
+  }
 
   return (
     <div

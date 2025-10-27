@@ -17,6 +17,7 @@ import Tooltip from "@/components/ui/tooltip"
 import Modal from "@/components/ui/modal"
 import { invoke } from "@/lib/electron"
 import useRestartStore from "@/store/restartState"
+import useSystemStore from "@/store/systemInfo"
 import Button from "@/components/ui/button"
 import Toggle from "@/components/ui/Toggle"
 import log from "electron-log/renderer"
@@ -38,6 +39,30 @@ function Tweaks() {
   const [selectedTweak, setSelectedTweak] = useState(null)
 
   const { setNeedsRestart } = useRestartStore()
+  const systemInfo = useSystemStore((state) => state.systemInfo)
+
+  const isTweakCompatible = (tweak) => {
+    // If system info is not loaded yet, assume compatible to avoid false negatives
+    if (!systemInfo || Object.keys(systemInfo).length === 0) {
+      return { compatible: true }
+    }
+
+    // Check if tweak requires GPU
+    if (tweak.category && tweak.category.includes("GPU")) {
+      if (!systemInfo.hasGPU) {
+        return { compatible: false, reason: "Requires a dedicated GPU" }
+      }
+    }
+
+    // Check if tweak requires NVIDIA GPU
+    if (tweak.name === "optimize-nvidia-settings") {
+      if (!systemInfo.isNvidia) {
+        return { compatible: false, reason: "Requires an NVIDIA GPU" }
+      }
+    }
+
+    return { compatible: true }
+  }
 
   useEffect(() => {
     loadTweaks()
@@ -465,29 +490,54 @@ function Tweaks() {
                           >
                             <ExternalLink className="w-3 h-3" /> Docs
                           </Button>
-                          {tweak.reversible == null || tweak.reversible == true ? (
-                            <Toggle
-                              checked={toggleStates[tweak.name] || false}
-                              onChange={(e) => {
-                                const willOpenModal = !!tweak.modal && !toggleStates[tweak.name]
-                                if (willOpenModal) {
-                                  e.preventDefault()
-                                  e.stopPropagation()
-                                }
-                                handleToggle(originalIndex)
-                              }}
-                              disabled={false}
-                            />
-                          ) : (
-                            <div>
-                              <Button
-                                onClick={() => handleButtonClick(originalIndex)}
-                                disabled={false}
-                              >
-                                Apply
-                              </Button>
-                            </div>
-                          )}
+                          {(() => {
+                            const compatibility = isTweakCompatible(tweak)
+                            return (
+                              <>
+                                {!compatibility.compatible && (
+                                  <Tooltip content={compatibility.reason} delay={0.3} side="right">
+                                    <div className="p-1.5 bg-orange-500/50 rounded-lg hover:bg-orange-500/80 transition-colors">
+                                      <Monitor className="w-4 h-4 text-orange-300" />
+                                    </div>
+                                  </Tooltip>
+                                )}
+                                {tweak.reversible == null || tweak.reversible == true ? (
+                                  <Tooltip
+                                    content={
+                                      !compatibility.compatible ? compatibility.reason : null
+                                    }
+                                  >
+                                    <Toggle
+                                      checked={toggleStates[tweak.name] || false}
+                                      onChange={(e) => {
+                                        const willOpenModal =
+                                          !!tweak.modal && !toggleStates[tweak.name]
+                                        if (willOpenModal) {
+                                          e.preventDefault()
+                                          e.stopPropagation()
+                                        }
+                                        handleToggle(originalIndex)
+                                      }}
+                                      disabled={!compatibility.compatible}
+                                    />
+                                  </Tooltip>
+                                ) : (
+                                  <Tooltip
+                                    content={
+                                      !compatibility.compatible ? compatibility.reason : null
+                                    }
+                                  >
+                                    <Button
+                                      onClick={() => handleButtonClick(originalIndex)}
+                                      disabled={!compatibility.compatible}
+                                    >
+                                      Apply
+                                    </Button>
+                                  </Tooltip>
+                                )}
+                              </>
+                            )
+                          })()}
                         </div>
                       </div>
                       <div className="flex items-start mb-3">

@@ -6,6 +6,7 @@ import { exec } from "child_process"
 import { promisify } from "util"
 import { logo } from "./index"
 import { executePowerShell } from "./powershell"
+import si from "systeminformation"
 import log from "electron-log"
 console.log = log.log
 console.error = log.error
@@ -92,6 +93,58 @@ const getNipPath = () => {
   return path.join(process.resourcesPath, "sparklenvidia.nip")
 }
 
+async function detectGPU() {
+  try {
+    const graphicsData = await si.graphics()
+    if (!graphicsData.controllers || graphicsData.controllers.length === 0) {
+      return { hasGPU: false, isNvidia: false, model: null }
+    }
+
+    const dedicatedGPU = graphicsData.controllers.find((controller) => {
+      const model = (controller.model || "").toLowerCase()
+      return (
+        (model.includes("nvidia") &&
+          (model.includes("gtx") ||
+            model.includes("rtx") ||
+            model.includes("titan") ||
+            model.includes("quadro") ||
+            model.includes("mx") ||
+            model.includes("tesla") ||
+            model.includes("a100") ||
+            model.includes("a40"))) ||
+        (model.includes("amd") &&
+          (model.includes("radeon") ||
+            model.includes("rx") ||
+            model.includes("vega") ||
+            model.includes("firepro") ||
+            model.includes("instinct"))) ||
+        (model.includes("intel") && model.includes("arc"))
+      )
+    })
+
+    const gpu = dedicatedGPU || graphicsData.controllers[0]
+    const hasGPU = !!gpu
+    const isNvidia = hasGPU && gpu.model.toLowerCase().includes("nvidia")
+
+    return {
+      hasGPU,
+      isNvidia,
+      model: gpu?.model || null,
+    }
+  } catch (error) {
+    console.error("Error detecting GPU:", error)
+    return { hasGPU: false, isNvidia: false, model: null }
+  }
+}
+
+function isGPUTweak(tweak) {
+  return tweak.category && tweak.category.includes("GPU")
+}
+
+function isNvidiaTweak(tweak) {
+  return tweak.name === "optimize-nvidia-settings"
+}
+
 function NvidiaProfileInspector() {
   const exePath = getExePath("nvidiaProfileInspector.exe")
   const nipPath = getNipPath()
@@ -145,6 +198,22 @@ export const setupTweaksHandlers = () => {
     if (!tweak) {
       throw new Error(`No apply script found for tweak: ${name}`)
     }
+
+    // Check hardware requirements for GPU-related tweaks
+    if (isGPUTweak(tweak)) {
+      const gpuInfo = await detectGPU()
+      if (!gpuInfo.hasGPU) {
+        throw new Error(`This tweak requires a dedicated GPU, but no compatible GPU was detected.`)
+      }
+    }
+
+    if (isNvidiaTweak(tweak)) {
+      const gpuInfo = await detectGPU()
+      if (!gpuInfo.isNvidia) {
+        throw new Error(`This tweak is only for NVIDIA GPUs, but no NVIDIA GPU was detected.`)
+      }
+    }
+
     if (name === "optimize-nvidia-settings") {
       console.log(logo, "Running Nvidia settings optimization...")
       NvidiaProfileInspector()
