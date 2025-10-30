@@ -1,0 +1,5 @@
+{
+  "name": "Unlock AI Services",
+  "description": "Changes the system region to USA and modifies the hosts file to unlock access to some AI services. This can be reverted by un-applying the tweak.",
+  "category": "Network"
+}

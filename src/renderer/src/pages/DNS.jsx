@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react"
 import { invoke } from "@/lib/electron"
 import RootDiv from "@/components/rootdiv"
-import Button from "@/components/ui/button"
-import Modal from "@/components/ui/modal"
+import Button from "@/components/ui/button.jsx"
+import Modal from "@/components/ui/modal.jsx"
 import { toast } from "react-toastify"
 import { Globe, Shield, Settings, RefreshCw, AlertCircle, Info } from "lucide-react"
 import { Cloud } from "lucide-react"
 import log from "electron-log/renderer"
 import { Check } from "lucide-react"
-import Card from "@/components/ui/Card"
+import Card from "@/components/ui/card.jsx"
 
 const dnsProviders = [
   {

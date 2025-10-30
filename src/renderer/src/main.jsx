@@ -6,6 +6,7 @@ import { init } from "@sentry/electron/renderer"
 import { init as reactInit } from "@sentry/react"
 import { PostHogProvider } from "posthog-js/react"
 import * as Sentry from "@sentry/react"
+import './i18n';
 
 init({
   sendDefaultPii: true,

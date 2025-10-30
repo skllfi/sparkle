@@ -1,5 +1,5 @@
-import Button from "@/components/ui/button"
-import Toggle from "@/components/ui/toggle"
+import Button from "@/components/ui/button.jsx"
+import Toggle from "@/components/ui/toggle.jsx"
 import { useState } from "react"
 import { invoke } from "@/lib/electron"
 import RootDiv from "@/components/rootdiv"
@@ -7,7 +7,7 @@ import { RefreshCw, Icon } from "lucide-react"
 import { broom } from "@lucide/lab"
 import { toast } from "react-toastify"
 import log from "electron-log/renderer"
-import Card from "@/components/ui/Card"
+import Card from "@/components/ui/card.jsx"
 
 const cleanups = [
   {

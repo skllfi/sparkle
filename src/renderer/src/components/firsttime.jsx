@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Modal from "@/components/ui/modal";
-import Button from "./ui/button";
+import Modal from "@/components/ui/modal.jsx";
+import Button from "@/components/ui/button.jsx";
 import { toast } from "react-toastify";
 import { invoke } from "@/lib/electron";
 import data from "../../../../package.json";

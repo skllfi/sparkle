@@ -1,11 +1,13 @@
 import { useState } from "react"
 import { invoke } from "@/lib/electron"
-import RootDiv from "@/components/rootdiv"
-import Modal from "@/components/ui/modal"
+import RootDiv from "@/components/rootdiv.jsx"
+import Modal from "@/components/ui/modal.jsx"
 import { toast } from "react-toastify"
-import Button from "@/components/ui/button"
-import Toggle from "@/components/ui/toggle"
+import Button from "@/components/ui/button.jsx"
+import Toggle from "@/components/ui/toggle.jsx"
 import log from "electron-log/renderer"
+import NoDPIComponent from "@/lib/components/utilities/NoDPI.jsx";
+import ProxyManager from "@/lib/components/utilities/ProxyManager.jsx";
 import {
   SquareTerminal,
   Binary,
@@ -209,6 +211,10 @@ export default function UtilitiesPage() {
         </div>
       </Modal>
       <RootDiv>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+          <NoDPIComponent />
+          <ProxyManager />
+        </div>
         <div className="pb-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {utilities.map((util) => (

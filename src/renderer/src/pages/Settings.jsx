@@ -1,24 +1,32 @@
-import RootDiv from "@/components/rootdiv"
+import RootDiv from "@/components/rootdiv.jsx"
 import { useEffect, useState } from "react"
 import jsonData from "../../../../package.json"
 import { invoke } from "@/lib/electron"
-import Button from "@/components/ui/button"
-import Modal from "@/components/ui/modal"
-import Toggle from "@/components/ui/toggle"
+import Button from "@/components/ui/button.jsx"
+import Modal from "@/components/ui/modal.jsx"
+import Toggle from "@/components/ui/toggle.jsx"
 import { toast } from "react-toastify"
-import Card from "@/components/ui/Card"
+import Card from "@/components/ui/card.jsx"
+import { useTranslation } from "react-i18next"
 
 const themes = [
-  { label: "System", value: "system" },
-  { label: "Dark", value: "dark" },
-  { label: "Light", value: "light" },
-  { label: "Purple", value: "purple" },
-  { label: "Gray", value: "gray" },
-  { label: "Classic", value: "classic" },
+  { labelKey: "settings.themes.system", value: "system" },
+  { labelKey: "settings.themes.dark", value: "dark" },
+  { labelKey: "settings.themes.light", value: "light" },
+  { labelKey: "settings.themes.purple", value: "purple" },
+  { labelKey: "settings.themes.gray", value: "gray" },
+  { labelKey: "settings.themes.classic", value: "classic" },
+]
+
+const languages = [
+  { label: "English", value: "en" },
+  { label: "Russian", value: "ru" },
 ]
 
 function Settings({ onCheckForUpdates }) {
+  const { t, i18n } = useTranslation()
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "system")
+  const [language, setLanguage] = useState(localStorage.getItem("language") || "en")
   const [checking, setChecking] = useState(false)
   const [discordEnabled, setDiscordEnabled] = useState(true)
   const [discordLoading, setDiscordLoading] = useState(false)
@@ -29,12 +37,18 @@ function Settings({ onCheckForUpdates }) {
   })
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
 
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng)
+    setLanguage(lng)
+    localStorage.setItem("language", lng)
+  }
+
   const checkForUpdates = async () => {
     try {
       setChecking(true)
       const res = await invoke({ channel: "updater:check" })
       if (res?.ok && !res.updateInfo) {
-        toast.success("You're up to date")
+        toast.success(t("settings.up_to_date"))
       }
     } catch (e) {
       toast.error(String(e))
@@ -84,7 +98,7 @@ function Settings({ onCheckForUpdates }) {
     await invoke({ channel: "clear-sparkle-cache" })
     localStorage.removeItem("sparkle:systemInfo")
     localStorage.removeItem("sparkle:tweakInfo")
-    toast.success("Sparkle cache cleared successfully!")
+    toast.success(t("settings.cache_cleared_success"))
   }
 
   const handleToggleTray = async () => {
@@ -115,19 +129,20 @@ function Settings({ onCheckForUpdates }) {
                 />
               </svg>
             </div>
-            <h2 className="text-xl font-semibold text-white mb-3">Delete Legacy Backups</h2>
+            <h2 className="text-xl font-semibold text-white mb-3">
+              {t("settings.delete_legacy_backups_title")}
+            </h2>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Are you sure you want to delete all legacy registry backups? This will permanently
-              remove the{" "}
+              {t("settings.delete_legacy_backups_confirm")}
               <code className="bg-sparkle-border-secondary/20 px-1 py-0.5 rounded-sm text-xs">
                 C:\Sparkle\Backup
-              </code>{" "}
-              folder and all its contents.
+              </code>
+              {t("settings.folder_and_contents")}
             </p>
           </div>
           <div className="flex gap-3 justify-end">
             <Button variant="secondary" onClick={() => setDeleteModalOpen(false)}>
-              Cancel
+              {t("settings.cancel")}
             </Button>
             <Button
               variant="danger"
@@ -136,7 +151,7 @@ function Settings({ onCheckForUpdates }) {
                 invoke({ channel: "delete-old-sparkle-backups" })
               }}
             >
-              Delete
+              {t("settings.delete")}
             </Button>
           </div>
         </div>
@@ -144,10 +159,33 @@ function Settings({ onCheckForUpdates }) {
       <RootDiv>
         <div className="min-h-screen w-full pb-16 overflow-y-auto">
           <div className="space-y-8 ">
-            <SettingSection title="Appearance">
+            <SettingSection title={t("settings.appearance_title")}>
               <SettingCard>
                 <div className="space-y-4">
-                  <h3 className="text-base font-medium text-sparkle-text">Theme</h3>
+                  <h3 className="text-base font-medium text-sparkle-text">
+                    {t("settings.language_title")}
+                  </h3>
+                  <p className="text-sm text-sparkle-text-secondary">
+                    {t("settings.language_description")}
+                  </p>
+                  <div className="flex gap-2">
+                    <select
+                      value={language}
+                      onChange={(e) => changeLanguage(e.target.value)}
+                      className="w-full bg-sparkle-card border border-sparkle-border rounded-lg px-3 py-2 text-sparkle-text focus:ring-0 focus:outline-hidden"
+                    >
+                      {languages.map((lang) => (
+                        <option key={lang.value} value={lang.value}>
+                          {lang.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </SettingCard>
+              <SettingCard>
+                <div className="space-y-4">
+                  <h3 className="text-base font-medium text-sparkle-text">{t("settings.theme_title")}</h3>
                   <div className="grid grid-cols-6 gap-3">
                     {themes.map((t) => (
                       <label
@@ -164,7 +202,7 @@ function Settings({ onCheckForUpdates }) {
                           onChange={() => setTheme(t.value)}
                           className="sr-only"
                         />
-                        <span className="text-sparkle-text font-medium">{t.label}</span>
+                        <span className="text-sparkle-text font-medium">{t(t.labelKey)}</span>
                       </label>
                     ))}
                   </div>
@@ -172,15 +210,15 @@ function Settings({ onCheckForUpdates }) {
               </SettingCard>
             </SettingSection>
 
-            <SettingSection title="Discord RPC">
+            <SettingSection title={t("settings.discord_rpc_title")}>
               <SettingCard>
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <h3 className="text-base font-medium text-sparkle-text mb-1">
-                      Discord Rich Presence
+                      {t("settings.discord_rpc_title")}
                     </h3>
                     <p className="text-sm text-sparkle-text-secondary">
-                      Show your Sparkle activity on Discord
+                      {t("settings.discord_rpc_description")}
                     </p>
                   </div>
                   <div className="flex items-center gap-3">
@@ -196,37 +234,37 @@ function Settings({ onCheckForUpdates }) {
                           : "text-sparkle-text-secondary bg-sparkle-border-secondary/20"
                       }`}
                     >
-                      {discordEnabled ? "Enabled" : "Disabled"}
+                      {discordEnabled ? t("settings.enabled") : t("settings.disabled")}
                     </span>
                   </div>
                 </div>
               </SettingCard>
             </SettingSection>
-            <SettingSection title="Updates">
+            <SettingSection title={t("settings.updates_title")}>
               <SettingCard>
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <h3 className="text-base font-medium text-sparkle-text mb-1">
-                      Check for Updates
+                      {t("settings.updates_title")}
                     </h3>
-                    <p className="text-sm text-sparkle-text-secondary">Check for updates</p>
+                    <p className="text-sm text-sparkle-text-secondary">{t("settings.check_for_updates_button")}</p>
                   </div>
                   <Button onClick={checkForUpdates} disabled={checking}>
-                    {checking ? "Checking..." : "Check for Updates"}
+                    {checking ? t("settings.checking_for_updates") : t("settings.check_for_updates_button")}
                   </Button>
                 </div>
               </SettingCard>
             </SettingSection>
-            <SettingSection title="Profile">
+            <SettingSection title={t("settings.profile_title")}>
               <SettingCard>
                 <div className="space-y-4">
-                  <h3 className="text-base font-medium text-sparkle-text">User Name</h3>
+                  <h3 className="text-base font-medium text-sparkle-text">{t("settings.user_name_label")}</h3>
                   <input
                     type="text"
                     defaultValue={localStorage.getItem("sparkle:user") || ""}
                     onChange={(e) => localStorage.setItem("sparkle:user", e.target.value)}
                     className="w-full bg-sparkle-card border border-sparkle-border rounded-lg px-3 py-2 text-sparkle-text focus:ring-0 focus:outline-hidden"
-                    placeholder="Enter your name"
+                    placeholder={t("settings.user_name_placeholder")}
                   />
                   <div className="flex gap-2">
                     <Button
@@ -234,28 +272,28 @@ function Settings({ onCheckForUpdates }) {
                       onClick={async () => {
                         const username = await invoke({ channel: "get-user-name" })
                         localStorage.setItem("sparkle:user", username)
-                        toast.success("Name reset to system user")
+                        toast.success(t("settings.name_reset_success"))
                       }}
                     >
-                      Reset to System Name
+                      {t("settings.reset_to_system_name_button")}
                     </Button>
                   </div>
                 </div>
               </SettingCard>
             </SettingSection>
 
-            <SettingSection title="Privacy">
+            <SettingSection title={t("settings.privacy_title")}>
               <SettingCard>
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <h3 className="text-base font-medium text-sparkle-text mb-1">
-                      Disable Analytics
+                      {t("settings.disable_analytics_label")}
                     </h3>
                     <p className="text-sm text-sparkle-text-secondary">
-                      Disables Posthog analytics
+                      {t("settings.disable_analytics_description")}
                       <span className="inline-flex items-center gap-1 ml-2 text-yellow-500">
                         <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></span>
-                        Requires restart
+                        {t("settings.requires_restart")}
                       </span>
                     </p>
                   </div>
@@ -271,40 +309,40 @@ function Settings({ onCheckForUpdates }) {
                           : "text-sparkle-text-secondary bg-sparkle-border-secondary/20"
                       }`}
                     >
-                      {posthogDisabled ? "Disabled" : "Enabled"}
+                      {posthogDisabled ? t("settings.disabled") : t("settings.enabled")}
                     </span>
                   </div>
                 </div>
               </SettingCard>
             </SettingSection>
 
-            <SettingSection title="Data Management">
+            <SettingSection title={t("settings.data_management_title")}>
               <SettingCard>
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex-1">
-                    <h3 className="text-base font-medium text-sparkle-text mb-1">Legacy Backups</h3>
+                    <h3 className="text-base font-medium text-sparkle-text mb-1">{t("settings.legacy_backups_label")}</h3>
                     <p className="text-sm text-sparkle-text-secondary">
-                      Remove old backup files stored in{" "}
+                      {t("settings.legacy_backups_description")}
                       <code className="bg-sparkle-border-secondary/20 px-1 py-0.5 rounded-sm text-xs">
                         C:\Sparkle\Backup
                       </code>
                     </p>
                   </div>
                   <Button variant="danger" onClick={() => setDeleteModalOpen(true)}>
-                    Delete Backups
+                    {t("settings.delete_backups_button")}
                   </Button>
                 </div>
                 <div className="flex items-center justify-between mt-2">
                   <div className="flex-1">
                     <h3 className="text-base font-medium text-sparkle-text mb-1">
-                      Clear Sparkle Cache
+                      {t("settings.clear_sparkle_cache_label")}
                     </h3>
                     <p className="text-sm text-sparkle-text-secondary">
-                      Remove temporary files/logs Sparkle may leave behind.
+                      {t("settings.clear_sparkle_cache_description")}
                     </p>
                   </div>
                   <Button variant="secondary" onClick={clearCache}>
-                    Clear Cache
+                    {t("settings.clear_cache_button")}
                   </Button>
                   <Button
                     variant="secondary"
@@ -313,22 +351,22 @@ function Settings({ onCheckForUpdates }) {
                       await invoke({ channel: "open-log-folder" })
                     }}
                   >
-                    Open Log Folder
+                    {t("settings.open_log_folder_button")}
                   </Button>
                 </div>
               </SettingCard>
             </SettingSection>
 
-            <SettingSection title="Other">
+            <SettingSection title={t("settings.other_title")}>
               <SettingCard>
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <h3 className="text-base font-medium text-sparkle-text mb-1">Show tray icon</h3>
+                    <h3 className="text-base font-medium text-sparkle-text mb-1">{t("settings.show_tray_icon_label")}</h3>
                     <p className="text-sm text-sparkle-text-secondary">
-                      Enable or disable Sparkle running in the system tray.
+                      {t("settings.show_tray_icon_description")}
                       <span className="inline-flex items-center gap-1 ml-2 text-yellow-500">
                         <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></span>
-                        Requires restart
+                        {t("settings.requires_restart")}
                       </span>
                     </p>
                   </div>
@@ -345,25 +383,25 @@ function Settings({ onCheckForUpdates }) {
                           : "text-sparkle-text-secondary bg-sparkle-border-secondary/20"
                       }`}
                     >
-                      {trayEnabled ? "Enabled" : "Disabled"}
+                      {trayEnabled ? t("settings.enabled") : t("settings.disabled")}
                     </span>
                   </div>
                 </div>
               </SettingCard>
             </SettingSection>
 
-            <SettingSection title="About">
+            <SettingSection title={t("settings.about_title")}>
               <SettingCard>
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-base font-medium text-sparkle-text mb-1">Sparkle</h3>
+                    <h3 className="text-base font-medium text-sparkle-text mb-1">{t("settings.sparkle_title")}</h3>
                     <p className="text-sm text-sparkle-text-secondary">
-                      Version {jsonData.version}
+                      {t("settings.version")} {jsonData.version}
                     </p>
                   </div>
                   <div className="text-right">
                     <p className="text-sm text-sparkle-text-secondary">
-                      © {new Date().getFullYear()} Parcoil Network
+                      {t("settings.copyright", { year: new Date().getFullYear() })}
                     </p>
                   </div>
                 </div>

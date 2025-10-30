@@ -18,6 +18,19 @@ import Store from "electron-store"
 import { startDiscordRPC, stopDiscordRPC } from "./rpc"
 import { initAutoUpdater, triggerAutoUpdateCheck } from "./updates.js"
 import { ensureWinget } from "./system"
+import {
+  initNoDPI,
+  startNoDPI,
+  stopNoDPI,
+  checkNoDPIStatus,
+  getNoDPIBlacklist,
+  updateNoDPIBlacklist,
+  isNoDPIAutostartEnabled,
+  enableNoDPIAutostart,
+  disableNoDPIAutostart
+} from './nodpi';
+import { setProxy, disableProxy, getProxyStatus } from './proxyHandler';
+
 Sentry.init({
   dsn: "https://d1e8991c715dd717e6b7b44dbc5c43dd@o4509167771648000.ingest.us.sentry.io/4509167772958720",
   ipcMode: IPCMode.Both,
@@ -55,7 +68,7 @@ if (store.get("showTray") === undefined) {
 ipcMain.handle("tray:get", () => {
   return store.get("showTray")
 })
-ipcMain.handle("tray:set", (event, value) => {
+pcMain.handle("tray:set", (event, value) => {
   store.set("showTray", value)
   if (mainWindow) {
     if (value) {
@@ -112,9 +125,27 @@ ipcMain.handle("discord-rpc:get", () => {
   return store.get("discord-rpc")
 })
 
+// NoDPI Handlers
+ipcMain.handle('nodpi:start', () => startNoDPI());
+ipcMain.handle('nodpi:stop', () => stopNoDPI());
+ipcMain.handle('nodpi:status', () => checkNoDPIStatus());
+ipcMain.handle('nodpi:get-blacklist', () => getNoDPIBlacklist());
+ipcMain.handle('nodpi:update-blacklist', (event, content) => updateNoDPIBlacklist(content));
+ipcMain.handle('nodpi:autostart-status', () => isNoDPIAutostartEnabled());
+ipcMain.handle('nodpi:autostart-enable', () => enableNoDPIAutostart());
+ipcMain.handle('nodpi:autostart-disable', () => disableNoDPIAutostart());
+
+// Proxy Handlers
+ipcMain.handle('proxy:set', (event, { address, port }) => setProxy(address, port));
+ipcMain.handle('proxy:disable', () => disableProxy());
+ipcMain.handle('proxy:status', () => getProxyStatus());
+
+
 export let mainWindow = null
 
 function createWindow() {
+  const shouldShow = !process.argv.includes('--hidden');
+
   mainWindow = new BrowserWindow({
     width: 1380,
     backgroundColor: "#0c121f",
@@ -123,7 +154,7 @@ function createWindow() {
     minHeight: 760,
     center: true,
     frame: false,
-    show: false,
+    show: false, // Always start hidden, we show it later if needed
     autoHideMenuBar: true,
     icon: path.join(__dirname, "../../resources/sparkle2.ico"),
     webPreferences: {
@@ -132,6 +163,8 @@ function createWindow() {
       sandbox: false,
     },
   })
+
+  initNoDPI(mainWindow);
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
@@ -144,13 +177,22 @@ function createWindow() {
     mainWindow.loadFile(join(__dirname, "../renderer/index.html"))
   }
 
-  mainWindow.once("ready-to-show", () => {
-    mainWindow.show()
-  })
+  if (shouldShow) {
+    mainWindow.once("ready-to-show", () => {
+      mainWindow.show()
+    })
+  }
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   createWindow()
+
+  const nodpiAutostart = await isNoDPIAutostartEnabled();
+  if (nodpiAutostart.isEnabled) {
+    console.log(logo, "NoDPI autostart is enabled, starting service...");
+    await startNoDPI();
+  }
+
   initAutoUpdater(() => mainWindow)
   if (store.get("showTray")) {
     setTimeout(() => {
@@ -203,6 +245,14 @@ app.whenReady().then(() => {
       }
     }
   })
+  
+  app.on('quit', async () => {
+    const nodpiStatus = checkNoDPIStatus();
+    if (nodpiStatus.isRunning) {
+        console.log(logo, "Stopping NoDPI and disabling proxy on quit...");
+        await stopNoDPI();
+    }
+  });
 
   const gotTheLock = app.requestSingleInstanceLock()
 
@@ -212,6 +262,7 @@ app.whenReady().then(() => {
     app.on("second-instance", () => {
       if (mainWindow) {
         if (mainWindow.isMinimized()) mainWindow.restore()
+        if (!mainWindow.isVisible()) mainWindow.show();
         mainWindow.focus()
       }
     })

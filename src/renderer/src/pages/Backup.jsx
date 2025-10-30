@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 import { RefreshCw, PlusCircle, Shield, RotateCcw, Loader2, Search } from "lucide-react"
-import RootDiv from "@/components/rootdiv"
+import RootDiv from "@/components/rootdiv.jsx"
 import { invoke } from "@/lib/electron"
-import Button from "@/components/ui/button"
-import Modal from "@/components/ui/modal"
+import Button from "@/components/ui/button.jsx"
+import Modal from "@/components/ui/modal.jsx"
 import { toast } from "react-toastify"
 import { Trash } from "lucide-react"
 import log from "electron-log/renderer"
-import { LargeInput } from "@/components/ui/input"
+import { LargeInput } from "@/components/ui/input.jsx"
 
 export default function RestorePointManager() {
   const [restorePoints, setRestorePoints] = useState([])

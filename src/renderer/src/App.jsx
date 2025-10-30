@@ -1,96 +1,56 @@
-import { useState, useEffect } from "react"
-import { Routes, Route, Navigate } from "react-router-dom"
-import TitleBar from "./components/titlebar"
-import Nav from "./components/nav"
-import "./app.css"
-import { ToastContainer, Slide } from "react-toastify"
-import Home from "./pages/Home"
-import Tweaks from "./pages/Tweaks"
-import Clean from "./pages/Clean"
-import Apps from "./pages/Apps"
-import Utilities from "./pages/Utilities"
-import DNS from "./pages/DNS"
-import Settings from "./pages/Settings"
-import Backup from "./pages/Backup"
-import FirstTime from "./components/firsttime"
-import UpdateManager from "./components/updatemanager"
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import './App.css';
+
+import TitleBar from '@/components/titlebar.jsx';
+import Nav from '@/components/nav.jsx';
+import Rootdiv from '@/components/rootdiv.jsx';
+import Home from '@/pages/Home.jsx';
+import Tweaks from '@/pages/Tweaks.jsx';
+import Clean from '@/pages/Clean.jsx';
+import Apps from '@/pages/Apps.jsx';
+import Settings from '@/pages/Settings.jsx';
+import NotFound from '@/pages/Notfound.jsx';
+import DNS from '@/pages/DNS.jsx';
+import Backup from '@/pages/Backup.jsx';
+import Utilities from '@/pages/Utilities.jsx';
 
 function App() {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "system")
-
-  useEffect(() => {
-    const applyTheme = (theme) => {
-      document.body.classList.remove("light", "purple", "dark", "gray", "classic")
-      if (theme === "system" || !theme) {
-        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light"
-        document.body.classList.add(systemTheme)
-        document.body.setAttribute("data-theme", systemTheme)
-      } else {
-        document.body.classList.add(theme)
-        document.body.setAttribute("data-theme", theme)
-      }
-    }
-
-    applyTheme(theme)
-
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
-    const handleSystemThemeChange = () => {
-      if ((localStorage.getItem("theme") || "system") === "system") applyTheme("system")
-    }
-
-    const handleStorageChange = (e) => {
-      if (e.key === "theme") setTheme(e.newValue || "system")
-    }
-
-    mediaQuery.addEventListener("change", handleSystemThemeChange)
-    window.addEventListener("storage", handleStorageChange)
-
-    if (localStorage.getItem("posthogDisabled") === "true") {
-      document.body.classList.add("ph-no-capture")
-    } else {
-      document.body.classList.remove("ph-no-capture")
-    }
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleSystemThemeChange)
-      window.removeEventListener("storage", handleStorageChange)
-    }
-  }, [theme])
-
-  return (
-    <div className="flex flex-col h-screen bg-sparkle-bg text-sparkle-text overflow-hidden">
-      <FirstTime />
-      <TitleBar />
-      <Nav />
-      <div className="flex flex-1 pt-[50px] relative">
-        <main className="flex-1 ml-52 p-6 rounded-tl-2xl border-t border-l border-sparkle-border">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/tweaks" element={<Tweaks />} />
-            <Route path="/clean" element={<Clean />} />
-            <Route path="/backup" element={<Backup />} />
-            <Route path="/utilities" element={<Utilities />} />
-            <Route path="/dns" element={<DNS />} />
-            <Route path="/apps" element={<Apps />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </main>
-      </div>
-      <UpdateManager />
-      <ToastContainer
-        stacked
-        limit={5}
-        position="bottom-right"
-        theme="dark"
-        transition={Slide}
-        hideProgressBar
-        pauseOnFocusLoss={false}
-      />
-    </div>
-  )
+    return (
+        <>
+            <ToastContainer 
+                position="bottom-right"
+                theme="dark"
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
+            <Router>
+                <TitleBar />
+                <Rootdiv>
+                    <Nav />
+                    <main className="ml-20 h-full w-full bg-transparent p-6">
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/tweaks" element={<Tweaks />} />
+                            <Route path="/clean" element={<Clean />} />
+                            <Route path="/apps" element={<Apps />} />
+                            <Route path="/settings" element={<Settings />} />
+                            <Route path="/dns" element={<DNS />} />
+                            <Route path="/backup" element={<Backup />} />
+                            <Route path="/utilities" element={<Utilities />} />
+                            <Route path="*" element={<NotFound />} />
+                        </Routes>
+                    </main>
+                </Rootdiv>
+            </Router>
+        </>
+    );
 }
 
-export default App
+export default App;

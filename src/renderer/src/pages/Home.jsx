@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react"
 import RootDiv from "@/components/rootdiv"
 import { Cpu, HardDrive, Zap, MemoryStick, Gpu } from "lucide-react"
-import InfoCard from "@/components/infocard"
+import InfoCard from "@/components/infocard.jsx"
 import { invoke } from "@/lib/electron"
-import Button from "@/components/ui/button"
+import Button from "@/components/ui/button.jsx"
 import { useNavigate } from "react-router-dom"
 import useSystemStore from "@/store/systemInfo"
 import log from "electron-log/renderer"
 import Greeting from "@/components/greeting"
 import { MonitorCog } from "lucide-react"
 import { Wrench } from "lucide-react"
-import Card from "@/components/ui/Card"
+import Card from "@/components/ui/card.jsx"
 function Home() {
   const systemInfo = useSystemStore((state) => state.systemInfo)
   const setSystemInfo = useSystemStore((state) => state.setSystemInfo)
@@ -126,7 +126,8 @@ function Home() {
               className="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-sparkle-primary rounded-full ml-3"
               role="status"
               aria-label="loading"
-            ></div>
+            >
+            </div>
           </div>
           <div className="text-sparkle-text-secondary">Loading system information...</div>
           <p className="text-sm text-sparkle-primary">

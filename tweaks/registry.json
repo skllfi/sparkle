@@ -1,5 +1,5 @@
 {
-  "version": "2025-10-17T02:35:10.068Z",
+  "version": "2025-10-30T22:26:24.905Z",
   "tweaks": [
     {
       "id": "align-taskbar-left",
@@ -440,6 +440,16 @@
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/ultimate-performance-plan",
       "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/ultimate-performance-plan/meta.json"
+    },
+    {
+      "id": "Unlock AI Services",
+      "title": "unlock-ai-services",
+      "description": "Changes the system region to USA and modifies the hosts file to unlock access to some AI services. This can be reverted by un-applying the tweak.",
+      "category": "Network",
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getsparkle.net/tweaks/unlock-ai-services",
+      "source": "https://github.com/Parcoil/Sparkle/blob/v2/tweaks/unlock-ai-services/meta.json"
     }
   ]
 }
