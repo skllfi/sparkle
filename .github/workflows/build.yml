@@ -1,32 +1,38 @@
-
-name: Build Electron App
+name: Build & Release
 
 on:
   push:
     branches:
-      - "v2"
+      - v2
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-    - name: Check out git repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Install Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install pnpm
+        run: npm install -g pnpm
 
-    - name: Build application
-      run: npm run build:electron
+      - name: Install dependencies
+        run: pnpm install
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: sparkle-windows
-        path: dist/sparkle Setup 2.9.0.exe
+      - name: Build the application
+        run: pnpm run build:electron
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Sparkle-build
+          path: |
+            dist/*.exe
+            dist/*.zip
