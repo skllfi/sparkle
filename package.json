@@ -72,9 +72,7 @@
         "from": "resources",
         "to": ".",
         "filter": [
-          "*.exe",
-          "*.nip",
-          "*.pow"
+          "**/*"
         ]
       },
       {

@@ -1,0 +1,32 @@
+
+name: Build Electron App
+
+on:
+  push:
+    branches:
+      - "v2"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Check out git repository
+      uses: actions/checkout@v2
+
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build application
+      run: npm run build:electron
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: sparkle-windows
+        path: dist/sparkle Setup 2.9.0.exe

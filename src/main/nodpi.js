@@ -7,7 +7,7 @@ let nodpiProcess = null;
 let mainWindow = null;
 
 const nodpiPath = path.join(process.resourcesPath, 'bin', 'nodpi', 'NoDPI.exe');
-const blacklistPath = path.join(process.resourcesPath, 'bin', 'nodpi', 'domains_to_ignore.txt');
+const blacklistPath = path.join(process.resourcesPath, 'bin', 'nodpi', 'blacklist.txt');
 
 export function initNoDPI(mWindow) {
     mainWindow = mWindow;
