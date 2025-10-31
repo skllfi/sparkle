@@ -68,7 +68,7 @@ if (store.get("showTray") === undefined) {
 ipcMain.handle("tray:get", () => {
   return store.get("showTray")
 })
-pcMain.handle("tray:set", (event, value) => {
+ipcMain.handle("tray:set", (event, value) => {
   store.set("showTray", value)
   if (mainWindow) {
     if (value) {
