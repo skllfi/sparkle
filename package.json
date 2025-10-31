@@ -47,6 +47,7 @@
     "@electron-toolkit/eslint-config": "^2.1.0",
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
     "@tailwindcss/postcss": "^4.1.16",
+    "@vitejs/plugin-react": "^4.7.0",
     "autoprefixer": "^10.4.21",
     "electron": "38.0.0",
     "electron-builder": "^26.0.12",
