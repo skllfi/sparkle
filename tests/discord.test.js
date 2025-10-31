@@ -5,29 +5,29 @@ import { startDiscordRPC } from "../src/main/rpc";
 import { initDiscordRPC } from "../src/main/utils/discord";
 
 vi.mock("electron-store", () => {
-    const storeMocks = {
-        get: vi.fn(),
-        set: vi.fn(),
-        clear: vi.fn(),
+  const storeMocks = {
+    get: vi.fn(),
+    set: vi.fn(),
+    clear: vi.fn(),
+  };
+
+  let storeData = {};
+  const StoreClass = class {
+    constructor() {
+      this.get = storeMocks.get;
+      this.set = storeMocks.set;
+      this.clear = storeMocks.clear;
+
+      this.get.mockImplementation((key) => storeData[key]);
+      this.set.mockImplementation((key, value) => {
+        storeData[key] = value;
+      });
+      this.clear.mockImplementation(() => {
+        storeData = {};
+      });
     }
-
-    let storeData = {};
-    const StoreClass = class {
-        constructor() {
-            this.get = storeMocks.get;
-            this.set = storeMocks.set;
-            this.clear = storeMocks.clear;
-
-            this.get.mockImplementation((key) => storeData[key]);
-            this.set.mockImplementation((key, value) => {
-                storeData[key] = value;
-            });
-            this.clear.mockImplementation(() => {
-                storeData = {};
-            });
-        }
-    };
-    return { default: StoreClass };
+  };
+  return { default: StoreClass };
 });
 
 vi.mock("../src/main/rpc", () => ({
@@ -35,15 +35,15 @@ vi.mock("../src/main/rpc", () => ({
 }));
 
 vi.mock("../src/main/index", () => ({
-    logo: "[Sparkle]:"
+  logo: "[Sparkle]:",
 }));
 
 describe("initDiscordRPC", () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
-        const store = new Store();
-        store.clear();
-    });
+  beforeEach(() => {
+    vi.clearAllMocks();
+    const store = new Store();
+    store.clear();
+  });
 
   it("should call startDiscordRPC when discord-rpc is undefined", async () => {
     await initDiscordRPC();
