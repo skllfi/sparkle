@@ -5,10 +5,7 @@
       "id": "align-taskbar-left",
       "title": "Align Taskbar Left",
       "description": "Aligns the taskbar to the left side of the screen.",
-      "category": [
-        "General",
-        "Appearance"
-      ],
+      "category": ["General", "Appearance"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/align-taskbar-left",
@@ -22,10 +19,7 @@
       "id": "debloat-windows",
       "title": "Debloat Windows",
       "description": "Choose between Sparkle Debloat script or Raphire's Win11Debloat script to remove built-in Windows apps and bloatware.",
-      "category": [
-        "Performance",
-        "Privacy"
-      ],
+      "category": ["Performance", "Privacy"],
       "recommended": true,
       "reversible": false,
       "updatedversion": "2.9.0",
@@ -40,9 +34,7 @@
       "id": "detailed-bsod",
       "title": "Detailed BSOD",
       "description": "Adds detailed information to the Blue Screen of Death (BSOD) screen",
-      "category": [
-        "General"
-      ],
+      "category": ["General"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/detailed-bsod",
@@ -56,10 +48,7 @@
       "id": "disable-background-ms-store-apps",
       "title": "Disable Background MS Store apps",
       "description": "Disables Microsoft Store apps from running in the background",
-      "category": [
-        "Performance",
-        "Privacy"
-      ],
+      "category": ["Performance", "Privacy"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/disable-background-ms-store-apps",
@@ -73,10 +62,7 @@
       "id": "disable-copilot",
       "title": "Disable Copilot",
       "description": "Removes Microsoft's Copilot feature. (will fail if copilot is not installed)",
-      "category": [
-        "Performance",
-        "Privacy"
-      ],
+      "category": ["Performance", "Privacy"],
       "recommended": true,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/disable-copilot",
@@ -90,10 +76,7 @@
       "id": "disable-core-isolation",
       "title": "Disable Core Isolation",
       "description": "Disables Core Isolation Memory Integrity to improve system performance",
-      "category": [
-        "Performance",
-        "Gaming"
-      ],
+      "category": ["Performance", "Gaming"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/disable-core-isolation",
@@ -107,10 +90,7 @@
       "id": "disable-defender-rtp",
       "title": "Disable Defender RTP",
       "description": "Disables Defender Real-time Protection",
-      "category": [
-        "Performance",
-        "General"
-      ],
+      "category": ["Performance", "General"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/disable-defender-rtp",
@@ -124,9 +104,7 @@
       "id": "disable-dynamic-ticking",
       "title": "Disable Dynamic Ticking",
       "description": "Improves system responsiveness and reduces latency by disabling dynamic timer ticks.",
-      "category": [
-        "Performance"
-      ],
+      "category": ["Performance"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/disable-dynamic-ticking",
@@ -140,10 +118,7 @@
       "id": "disable-fast-startup",
       "title": "Disable Fast Startup",
       "description": "Disables Windows Fast Startup to improve system stability",
-      "category": [
-        "Performance",
-        "General"
-      ],
+      "category": ["Performance", "General"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/disable-fast-startup",
@@ -157,9 +132,7 @@
       "id": "disable-gamebar",
       "title": "Disable Gamebar",
       "description": "Disables The Xbox gamebar ",
-      "category": [
-        "Performance"
-      ],
+      "category": ["Performance"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/disable-gamebar",
@@ -173,10 +146,7 @@
       "id": "disable-hibernation",
       "title": "Disable Hibernation",
       "description": "Disables the hibernation feature to free up disk space and improve shutdown speed",
-      "category": [
-        "Performance",
-        "General"
-      ],
+      "category": ["Performance", "General"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/disable-hibernation",
@@ -190,9 +160,7 @@
       "id": "disable-location-tracking",
       "title": "Disable Location Tracking",
       "description": "Disables Windows location tracking.",
-      "category": [
-        "Privacy"
-      ],
+      "category": ["Privacy"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/disable-location-tracking",
@@ -206,9 +174,7 @@
       "id": "disable-lockscreen-tips",
       "title": "Disable Lockscreen Tips",
       "description": "Disables tips on the lockscreen.",
-      "category": [
-        "General"
-      ],
+      "category": ["General"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/disable-lockscreen-tips",
@@ -222,10 +188,7 @@
       "id": "disable-mouse-acceleration",
       "title": "Disable Mouse Acceleration",
       "description": "Disables mouse acceleration for a more consistent and precise mouse movement experience. Great for gaming",
-      "category": [
-        "Performance",
-        "Gaming"
-      ],
+      "category": ["Performance", "Gaming"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/disable-mouse-acceleration",
@@ -239,11 +202,7 @@
       "id": "disable-wifi-sense",
       "title": "Disable Wifi Sense",
       "description": "Disables Wifi Sense to prevent sharing of Wi-Fi networks with contacts",
-      "category": [
-        "Privacy",
-        "Network",
-        "General"
-      ],
+      "category": ["Privacy", "Network", "General"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/disable-wifi-sense",
@@ -257,10 +216,7 @@
       "id": "enable-dark-mode",
       "title": "Enable Dark Mode",
       "description": "Enables dark mode for Windows. Great for unactivated systems.",
-      "category": [
-        "General",
-        "Appearance"
-      ],
+      "category": ["General", "Appearance"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/enable-dark-mode",
@@ -274,9 +230,7 @@
       "id": "enable-end-task-right-click",
       "title": "Enable End Task With Right Click",
       "description": "Enables the \"End Task\" option in the taskbar context menu",
-      "category": [
-        "General"
-      ],
+      "category": ["General"],
       "recommended": true,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/enable-end-task-right-click",
@@ -290,11 +244,7 @@
       "id": "enable-game-mode",
       "title": "Enable Game Mode",
       "description": "Enables Game Mode on windows",
-      "category": [
-        "General",
-        "Performance",
-        "Gaming"
-      ],
+      "category": ["General", "Performance", "Gaming"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/enable-game-mode",
@@ -308,11 +258,7 @@
       "id": "enable-hags",
       "title": "Enable HAGS",
       "description": "Enables HAGS (Hardware Accelerated GPU Scheduling)",
-      "category": [
-        "Performance",
-        "Gaming",
-        "GPU"
-      ],
+      "category": ["Performance", "Gaming", "GPU"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/enable-hags",
@@ -326,9 +272,7 @@
       "id": "enable-hpet",
       "title": "Enable HPET (High Precision Event Timer)",
       "description": "Forces use of the High Precision Event Timer, which can reduce stuttering and improve timing accuracy on some hardware.",
-      "category": [
-        "Performance"
-      ],
+      "category": ["Performance"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/enable-hpet",
@@ -342,11 +286,7 @@
       "id": "enable-optimization-for-windowed-games",
       "title": "Enable Optimization For Windowed Games",
       "description": "Enables Optimization For Windowed Games on windows",
-      "category": [
-        "General",
-        "Performance",
-        "Gaming"
-      ],
+      "category": ["General", "Performance", "Gaming"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/enable-optimization-for-windowed-games",
@@ -360,10 +300,7 @@
       "id": "menu-show-delay-zero",
       "title": "Menu Show Delay Zero",
       "description": "Removes the delay when opening menus.",
-      "category": [
-        "Performance",
-        "Appearance"
-      ],
+      "category": ["Performance", "Appearance"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/menu-show-delay-zero",
@@ -377,10 +314,7 @@
       "id": "optimize-network-settings",
       "title": "Optimize Network Settings",
       "description": "Changes various Windows settings to improve network latency and speeds.",
-      "category": [
-        "Network",
-        "Gaming"
-      ],
+      "category": ["Network", "Gaming"],
       "recommended": false,
       "reversible": true,
       "updatedversion": "2.9.0",
@@ -395,11 +329,7 @@
       "id": "optimize-nvidia-settings",
       "title": "Optimize Nvidia Settings",
       "description": "Changes Nvidia Control Panel settings to improve gaming performance",
-      "category": [
-        "Performance",
-        "GPU",
-        "Gaming"
-      ],
+      "category": ["Performance", "GPU", "Gaming"],
       "recommended": false,
       "reversible": false,
       "docsurl": "https://docs.getsparkle.net/tweaks/optimize-nvidia-settings",
@@ -413,10 +343,7 @@
       "id": "remove-gaming-apps",
       "title": "Remove Gaming Apps",
       "description": "Removes Xbox app, Xbox Game Bar, and Xbox Game Overlay",
-      "category": [
-        "Performance",
-        "Privacy"
-      ],
+      "category": ["Performance", "Privacy"],
       "recommended": false,
       "reversible": false,
       "docsurl": "https://docs.getsparkle.net/tweaks/remove-gaming-apps",
@@ -430,11 +357,7 @@
       "id": "remove-onedrive",
       "title": "Remove OneDrive",
       "description": "Removes OneDrive from the system",
-      "category": [
-        "Performance",
-        "General",
-        "Privacy"
-      ],
+      "category": ["Performance", "General", "Privacy"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/remove-onedrive",
@@ -448,10 +371,7 @@
       "id": "revert-context-menu",
       "title": "Revert Context Menu",
       "description": "Reverts the context menu to the default Windows 10 context menu.",
-      "category": [
-        "General",
-        "Appearance"
-      ],
+      "category": ["General", "Appearance"],
       "recommended": true,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/revert-context-menu",
@@ -465,10 +385,7 @@
       "id": "run-disk-cleanup",
       "title": "Run Disk Cleanup",
       "description": "Runs disk cleanup on your C: drive. also removes old windows update cache",
-      "category": [
-        "General",
-        "Performance"
-      ],
+      "category": ["General", "Performance"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/run-disk-cleanup",
@@ -482,9 +399,7 @@
       "id": "set-powershell7-default",
       "title": "Set PowerShell 7 as Default",
       "description": "Sets PowerShell 7 as the default profile in Windows Terminal (installs PS7 if missing)",
-      "category": [
-        "General"
-      ],
+      "category": ["General"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/set-powershell7-default",
@@ -498,10 +413,7 @@
       "id": "set-services-to-manual",
       "title": "Set Services to Manual",
       "description": "Sets various Windows services to Manual startup type to improve performance.",
-      "category": [
-        "Performance",
-        "Gaming"
-      ],
+      "category": ["Performance", "Gaming"],
       "recommended": true,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/set-services-to-manual",
@@ -515,9 +427,7 @@
       "id": "set-time-utc",
       "title": "Set Time To UTC",
       "description": "Sets the system time to UTC, Great for dual booting",
-      "category": [
-        "General"
-      ],
+      "category": ["General"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/set-time-utc",
@@ -531,9 +441,7 @@
       "id": "set-win32-priority-separation",
       "title": "Set Win32 Priority Separation",
       "description": "Optimizes foreground app performance by modifying system process priority behavior.",
-      "category": [
-        "Performance"
-      ],
+      "category": ["Performance"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/set-win32-priority-separation",
@@ -547,10 +455,7 @@
       "id": "show-seconds-in-taskbar-clock",
       "title": "Show Seconds in Taskbar Clock",
       "description": "Enables the seconds next to the clock in the taskbar",
-      "category": [
-        "Appearance",
-        "General"
-      ],
+      "category": ["Appearance", "General"],
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/show-seconds-in-system-clock",
@@ -564,10 +469,7 @@
       "id": "ultimate-performance-plan",
       "title": "Ultimate Performance Power Plan",
       "description": "Enables And Applys The Windows Ultimate Powerplan for better performance",
-      "category": [
-        "Performance",
-        "Gaming"
-      ],
+      "category": ["Performance", "Gaming"],
       "recommended": true,
       "reversible": true,
       "docsurl": "https://docs.getsparkle.net/tweaks/ultimate-performance-plan",

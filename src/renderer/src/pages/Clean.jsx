@@ -1,13 +1,13 @@
-import Button from "@/components/ui/button.jsx"
-import Toggle from "@/components/ui/toggle.jsx"
-import { useState } from "react"
-import { invoke } from "@/lib/electron"
-import RootDiv from "@/components/rootdiv"
-import { RefreshCw, Icon } from "lucide-react"
-import { broom } from "@lucide/lab"
-import { toast } from "react-toastify"
-import log from "electron-log/renderer"
-import Card from "@/components/ui/card.jsx"
+import Button from "@/components/ui/button.jsx";
+import Toggle from "@/components/ui/toggle.jsx";
+import { useState } from "react";
+import { invoke } from "@/lib/electron";
+import RootDiv from "@/components/rootdiv";
+import { RefreshCw, Icon } from "lucide-react";
+import { broom } from "@lucide/lab";
+import { toast } from "react-toastify";
+import log from "electron-log/renderer";
+import Card from "@/components/ui/card.jsx";
 
 const cleanups = [
   {
@@ -87,76 +87,78 @@ const cleanups = [
       Write-Output $totalSizeBefore
     `,
   },
-]
+];
 
 function Clean() {
-  const [selected, setSelected] = useState([])
-  const [loadingQueue, setLoadingQueue] = useState([])
+  const [selected, setSelected] = useState([]);
+  const [loadingQueue, setLoadingQueue] = useState([]);
   const [lastClean, setLastClean] = useState(
     localStorage.getItem("last-clean") || "Not cleaned yet.",
-  )
-  const [isCleaning, setIsCleaning] = useState(false)
-  const [cleanupResults, setCleanupResults] = useState({})
+  );
+  const [isCleaning, setIsCleaning] = useState(false);
+  const [cleanupResults, setCleanupResults] = useState({});
 
   const toggleCleanup = (id) => {
-    setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]))
-  }
+    setSelected((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+    );
+  };
 
   const formatBytes = (bytes) => {
-    if (bytes === 0 || !bytes) return "0 B"
-    const sizes = ["B", "KB", "MB", "GB", "TB"]
-    const i = Math.floor(Math.log(bytes) / Math.log(1024))
-    return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sizes[i]}`
-  }
+    if (bytes === 0 || !bytes) return "0 B";
+    const sizes = ["B", "KB", "MB", "GB", "TB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+    return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sizes[i]}`;
+  };
 
   async function runSelectedCleanups() {
-    setIsCleaning(true)
-    setLoadingQueue([])
-    setCleanupResults({})
-    let anySuccess = false
-    let newResults = {}
+    setIsCleaning(true);
+    setLoadingQueue([]);
+    setCleanupResults({});
+    let anySuccess = false;
+    let newResults = {};
 
     for (const cleanup of cleanups) {
-      if (!selected.includes(cleanup.id)) continue
-      setLoadingQueue((q) => [...q, cleanup.id])
-      const toastId = toast.loading(`Running ${cleanup.label}...`)
+      if (!selected.includes(cleanup.id)) continue;
+      setLoadingQueue((q) => [...q, cleanup.id]);
+      const toastId = toast.loading(`Running ${cleanup.label}...`);
       try {
         const result = await invoke({
           channel: "run-powershell",
           payload: { script: cleanup.script, name: `cleanup-${cleanup.id}` },
-        })
+        });
 
-        const resultStr = result?.output || "0"
-        const freedSpace = parseInt(resultStr.trim(), 10) || 0
-        newResults[cleanup.id] = freedSpace
+        const resultStr = result?.output || "0";
+        const freedSpace = parseInt(resultStr.trim(), 10) || 0;
+        newResults[cleanup.id] = freedSpace;
 
         toast.update(toastId, {
           render: `${cleanup.label} completed! ${formatBytes(freedSpace)} cleared.`,
           type: "success",
           isLoading: false,
           autoClose: 3000,
-        })
-        anySuccess = true
+        });
+        anySuccess = true;
       } catch (err) {
         toast.update(toastId, {
           render: `Failed: ${err.message || err}`,
           type: "error",
           isLoading: false,
           autoClose: 4000,
-        })
-        log.error(`Failed to run ${cleanup.id} cleanup: ${err.message || err}`)
+        });
+        log.error(`Failed to run ${cleanup.id} cleanup: ${err.message || err}`);
       }
     }
 
     if (anySuccess) {
-      const now = new Date().toLocaleString()
-      setLastClean(now)
-      localStorage.setItem("last-clean", now)
-      setCleanupResults(newResults)
+      const now = new Date().toLocaleString();
+      setLastClean(now);
+      localStorage.setItem("last-clean", now);
+      setCleanupResults(newResults);
     }
 
-    setLoadingQueue([])
-    setIsCleaning(false)
+    setLoadingQueue([]);
+    setIsCleaning(false);
   }
 
   return (
@@ -167,7 +169,9 @@ function Clean() {
             <Icon iconNode={broom} className="text-teal-500" size={28} />
           </div>
           <div className="flex-1">
-            <h2 className="text-2xl font-bold text-sparkle-text mb-1">System Cleanup</h2>
+            <h2 className="text-2xl font-bold text-sparkle-text mb-1">
+              System Cleanup
+            </h2>
             <p className="text-sm text-sparkle-text-secondary">
               Last cleaned: <span className="font-medium">{lastClean}</span>
             </p>
@@ -176,7 +180,7 @@ function Clean() {
 
         <Card className="flex flex-col divide-y divide-sparkle-border p-0">
           {cleanups.map(({ id, label, description }, idx) => {
-            const isSelected = selected.includes(id)
+            const isSelected = selected.includes(id);
             return (
               <div
                 key={id}
@@ -188,7 +192,9 @@ function Clean() {
                   </span>
                   <span className="text-xs text-sparkle-text-secondary mt-0.5 truncate">
                     {description}
-                    {cleanupResults[id] ? ` (${formatBytes(cleanupResults[id])} cleared)` : ""}
+                    {cleanupResults[id]
+                      ? ` (${formatBytes(cleanupResults[id])} cleared)`
+                      : ""}
                   </span>
                 </div>
                 <div className="ml-4 flex items-center">
@@ -201,13 +207,18 @@ function Clean() {
                 {loadingQueue.includes(id) && (
                   <div className="absolute inset-0 flex items-center justify-center z-10 rounded-xl">
                     <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-sparkle-border border border-sparkle-border-secondary">
-                      <RefreshCw className="animate-spin text-teal-500" size={18} />
-                      <span className="text-sm font-medium text-teal-600">Cleaning...</span>
+                      <RefreshCw
+                        className="animate-spin text-teal-500"
+                        size={18}
+                      />
+                      <span className="text-sm font-medium text-teal-600">
+                        Cleaning...
+                      </span>
                     </div>
                   </div>
                 )}
               </div>
-            )
+            );
           })}
         </Card>
 
@@ -234,7 +245,7 @@ function Clean() {
         </div>
       </div>
     </RootDiv>
-  )
+  );
 }
 
-export default Clean
+export default Clean;

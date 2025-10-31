@@ -4,5 +4,5 @@
  * @returns {string} - Joined class names
  */
 export function cn(...classes) {
-  return classes.filter(Boolean).join(" ")
+  return classes.filter(Boolean).join(" ");
 }

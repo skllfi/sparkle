@@ -1,35 +1,44 @@
-import os from "os"
-import { ipcMain } from "electron"
-import si from "systeminformation"
-import { exec } from "child_process"
-import fs from "fs"
-import path from "path"
-import log from "electron-log"
-import { shell } from "electron"
-import { executePowerShell } from "./powershell"
-console.log = log.log
-console.error = log.error
-console.warn = log.warn
+import os from "os";
+import { ipcMain } from "electron";
+import si from "systeminformation";
+import { exec } from "child_process";
+import fs from "fs";
+import path from "path";
+import log from "electron-log";
+import { shell } from "electron";
+import { executePowerShell } from "./powershell";
+console.log = log.log;
+console.error = log.error;
+console.warn = log.warn;
 async function getSystemInfo() {
   try {
-    const [cpuData, graphicsData, osInfo, memLayout, diskLayout, fsSize, blockDevices] =
-      await Promise.all([
-        si.cpu(),
-        si.graphics(),
-        si.osInfo(),
-        si.memLayout(),
-        si.diskLayout(),
-        si.fsSize(),
-        si.blockDevices(),
-      ])
+    const [
+      cpuData,
+      graphicsData,
+      osInfo,
+      memLayout,
+      diskLayout,
+      fsSize,
+      blockDevices,
+    ] = await Promise.all([
+      si.cpu(),
+      si.graphics(),
+      si.osInfo(),
+      si.memLayout(),
+      si.diskLayout(),
+      si.fsSize(),
+      si.blockDevices(),
+    ]);
 
-    let totalMemory = os.totalmem()
-    const memoryType = memLayout.length > 0 ? memLayout[0].type : "Unknown"
-    const cDrive = fsSize.find((d) => d.mount.toUpperCase().startsWith("C:"))
+    let totalMemory = os.totalmem();
+    const memoryType = memLayout.length > 0 ? memLayout[0].type : "Unknown";
+    const cDrive = fsSize.find((d) => d.mount.toUpperCase().startsWith("C:"));
 
-    let primaryDisk = null
+    let primaryDisk = null;
     if (cDrive) {
-      const cBlock = blockDevices.find((b) => b.mount && b.mount.toUpperCase().startsWith("C:"))
+      const cBlock = blockDevices.find(
+        (b) => b.mount && b.mount.toUpperCase().startsWith("C:"),
+      );
 
       if (cBlock) {
         primaryDisk =
@@ -37,15 +46,20 @@ async function getSystemInfo() {
             (disk) =>
               disk.device?.toLowerCase() === cBlock.device?.toLowerCase() ||
               disk.name?.toLowerCase().includes(cBlock.name?.toLowerCase()),
-          ) || null
+          ) || null;
       }
     }
 
-    let gpuInfo = { model: "GPU not found", vram: "N/A", hasGPU: false, isNvidia: false }
+    let gpuInfo = {
+      model: "GPU not found",
+      vram: "N/A",
+      hasGPU: false,
+      isNvidia: false,
+    };
 
     if (graphicsData.controllers && graphicsData.controllers.length > 0) {
       const dedicatedGPU = graphicsData.controllers.find((controller) => {
-        const model = (controller.model || "").toLowerCase()
+        const model = (controller.model || "").toLowerCase();
         return (
           (model.includes("nvidia") &&
             (model.includes("gtx") ||
@@ -63,27 +77,31 @@ async function getSystemInfo() {
               model.includes("firepro") ||
               model.includes("instinct"))) ||
           (model.includes("intel") && model.includes("arc"))
-        )
-      })
+        );
+      });
 
       if (dedicatedGPU) {
-        const hasGPU = true
-        const isNvidia = dedicatedGPU.model.toLowerCase().includes("nvidia")
+        const hasGPU = true;
+        const isNvidia = dedicatedGPU.model.toLowerCase().includes("nvidia");
         gpuInfo = {
           model: dedicatedGPU.model || "Unknown GPU",
-          vram: dedicatedGPU.vram ? `${Math.round(dedicatedGPU.vram / 1024)} GB` : "Unknown",
+          vram: dedicatedGPU.vram
+            ? `${Math.round(dedicatedGPU.vram / 1024)} GB`
+            : "Unknown",
           hasGPU,
           isNvidia,
-        }
+        };
       }
     }
 
-    const versionScript = `(Get-ItemProperty -Path "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion").DisplayVersion`
+    const versionScript = `(Get-ItemProperty -Path "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion").DisplayVersion`;
     const versionPsResult = await executePowerShell(null, {
       script: versionScript,
       name: "GetWindowsVersion",
-    })
-    const windowsVersion = versionPsResult.success ? versionPsResult.output.trim() : "Unknown"
+    });
+    const windowsVersion = versionPsResult.success
+      ? versionPsResult.output.trim()
+      : "Unknown";
 
     return {
       cpu_model: cpuData.brand,
@@ -105,85 +123,86 @@ async function getSystemInfo() {
       disk_size: cDrive?.size
         ? `${Math.round(cDrive.size / 1024 / 1024 / 1024).toFixed(1)} GB`
         : "Unknown",
-    }
+    };
   } catch (error) {
-    console.error("Failed to get system info:", error)
-    throw error
+    console.error("Failed to get system info:", error);
+    throw error;
   }
 }
 
 function restartSystem() {
   try {
-    exec("shutdown /r /t 0")
-    return { success: true }
+    exec("shutdown /r /t 0");
+    return { success: true };
   } catch (error) {
-    console.error("Failed to restart system:", error)
-    throw error
+    console.error("Failed to restart system:", error);
+    throw error;
   }
 }
 function getUserName() {
-  return os.userInfo().username
+  return os.userInfo().username;
 }
 function clearSparkleCache() {
   try {
-    const appDataPath = process.env.APPDATA || path.join(os.homedir(), "AppData", "Roaming")
-    const scriptsPath = path.join(appDataPath, "sparkle", "scripts")
-    const logsPath = path.join(appDataPath, "sparkle", "logs")
+    const appDataPath =
+      process.env.APPDATA || path.join(os.homedir(), "AppData", "Roaming");
+    const scriptsPath = path.join(appDataPath, "sparkle", "scripts");
+    const logsPath = path.join(appDataPath, "sparkle", "logs");
 
-    let scriptsCleared = false
-    let logsCleared = false
-    let errors = []
+    let scriptsCleared = false;
+    let logsCleared = false;
+    let errors = [];
 
     if (fs.existsSync(scriptsPath)) {
-      const files = fs.readdirSync(scriptsPath)
+      const files = fs.readdirSync(scriptsPath);
       for (const file of files) {
-        const filePath = path.join(scriptsPath, file)
+        const filePath = path.join(scriptsPath, file);
         try {
           if (fs.lstatSync(filePath).isFile()) {
-            fs.unlinkSync(filePath)
+            fs.unlinkSync(filePath);
           }
         } catch (err) {
-          errors.push(`Failed to delete script file: ${file} - ${err.message}`)
+          errors.push(`Failed to delete script file: ${file} - ${err.message}`);
         }
       }
 
-      scriptsCleared = true
-      console.log("Sparkle scripts directory files cleared successfully.")
+      scriptsCleared = true;
+      console.log("Sparkle scripts directory files cleared successfully.");
     } else {
-      console.warn("Sparkle scripts directory does not exist.")
-      errors.push("Scripts directory does not exist.")
+      console.warn("Sparkle scripts directory does not exist.");
+      errors.push("Scripts directory does not exist.");
     }
 
     if (fs.existsSync(logsPath)) {
-      const logFiles = fs.readdirSync(logsPath)
+      const logFiles = fs.readdirSync(logsPath);
       for (const file of logFiles) {
-        const filePath = path.join(logsPath, file)
+        const filePath = path.join(logsPath, file);
         try {
           if (fs.lstatSync(filePath).isFile()) {
-            fs.unlinkSync(filePath)
+            fs.unlinkSync(filePath);
           }
         } catch (err) {
-          errors.push(`Failed to delete log file: ${file} - ${err.message}`)
+          errors.push(`Failed to delete log file: ${file} - ${err.message}`);
         }
       }
-      logsCleared = true
-      console.log("Sparkle logs directory files cleared successfully.")
+      logsCleared = true;
+      console.log("Sparkle logs directory files cleared successfully.");
     } else {
-      console.warn("Sparkle logs directory does not exist.")
-      errors.push("Logs directory does not exist.")
+      console.warn("Sparkle logs directory does not exist.");
+      errors.push("Logs directory does not exist.");
     }
 
     if (errors.length === 0) {
-      return { success: true }
+      return { success: true };
     } else {
       return {
         success: scriptsCleared || logsCleared,
         error: errors.join(" | "),
-      }
+      };
     }
   } catch (error) {
-    console.error("Failed to clear Sparkle scripts or logs directory:", error)
-    return { success: false, error: error.message }
+    console.error("Failed to clear Sparkle scripts or logs directory:", error);
+    return { success: false, error: error.message };
   }
 }
 
@@ -192,12 +211,12 @@ function openLogFolder() {
     process.env.APPDATA || path.join(os.homedir(), "AppData", "Roaming"),
     "sparkle",
     "logs",
-  )
+  );
   if (fs.existsSync(logPath)) {
-    shell.openPath(logPath)
+    shell.openPath(logPath);
   } else {
-    console.warn("Sparkle logs directory does not exist.")
-    return { success: false, error: "Logs directory does not exist." }
+    console.warn("Sparkle logs directory does not exist.");
+    return { success: false, error: "Logs directory does not exist." };
   }
 }
 
@@ -325,20 +344,20 @@ if ($TestMode -or -not (Check-Winget)) {
 } else {
     Write-Output "Winget is already installed. Sparkle can install apps!"
 }
-`
+`;
 
-export { ensureWinget }
+export { ensureWinget };
 
 function ensureWinget() {
   const result = executePowerShell(null, {
     script: ensureWingetScript,
     name: "Ensure-Winget",
-  })
-  return result
+  });
+  return result;
 }
 
-ipcMain.handle("restart", restartSystem)
-ipcMain.handle("open-log-folder", openLogFolder)
-ipcMain.handle("clear-sparkle-cache", clearSparkleCache)
-ipcMain.handle("get-system-info", getSystemInfo)
-ipcMain.handle("get-user-name", getUserName)
+ipcMain.handle("restart", restartSystem);
+ipcMain.handle("open-log-folder", openLogFolder);
+ipcMain.handle("clear-sparkle-cache", clearSparkleCache);
+ipcMain.handle("get-system-info", getSystemInfo);
+ipcMain.handle("get-user-name", getUserName);

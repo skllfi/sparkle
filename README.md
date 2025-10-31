@@ -15,18 +15,18 @@ This is a significantly enhanced version of the original [Sparkle](https://githu
 
 #### Key Differences & New Features:
 
-*   **Full Russian Localization:** The entire application interface, including all new features, has been fully translated into Russian.
-*   **New "Utilities" Tab:** A dedicated section has been added, consolidating powerful tools for managing network settings and the system.
-*   **NoDPI Integration (DPI Circumvention):**
-    *   Built-in `NoDPI` utility to effectively bypass Deep Packet Inspection (DPI) by internet providers.
-    *   Allows enabling/disabling the bypass, adding it to Windows startup, and monitoring real-time statistics.
-    *   Features a user-friendly editor for managing the list of domains to be processed by the utility (`blacklist.txt`).
-*   **DNS Server Manager:**
-    *   Change system-wide DNS servers in one click, choosing from popular and trusted options (Google, Quad9, AdGuard DNS, etc.).
-    *   Helps improve privacy, security, and website access speed.
-*   **Additional System Utilities:**
-    *   **Flush DNS Cache:** Instantly clears the system's DNS cache.
-    *   **Disk Cleanup:** Launches the standard Windows utility to free up disk space.
+- **Full Russian Localization:** The entire application interface, including all new features, has been fully translated into Russian.
+- **New "Utilities" Tab:** A dedicated section has been added, consolidating powerful tools for managing network settings and the system.
+- **NoDPI Integration (DPI Circumvention):**
+  - Built-in `NoDPI` utility to effectively bypass Deep Packet Inspection (DPI) by internet providers.
+  - Allows enabling/disabling the bypass, adding it to Windows startup, and monitoring real-time statistics.
+  - Features a user-friendly editor for managing the list of domains to be processed by the utility (`blacklist.txt`).
+- **DNS Server Manager:**
+  - Change system-wide DNS servers in one click, choosing from popular and trusted options (Google, Quad9, AdGuard DNS, etc.).
+  - Helps improve privacy, security, and website access speed.
+- **Additional System Utilities:**
+  - **Flush DNS Cache:** Instantly clears the system's DNS cache.
+  - **Disk Cleanup:** Launches the standard Windows utility to free up disk space.
 
 ---
 
@@ -172,18 +172,18 @@ cd Sparkle</code></pre>
 
 #### Ключевые отличия и нововведения:
 
-*   **Полная русская локализация:** Весь интерфейс приложения, включая все новые функции, полностью переведен на русский язык.
-*   **Новая вкладка "Утилиты":** Добавлен специальный раздел, объединяющий мощные инструменты для управления сетевыми настройками и системой.
-*   **Интеграция NoDPI (Обход блокировок DPI):**
-    *   Встроена утилита `NoDPI` для эффективного обхода глубокой фильтрации трафика (*Deep Packet Inspection*) со стороны провайдеров.
-    *   Позволяет включать/выключать обход, добавлять его в автозагрузку Windows и отслеживать статистику работы в реальном времени.
-    *   Реализован удобный редактор для управления списком доменов, которые должны обрабатываться утилитой (`blacklist.txt`).
-*   **Менеджер DNS-серверов:**
-    *   Позволяет в один клик менять системные DNS-серверы, выбирая из популярных и проверенных вариантов (Google, Quad9, AdGuard DNS и др.).
-    *   Помогает повысить конфиденциальность, безопасность и скорость доступа к сайтам.
-*   **Дополнительные системные утилиты:**
-    *   **Очистка DNS-кеша:** Мгновенно сбрасывает системный кэш DNS.
-    *   **Очистка диска:** Запускает стандартную утилиту Windows для освобождения места на диске.
+- **Полная русская локализация:** Весь интерфейс приложения, включая все новые функции, полностью переведен на русский язык.
+- **Новая вкладка "Утилиты":** Добавлен специальный раздел, объединяющий мощные инструменты для управления сетевыми настройками и системой.
+- **Интеграция NoDPI (Обход блокировок DPI):**
+  - Встроена утилита `NoDPI` для эффективного обхода глубокой фильтрации трафика (_Deep Packet Inspection_) со стороны провайдеров.
+  - Позволяет включать/выключать обход, добавлять его в автозагрузку Windows и отслеживать статистику работы в реальном времени.
+  - Реализован удобный редактор для управления списком доменов, которые должны обрабатываться утилитой (`blacklist.txt`).
+- **Менеджер DNS-серверов:**
+  - Позволяет в один клик менять системные DNS-серверы, выбирая из популярных и проверенных вариантов (Google, Quad9, AdGuard DNS и др.).
+  - Помогает повысить конфиденциальность, безопасность и скорость доступа к сайтам.
+- **Дополнительные системные утилиты:**
+  - **Очистка DNS-кеша:** Мгновенно сбрасывает системный кэш DNS.
+  - **Очистка диска:** Запускает стандартную утилиту Windows для освобождения места на диске.
 
 ---
 

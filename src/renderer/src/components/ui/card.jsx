@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 function Card({ children, className, ...props }) {
   return (
@@ -11,7 +11,7 @@ function Card({ children, className, ...props }) {
     >
       {children}
     </div>
-  )
+  );
 }
 
-export default Card
+export default Card;

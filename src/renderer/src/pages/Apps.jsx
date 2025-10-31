@@ -1,80 +1,83 @@
-import { useState, useMemo, Suspense } from "react"
-import data from "../assets/apps.json"
-import RootDiv from "@/components/rootdiv"
-import { Search } from "lucide-react"
-import Button from "@/components/ui/button.jsx"
-import Checkbox from "@/components/ui/checkbox.jsx"
-import Modal from "@/components/ui/modal.jsx"
-import { invoke } from "@/lib/electron"
-import { Download } from "lucide-react"
-import { Trash } from "lucide-react"
-import { toast } from "react-toastify"
-import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import log from "electron-log/renderer"
-import { Upload } from "lucide-react"
-import Card from "@/components/ui/card.jsx"
-import { LargeInput } from "@/components/ui/input.jsx"
+import { useState, useMemo, Suspense } from "react";
+import data from "../assets/apps.json";
+import RootDiv from "@/components/rootdiv";
+import { Search } from "lucide-react";
+import Button from "@/components/ui/button.jsx";
+import Checkbox from "@/components/ui/checkbox.jsx";
+import Modal from "@/components/ui/modal.jsx";
+import { invoke } from "@/lib/electron";
+import { Download } from "lucide-react";
+import { Trash } from "lucide-react";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import log from "electron-log/renderer";
+import { Upload } from "lucide-react";
+import Card from "@/components/ui/card.jsx";
+import { LargeInput } from "@/components/ui/input.jsx";
 function Apps() {
-  const [search, setSearch] = useState("")
-  const [selectedApps, setSelectedApps] = useState([])
-  const [loading, setLoading] = useState("")
-  const [currentApp, setCurrentApp] = useState("")
-  const [totalApps, setTotalApps] = useState(0)
-  const [installedApps, setInstalledApps] = useState([])
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [importModalOpen, setImportModalOpen] = useState(false)
-  const [importedApps, setImportedApps] = useState([])
-  const [selectedImportedApps, setSelectedImportedApps] = useState(importedApps)
-  const [appsList, setAppsList] = useState([])
+  const [search, setSearch] = useState("");
+  const [selectedApps, setSelectedApps] = useState([]);
+  const [loading, setLoading] = useState("");
+  const [currentApp, setCurrentApp] = useState("");
+  const [totalApps, setTotalApps] = useState(0);
+  const [installedApps, setInstalledApps] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [importModalOpen, setImportModalOpen] = useState(false);
+  const [importedApps, setImportedApps] = useState([]);
+  const [selectedImportedApps, setSelectedImportedApps] =
+    useState(importedApps);
+  const [appsList, setAppsList] = useState([]);
 
   // const appsList = data.apps
-  const router = useNavigate()
+  const router = useNavigate();
 
   const filteredApps = appsList.filter((app) =>
     app.name.toLowerCase().includes(search.toLowerCase()),
-  )
+  );
 
   const exportSelectedApps = () => {
-    const blob = new Blob([JSON.stringify(selectedApps, null, 2)], { type: "application/json" })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = "sparkle-apps.json"
-    a.click()
-    URL.revokeObjectURL(url)
-  }
+    const blob = new Blob([JSON.stringify(selectedApps, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "sparkle-apps.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   const importSelectedApps = (event) => {
-    const file = event.target.files[0]
-    if (!file) return
-    const reader = new FileReader()
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
     reader.onload = (e) => {
       try {
-        const parsed = JSON.parse(e.target.result)
+        const parsed = JSON.parse(e.target.result);
         if (Array.isArray(parsed)) {
-          setImportedApps(parsed)
-          setSelectedImportedApps(parsed)
-          setImportModalOpen(true)
+          setImportedApps(parsed);
+          setSelectedImportedApps(parsed);
+          setImportModalOpen(true);
         } else {
-          toast.error("Invalid import file format")
+          toast.error("Invalid import file format");
         }
       } catch {
-        toast.error("Failed to parse JSON file")
+        toast.error("Failed to parse JSON file");
       } finally {
-        event.target.value = ""
+        event.target.value = "";
       }
-    }
-    reader.readAsText(file)
-  }
+    };
+    reader.readAsText(file);
+  };
 
   const appsByCategory = useMemo(() => {
     return filteredApps.reduce((acc, app) => {
-      if (!acc[app.category]) acc[app.category] = []
-      acc[app.category].push(app)
-      return acc
-    }, {})
-  }, [filteredApps])
+      if (!acc[app.category]) acc[app.category] = [];
+      acc[app.category].push(app);
+      return acc;
+    }, {});
+  }, [filteredApps]);
 
   const checkInstalledApps = () => {
     invoke({
@@ -83,13 +86,15 @@ function Apps() {
         action: "check-installed",
         apps: appsList.map((a) => a.id),
       },
-    })
-  }
+    });
+  };
   const toggleApp = (appId) => {
     setSelectedApps((prev) =>
-      prev.includes(appId) ? prev.filter((id) => id !== appId) : [...prev, appId],
-    )
-  }
+      prev.includes(appId)
+        ? prev.filter((id) => id !== appId)
+        : [...prev, appId],
+    );
+  };
 
   useEffect(() => {
     const loadApps = async () => {
@@ -98,7 +103,9 @@ function Apps() {
         if (import.meta.env.DEV) {
           appsData = data;
         } else {
-          const response = await fetch("https://raw.githubusercontent.com/parcoil/sparkle/refs/heads/v2/src/renderer/src/assets/apps.json");
+          const response = await fetch(
+            "https://raw.githubusercontent.com/parcoil/sparkle/refs/heads/v2/src/renderer/src/assets/apps.json",
+          );
           appsData = await response.json();
         }
         setAppsList(appsData.apps || []);
@@ -113,76 +120,82 @@ function Apps() {
 
     const idleHandle = requestIdleCallback(() => {
       try {
-        const item = window.localStorage.getItem("installedApps")
+        const item = window.localStorage.getItem("installedApps");
         if (item) {
-          setInstalledApps(JSON.parse(item))
+          setInstalledApps(JSON.parse(item));
         }
       } catch (error) {
-        console.error("Failed to parse installedApps from localStorage", error)
+        console.error("Failed to parse installedApps from localStorage", error);
       }
-    })
+    });
 
-    checkInstalledApps()
+    checkInstalledApps();
 
     const listeners = {
       "install-progress": (event, message) => {
-        console.log(message)
-        setCurrentApp(message)
-        setCurrentIndex((prev) => prev + 1)
+        console.log(message);
+        setCurrentApp(message);
+        setCurrentIndex((prev) => prev + 1);
       },
       "install-complete": () => {
-        setLoading("")
-        setCurrentApp("")
-        setCurrentIndex(0)
-        setTotalApps(0)
-        toast.success("Operation completed successfully!")
-        checkInstalledApps()
+        setLoading("");
+        setCurrentApp("");
+        setCurrentIndex(0);
+        setTotalApps(0);
+        toast.success("Operation completed successfully!");
+        checkInstalledApps();
       },
       "install-error": () => {
-        setLoading("")
-        setCurrentApp("")
-        toast.error("There was an error during the operation. Please try again.")
+        setLoading("");
+        setCurrentApp("");
+        toast.error(
+          "There was an error during the operation. Please try again.",
+        );
       },
       "installed-apps-checked": (event, { success, installed, error }) => {
         if (success) {
-          setInstalledApps(installed)
+          setInstalledApps(installed);
           try {
-            window.localStorage.setItem("installedApps", JSON.stringify(installed))
+            window.localStorage.setItem(
+              "installedApps",
+              JSON.stringify(installed),
+            );
           } catch (err) {
-            console.error("Failed to save installed apps to localStorage", err)
+            console.error("Failed to save installed apps to localStorage", err);
           }
         } else {
-          console.error("Failed to check installed apps:", error)
-          toast.error("Could not verify installed apps.")
+          console.error("Failed to check installed apps:", error);
+          toast.error("Could not verify installed apps.");
         }
       },
-    }
+    };
 
     Object.entries(listeners).forEach(([channel, listener]) => {
-      window.electron.ipcRenderer.on(channel, listener)
-    })
+      window.electron.ipcRenderer.on(channel, listener);
+    });
 
     return () => {
-      cancelIdleCallback(idleHandle)
+      cancelIdleCallback(idleHandle);
       Object.keys(listeners).forEach((channel) => {
-        window.electron.ipcRenderer.removeAllListeners(channel)
-      })
-    }
-  }, [])
+        window.electron.ipcRenderer.removeAllListeners(channel);
+      });
+    };
+  }, []);
 
   const handleAppAction = async (type, appsToUse = selectedApps) => {
-    const actionVerb = type === "install" ? "Installing" : "Uninstalling"
-    setLoading(type)
+    const actionVerb = type === "install" ? "Installing" : "Uninstalling";
+    setLoading(type);
 
     try {
       const commands = appsToUse.flatMap((appId) => {
         const app = appsList.find(
-          (a) => a.id === appId || (Array.isArray(a.id) && a.id.includes(appId)),
-        )
-        return app
-      })
+          (a) =>
+            a.id === appId || (Array.isArray(a.id) && a.id.includes(appId)),
+        );
+        return app;
+      });
 
-      if (commands.length === 0) return
+      if (commands.length === 0) return;
 
       invoke({
         channel: "handle-apps",
@@ -190,17 +203,15 @@ function Apps() {
           action: type,
           apps: appsToUse,
         },
-      })
+      });
 
-      setTotalApps(appsToUse.length)
-      setCurrentIndex(0)
+      setTotalApps(appsToUse.length);
+      setCurrentIndex(0);
     } catch (error) {
-      console.error(`Error ${actionVerb.toLowerCase()} apps:`, error)
-      log.error(`Error ${actionVerb.toLowerCase()} apps:`, error)
+      console.error(`Error ${actionVerb.toLowerCase()} apps:`, error);
+      log.error(`Error ${actionVerb.toLowerCase()} apps:`, error);
     }
-  }
-
-
+  };
 
   return (
     <>
@@ -214,43 +225,51 @@ function Apps() {
             {importedApps.length > 0 ? (
               <ul className="space-y-2 max-h-60 overflow-y-auto custom-scrollbar">
                 {importedApps.map((id) => {
-                  const app = appsList.find((a) => a.id === id)
+                  const app = appsList.find((a) => a.id === id);
                   return (
-                    <li key={id} className="flex items-center gap-2 text-sparkle-text">
+                    <li
+                      key={id}
+                      className="flex items-center gap-2 text-sparkle-text"
+                    >
                       <Checkbox
                         checked={selectedImportedApps.includes(id)}
                         onChange={(e) => {
-                          const checked = e.target.checked
+                          const checked = e.target.checked;
                           setSelectedImportedApps((prev) => {
                             if (checked) {
-                              return prev.includes(id) ? prev : [...prev, id]
+                              return prev.includes(id) ? prev : [...prev, id];
                             } else {
-                              return prev.filter((x) => x !== id)
+                              return prev.filter((x) => x !== id);
                             }
-                          })
+                          });
                         }}
                       />
 
                       {app ? app.name : `Unknown App (${id})`}
                     </li>
-                  )
+                  );
                 })}
               </ul>
             ) : (
-              <p className="text-sparkle-text-secondary italic">No apps found in file</p>
+              <p className="text-sparkle-text-secondary italic">
+                No apps found in file
+              </p>
             )}
           </div>
 
           <div className="flex justify-end gap-3">
-            <Button variant="secondary" onClick={() => setImportModalOpen(false)}>
+            <Button
+              variant="secondary"
+              onClick={() => setImportModalOpen(false)}
+            >
               Cancel
             </Button>
             <Button
               disabled={selectedImportedApps.length === 0}
               onClick={() => {
-                setSelectedApps(selectedImportedApps)
-                setImportModalOpen(false)
-                handleAppAction("install", selectedImportedApps)
+                setSelectedApps(selectedImportedApps);
+                setImportModalOpen(false);
+                handleAppAction("install", selectedImportedApps);
               }}
             >
               Install Selected
@@ -267,12 +286,15 @@ function Apps() {
             </div>
             <div>
               <h3 className="text-lg font-medium text-sparkle-text">
-                {loading === "install" ? "Installing" : "Uninstalling"} {currentApp || "Apps"}
+                {loading === "install" ? "Installing" : "Uninstalling"}{" "}
+                {currentApp || "Apps"}
                 <p className="text-sm text-sparkle-text-secondary  mt-1 mb-1">
                   {totalApps > 0 && ` (${currentIndex} of ${totalApps})`}
                 </p>
               </h3>
-              <p className="text-sm text-sparkle-text-secondary">This may take a few moments</p>
+              <p className="text-sm text-sparkle-text-secondary">
+                This may take a few moments
+              </p>
             </div>
           </div>
         </div>
@@ -314,7 +336,7 @@ function Apps() {
           </Button>
 
           <label className="flex gap-2 cursor-pointer bg-sparkle-border text-sparkle-text rounded-lg font-medium px-3 py-1.5 text-sm text-center items-center active:scale-90 hover:bg-sparkle-secondary transition-all duration-200">
-          <Upload className="w-5" />
+            <Upload className="w-5" />
             Import List
             <input
               type="file"
@@ -336,7 +358,10 @@ function Apps() {
         </div>
         <p className="mb-2 mt-2 text-sparkle-text-muted font-medium">
           Looking to debloat windows? its located in {""}
-          <a className="text-sparkle-primary cursor-pointer" onClick={() => router("/tweaks")}>
+          <a
+            className="text-sparkle-primary cursor-pointer"
+            onClick={() => router("/tweaks")}
+          >
             Tweaks
           </a>
         </p>
@@ -346,59 +371,73 @@ function Apps() {
           </p>
         )}
         <div className="space-y-10 mb-10">
-          <Suspense fallback={<div className="text-center text-sparkle-text-secondary">Loading...</div>}>
-          {Object.entries(appsByCategory).map(([category, apps]) => (
-            <div key={category} className="space-y-4">
-              <h2 className="text-2xl text-sparkle-primary font-bold capitalize">{category}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 mr-4">
-                {apps.map((app) => (
-                  <Card
-                    key={app.id}
-                    onClick={() => toggleApp(app.id)}
-                    className="p-4"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div onClick={(e) => e.stopPropagation()}>
-                          <Checkbox
-                            checked={selectedApps.includes(app.id)}
-                            onChange={() => toggleApp(app.id)}
-                          />
-                        </div>
-                        <div className="min-w-10 max-w-10 max--h-10 min-h-10 rounded-lg overflow-hidden bg-sparkle-accent flex items-center justify-center">
-                          {app.icon ? (
-                            <img
-                              src={app.icon}
-                              alt={app.name}
-                              className="w-8 h-8 object-contain rounded-md"
-                            />
-                          ) : (
-                            <img src={sparkleLogo} alt="" className="w-6 h-6 opacity-50" />
-                          )}
-                        </div>
-                        <div>
-                          <h3 className="text-sparkle-text font-medium group-hover:text-sparkle-primary transition">
-                            {app.name}
-                          </h3>
-                          {app.info && (
-                            <p className="text-sm text-sparkle-text-secondary line-clamp-1 font-semibold">
-                              {app.info}
-                            </p>
-                          )}
-                          <p className="text-xs text-sparkle-text-secondary">ID: {app.id}</p>
-                        </div>
-                      </div>
-                      {installedApps.includes(app.id) && (
-                        <div className="text-xs font-semibold text-sparkle-text bg-sparkle-accent py-1 px-2 rounded-full">
-                          Installed
-                        </div>
-                      )}
-                    </div>
-                  </Card>
-                ))}
+          <Suspense
+            fallback={
+              <div className="text-center text-sparkle-text-secondary">
+                Loading...
               </div>
-            </div>
-          ))}
+            }
+          >
+            {Object.entries(appsByCategory).map(([category, apps]) => (
+              <div key={category} className="space-y-4">
+                <h2 className="text-2xl text-sparkle-primary font-bold capitalize">
+                  {category}
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 mr-4">
+                  {apps.map((app) => (
+                    <Card
+                      key={app.id}
+                      onClick={() => toggleApp(app.id)}
+                      className="p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div onClick={(e) => e.stopPropagation()}>
+                            <Checkbox
+                              checked={selectedApps.includes(app.id)}
+                              onChange={() => toggleApp(app.id)}
+                            />
+                          </div>
+                          <div className="min-w-10 max-w-10 max--h-10 min-h-10 rounded-lg overflow-hidden bg-sparkle-accent flex items-center justify-center">
+                            {app.icon ? (
+                              <img
+                                src={app.icon}
+                                alt={app.name}
+                                className="w-8 h-8 object-contain rounded-md"
+                              />
+                            ) : (
+                              <img
+                                src={sparkleLogo}
+                                alt=""
+                                className="w-6 h-6 opacity-50"
+                              />
+                            )}
+                          </div>
+                          <div>
+                            <h3 className="text-sparkle-text font-medium group-hover:text-sparkle-primary transition">
+                              {app.name}
+                            </h3>
+                            {app.info && (
+                              <p className="text-sm text-sparkle-text-secondary line-clamp-1 font-semibold">
+                                {app.info}
+                              </p>
+                            )}
+                            <p className="text-xs text-sparkle-text-secondary">
+                              ID: {app.id}
+                            </p>
+                          </div>
+                        </div>
+                        {installedApps.includes(app.id) && (
+                          <div className="text-xs font-semibold text-sparkle-text bg-sparkle-accent py-1 px-2 rounded-full">
+                            Installed
+                          </div>
+                        )}
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            ))}
           </Suspense>
           <p className="text-center text-sparkle-text-muted">
             Request more apps or make a pull request on{" "}
@@ -414,7 +453,7 @@ function Apps() {
         </div>
       </RootDiv>
     </>
-  )
+  );
 }
 
-export default Apps
+export default Apps;

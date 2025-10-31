@@ -1,20 +1,20 @@
-import { Wrench, Folder, LayoutGrid, Icon } from "lucide-react"
-import { broom } from "@lucide/lab"
-import { useLocation, useNavigate } from "react-router-dom"
-import { clsx } from "clsx"
-import useRestartStore from "../store/restartState"
-import info from "../../../../package.json"
-import Button from "./ui/button"
-import Modal from "./ui/modal"
-import { invoke } from "@/lib/electron"
-import GithubIcon from "./githubicon"
-import DiscordIcon from "./discordicon"
-import { Box } from "lucide-react"
-import { Settings } from "lucide-react"
-import { RefreshCw } from "lucide-react"
-import { useRef, useEffect, useState } from "react"
-import { EthernetPort } from "lucide-react"
-import { Gauge } from "lucide-react"
+import { Wrench, Folder, LayoutGrid, Icon } from "lucide-react";
+import { broom } from "@lucide/lab";
+import { useLocation, useNavigate } from "react-router-dom";
+import { clsx } from "clsx";
+import useRestartStore from "../store/restartState";
+import info from "../../../../package.json";
+import Button from "./ui/button";
+import Modal from "./ui/modal";
+import { invoke } from "@/lib/electron";
+import GithubIcon from "./githubicon";
+import DiscordIcon from "./discordicon";
+import { Box } from "lucide-react";
+import { Settings } from "lucide-react";
+import { RefreshCw } from "lucide-react";
+import { useRef, useEffect, useState } from "react";
+import { EthernetPort } from "lucide-react";
+import { Gauge } from "lucide-react";
 
 const tabIcons = {
   home: <Gauge size={20} />,
@@ -25,7 +25,7 @@ const tabIcons = {
   dns: <EthernetPort size={20} />,
   apps: <LayoutGrid size={20} />,
   settings: <Settings size={20} />,
-}
+};
 
 const tabs = {
   home: { label: "Dashboard", path: "/" },
@@ -36,48 +36,51 @@ const tabs = {
   dns: { label: "DNS Manager", path: "/dns" },
   apps: { label: "Apps", path: "/apps" },
   settings: { label: "Settings", path: "/settings" },
-}
+};
 
 function Nav() {
-  const location = useLocation()
-  const navigate = useNavigate()
-  const { needsRestart } = useRestartStore()
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { needsRestart } = useRestartStore();
 
-  const tabRefs = useRef({})
-  const containerRef = useRef(null)
-  const [indicatorStyle, setIndicatorStyle] = useState({ top: 0, height: 0 })
-  const [showRestartModal, setShowRestartModal] = useState(false)
+  const tabRefs = useRef({});
+  const containerRef = useRef(null);
+  const [indicatorStyle, setIndicatorStyle] = useState({ top: 0, height: 0 });
+  const [showRestartModal, setShowRestartModal] = useState(false);
 
   const getActiveTab = () => {
-    const path = location.pathname
-    if (path === "/") return "home"
-    const match = Object.entries(tabs).find(([, { path: p }]) => p === path)
-    return match ? match[0] : ""
-  }
+    const path = location.pathname;
+    if (path === "/") return "home";
+    const match = Object.entries(tabs).find(([, { path: p }]) => p === path);
+    return match ? match[0] : "";
+  };
 
-  const activeTab = getActiveTab()
+  const activeTab = getActiveTab();
 
   useEffect(() => {
     const updateIndicator = () => {
-      const ref = tabRefs.current[activeTab]
-      const container = containerRef.current
+      const ref = tabRefs.current[activeTab];
+      const container = containerRef.current;
       if (ref && ref instanceof HTMLElement && container) {
-        const tabRect = ref.getBoundingClientRect()
-        const containerRect = container.getBoundingClientRect()
+        const tabRect = ref.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
         setIndicatorStyle({
           top: tabRect.top - containerRect.top,
           height: tabRect.height,
-        })
+        });
       }
-    }
-    updateIndicator()
-    window.addEventListener("resize", updateIndicator)
-    return () => window.removeEventListener("resize", updateIndicator)
-  }, [activeTab])
+    };
+    updateIndicator();
+    window.addEventListener("resize", updateIndicator);
+    return () => window.removeEventListener("resize", updateIndicator);
+  }, [activeTab]);
 
   return (
     <nav className="h-screen w-52 text-sparkle-text fixed left-0 top-0 flex flex-col py-6 z-40 bg-sparkle-bg">
-      <div className="flex-1 flex flex-col gap-2 px-3 mt-10 relative" ref={containerRef}>
+      <div
+        className="flex-1 flex flex-col gap-2 px-3 mt-10 relative"
+        ref={containerRef}
+      >
         <div
           className="absolute left-0 w-1 bg-sparkle-primary rounded-sm transition-all duration-300"
           style={{
@@ -125,13 +128,16 @@ function Nav() {
           <h2 className="text-lg font-semibold">Confirm Restart</h2>
           <p>Are you sure you want to restart your computer now?</p>
           <div className="flex gap-2 justify-end">
-            <Button onClick={() => setShowRestartModal(false)} variant="secondary">
+            <Button
+              onClick={() => setShowRestartModal(false)}
+              variant="secondary"
+            >
               Cancel
             </Button>
             <Button
               onClick={() => {
-                setShowRestartModal(false)
-                invoke({ channel: "restart" })
+                setShowRestartModal(false);
+                invoke({ channel: "restart" });
               }}
               variant="danger"
             >
@@ -150,7 +156,7 @@ function Nav() {
       </div>
       <p className="text-sparkle-primary text-center">v{info.version}</p>
     </nav>
-  )
+  );
 }
 
-export default Nav
+export default Nav;

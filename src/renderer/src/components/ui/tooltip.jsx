@@ -1,43 +1,43 @@
-import { useState, useRef } from "react"
+import { useState, useRef } from "react";
 
 const Tooltip = ({ content, children, side = "top", delay = 0.5 }) => {
-  const [isVisible, setIsVisible] = useState(false)
-  const timeoutRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(false);
+  const timeoutRef = useRef(null);
 
   const handleMouseEnter = () => {
-    if (!content) return
-    clearTimeout(timeoutRef.current)
-    timeoutRef.current = setTimeout(() => setIsVisible(true), delay * 1000)
-  }
+    if (!content) return;
+    clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => setIsVisible(true), delay * 1000);
+  };
 
   const handleMouseLeave = () => {
-    clearTimeout(timeoutRef.current)
-    setIsVisible(false)
-  }
+    clearTimeout(timeoutRef.current);
+    setIsVisible(false);
+  };
 
   const sideToTransform = {
     top: "translate(-50%, -0.5rem) scale-95",
     bottom: "translate(-50%, 0.5rem) scale-95",
     left: "translate(-0.5rem, -50%) scale-95",
     right: "translate(0.5rem, -50%) scale-95",
-  }
+  };
 
   const sideToPositionStyle = {
     top: { left: "50%", bottom: "100%" },
     bottom: { left: "50%", top: "100%" },
     left: { right: "100%", top: "50%" },
     right: { left: "100%", top: "50%" },
-  }
+  };
 
   const transformStyle = isVisible
     ? sideToTransform[side]
         .replace("scale-95", "scale-100")
         .replace(/-0.5rem/, "0rem")
         .replace(/0.5rem/, "0rem")
-    : sideToTransform[side]
+    : sideToTransform[side];
 
   if (!content) {
-    return children
+    return children;
   }
 
   return (
@@ -58,7 +58,7 @@ const Tooltip = ({ content, children, side = "top", delay = 0.5 }) => {
         {content}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Tooltip
+export default Tooltip;

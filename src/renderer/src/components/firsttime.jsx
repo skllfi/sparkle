@@ -27,7 +27,7 @@ export default function FirstTime() {
         isLoading: true,
         closeOnClick: false,
         draggable: false,
-      }
+      },
     );
 
     try {
@@ -69,8 +69,8 @@ export default function FirstTime() {
 
         <p className="text-sparkle-text-secondary mb-4 text-sm">
           <span className="font-medium">
-            By clicking <strong>Yes</strong>, Sparkle will create a restore point and
-            disable the cooldown for future restore points.
+            By clicking <strong>Yes</strong>, Sparkle will create a restore
+            point and disable the cooldown for future restore points.
           </span>
         </p>
 
@@ -80,17 +80,29 @@ export default function FirstTime() {
         </p>
 
         <p className="text-red-500 mb-8 text-sm">
-          If you download from any other source, this may be malware. Please uninstall and
-          reinstall from{" "}
-          <a href="https://getsparkle.net" target="_blank" className="text-blue-500">
+          If you download from any other source, this may be malware. Please
+          uninstall and reinstall from{" "}
+          <a
+            href="https://getsparkle.net"
+            target="_blank"
+            className="text-blue-500"
+          >
             getsparkle.net
           </a>
           ,{" "}
-          <a href="https://github.com/Parcoil/Sparkle" target="_blank" className="text-blue-500">
+          <a
+            href="https://github.com/Parcoil/Sparkle"
+            target="_blank"
+            className="text-blue-500"
+          >
             our GitHub
           </a>
           , or{" "}
-          <a href="https://parcoil.com" target="_blank" className="text-blue-500">
+          <a
+            href="https://parcoil.com"
+            target="_blank"
+            className="text-blue-500"
+          >
             parcoil.com
           </a>
           .

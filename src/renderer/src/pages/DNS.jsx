@@ -1,14 +1,21 @@
-import { useState, useEffect } from "react"
-import { invoke } from "@/lib/electron"
-import RootDiv from "@/components/rootdiv"
-import Button from "@/components/ui/button.jsx"
-import Modal from "@/components/ui/modal.jsx"
-import { toast } from "react-toastify"
-import { Globe, Shield, Settings, RefreshCw, AlertCircle, Info } from "lucide-react"
-import { Cloud } from "lucide-react"
-import log from "electron-log/renderer"
-import { Check } from "lucide-react"
-import Card from "@/components/ui/card.jsx"
+import { useState, useEffect } from "react";
+import { invoke } from "@/lib/electron";
+import RootDiv from "@/components/rootdiv";
+import Button from "@/components/ui/button.jsx";
+import Modal from "@/components/ui/modal.jsx";
+import { toast } from "react-toastify";
+import {
+  Globe,
+  Shield,
+  Settings,
+  RefreshCw,
+  AlertCircle,
+  Info,
+} from "lucide-react";
+import { Cloud } from "lucide-react";
+import log from "electron-log/renderer";
+import { Check } from "lucide-react";
+import Card from "@/components/ui/card.jsx";
 
 const dnsProviders = [
   {
@@ -72,57 +79,57 @@ const dnsProviders = [
     color: "text-gray-500",
     icon: <Settings className="w-5 h-5" />,
   },
-]
+];
 
 export default function DNSPage() {
-  const [selectedProvider, setSelectedProvider] = useState(null)
-  const [currentDNS, setCurrentDNS] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [modalOpen, setModalOpen] = useState(false)
-  const [customDNS, setCustomDNS] = useState({ primary: "", secondary: "" })
-  const [showCustom, setShowCustom] = useState(false)
+  const [selectedProvider, setSelectedProvider] = useState(null);
+  const [currentDNS, setCurrentDNS] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [customDNS, setCustomDNS] = useState({ primary: "", secondary: "" });
+  const [showCustom, setShowCustom] = useState(false);
 
   useEffect(() => {
-    getCurrentDNS()
-  }, [])
+    getCurrentDNS();
+  }, []);
 
   const getCurrentDNS = async () => {
     try {
       const result = await invoke({
         channel: "dns:get-current",
-      })
+      });
 
       if (result.success) {
-        setCurrentDNS(result.data)
+        setCurrentDNS(result.data);
       }
     } catch (error) {
-      console.error("Error getting current DNS:", error)
-      log.error("Error getting current DNS:", error)
+      console.error("Error getting current DNS:", error);
+      log.error("Error getting current DNS:", error);
     }
-  }
+  };
 
   const applyDNS = async (provider) => {
-    setLoading(true)
-    const toastId = toast.loading(`Applying ${provider.name} DNS...`)
+    setLoading(true);
+    const toastId = toast.loading(`Applying ${provider.name} DNS...`);
 
     try {
-      let payload
+      let payload;
       if (provider.id === "custom") {
         payload = {
           dnsType: "custom",
           primaryDNS: customDNS.primary,
           secondaryDNS: customDNS.secondary,
-        }
+        };
       } else {
         payload = {
           dnsType: provider.id,
-        }
+        };
       }
 
       const result = await invoke({
         channel: "dns:apply",
         payload,
-      })
+      });
 
       if (result.success) {
         toast.update(toastId, {
@@ -130,10 +137,10 @@ export default function DNSPage() {
           type: "success",
           isLoading: false,
           autoClose: 3000,
-        })
-        await getCurrentDNS()
+        });
+        await getCurrentDNS();
       } else {
-        throw new Error(result.error)
+        throw new Error(result.error);
       }
     } catch (error) {
       toast.update(toastId, {
@@ -141,33 +148,33 @@ export default function DNSPage() {
         type: "error",
         isLoading: false,
         autoClose: 5000,
-      })
-      log.error("Failed to apply DNS:", error)
+      });
+      log.error("Failed to apply DNS:", error);
     } finally {
-      setLoading(false)
-      setModalOpen(false)
+      setLoading(false);
+      setModalOpen(false);
     }
-  }
+  };
 
   const openConfirmationModal = (provider) => {
-    setSelectedProvider(provider)
-    setModalOpen(true)
-  }
+    setSelectedProvider(provider);
+    setModalOpen(true);
+  };
 
   const validateCustomDNS = (dns) => {
     // regex is weird
     const ipRegex =
-      /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
-    return ipRegex.test(dns)
-  }
+      /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    return ipRegex.test(dns);
+  };
 
   const isCustomDNSValid = () => {
     return (
       customDNS.primary &&
       validateCustomDNS(customDNS.primary) &&
       (!customDNS.secondary || validateCustomDNS(customDNS.secondary))
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -178,7 +185,10 @@ export default function DNSPage() {
             <>
               <p className="mb-4">
                 You are about to change your DNS servers to{" "}
-                <span className="text-sparkle-primary font-medium">{selectedProvider.name}</span>.
+                <span className="text-sparkle-primary font-medium">
+                  {selectedProvider.name}
+                </span>
+                .
               </p>
               <div className="bg-sparkle-border-secondary border border-sparkle-border p-3 rounded-md mb-4">
                 <div className="text-sm">
@@ -191,8 +201,8 @@ export default function DNSPage() {
                 </div>
               </div>
               <p className="text-sm text-sparkle-text-secondary mb-4">
-                This will change DNS settings for all active network adapters and flush the DNS
-                cache.
+                This will change DNS settings for all active network adapters
+                and flush the DNS cache.
               </p>
             </>
           )}
@@ -200,7 +210,10 @@ export default function DNSPage() {
             <Button onClick={() => setModalOpen(false)} variant="secondary">
               Cancel
             </Button>
-            <Button onClick={() => applyDNS(selectedProvider)} disabled={loading}>
+            <Button
+              onClick={() => applyDNS(selectedProvider)}
+              disabled={loading}
+            >
               {loading ? "Applying..." : "Apply"}
             </Button>
           </div>
@@ -211,7 +224,12 @@ export default function DNSPage() {
           <Card className="p-4 mb-4">
             <div className="flex items-center gap-3 mb-3">
               <h2 className="font-semibold">Current DNS Settings</h2>
-              <Button onClick={getCurrentDNS} variant="" size="sm" className="ml-auto">
+              <Button
+                onClick={getCurrentDNS}
+                variant=""
+                size="sm"
+                className="ml-auto"
+              >
                 <RefreshCw className="w-5 h-5" />
               </Button>
             </div>
@@ -222,7 +240,9 @@ export default function DNSPage() {
                   <div key={index} className="flex items-center gap-2 text-sm">
                     <Check className="w-4 h-4 text-green-500" />
                     <span className="font-medium">{dns.adapter}:</span>
-                    <span className="text-sparkle-text-secondary">{dns.servers}</span>
+                    <span className="text-sparkle-text-secondary">
+                      {dns.servers}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -248,7 +268,9 @@ export default function DNSPage() {
                     <h3 className="font-semibold">
                       {provider.name}
                       {provider.recommended && (
-                        <span className="text-xs text-sparkle-primary ml-2">Recommended</span>
+                        <span className="text-xs text-sparkle-primary ml-2">
+                          Recommended
+                        </span>
                       )}
                     </h3>
 
@@ -257,10 +279,15 @@ export default function DNSPage() {
                     </p>
                   </div>
                 </div>
-                <p className="text-sm text-sparkle-text-secondary">{provider.description}</p>
+                <p className="text-sm text-sparkle-text-secondary">
+                  {provider.description}
+                </p>
                 <div className="flex flex-wrap gap-1 mt-3">
                   {provider.features.map((feature, index) => (
-                    <span key={index} className="px-2 py-1 bg-sparkle-border text-xs rounded-md">
+                    <span
+                      key={index}
+                      className="px-2 py-1 bg-sparkle-border text-xs rounded-md"
+                    >
                       {feature}
                     </span>
                   ))}
@@ -282,12 +309,17 @@ export default function DNSPage() {
               <div className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">Primary DNS</label>
+                    <label className="block text-sm font-medium mb-2">
+                      Primary DNS
+                    </label>
                     <input
                       type="text"
                       value={customDNS.primary}
                       onChange={(e) =>
-                        setCustomDNS((prev) => ({ ...prev, primary: e.target.value }))
+                        setCustomDNS((prev) => ({
+                          ...prev,
+                          primary: e.target.value,
+                        }))
                       }
                       placeholder="e.g., 1.1.1.1"
                       className="w-full px-3 py-2 bg-sparkle-border border border-sparkle-border-secondary rounded-lg text-sparkle-text focus:outline-hidden focus:border-sparkle-primary"
@@ -301,7 +333,10 @@ export default function DNSPage() {
                       type="text"
                       value={customDNS.secondary}
                       onChange={(e) =>
-                        setCustomDNS((prev) => ({ ...prev, secondary: e.target.value }))
+                        setCustomDNS((prev) => ({
+                          ...prev,
+                          secondary: e.target.value,
+                        }))
                       }
                       placeholder="e.g., 1.0.0.1"
                       className="w-full px-3 py-2 bg-sparkle-border border border-sparkle-border-secondary rounded-lg text-sparkle-text focus:outline-hidden focus:border-sparkle-primary"
@@ -334,5 +369,5 @@ export default function DNSPage() {
         </div>
       </RootDiv>
     </>
-  )
+  );
 }

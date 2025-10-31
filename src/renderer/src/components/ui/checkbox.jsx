@@ -1,8 +1,8 @@
-import { useId } from "react"
-import { Check } from "lucide-react"
+import { useId } from "react";
+import { Check } from "lucide-react";
 
 export default function Checkbox({ label, checked, onChange, onClick }) {
-  const id = useId()
+  const id = useId();
 
   return (
     <label
@@ -23,5 +23,5 @@ export default function Checkbox({ label, checked, onChange, onClick }) {
       </div>
       <span className="text-sm">{label}</span>
     </label>
-  )
+  );
 }

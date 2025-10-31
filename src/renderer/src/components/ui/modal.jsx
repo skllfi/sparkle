@@ -1,13 +1,13 @@
-import React, { useEffect } from "react"
+import React, { useEffect } from "react";
 
 export default function Modal({ open, onClose, children }) {
   useEffect(() => {
     const handleKey = (e) => {
-      if (e.key === "Escape") onClose()
-    }
-    if (open) window.addEventListener("keydown", handleKey)
-    return () => window.removeEventListener("keydown", handleKey)
-  }, [open, onClose])
+      if (e.key === "Escape") onClose();
+    };
+    if (open) window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [open, onClose]);
 
   return (
     <div
@@ -28,5 +28,5 @@ export default function Modal({ open, onClose, children }) {
         {children}
       </div>
     </div>
-  )
+  );
 }

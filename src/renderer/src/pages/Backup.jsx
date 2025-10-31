@@ -1,32 +1,39 @@
-import { useEffect, useState } from "react"
-import { RefreshCw, PlusCircle, Shield, RotateCcw, Loader2, Search } from "lucide-react"
-import RootDiv from "@/components/rootdiv.jsx"
-import { invoke } from "@/lib/electron"
-import Button from "@/components/ui/button.jsx"
-import Modal from "@/components/ui/modal.jsx"
-import { toast } from "react-toastify"
-import { Trash } from "lucide-react"
-import log from "electron-log/renderer"
-import { LargeInput } from "@/components/ui/input.jsx"
+import { useEffect, useState } from "react";
+import {
+  RefreshCw,
+  PlusCircle,
+  Shield,
+  RotateCcw,
+  Loader2,
+  Search,
+} from "lucide-react";
+import RootDiv from "@/components/rootdiv.jsx";
+import { invoke } from "@/lib/electron";
+import Button from "@/components/ui/button.jsx";
+import Modal from "@/components/ui/modal.jsx";
+import { toast } from "react-toastify";
+import { Trash } from "lucide-react";
+import log from "electron-log/renderer";
+import { LargeInput } from "@/components/ui/input.jsx";
 
 export default function RestorePointManager() {
-  const [restorePoints, setRestorePoints] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [processing, setProcessing] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
+  const [restorePoints, setRestorePoints] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [processing, setProcessing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [modalState, setModalState] = useState({
     isOpen: false,
     type: null,
     restorePoint: null,
-  })
+  });
 
-  const [customModalOpen, setCustomModalOpen] = useState(false)
-  const [customName, setCustomName] = useState("")
+  const [customModalOpen, setCustomModalOpen] = useState(false);
+  const [customName, setCustomName] = useState("");
 
   const fetchRestorePoints = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const response = await invoke({ channel: "get-restore-points" })
+      const response = await invoke({ channel: "get-restore-points" });
       if (response.success && Array.isArray(response.points)) {
         const sorted = response.points.sort((a, b) => {
           const parse = (str) =>
@@ -42,89 +49,89 @@ export default function RestorePointManager() {
                 str.slice(10, 12) +
                 ":" +
                 str.slice(12, 14),
-            )
-          return parse(b.CreationTime) - parse(a.CreationTime)
-        })
-        setRestorePoints(sorted)
+            );
+          return parse(b.CreationTime) - parse(a.CreationTime);
+        });
+        setRestorePoints(sorted);
       } else {
-        toast.error("Failed to load restore points. Please check logs")
-        log.error("Failed to load restore points:", response)
+        toast.error("Failed to load restore points. Please check logs");
+        log.error("Failed to load restore points:", response);
       }
     } catch (error) {
-      toast.error(`Failed to load restore points. Please check logs`)
-      console.error(error)
-      log.error("Failed to load restore points:", error)
+      toast.error(`Failed to load restore points. Please check logs`);
+      console.error(error);
+      log.error("Failed to load restore points:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchRestorePoints()
-  }, [])
+    fetchRestorePoints();
+  }, []);
 
   const handleCreateRestorePoint = async () => {
-    setProcessing(true)
+    setProcessing(true);
     try {
-      await invoke({ channel: "create-sparkle-restore-point" })
-      toast.success("Restore point created!")
-      await fetchRestorePoints()
+      await invoke({ channel: "create-sparkle-restore-point" });
+      toast.success("Restore point created!");
+      await fetchRestorePoints();
     } catch (err) {
-      toast.error("Failed to create restore point.")
-      log.error("Failed to create restore point:", err)
+      toast.error("Failed to create restore point.");
+      log.error("Failed to create restore point:", err);
     }
-    setProcessing(false)
-  }
+    setProcessing(false);
+  };
 
   const handleRestore = (restorePoint) => {
-    setModalState({ isOpen: true, type: "restore", restorePoint })
-  }
+    setModalState({ isOpen: true, type: "restore", restorePoint });
+  };
 
   const executeRestore = async () => {
-    setProcessing(true)
+    setProcessing(true);
     try {
       await invoke({
         channel: "restore-restore-point",
         payload: modalState.restorePoint.SequenceNumber,
-      })
-      toast.success("System restore started. Your PC may restart.")
+      });
+      toast.success("System restore started. Your PC may restart.");
     } catch (err) {
-      toast.error("Failed to start system restore.")
-      log.error("Failed to start system restore:", err)
+      toast.error("Failed to start system restore.");
+      log.error("Failed to start system restore:", err);
     }
-    setProcessing(false)
-    setModalState({ isOpen: false, type: null, restorePoint: null })
-  }
+    setProcessing(false);
+    setModalState({ isOpen: false, type: null, restorePoint: null });
+  };
 
   const handleCustomRestorePoint = async () => {
-    setProcessing(true)
+    setProcessing(true);
     try {
       if (!customName.trim()) {
-        toast.error("Please enter a name for the restore point.")
-        setProcessing(false)
-        return
+        toast.error("Please enter a name for the restore point.");
+        setProcessing(false);
+        return;
       }
-      await invoke({ channel: "create-restore-point", payload: customName })
-      toast.success("Restore point created!")
-      setCustomModalOpen(false)
-      setCustomName("")
-      await fetchRestorePoints()
+      await invoke({ channel: "create-restore-point", payload: customName });
+      toast.success("Restore point created!");
+      setCustomModalOpen(false);
+      setCustomName("");
+      await fetchRestorePoints();
     } catch (err) {
-      toast.error("Failed to create restore point.")
-      log.error("Failed to create restore point:", err)
+      toast.error("Failed to create restore point.");
+      log.error("Failed to create restore point:", err);
     }
-    setProcessing(false)
-  }
+    setProcessing(false);
+  };
   const handleDeleteAll = async () => {
-    setProcessing(true)
-    await invoke({ channel: "delete-all-restore-points" })
-    toast.success("All restore points deleted successfully.")
-    setProcessing(false)
-    await fetchRestorePoints()
-  }
+    setProcessing(true);
+    await invoke({ channel: "delete-all-restore-points" });
+    toast.success("All restore points deleted successfully.");
+    setProcessing(false);
+    await fetchRestorePoints();
+  };
   const filteredRestorePoints = restorePoints.filter((rp) =>
     (rp.Description || "").toLowerCase().includes(searchQuery.toLowerCase()),
-  )
+  );
 
   return (
     <>
@@ -183,7 +190,10 @@ export default function RestorePointManager() {
 
           {loading ? (
             <div className="flex items-center justify-center h-96">
-              <Loader2 size={32} className="text-sparkle-primary animate-spin" />
+              <Loader2
+                size={32}
+                className="text-sparkle-primary animate-spin"
+              />
             </div>
           ) : filteredRestorePoints.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center bg-sparkle-card border border-sparkle-border rounded-lg">
@@ -221,7 +231,10 @@ export default function RestorePointManager() {
                   </thead>
                   <tbody>
                     {filteredRestorePoints.map((rp, index) => (
-                      <tr key={index} className="border-t border-sparkle-border">
+                      <tr
+                        key={index}
+                        className="border-t border-sparkle-border"
+                      >
                         <td className="px-6 py-4 font-medium text-sparkle-text">
                           {rp.Description}
                         </td>
@@ -233,7 +246,10 @@ export default function RestorePointManager() {
                             disabled={processing}
                             title="Restore System"
                           >
-                            <RotateCcw size={16} className="text-sparkle-primary" />
+                            <RotateCcw
+                              size={16}
+                              className="text-sparkle-primary"
+                            />
                           </Button>
                         </td>
                       </tr>
@@ -244,53 +260,77 @@ export default function RestorePointManager() {
             </div>
           )}
           <p className="text-center text-sparkle-text-muted mt-4">
-            Listing restore points is a beta feature and may be unreliable, but creating restore
-            points works as expected.
+            Listing restore points is a beta feature and may be unreliable, but
+            creating restore points works as expected.
           </p>
         </div>
       </RootDiv>
       <Modal
         open={modalState.isOpen}
         onClose={() =>
-          !processing && setModalState({ isOpen: false, type: null, restorePoint: null })
+          !processing &&
+          setModalState({ isOpen: false, type: null, restorePoint: null })
         }
       >
         {modalState.type === "restore" && modalState.restorePoint && (
           <div className="bg-sparkle-card border border-sparkle-border rounded-2xl p-6 shadow-xl max-w-lg w-full mx-4 pb-0">
-            <h3 className="text-lg font-medium text-sparkle-text">Restore System</h3>
+            <h3 className="text-lg font-medium text-sparkle-text">
+              Restore System
+            </h3>
 
             <div className="p-4 pr-0">
               <p className="text-sparkle-text-secondary mb-4">
                 Are you sure you want to restore your system to{" "}
-                <span className="font-bold">"{modalState.restorePoint.Description}"?</span> Your PC
-                will restart shortly. and the restore point will be applied. <br /> <br />
-                Your files will not be affected, but recently installed applications and settings
-                may be lost.
+                <span className="font-bold">
+                  "{modalState.restorePoint.Description}"?
+                </span>{" "}
+                Your PC will restart shortly. and the restore point will be
+                applied. <br /> <br />
+                Your files will not be affected, but recently installed
+                applications and settings may be lost.
                 <br /> <br />
-                This will revert all changes sparkle has made to your system since this restore
-                point was created.
+                This will revert all changes sparkle has made to your system
+                since this restore point was created.
               </p>
               <div className="flex justify-end gap-3">
                 <Button
                   variant="secondary"
                   onClick={() =>
-                    !processing && setModalState({ isOpen: false, type: null, restorePoint: null })
+                    !processing &&
+                    setModalState({
+                      isOpen: false,
+                      type: null,
+                      restorePoint: null,
+                    })
                   }
                   disabled={processing}
                 >
                   Cancel
                 </Button>
-                <Button variant="primary" onClick={executeRestore} disabled={processing}>
-                  {processing ? <Loader2 size={16} className="animate-spin" /> : "Restore"}
+                <Button
+                  variant="primary"
+                  onClick={executeRestore}
+                  disabled={processing}
+                >
+                  {processing ? (
+                    <Loader2 size={16} className="animate-spin" />
+                  ) : (
+                    "Restore"
+                  )}
                 </Button>
               </div>
             </div>
           </div>
         )}
       </Modal>
-      <Modal open={customModalOpen} onClose={() => !processing && setCustomModalOpen(false)}>
+      <Modal
+        open={customModalOpen}
+        onClose={() => !processing && setCustomModalOpen(false)}
+      >
         <div className="bg-sparkle-card border border-sparkle-border rounded-2xl p-6 shadow-xl max-w-lg w-full mx-4 pb-0">
-          <h3 className="text-lg font-medium text-sparkle-text">Create Custom Restore Point</h3>
+          <h3 className="text-lg font-medium text-sparkle-text">
+            Create Custom Restore Point
+          </h3>
 
           <div className="p-4 space-y-4">
             <input
@@ -314,7 +354,11 @@ export default function RestorePointManager() {
                 onClick={handleCustomRestorePoint}
                 disabled={processing || !customName.trim()}
               >
-                {processing ? <Loader2 size={16} className="animate-spin" /> : "Create"}
+                {processing ? (
+                  <Loader2 size={16} className="animate-spin" />
+                ) : (
+                  "Create"
+                )}
               </Button>
             </div>
             <p className="text-xs text-center text-sparkle-text-muted">
@@ -324,5 +368,5 @@ export default function RestorePointManager() {
         </div>
       </Modal>
     </>
-  )
+  );
 }

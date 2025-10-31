@@ -1,11 +1,11 @@
-import { useState } from "react"
-import { invoke } from "@/lib/electron"
-import RootDiv from "@/components/rootdiv.jsx"
-import Modal from "@/components/ui/modal.jsx"
-import { toast } from "react-toastify"
-import Button from "@/components/ui/button.jsx"
-import Toggle from "@/components/ui/toggle.jsx"
-import log from "electron-log/renderer"
+import { useState } from "react";
+import { invoke } from "@/lib/electron";
+import RootDiv from "@/components/rootdiv.jsx";
+import Modal from "@/components/ui/modal.jsx";
+import { toast } from "react-toastify";
+import Button from "@/components/ui/button.jsx";
+import Toggle from "@/components/ui/toggle.jsx";
+import log from "electron-log/renderer";
 import NoDPIComponent from "@/lib/components/utilities/NoDPI.jsx";
 import ProxyManager from "@/lib/components/utilities/ProxyManager.jsx";
 import {
@@ -23,7 +23,7 @@ import {
   Info,
   CaseSensitive,
   ScreenShare,
-} from "lucide-react"
+} from "lucide-react";
 
 const utilities = [
   {
@@ -82,58 +82,62 @@ const utilities = [
     icon: <HardDrive className="w-5 h-5" />,
     color: "text-teal-500",
   },
-]
+];
 
 export default function UtilitiesPage() {
-  const [running, setRunning] = useState(false)
-  const [modalOpen, setModalOpen] = useState(false)
-  const [selectedUtility, setSelectedUtility] = useState(null)
-  const [noExit, setNoExit] = useState(true)
+  const [running, setRunning] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedUtility, setSelectedUtility] = useState(null);
+  const [noExit, setNoExit] = useState(true);
 
   const confirmAndRun = async () => {
-    if (!selectedUtility) return
-    setModalOpen(false)
-    setRunning(true)
-    const toastId = toast.loading(`Running ${selectedUtility.name}...`)
+    if (!selectedUtility) return;
+    setModalOpen(false);
+    setRunning(true);
+    const toastId = toast.loading(`Running ${selectedUtility.name}...`);
     try {
       await invoke({
         channel: "run-powershell-window",
-        payload: { script: selectedUtility.command, name: selectedUtility.name, noExit: noExit },
-      })
+        payload: {
+          script: selectedUtility.command,
+          name: selectedUtility.name,
+          noExit: noExit,
+        },
+      });
       toast.update(toastId, {
         render: `${selectedUtility.name} completed!`,
         type: "success",
         isLoading: false,
         autoClose: 3000,
-      })
+      });
     } catch (error) {
-      log.error(`Error running utility ${selectedUtility.name}:`, error)
+      log.error(`Error running utility ${selectedUtility.name}:`, error);
       toast.update(toastId, {
         render: `Failed to run ${selectedUtility.name}: ${error.message || error}`,
         type: "error",
         isLoading: false,
         autoClose: 4000,
-      })
+      });
     }
-    setRunning(false)
-    setSelectedUtility(null)
-  }
+    setRunning(false);
+    setSelectedUtility(null);
+  };
 
   const openConfirmationModal = (utility) => {
-    setSelectedUtility(utility)
-    setModalOpen(true)
-  }
+    setSelectedUtility(utility);
+    setModalOpen(true);
+  };
 
   const openQuickAccessTool = async (script) => {
     try {
       await invoke({
         channel: "run-powershell",
         payload: { script },
-      })
+      });
     } catch (error) {
-      log.error("Error running quick access tool:", error)
+      log.error("Error running quick access tool:", error);
     }
-  }
+  };
 
   const quickAccess = [
     {
@@ -181,7 +185,7 @@ export default function UtilitiesPage() {
       command: "start mstsc.exe",
       icon: <ScreenShare className="w-6 h-6 text-blue-400" />,
     },
-  ]
+  ];
 
   return (
     <>
@@ -192,7 +196,9 @@ export default function UtilitiesPage() {
             <>
               <p className="mb-4">
                 You are about to run{" "}
-                <span className={`${selectedUtility.color} underline  font-medium`}>
+                <span
+                  className={`${selectedUtility.color} underline  font-medium`}
+                >
                   {selectedUtility.name}
                 </span>
                 .
@@ -227,18 +233,26 @@ export default function UtilitiesPage() {
                 <div className={`${util.color}`}>{util.icon}</div>
                 <div className="text-left">
                   <h2 className="font-semibold">Run {util.name}</h2>
-                  <p className="text-sm text-sparkle-text-secondary">Type: {util.type}</p>
+                  <p className="text-sm text-sparkle-text-secondary">
+                    Type: {util.type}
+                  </p>
                 </div>
               </button>
             ))}
           </div>
           <div className="flex flex-row gap-2 mt-3">
-            <Toggle checked={noExit} onChange={() => setNoExit(!noExit)} id="noExitToggle" />
+            <Toggle
+              checked={noExit}
+              onChange={() => setNoExit(!noExit)}
+              id="noExitToggle"
+            />
             <p>Keep PowerShell window open after execution</p>
           </div>
 
           <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-2 text-sparkle-text-secondary">Quick Access</h2>
+            <h2 className="text-xl font-semibold mb-2 text-sparkle-text-secondary">
+              Quick Access
+            </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {quickAccess.map((tool) => (
@@ -256,5 +270,5 @@ export default function UtilitiesPage() {
         </div>
       </RootDiv>
     </>
-  )
+  );
 }

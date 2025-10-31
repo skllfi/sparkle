@@ -1,54 +1,58 @@
-import { ipcMain, app } from "electron"
-import { executePowerShell } from "./powershell"
-import path from "path"
-import fs from "fs/promises"
-import log from "electron-log"
-console.log = log.log
-console.error = log.error
-console.warn = log.warn
+import { ipcMain, app } from "electron";
+import { executePowerShell } from "./powershell";
+import path from "path";
+import fs from "fs/promises";
+import log from "electron-log";
+console.log = log.log;
+console.error = log.error;
+console.warn = log.warn;
 
 const ensureScriptsAvailable = async () => {
-  const userDataScriptsDir = path.join(app.getPath("userData"), "scripts", "dns-changer")
+  const userDataScriptsDir = path.join(
+    app.getPath("userData"),
+    "scripts",
+    "dns-changer",
+  );
 
   try {
-    await fs.access(userDataScriptsDir)
-    return
+    await fs.access(userDataScriptsDir);
+    return;
   } catch (error) {
-    console.log("Copying DNS scripts to user data directory...")
+    console.log("Copying DNS scripts to user data directory...");
 
     const sourcePaths = [
       path.join(process.cwd(), "scripts", "dns-changer"),
       path.join(process.cwd(), "resources", "tweaks", "dns-changer"),
       path.join(process.resourcesPath, "scripts", "dns-changer"),
       path.join(process.resourcesPath, "tweaks", "dns-changer"),
-    ]
+    ];
 
     for (const sourcePath of sourcePaths) {
       try {
-        await fs.access(sourcePath)
+        await fs.access(sourcePath);
 
-        await fs.mkdir(userDataScriptsDir, { recursive: true })
+        await fs.mkdir(userDataScriptsDir, { recursive: true });
 
-        const files = ["apply.ps1", "unapply.ps1"]
+        const files = ["apply.ps1", "unapply.ps1"];
         for (const file of files) {
-          const sourceFile = path.join(sourcePath, file)
-          const destFile = path.join(userDataScriptsDir, file)
+          const sourceFile = path.join(sourcePath, file);
+          const destFile = path.join(userDataScriptsDir, file);
 
           try {
-            await fs.copyFile(sourceFile, destFile)
-            console.log(`Copied ${file} to user data`)
+            await fs.copyFile(sourceFile, destFile);
+            console.log(`Copied ${file} to user data`);
           } catch (copyError) {
-            console.warn(`Failed to copy ${file}:`, copyError.message)
+            console.warn(`Failed to copy ${file}:`, copyError.message);
           }
         }
-        break
+        break;
       } catch (error) {}
     }
   }
-}
+};
 
 const getScriptPath = async (scriptName) => {
-  await ensureScriptsAvailable()
+  await ensureScriptsAvailable();
 
   const possiblePaths = [
     path.join(process.cwd(), "scripts", "dns-changer", scriptName),
@@ -56,20 +60,20 @@ const getScriptPath = async (scriptName) => {
     path.join(process.resourcesPath, "scripts", "dns-changer", scriptName),
     path.join(process.resourcesPath, "tweaks", "dns-changer", scriptName),
     path.join(app.getPath("userData"), "scripts", "dns-changer", scriptName),
-  ]
+  ];
 
   for (const scriptPath of possiblePaths) {
     try {
-      await fs.access(scriptPath)
-      console.log(`Found DNS script at: ${scriptPath}`)
-      return scriptPath
+      await fs.access(scriptPath);
+      console.log(`Found DNS script at: ${scriptPath}`);
+      return scriptPath;
     } catch (error) {}
   }
 
   throw new Error(
     `DNS script not found: ${scriptName}. Searched paths: ${possiblePaths.join(", ")}`,
-  )
-}
+  );
+};
 
 export const setupDNSHandlers = () => {
   ipcMain.handle("dns:get-current", async () => {
@@ -89,61 +93,70 @@ export const setupDNSHandlers = () => {
           }
       }
       `;
-      
-      const result = await executePowerShell(null, { script, name: "Get-DNS" })
+
+      const result = await executePowerShell(null, { script, name: "Get-DNS" });
 
       if (result.success) {
         const lines = result.output
           .trim()
           .split("\n")
-          .filter((line) => line.includes("|"))
+          .filter((line) => line.includes("|"));
         const dnsInfo = lines.map((line) => {
-          const [adapter, servers] = line.split("|")
-          return { adapter: adapter.trim(), servers: servers.trim() }
-        })
-        return { success: true, data: dnsInfo }
+          const [adapter, servers] = line.split("|");
+          return { adapter: adapter.trim(), servers: servers.trim() };
+        });
+        return { success: true, data: dnsInfo };
       } else {
-        return { success: false, error: result.error }
+        return { success: false, error: result.error };
       }
     } catch (error) {
-      return { success: false, error: error.message }
+      return { success: false, error: error.message };
     }
-  })
+  });
 
-  ipcMain.handle("dns:apply", async (event, { dnsType, primaryDNS = "", secondaryDNS = "" }) => {
-    try {
-      const dnsScriptPath = await getScriptPath("apply.ps1")
+  ipcMain.handle(
+    "dns:apply",
+    async (event, { dnsType, primaryDNS = "", secondaryDNS = "" }) => {
+      try {
+        const dnsScriptPath = await getScriptPath("apply.ps1");
 
-      let script
-      if (dnsType === "custom") {
-        script = `
+        let script;
+        if (dnsType === "custom") {
+          script = `
           . "${dnsScriptPath}" -DNSType "custom" -PrimaryDNS "${primaryDNS}" -SecondaryDNS "${secondaryDNS}"
-        `
-      } else {
-        script = `
+        `;
+        } else {
+          script = `
           . "${dnsScriptPath}" -DNSType "${dnsType}"
-        `
-      }
+        `;
+        }
 
-      const result = await executePowerShell(null, { script, name: "Apply-DNS" })
-      return result
-    } catch (error) {
-      return { success: false, error: error.message }
-    }
-  })
+        const result = await executePowerShell(null, {
+          script,
+          name: "Apply-DNS",
+        });
+        return result;
+      } catch (error) {
+        return { success: false, error: error.message };
+      }
+    },
+  );
 
   ipcMain.handle("dns:reset", async () => {
     try {
-      const dnsScriptPath = await getScriptPath("unapply.ps1")
+      const dnsScriptPath = await getScriptPath("unapply.ps1");
       const script = `
         . "${dnsScriptPath}"
-      `
-      const result = await executePowerShell(null, { script, name: "Reset-DNS" })
-      return result
+      `;
+      const result = await executePowerShell(null, {
+        script,
+        name: "Reset-DNS",
+      });
+      return result;
     } catch (error) {
-      return { success: false, error: error.message }
+      return { success: false, error: error.message };
     }
-  })
+  });
 
   ipcMain.handle("dns:test", async (event, { hostname = "google.com" }) => {
     try {
@@ -155,13 +168,16 @@ export const setupDNSHandlers = () => {
         } catch {
           Write-Host "Error testing DNS: $($_.Exception.Message)"
         }
-      `
-      const result = await executePowerShell(null, { script, name: "Test-DNS" })
-      return result
+      `;
+      const result = await executePowerShell(null, {
+        script,
+        name: "Test-DNS",
+      });
+      return result;
     } catch (error) {
-      return { success: false, error: error.message }
+      return { success: false, error: error.message };
     }
-  })
+  });
 
   ipcMain.handle("dns:get-adapters", async () => {
     try {
@@ -169,26 +185,33 @@ export const setupDNSHandlers = () => {
         Get-NetAdapter | Where-Object { $_.Status -eq "Up" } | ForEach-Object {
           Write-Host "$($_.Name)|$($_.InterfaceDescription)|$($_.Status)"
         }
-      `
-      const result = await executePowerShell(null, { script, name: "Get-Adapters" })
+      `;
+      const result = await executePowerShell(null, {
+        script,
+        name: "Get-Adapters",
+      });
 
       if (result.success) {
         const lines = result.output
           .trim()
           .split("\n")
-          .filter((line) => line.includes("|"))
+          .filter((line) => line.includes("|"));
         const adapters = lines.map((line) => {
-          const [name, description, status] = line.split("|")
-          return { name: name.trim(), description: description.trim(), status: status.trim() }
-        })
-        return { success: true, data: adapters }
+          const [name, description, status] = line.split("|");
+          return {
+            name: name.trim(),
+            description: description.trim(),
+            status: status.trim(),
+          };
+        });
+        return { success: true, data: adapters };
       } else {
-        return { success: false, error: result.error }
+        return { success: false, error: result.error };
       }
     } catch (error) {
-      return { success: false, error: error.message }
+      return { success: false, error: error.message };
     }
-  })
+  });
 
   ipcMain.handle("dns:flush-cache", async () => {
     try {
@@ -196,25 +219,28 @@ export const setupDNSHandlers = () => {
         Write-Host "Flushing DNS cache..."
         ipconfig /flushdns
         Write-Host "DNS cache flushed successfully!"
-      `
-      const result = await executePowerShell(null, { script, name: "Flush-DNS" })
-      return result
+      `;
+      const result = await executePowerShell(null, {
+        script,
+        name: "Flush-DNS",
+      });
+      return result;
     } catch (error) {
-      return { success: false, error: error.message }
+      return { success: false, error: error.message };
     }
-  })
-}
+  });
+};
 
 export const cleanupDNSHandlers = () => {
-  ipcMain.removeHandler("dns:get-current")
-  ipcMain.removeHandler("dns:apply")
-  ipcMain.removeHandler("dns:reset")
-  ipcMain.removeHandler("dns:test")
-  ipcMain.removeHandler("dns:get-adapters")
-  ipcMain.removeHandler("dns:flush-cache")
-}
+  ipcMain.removeHandler("dns:get-current");
+  ipcMain.removeHandler("dns:apply");
+  ipcMain.removeHandler("dns:reset");
+  ipcMain.removeHandler("dns:test");
+  ipcMain.removeHandler("dns:get-adapters");
+  ipcMain.removeHandler("dns:flush-cache");
+};
 
 export default {
   setupDNSHandlers,
   cleanupDNSHandlers,
-}
+};

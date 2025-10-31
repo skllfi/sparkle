@@ -1,62 +1,74 @@
-import { useState, useEffect, useMemo } from "react"
-import Modal from "@/components/ui/modal"
-import Button from "@/components/ui/button"
-import { toast } from "react-toastify"
+import { useState, useEffect, useMemo } from "react";
+import Modal from "@/components/ui/modal";
+import Button from "@/components/ui/button";
+import { toast } from "react-toastify";
 
 export default function UpdateManager() {
-  const [updateOpen, setUpdateOpen] = useState(false)
-  const [updateVersion, setUpdateVersion] = useState(null)
-  const [isDownloading, setIsDownloading] = useState(false)
-  const [downloadPercent, setDownloadPercent] = useState(0)
-  const isDownloaded = useMemo(() => downloadPercent >= 100, [downloadPercent])
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const [updateVersion, setUpdateVersion] = useState(null);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadPercent, setDownloadPercent] = useState(0);
+  const isDownloaded = useMemo(() => downloadPercent >= 100, [downloadPercent]);
 
   useEffect(() => {
     const onAvailable = (_e, payload) => {
-      setUpdateVersion(payload?.version ?? null)
-      setUpdateOpen(true)
-      setIsDownloading(false)
-      setDownloadPercent(0)
-    }
+      setUpdateVersion(payload?.version ?? null);
+      setUpdateOpen(true);
+      setIsDownloading(false);
+      setDownloadPercent(0);
+    };
     const onNotAvailable = () => {
-      toast.success("You're up to date")
-    }
+      toast.success("You're up to date");
+    };
     const onError = (_e, payload) => {
-      toast.error(payload?.message ?? "Update error")
-      setIsDownloading(false)
-    }
+      toast.error(payload?.message ?? "Update error");
+      setIsDownloading(false);
+    };
     const onProgress = (_e, payload) => {
-      setIsDownloading(true)
-      setDownloadPercent(Math.max(0, Math.min(100, payload.percent || 0)))
-    }
+      setIsDownloading(true);
+      setDownloadPercent(Math.max(0, Math.min(100, payload.percent || 0)));
+    };
     const onDownloaded = () => {
-      setIsDownloading(false)
-      setDownloadPercent(100)
-    }
+      setIsDownloading(false);
+      setDownloadPercent(100);
+    };
 
-    window.electron.ipcRenderer.on("updater:available", onAvailable)
-    window.electron.ipcRenderer.on("updater:not-available", onNotAvailable)
-    window.electron.ipcRenderer.on("updater:error", onError)
-    window.electron.ipcRenderer.on("updater:download-progress", onProgress)
-    window.electron.ipcRenderer.on("updater:downloaded", onDownloaded)
+    window.electron.ipcRenderer.on("updater:available", onAvailable);
+    window.electron.ipcRenderer.on("updater:not-available", onNotAvailable);
+    window.electron.ipcRenderer.on("updater:error", onError);
+    window.electron.ipcRenderer.on("updater:download-progress", onProgress);
+    window.electron.ipcRenderer.on("updater:downloaded", onDownloaded);
 
     return () => {
-      window.electron.ipcRenderer.removeListener("updater:available", onAvailable)
-      window.electron.ipcRenderer.removeListener("updater:not-available", onNotAvailable)
-      window.electron.ipcRenderer.removeListener("updater:error", onError)
-      window.electron.ipcRenderer.removeListener("updater:download-progress", onProgress)
-      window.electron.ipcRenderer.removeListener("updater:downloaded", onDownloaded)
-    }
-  }, [])
+      window.electron.ipcRenderer.removeListener(
+        "updater:available",
+        onAvailable,
+      );
+      window.electron.ipcRenderer.removeListener(
+        "updater:not-available",
+        onNotAvailable,
+      );
+      window.electron.ipcRenderer.removeListener("updater:error", onError);
+      window.electron.ipcRenderer.removeListener(
+        "updater:download-progress",
+        onProgress,
+      );
+      window.electron.ipcRenderer.removeListener(
+        "updater:downloaded",
+        onDownloaded,
+      );
+    };
+  }, []);
 
   const handleUpdateNow = async () => {
     if (isDownloaded) {
-      await window.electron.ipcRenderer.invoke("updater:install")
-      return
+      await window.electron.ipcRenderer.invoke("updater:install");
+      return;
     }
-    setIsDownloading(true)
-    setDownloadPercent(0)
-    await window.electron.ipcRenderer.invoke("updater:download")
-  }
+    setIsDownloading(true);
+    setDownloadPercent(0);
+    await window.electron.ipcRenderer.invoke("updater:download");
+  };
 
   return (
     <Modal open={updateOpen} onClose={() => {}}>
@@ -73,10 +85,14 @@ export default function UpdateManager() {
         </p>
         <div className="flex justify-end gap-3">
           <Button onClick={handleUpdateNow} disabled={isDownloading}>
-            {isDownloaded ? "Restart and install" : isDownloading ? "Downloading…" : "Update now"}
+            {isDownloaded
+              ? "Restart and install"
+              : isDownloading
+                ? "Downloading…"
+                : "Update now"}
           </Button>
         </div>
       </div>
     </Modal>
-  )
+  );
 }

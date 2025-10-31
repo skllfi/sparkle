@@ -1,6 +1,6 @@
-import { Minus, Square, X } from "lucide-react"
-import { close, minimize, toggleMaximize } from "../lib/electron"
-import sparkleLogo from "../../../../resources/sparklelogo.png"
+import { Minus, Square, X } from "lucide-react";
+import { close, minimize, toggleMaximize } from "../lib/electron";
+import sparkleLogo from "../../../../resources/sparklelogo.png";
 
 function TitleBar() {
   return (
@@ -37,7 +37,7 @@ function TitleBar() {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default TitleBar
+export default TitleBar;

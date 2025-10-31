@@ -1,121 +1,121 @@
-import { useState, useEffect } from "react"
-import RootDiv from "@/components/rootdiv"
-import { Cpu, HardDrive, Zap, MemoryStick, Gpu } from "lucide-react"
-import InfoCard from "@/components/infocard.jsx"
-import { invoke } from "@/lib/electron"
-import Button from "@/components/ui/button.jsx"
-import { useNavigate } from "react-router-dom"
-import useSystemStore from "@/store/systemInfo"
-import log from "electron-log/renderer"
-import Greeting from "@/components/greeting"
-import { MonitorCog } from "lucide-react"
-import { Wrench } from "lucide-react"
-import Card from "@/components/ui/card.jsx"
+import { useState, useEffect } from "react";
+import RootDiv from "@/components/rootdiv";
+import { Cpu, HardDrive, Zap, MemoryStick, Gpu } from "lucide-react";
+import InfoCard from "@/components/infocard.jsx";
+import { invoke } from "@/lib/electron";
+import Button from "@/components/ui/button.jsx";
+import { useNavigate } from "react-router-dom";
+import useSystemStore from "@/store/systemInfo";
+import log from "electron-log/renderer";
+import Greeting from "@/components/greeting";
+import { MonitorCog } from "lucide-react";
+import { Wrench } from "lucide-react";
+import Card from "@/components/ui/card.jsx";
 function Home() {
-  const systemInfo = useSystemStore((state) => state.systemInfo)
-  const setSystemInfo = useSystemStore((state) => state.setSystemInfo)
+  const systemInfo = useSystemStore((state) => state.systemInfo);
+  const setSystemInfo = useSystemStore((state) => state.setSystemInfo);
   const [tweakInfo, setTweakInfo] = useState(() => {
     try {
-      const cached = localStorage.getItem("sparkle:tweakInfo")
-      return cached ? JSON.parse(cached) : null
+      const cached = localStorage.getItem("sparkle:tweakInfo");
+      return cached ? JSON.parse(cached) : null;
     } catch (err) {
-      console.error("Failed to parse tweakInfo cache", err)
-      return null
+      console.error("Failed to parse tweakInfo cache", err);
+      return null;
     }
-  })
-  const router = useNavigate()
-  const [loading, setLoading] = useState(true)
-  const [usingCache, setUsingCache] = useState(false)
+  });
+  const router = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [usingCache, setUsingCache] = useState(false);
   const [activeTweaks, setActiveTweaks] = useState(() => {
     try {
-      const cached = localStorage.getItem("sparkle:activeTweaks")
-      return cached ? JSON.parse(cached) : []
+      const cached = localStorage.getItem("sparkle:activeTweaks");
+      return cached ? JSON.parse(cached) : [];
     } catch {
-      return []
+      return [];
     }
-  })
+  });
 
   const goToTweaks = () => {
-    router("tweaks")
-  }
+    router("tweaks");
+  };
 
   const fetchActiveTweaks = async () => {
     try {
-      const active = await invoke({ channel: "tweak:active" })
-      setActiveTweaks(active)
-      localStorage.setItem("sparkle:activeTweaks", JSON.stringify(active))
+      const active = await invoke({ channel: "tweak:active" });
+      setActiveTweaks(active);
+      localStorage.setItem("sparkle:activeTweaks", JSON.stringify(active));
     } catch (err) {
-      console.error("Failed to fetch active tweaks:", err)
+      console.error("Failed to fetch active tweaks:", err);
     }
-  }
+  };
 
   useEffect(() => {
     const idleHandle = requestIdleCallback(() => {
-      const cached = localStorage.getItem("sparkle:systemInfo")
+      const cached = localStorage.getItem("sparkle:systemInfo");
       if (cached) {
         try {
-          const parsed = JSON.parse(cached)
-          setSystemInfo(parsed)
-          setUsingCache(true)
-          setLoading(false)
+          const parsed = JSON.parse(cached);
+          setSystemInfo(parsed);
+          setUsingCache(true);
+          setLoading(false);
         } catch (err) {
-          console.warn("Failed to parse systemInfo cache", err)
+          console.warn("Failed to parse systemInfo cache", err);
         }
       }
 
       invoke({ channel: "get-system-info" })
         .then((info) => {
-          setSystemInfo(info)
-          localStorage.setItem("sparkle:systemInfo", JSON.stringify(info))
-          setUsingCache(false)
-          log.info("Fetched system info")
+          setSystemInfo(info);
+          localStorage.setItem("sparkle:systemInfo", JSON.stringify(info));
+          setUsingCache(false);
+          log.info("Fetched system info");
         })
         .catch((err) => {
-          log.error("Error fetching system info:", err)
-          console.error("Error fetching system info:", err)
+          log.error("Error fetching system info:", err);
+          console.error("Error fetching system info:", err);
         })
-        .finally(() => setLoading(false))
-    })
+        .finally(() => setLoading(false));
+    });
 
-    return () => cancelIdleCallback(idleHandle)
-  }, [])
+    return () => cancelIdleCallback(idleHandle);
+  }, []);
 
   useEffect(() => {
     const idleHandle = requestIdleCallback(() => {
-      const cached = localStorage.getItem("sparkle:tweakInfo")
+      const cached = localStorage.getItem("sparkle:tweakInfo");
       if (cached) {
         try {
-          setTweakInfo(JSON.parse(cached))
+          setTweakInfo(JSON.parse(cached));
         } catch (err) {
-          console.error("Failed to parse tweakInfo cache", err)
+          console.error("Failed to parse tweakInfo cache", err);
         }
       }
 
       invoke({ channel: "tweaks:fetch" })
         .then((tweaks) => {
-          setTweakInfo(tweaks)
-          localStorage.setItem("sparkle:tweakInfo", JSON.stringify(tweaks))
+          setTweakInfo(tweaks);
+          localStorage.setItem("sparkle:tweakInfo", JSON.stringify(tweaks));
         })
         .catch((err) => {
-          console.error("Error fetching tweak info:", err)
-        })
-    })
+          console.error("Error fetching tweak info:", err);
+        });
+    });
 
-    return () => cancelIdleCallback(idleHandle)
-  }, [])
+    return () => cancelIdleCallback(idleHandle);
+  }, []);
 
   useEffect(() => {
     const idleHandle = requestIdleCallback(() => {
-      fetchActiveTweaks()
-    })
+      fetchActiveTweaks();
+    });
 
-    return () => cancelIdleCallback(idleHandle)
-  }, [])
+    return () => cancelIdleCallback(idleHandle);
+  }, []);
 
   const formatBytes = (bytes) => {
-    if (bytes === 0 || !bytes) return "0 GB"
-    return (bytes / 1024 / 1024 / 1024).toFixed(2) + " GB"
-  }
+    if (bytes === 0 || !bytes) return "0 GB";
+    return (bytes / 1024 / 1024 / 1024).toFixed(2) + " GB";
+  };
 
   if (loading) {
     return (
@@ -126,16 +126,17 @@ function Home() {
               className="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-sparkle-primary rounded-full ml-3"
               role="status"
               aria-label="loading"
-            >
-            </div>
+            ></div>
           </div>
-          <div className="text-sparkle-text-secondary">Loading system information...</div>
+          <div className="text-sparkle-text-secondary">
+            Loading system information...
+          </div>
           <p className="text-sm text-sparkle-primary">
             You may use other parts of sparkle while this loads
           </p>
         </div>
       </RootDiv>
-    )
+    );
   }
 
   return (
@@ -151,7 +152,10 @@ function Home() {
             subtitle="Processor Information"
             items={[
               { label: "Model", value: systemInfo?.cpu_model || "Unknown" },
-              { label: "Cores", value: `${systemInfo?.cpu_cores || "0"} Cores` },
+              {
+                label: "Cores",
+                value: `${systemInfo?.cpu_cores || "0"} Cores`,
+              },
             ]}
           />
 
@@ -174,7 +178,10 @@ function Home() {
             title="Memory"
             subtitle="RAM Information"
             items={[
-              { label: "Total Memory", value: formatBytes(systemInfo?.memory_total) },
+              {
+                label: "Total Memory",
+                value: formatBytes(systemInfo?.memory_total),
+              },
               { label: "Type", value: systemInfo?.memory_type || "Unknown" },
             ]}
           />
@@ -198,8 +205,14 @@ function Home() {
             title="Storage"
             subtitle="Disk Information"
             items={[
-              { label: "Primary Disk", value: systemInfo?.disk_model || "Unknown" },
-              { label: "Total Space", value: systemInfo?.disk_size || "Unknown" },
+              {
+                label: "Primary Disk",
+                value: systemInfo?.disk_model || "Unknown",
+              },
+              {
+                label: "Total Space",
+                value: systemInfo?.disk_size || "Unknown",
+              },
             ]}
           />
 
@@ -210,8 +223,14 @@ function Home() {
             title="Tweaks"
             subtitle="Tweaks Status"
             items={[
-              { label: "Available Tweaks", value: `${tweakInfo?.length || 0} Tweaks` },
-              { label: "Active Tweaks", value: `${activeTweaks.length || 0} Active` },
+              {
+                label: "Available Tweaks",
+                value: `${tweakInfo?.length || 0} Tweaks`,
+              },
+              {
+                label: "Active Tweaks",
+                value: `${activeTweaks.length || 0} Active`,
+              },
             ]}
           />
         </div>
@@ -226,7 +245,11 @@ function Home() {
             </p>
           </div>
           <div className="ml-auto">
-            <Button variant="outline" className="flex items-center gap-2" onClick={goToTweaks}>
+            <Button
+              variant="outline"
+              className="flex items-center gap-2"
+              onClick={goToTweaks}
+            >
               <Zap size={18} /> Tweaks
             </Button>
           </div>
@@ -236,7 +259,7 @@ function Home() {
         </p>
       </div>
     </RootDiv>
-  )
+  );
 }
 
-export default Home
+export default Home;
