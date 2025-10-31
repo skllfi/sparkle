@@ -1,38 +1,24 @@
-name: Build & Release
-
+name: Build
 on:
   push:
     branches:
-      - v2
-
+      - main
 jobs:
   build:
-    runs-on: windows-latest
-
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-
-      - name: Install pnpm
-        run: npm install -g pnpm
-
+          node-version: '20'
       - name: Install dependencies
-        run: pnpm install
-
-      - name: Build the application
-        run: pnpm run build:electron
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+        run: npm install
+      - name: Build application
+        run: npm run build:electron
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Sparkle-build
-          path: |
-            dist/*.exe
-            dist/*.zip
+          name: sparkle-build
+          path: dist/
