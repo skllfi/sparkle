@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 function Greeting() {
   const { t } = useTranslation();
   const [name, setName] = useState(localStorage.getItem("sparkle:user") || "");
-  const [randomGreeting, setRandomGreeting] = useState("");
 
   useEffect(() => {
     if (!name) {
@@ -22,18 +21,21 @@ function Greeting() {
     }
   }, [name]);
 
-  const generalGreetings = useMemo(() => [
-    t("greetings.hi"),
-    t("greetings.hello"),
-    t("greetings.hey"),
-    t("greetings.greetings"),
-    t("greetings.yo"),
-    t("greetings.howdy"),
-    t("greetings.whats_up"),
-    t("greetings.good_to_see_you"),
-    t("greetings.welcome_back"),
-    t("greetings.ahoy"),
-  ], [t]);
+  const generalGreetings = useMemo(
+    () => [
+      t("greetings.hi"),
+      t("greetings.hello"),
+      t("greetings.hey"),
+      t("greetings.greetings"),
+      t("greetings.yo"),
+      t("greetings.howdy"),
+      t("greetings.whats_up"),
+      t("greetings.good_to_see_you"),
+      t("greetings.welcome_back"),
+      t("greetings.ahoy"),
+    ],
+    [t],
+  );
 
   const timeGreetings = useMemo(() => {
     const hour = new Date().getHours();
@@ -42,9 +44,9 @@ function Greeting() {
     return [t("greetings.good_evening")];
   }, [t]);
 
-  useEffect(() => {
+  const randomGreeting = useMemo(() => {
     const allGreetings = [...generalGreetings, ...timeGreetings];
-    setRandomGreeting(allGreetings[Math.floor(Math.random() * allGreetings.length)]);
+    return allGreetings[Math.floor(Math.random() * allGreetings.length)];
   }, [generalGreetings, timeGreetings]);
 
   return (

@@ -21,7 +21,7 @@ export default function ProxyManager() {
         setAddress(status.address);
         setPort(status.port);
       }
-    } catch (error) {
+    } catch {
       toast.error(t("utilities.proxy_status_error"));
     }
     setIsLoading(false);
@@ -40,7 +40,7 @@ export default function ProxyManager() {
   }, [fetchProxyStatus]);
 
   const handleEnableProxy = async () => {
-    if (!/^[\d\.]+$/.test(address)) {
+    if (!/^[\d.]+$/.test(address)) {
       toast.error(t("utilities.proxy_invalid_address"));
       return;
     }

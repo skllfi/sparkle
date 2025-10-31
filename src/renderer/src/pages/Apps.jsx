@@ -1,4 +1,4 @@
-import { useState, useMemo, Suspense } from "react";
+import { useState, useMemo, Suspense, useCallback } from "react";
 import data from "../assets/apps.json";
 import RootDiv from "@/components/rootdiv";
 import { Search } from "lucide-react";
@@ -81,7 +81,7 @@ function Apps() {
     }, {});
   }, [filteredApps]);
 
-  const checkInstalledApps = () => {
+  const checkInstalledApps = useCallback(() => {
     invoke({
       channel: "handle-apps",
       payload: {
@@ -89,7 +89,7 @@ function Apps() {
         apps: appsList.map((a) => a.id),
       },
     });
-  };
+  }, [appsList]);
   const toggleApp = (appId) => {
     setSelectedApps((prev) =>
       prev.includes(appId)
@@ -182,7 +182,7 @@ function Apps() {
         window.electron.ipcRenderer.removeAllListeners(channel);
       });
     };
-  }, []);
+  }, [checkInstalledApps]);
 
   const handleAppAction = async (type, appsToUse = selectedApps) => {
     const actionVerb = type === "install" ? "Installing" : "Uninstalling";
@@ -442,7 +442,7 @@ function Apps() {
             ))}
           </Suspense>
           <p className="text-center text-sparkle-text-muted">
-            Request more apps or make a pull request on{" "}
+            Request more apps or make a pull request on {""}
             <a
               href="https://github.com/parcoil/sparkle"
               target="_blank"
