@@ -1,14 +1,16 @@
-import { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { invoke } from "@/lib/electron";
 import { useTranslation } from "react-i18next";
 
-function Greeting() {
+function Greeting(): React.ReactElement {
   const { t } = useTranslation();
-  const [name, setName] = useState(localStorage.getItem("sparkle:user") || "");
+  const [name, setName] = useState<string>(localStorage.getItem("sparkle:user") || "");
 
   useEffect(() => {
     if (!name) {
-      invoke({ channel: "get-user-name" })
+      // We now know from the main process that this returns a string.
+      // We cast the result to Promise<string> for type safety.
+      (invoke({ channel: "get-user-name" }) as Promise<string>)
         .then((username) => {
           if (username) {
             setName(username);
