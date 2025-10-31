@@ -1,5 +1,6 @@
 import { useId } from "react";
 import { Check } from "lucide-react";
+import PropTypes from "prop-types";
 
 export default function Checkbox({ label, checked, onChange, onClick }) {
   const id = useId();
@@ -25,3 +26,10 @@ export default function Checkbox({ label, checked, onChange, onClick }) {
     </label>
   );
 }
+
+Checkbox.propTypes = {
+  label: PropTypes.string.isRequired,
+  checked: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+};

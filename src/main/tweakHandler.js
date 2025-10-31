@@ -3,7 +3,6 @@ import fs from "fs/promises";
 import fsSync from "fs";
 import path from "path";
 import { exec } from "child_process";
-import { promisify } from "util";
 import { logo } from "./index";
 import { executePowerShell } from "./powershell";
 import si from "systeminformation";
@@ -12,7 +11,6 @@ console.log = log.log;
 console.error = log.error;
 console.warn = log.warn;
 
-const execPromise = promisify(exec);
 const userDataPath = app.getPath("userData");
 const tweaksStatePath = path.join(userDataPath, "tweakStates.json");
 const isDev = !app.isPackaged;
@@ -129,7 +127,7 @@ async function detectGPU() {
     return {
       hasGPU,
       isNvidia,
-      model: gpu?.model || null,
+      model: dedicatedGPU?.model || null,
     };
   } catch (error) {
     console.error("Error detecting GPU:", error);

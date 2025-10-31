@@ -63,7 +63,7 @@ ipcMain.handle("create-restore-point", async (_, name) => {
   }
 });
 
-ipcMain.handle("delete-all-restore-points", async (_, sequenceNumber) => {
+ipcMain.handle("delete-all-restore-points", async () => {
   try {
     await runPowerShell(`vssadmin delete shadows /all /quiet`);
     await changeRestorePointCooldown();

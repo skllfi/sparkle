@@ -17,7 +17,7 @@ const ensureScriptsAvailable = async () => {
   try {
     await fs.access(userDataScriptsDir);
     return;
-  } catch (error) {
+  } catch {
     console.log("Copying DNS scripts to user data directory...");
 
     const sourcePaths = [
@@ -46,7 +46,7 @@ const ensureScriptsAvailable = async () => {
           }
         }
         break;
-      } catch (error) {}
+      } catch {}
     }
   }
 };
@@ -67,7 +67,7 @@ const getScriptPath = async (scriptName) => {
       await fs.access(scriptPath);
       console.log(`Found DNS script at: ${scriptPath}`);
       return scriptPath;
-    } catch (error) {}
+    } catch {}
   }
 
   throw new Error(

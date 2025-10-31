@@ -75,5 +75,8 @@ export function initAutoUpdater(getMainWindow) {
 export async function triggerAutoUpdateCheck() {
   try {
     await autoUpdater.checkForUpdates();
-  } catch {}
+  } catch (error) {
+    // This is a silent check, so we'll just log the error
+    console.warn("Failed to check for updates on startup:", error);
+  }
 }

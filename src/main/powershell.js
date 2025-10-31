@@ -1,5 +1,4 @@
 import { promises as fsp } from "fs";
-import os from "os";
 import path from "path";
 import util from "util";
 import { exec } from "child_process";
@@ -123,7 +122,7 @@ ipcMain.handle("handle-apps", async (event, { action, apps }) => {
         }
 
         const escapeRegExp = (string) => {
-          return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          return string.replace(/[.*+?^${}()|[\\\]/g, "\\$&");
         };
 
         const installedAppIds = apps.filter((appId) => {

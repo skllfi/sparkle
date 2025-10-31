@@ -1,6 +1,7 @@
 import React from "react";
 import { Button as HeadlessButton } from "@headlessui/react";
 import clsx from "clsx";
+import PropTypes from "prop-types";
 
 const sizes = {
   sm: "px-3 py-1.5 text-sm",
@@ -49,6 +50,15 @@ const Button = ({
       {children}
     </HeadlessButton>
   );
+};
+
+Button.propTypes = {
+  children: PropTypes.node.isRequired,
+  variant: PropTypes.oneOf(["primary", "outline", "secondary", "danger"]),
+  size: PropTypes.oneOf(["sm", "md", "lg"]),
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  as: PropTypes.string,
 };
 
 export default Button;

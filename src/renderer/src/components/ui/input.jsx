@@ -1,5 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
+import PropTypes from "prop-types";
 
 function Input({
   type,
@@ -24,6 +25,14 @@ function Input({
     />
   );
 }
+
+Input.propTypes = {
+  type: PropTypes.string,
+  defaultValue: PropTypes.string,
+  onChange: PropTypes.func,
+  className: PropTypes.string,
+  placeholder: PropTypes.string,
+};
 
 function LargeInput({
   placeholder,
@@ -58,5 +67,13 @@ function LargeInput({
     </div>
   );
 }
+
+LargeInput.propTypes = {
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  icon: PropTypes.elementType,
+  className: PropTypes.string,
+};
 
 export { Input, LargeInput };

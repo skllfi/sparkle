@@ -116,7 +116,7 @@ export function isNoDPIAutostartEnabled() {
 
 export function enableNoDPIAutostart() {
   return new Promise((resolve) => {
-    const command = `reg add "HKCU\\${autostartKey}" /v ${autostartName} /t REG_SZ /d "\"${process.execPath}\" --hidden" /f`;
+    const command = `reg add "HKCU\\${autostartKey}" /v ${autostartName} /t REG_SZ /d "${process.execPath}" --hidden" /f`;
     exec(command, (error) => {
       if (error) {
         resolve({ success: false, error: error.message });

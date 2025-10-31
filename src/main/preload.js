@@ -1,10 +1,6 @@
 const {
   contextBridge,
-  ipcRenderer,
-  app,
-  BrowserWindow,
-  dialog,
-  fs,
+  ipcRenderer
 } = require("electron");
 
 contextBridge.exposeInMainWorld("electron", {

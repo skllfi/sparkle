@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import PropTypes from "prop-types";
 
 const Tooltip = ({ content, children, side = "top", delay = 0.5 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -59,6 +60,13 @@ const Tooltip = ({ content, children, side = "top", delay = 0.5 }) => {
       </div>
     </div>
   );
+};
+
+Tooltip.propTypes = {
+  content: PropTypes.node,
+  children: PropTypes.node.isRequired,
+  side: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+  delay: PropTypes.number,
 };
 
 export default Tooltip;

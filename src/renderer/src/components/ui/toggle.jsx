@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export default function Toggle({ checked, onChange, disabled }) {
   return (
@@ -14,3 +15,9 @@ export default function Toggle({ checked, onChange, disabled }) {
     </label>
   );
 }
+
+Toggle.propTypes = {
+  checked: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+};
