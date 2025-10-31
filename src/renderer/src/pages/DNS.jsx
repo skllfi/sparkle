@@ -11,10 +11,10 @@ import {
   RefreshCw,
   AlertCircle,
   Info,
+  Cloud,
+  Check,
 } from "lucide-react";
-import { Cloud } from "lucide-react";
 import log from "electron-log/renderer";
-import { Check } from "lucide-react";
 import Card from "@/components/ui/card.jsx";
 
 const dnsProviders = [

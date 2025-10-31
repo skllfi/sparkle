@@ -4,14 +4,11 @@ import { useTranslation } from "react-i18next";
 
 function Greeting() {
   const { t } = useTranslation();
-  const [name, setName] = useState("");
+  const [name, setName] = useState(localStorage.getItem("sparkle:user") || "");
   const [randomGreeting, setRandomGreeting] = useState("");
 
   useEffect(() => {
-    const cached = localStorage.getItem("sparkle:user");
-    if (cached) {
-      setName(cached);
-    } else {
+    if (!name) {
       invoke({ channel: "get-user-name" })
         .then((username) => {
           if (username) {
@@ -23,7 +20,7 @@ function Greeting() {
           console.error("Error fetching user name:", err);
         });
     }
-  }, []);
+  }, [name]);
 
   const generalGreetings = useMemo(() => [
     t("greetings.hi"),

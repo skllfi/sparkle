@@ -15,6 +15,8 @@ import log from "electron-log/renderer";
 import { Upload } from "lucide-react";
 import Card from "@/components/ui/card.jsx";
 import { LargeInput } from "@/components/ui/input.jsx";
+import sparkleLogo from "@/assets/icon.png";
+
 function Apps() {
   const [search, setSearch] = useState("");
   const [selectedApps, setSelectedApps] = useState([]);

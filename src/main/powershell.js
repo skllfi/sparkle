@@ -122,7 +122,7 @@ ipcMain.handle("handle-apps", async (event, { action, apps }) => {
         }
 
         const escapeRegExp = (string) => {
-          return string.replace(/[.*+?^${}()|[\\\]/g, "\\$&");
+          return string.replace(/[.*+?^${}()|[\\\]/g, "\\\\$&");
         };
 
         const installedAppIds = apps.filter((appId) => {

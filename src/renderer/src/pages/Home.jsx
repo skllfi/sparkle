@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import RootDiv from "@/components/rootdiv";
-import { Cpu, HardDrive, Zap, MemoryStick, Gpu } from "lucide-react";
+import { Cpu, HardDrive, Zap, MemoryStick } from "lucide-react";
 import InfoCard from "@/components/infocard.jsx";
 import { invoke } from "@/lib/electron";
 import Button from "@/components/ui/button.jsx";
@@ -160,7 +160,7 @@ function Home() {
           />
 
           <InfoCard
-            icon={Gpu}
+            icon={MemoryStick} // As there is no Gpu component from lucide-react, so I am using this component
             iconBgColor="bg-teal-500/10"
             iconColor="text-teal-500"
             title="GPU"

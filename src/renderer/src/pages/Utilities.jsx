@@ -11,7 +11,7 @@ import ProxyManager from "@/lib/components/utilities/ProxyManager.jsx";
 import {
   SquareTerminal,
   Binary,
-  ChartColumn,
+  BarChartBig,
   Settings,
   HardDrive,
   Activity,
@@ -148,7 +148,7 @@ export default function UtilitiesPage() {
     {
       name: "Task Manager",
       command: "start taskmgr.exe",
-      icon: <ChartColumn className="w-6 h-6 text-blue-400" />,
+      icon: <BarChartBig className="w-6 h-6 text-blue-400" />,
     },
     {
       name: "Disk Cleanup",

@@ -8,6 +8,7 @@ import Toggle from "@/components/ui/toggle.jsx";
 import { toast } from "react-toastify";
 import Card from "@/components/ui/card.jsx";
 import { useTranslation } from "react-i18next";
+import { Trash2 } from "lucide-react";
 
 const themes = [
   { labelKey: "settings.themes.system", value: "system" },
@@ -23,7 +24,7 @@ const languages = [
   { label: "Russian", value: "ru" },
 ];
 
-function Settings({ onCheckForUpdates }) {
+function Settings() {
   const { t, i18n } = useTranslation();
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "system");
   const [language, setLanguage] = useState(
@@ -126,19 +127,7 @@ function Settings({ onCheckForUpdates }) {
         <div className="bg-sparkle-card border border-sparkle-border rounded-2xl p-8 shadow-2xl max-w-md w-full mx-4">
           <div className="text-center mb-6">
             <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg
-                className="w-8 h-8 text-red-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                />
-              </svg>
+              <Trash2 className="w-8 h-8 text-red-500" />
             </div>
             <h2 className="text-xl font-semibold text-white mb-3">
               {t("settings.delete_legacy_backups_title")}
@@ -203,11 +192,11 @@ function Settings({ onCheckForUpdates }) {
                     {t("settings.theme_title")}
                   </h3>
                   <div className="grid grid-cols-6 gap-3">
-                    {themes.map((t) => (
+                    {themes.map((themeOption) => (
                       <label
-                        key={t.value}
+                        key={themeOption.value}
                         className={`flex items-center justify-center gap-2 cursor-pointer p-3 rounded-lg border transition-all duration-200 active:scale-95 ${
-                          theme === t.value
+                          theme === themeOption.value
                             ? "border-sparkle-primary"
                             : "border-sparkle-border"
                         }`}
@@ -215,13 +204,13 @@ function Settings({ onCheckForUpdates }) {
                         <input
                           type="radio"
                           name="theme"
-                          value={t.value}
-                          checked={theme === t.value}
-                          onChange={() => setTheme(t.value)}
+                          value={themeOption.value}
+                          checked={theme === themeOption.value}
+                          onChange={() => setTheme(themeOption.value)}
                           className="sr-only"
                         />
                         <span className="text-sparkle-text font-medium">
-                          {t(t.labelKey)}
+                          {t(themeOption.labelKey)}
                         </span>
                       </label>
                     ))}
@@ -460,7 +449,7 @@ function Settings({ onCheckForUpdates }) {
     </>
   );
 }
-// this saves alot of time
+
 const SettingCard = ({ children, className = "" }) => (
   <Card className={`p-4 ${className}`}>{children}</Card>
 );
@@ -471,4 +460,5 @@ const SettingSection = ({ title, children }) => (
     {children}
   </div>
 );
+
 export default Settings;

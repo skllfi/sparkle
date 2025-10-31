@@ -1,4 +1,4 @@
-import React, { useEffect, forwardRef } from "react";
+import { useEffect, forwardRef } from "react";
 import PropTypes from "prop-types";
 
 const Modal = forwardRef(({ open, onClose, children }, ref) => {
