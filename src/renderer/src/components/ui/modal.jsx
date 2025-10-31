@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, forwardRef } from "react";
 import PropTypes from "prop-types";
 
-export default function Modal({ open, onClose, children }) {
+const Modal = forwardRef(({ open, onClose, children }, ref) => {
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === "Escape") onClose();
@@ -12,6 +12,7 @@ export default function Modal({ open, onClose, children }) {
 
   return (
     <div
+      ref={ref}
       onClick={onClose}
       className={`
         fixed inset-0 flex justify-center items-center z-50 transition-all
@@ -30,10 +31,14 @@ export default function Modal({ open, onClose, children }) {
       </div>
     </div>
   );
-}
+});
+
+Modal.displayName = "Modal";
 
 Modal.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
+
+export default Modal;

@@ -1,8 +1,8 @@
-import { useId } from "react";
+import { useId, forwardRef } from "react";
 import { Check } from "lucide-react";
 import PropTypes from "prop-types";
 
-export default function Checkbox({ label, checked, onChange, onClick }) {
+const Checkbox = forwardRef(({ label, checked, onChange, onClick }, ref) => {
   const id = useId();
 
   return (
@@ -10,6 +10,7 @@ export default function Checkbox({ label, checked, onChange, onClick }) {
       htmlFor={id}
       onClick={onClick}
       className="flex items-center gap-2 cursor-pointer select-none text-slate-200"
+      ref={ref}
     >
       <input
         id={id}
@@ -25,7 +26,9 @@ export default function Checkbox({ label, checked, onChange, onClick }) {
       <span className="text-sm">{label}</span>
     </label>
   );
-}
+});
+
+Checkbox.displayName = "Checkbox";
 
 Checkbox.propTypes = {
   label: PropTypes.string.isRequired,
@@ -33,3 +36,5 @@ Checkbox.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func,
 };
+
+export default Checkbox;

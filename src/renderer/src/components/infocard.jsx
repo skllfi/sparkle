@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import Card from "./ui/card.jsx";
+import PropTypes from "prop-types";
 
 const InfoCard = ({
   icon: Icon,
@@ -44,6 +45,21 @@ const InfoCard = ({
       </div>
     </Card>
   );
+};
+
+InfoCard.propTypes = {
+  icon: PropTypes.elementType.isRequired,
+  iconBgColor: PropTypes.string,
+  iconColor: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    }),
+  ),
+  className: PropTypes.string,
 };
 
 export default InfoCard;

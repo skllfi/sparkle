@@ -1,6 +1,6 @@
 import React from "react";
 import { Button as HeadlessButton } from "@headlessui/react";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import PropTypes from "prop-types";
 
 const sizes = {
@@ -9,15 +9,18 @@ const sizes = {
   lg: "px-5 py-3 text-lg",
 };
 
-const Button = ({
-  children,
-  variant = "primary",
-  size = "sm",
-  className = "",
-  disabled = false,
-  as = "button",
-  ...props
-}) => {
+const Button = React.forwardRef((
+  {
+    children,
+    variant = "primary",
+    size = "sm",
+    className = "",
+    disabled = false,
+    as = "button",
+    ...props
+  },
+  ref
+) => {
   const base =
     "flex items-center rounded-lg font-medium transition-all duration-200 select-none focus:outline-hidden active:scale-90";
 
@@ -37,6 +40,7 @@ const Button = ({
   return (
     <HeadlessButton
       as={as}
+      ref={ref}
       className={clsx(
         base,
         sizes[size],
@@ -50,7 +54,9 @@ const Button = ({
       {children}
     </HeadlessButton>
   );
-};
+});
+
+Button.displayName = "Button";
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,

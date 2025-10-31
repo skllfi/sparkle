@@ -46,7 +46,9 @@ const ensureScriptsAvailable = async () => {
           }
         }
         break;
-      } catch {}
+      } catch {
+        // script not found, try next path
+      }
     }
   }
 };
@@ -67,7 +69,9 @@ const getScriptPath = async (scriptName) => {
       await fs.access(scriptPath);
       console.log(`Found DNS script at: ${scriptPath}`);
       return scriptPath;
-    } catch {}
+    } catch {
+      // script not found, try next path
+    }
   }
 
   throw new Error(

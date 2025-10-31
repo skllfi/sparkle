@@ -85,6 +85,7 @@ export default function FirstTime() {
           <a
             href="https://getsparkle.net"
             target="_blank"
+            rel="noreferrer"
             className="text-blue-500"
           >
             getsparkle.net
@@ -93,6 +94,7 @@ export default function FirstTime() {
           <a
             href="https://github.com/Parcoil/Sparkle"
             target="_blank"
+            rel="noreferrer"
             className="text-blue-500"
           >
             our GitHub
@@ -101,6 +103,7 @@ export default function FirstTime() {
           <a
             href="https://parcoil.com"
             target="_blank"
+            rel="noreferrer"
             className="text-blue-500"
           >
             parcoil.com

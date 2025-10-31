@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 function Greeting() {
   const { t } = useTranslation();
   const [name, setName] = useState("");
+  const [randomGreeting, setRandomGreeting] = useState("");
 
   useEffect(() => {
     const cached = localStorage.getItem("sparkle:user");
@@ -24,7 +25,7 @@ function Greeting() {
     }
   }, []);
 
-  const generalGreetings = [
+  const generalGreetings = useMemo(() => [
     t("greetings.hi"),
     t("greetings.hello"),
     t("greetings.hey"),
@@ -35,19 +36,19 @@ function Greeting() {
     t("greetings.good_to_see_you"),
     t("greetings.welcome_back"),
     t("greetings.ahoy"),
-  ];
+  ], [t]);
 
-  const timeGreetings = () => {
+  const timeGreetings = useMemo(() => {
     const hour = new Date().getHours();
     if (hour < 12) return [t("greetings.good_morning")];
     if (hour < 18) return [t("greetings.good_afternoon")];
     return [t("greetings.good_evening")];
-  };
-
-  const randomGreeting = useMemo(() => {
-    const allGreetings = [...generalGreetings, ...timeGreetings()];
-    return allGreetings[Math.floor(Math.random() * allGreetings.length)];
   }, [t]);
+
+  useEffect(() => {
+    const allGreetings = [...generalGreetings, ...timeGreetings];
+    setRandomGreeting(allGreetings[Math.floor(Math.random() * allGreetings.length)]);
+  }, [generalGreetings, timeGreetings]);
 
   return (
     <h1 className="text-2xl font-bold mb-4">

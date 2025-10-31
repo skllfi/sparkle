@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 function RootDiv({ children, ...props }) {
   const [style, setStyle] = useState({
@@ -40,5 +41,9 @@ function RootDiv({ children, ...props }) {
     </div>
   );
 }
+
+RootDiv.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default RootDiv;

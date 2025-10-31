@@ -147,10 +147,10 @@ function Nav() {
         </div>
       </Modal>
       <div className="flex items-center justify-center gap-2 mt-4 mb-2">
-        <a href="https://github.com/parcoil/sparkle" target="_blank">
+        <a href="https://github.com/parcoil/sparkle" target="_blank" rel="noreferrer">
           <GithubIcon className="w-5 fill-sparkle-primary" />
         </a>
-        <a href="https://discord.com/invite/En5YJYWj3Z" target="_blank">
+        <a href="https://discord.com/invite/En5YJYWj3Z" target="_blank" rel="noreferrer">
           <DiscordIcon className="w-5 fill-sparkle-primary" />
         </a>
       </div>
