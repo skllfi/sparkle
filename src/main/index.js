@@ -41,6 +41,9 @@ console.warn = log.warn;
 
 export const logo = "[Sparkle]:";
 log.initialize();
+
+import { initDiscordRPC } from "./utils/discord";
+
 async function Defender() {
   const Apppath = path.dirname(process.execPath);
   if (app.isPackaged) {
@@ -91,17 +94,6 @@ ipcMain.handle("tray:set", (event, value) => {
   }
   return store.get("showTray");
 });
-
-const initDiscordRPC = async () => {
-  if (store.get("discord-rpc") === undefined) {
-    store.set("discord-rpc", true);
-    console.log("(main.js) ", logo, "Starting Discord RPC");
-    await startDiscordRPC();
-  } else if (store.get("discord-rpc") === true) {
-    console.log("(main.js) ", logo, "Starting Discord RPC (from settings)");
-    await startDiscordRPC();
-  }
-};
 
 initDiscordRPC().catch((err) => {
   console.warn("(main.js) ", "Failed to initialize Discord RPC:", err.message);
