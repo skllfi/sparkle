@@ -1,20 +1,30 @@
 import { useState, useEffect } from "react";
 import RootDiv from "@/components/rootdiv";
-import { Cpu, HardDrive, Zap, MemoryStick } from "lucide-react";
+import { Cpu, HardDrive, Zap, MemoryStick, MonitorCog, Wrench } from "lucide-react";
 import InfoCard from "@/components/infocard.jsx";
 import { invoke } from "@/lib/electron";
 import Button from "@/components/ui/button.jsx";
 import { useNavigate } from "react-router-dom";
-import useSystemStore from "@/store/systemInfo";
+import useSystemStore from "@/store/systemInfo.ts";
 import log from "electron-log/renderer";
 import Greeting from "@/components/greeting";
-import { MonitorCog } from "lucide-react";
-import { Wrench } from "lucide-react";
 import Card from "@/components/ui/card.jsx";
+
+interface TweakInfo {
+  name: string;
+  psapply: string;
+  psunapply: string;
+  category: string;
+  description: string;
+  reboot: boolean;
+  author: string;
+  mitigation?: string; 
+}
+
 function Home() {
   const systemInfo = useSystemStore((state) => state.systemInfo);
   const setSystemInfo = useSystemStore((state) => state.setSystemInfo);
-  const [tweakInfo, setTweakInfo] = useState(() => {
+  const [tweakInfo, setTweakInfo] = useState<TweakInfo[] | null>(() => {
     try {
       const cached = localStorage.getItem("sparkle:tweakInfo");
       return cached ? JSON.parse(cached) : null;
@@ -26,7 +36,7 @@ function Home() {
   const router = useNavigate();
   const [loading, setLoading] = useState(true);
   const [usingCache, setUsingCache] = useState(false);
-  const [activeTweaks, setActiveTweaks] = useState(() => {
+  const [activeTweaks, setActiveTweaks] = useState<string[]>(() => {
     try {
       const cached = localStorage.getItem("sparkle:activeTweaks");
       return cached ? JSON.parse(cached) : [];
@@ -65,7 +75,7 @@ function Home() {
 
       invoke({ channel: "get-system-info" })
         .then((info) => {
-          setSystemInfo(info);
+          setSystemInfo(info as any);
           localStorage.setItem("sparkle:systemInfo", JSON.stringify(info));
           setUsingCache(false);
           log.info("Fetched system info");
@@ -93,7 +103,7 @@ function Home() {
 
       invoke({ channel: "tweaks:fetch" })
         .then((tweaks) => {
-          setTweakInfo(tweaks);
+          setTweakInfo(tweaks as TweakInfo[]);
           localStorage.setItem("sparkle:tweakInfo", JSON.stringify(tweaks));
         })
         .catch((err) => {
@@ -112,7 +122,7 @@ function Home() {
     return () => cancelIdleCallback(idleHandle);
   }, []);
 
-  const formatBytes = (bytes) => {
+  const formatBytes = (bytes: number) => {
     if (bytes === 0 || !bytes) return "0 GB";
     return (bytes / 1024 / 1024 / 1024).toFixed(2) + " GB";
   };
@@ -160,7 +170,7 @@ function Home() {
           />
 
           <InfoCard
-            icon={MemoryStick} // As there is no Gpu component from lucide-react, so I am using this component
+            icon={MemoryStick} 
             iconBgColor="bg-teal-500/10"
             iconColor="text-teal-500"
             title="GPU"
@@ -180,7 +190,7 @@ function Home() {
             items={[
               {
                 label: "Total Memory",
-                value: formatBytes(systemInfo?.memory_total),
+                value: formatBytes(systemInfo?.memory_total as number),
               },
               { label: "Type", value: systemInfo?.memory_type || "Unknown" },
             ]}

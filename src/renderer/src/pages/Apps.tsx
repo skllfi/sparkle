@@ -1,37 +1,39 @@
-import { useState, useMemo, Suspense, useCallback } from "react";
+import { useState, useMemo, Suspense, useCallback, useEffect, ChangeEvent } from "react";
 import data from "../assets/apps.json";
 import RootDiv from "@/components/rootdiv";
-import { Search } from "lucide-react";
+import { Search, Download, Trash, Upload } from "lucide-react";
 import Button from "@/components/ui/button.jsx";
 import Checkbox from "@/components/ui/checkbox.jsx";
 import Modal from "@/components/ui/modal.jsx";
 import { invoke } from "@/lib/electron";
-import { Download } from "lucide-react";
-import { Trash } from "lucide-react";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import log from "electron-log/renderer";
-import { Upload } from "lucide-react";
 import Card from "@/components/ui/card.jsx";
 import { LargeInput } from "@/components/ui/input.jsx";
 import sparkleLogo from "@/assets/icon.png";
 
+interface App {
+  id: string | string[];
+  name: string;
+  category: string;
+  icon?: string;
+  info?: string;
+}
+
 function Apps() {
   const [search, setSearch] = useState("");
-  const [selectedApps, setSelectedApps] = useState([]);
+  const [selectedApps, setSelectedApps] = useState<string[]>([]);
   const [loading, setLoading] = useState("");
   const [currentApp, setCurrentApp] = useState("");
   const [totalApps, setTotalApps] = useState(0);
-  const [installedApps, setInstalledApps] = useState([]);
+  const [installedApps, setInstalledApps] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [importModalOpen, setImportModalOpen] = useState(false);
-  const [importedApps, setImportedApps] = useState([]);
-  const [selectedImportedApps, setSelectedImportedApps] =
-    useState(importedApps);
-  const [appsList, setAppsList] = useState([]);
+  const [importedApps, setImportedApps] = useState<string[]>([]);
+  const [selectedImportedApps, setSelectedImportedApps] = useState<string[]>(importedApps);
+  const [appsList, setAppsList] = useState<App[]>([]);
 
-  // const appsList = data.apps
   const router = useNavigate();
 
   const filteredApps = appsList.filter((app) =>
@@ -50,13 +52,15 @@ function Apps() {
     URL.revokeObjectURL(url);
   };
 
-  const importSelectedApps = (event) => {
-    const file = event.target.files[0];
+  const importSelectedApps = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
     reader.onload = (e) => {
       try {
-        const parsed = JSON.parse(e.target.result);
+        const result = e.target?.result;
+        if (typeof result !== 'string') return;
+        const parsed = JSON.parse(result);
         if (Array.isArray(parsed)) {
           setImportedApps(parsed);
           setSelectedImportedApps(parsed);
@@ -67,7 +71,7 @@ function Apps() {
       } catch {
         toast.error("Failed to parse JSON file");
       } finally {
-        event.target.value = "";
+        if(event.target) event.target.value = "";
       }
     };
     reader.readAsText(file);
@@ -78,7 +82,7 @@ function Apps() {
       if (!acc[app.category]) acc[app.category] = [];
       acc[app.category].push(app);
       return acc;
-    }, {});
+    }, {} as Record<string, App[]>);
   }, [filteredApps]);
 
   const checkInstalledApps = useCallback(() => {
@@ -90,18 +94,20 @@ function Apps() {
       },
     });
   }, [appsList]);
-  const toggleApp = (appId) => {
+
+  const toggleApp = (appId: string | string[]) => {
+    const id = Array.isArray(appId) ? appId[0] : appId;
     setSelectedApps((prev) =>
-      prev.includes(appId)
-        ? prev.filter((id) => id !== appId)
-        : [...prev, appId],
+      prev.includes(id)
+        ? prev.filter((i) => i !== id)
+        : [...prev, id],
     );
   };
 
   useEffect(() => {
     const loadApps = async () => {
       try {
-        let appsData;
+        let appsData: { apps: App[] };
         if (import.meta.env.DEV) {
           appsData = data;
         } else {
@@ -134,7 +140,7 @@ function Apps() {
     checkInstalledApps();
 
     const listeners = {
-      "install-progress": (event, message) => {
+      "install-progress": (event: any, message: string) => {
         console.log(message);
         setCurrentApp(message);
         setCurrentIndex((prev) => prev + 1);
@@ -154,7 +160,7 @@ function Apps() {
           "There was an error during the operation. Please try again.",
         );
       },
-      "installed-apps-checked": (event, { success, installed, error }) => {
+      "installed-apps-checked": (event: any, { success, installed, error }: { success: boolean; installed: string[]; error: any }) => {
         if (success) {
           setInstalledApps(installed);
           try {
@@ -173,7 +179,7 @@ function Apps() {
     };
 
     Object.entries(listeners).forEach(([channel, listener]) => {
-      window.electron.ipcRenderer.on(channel, listener);
+      window.electron.ipcRenderer.on(channel, listener as any);
     });
 
     return () => {
@@ -184,7 +190,7 @@ function Apps() {
     };
   }, [checkInstalledApps]);
 
-  const handleAppAction = async (type, appsToUse = selectedApps) => {
+  const handleAppAction = async (type: 'install' | 'uninstall', appsToUse = selectedApps) => {
     const actionVerb = type === "install" ? "Installing" : "Uninstalling";
     setLoading(type);
 
@@ -235,7 +241,7 @@ function Apps() {
                     >
                       <Checkbox
                         checked={selectedImportedApps.includes(id)}
-                        onChange={(e) => {
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
                           const checked = e.target.checked;
                           setSelectedImportedApps((prev) => {
                             if (checked) {
@@ -307,13 +313,13 @@ function Apps() {
           icon={Search}
           placeholder={`Search for ${appsList.length} apps...`}
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
         />
 
         <div className="flex gap-3 mt-5 w-auto ml-1 mr-1">
           <Button
             className="text-sparkle-text flex gap-2"
-            disabled={selectedApps.length === 0 || loading}
+            disabled={selectedApps.length === 0 || !!loading}
             onClick={() => handleAppAction("install")}
           >
             <Download className="w-5" />
@@ -322,7 +328,7 @@ function Apps() {
           <Button
             className="flex gap-2"
             variant="danger"
-            disabled={selectedApps.length === 0 || loading}
+            disabled={selectedApps.length === 0 || !!loading}
             onClick={() => handleAppAction("uninstall")}
           >
             <Trash className="w-5" />
@@ -388,7 +394,7 @@ function Apps() {
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 mr-4">
                   {apps.map((app) => (
                     <Card
-                      key={app.id}
+                      key={app.id.toString()}
                       onClick={() => toggleApp(app.id)}
                       className="p-4"
                     >
@@ -396,7 +402,7 @@ function Apps() {
                         <div className="flex items-center gap-4">
                           <div onClick={(e) => e.stopPropagation()}>
                             <Checkbox
-                              checked={selectedApps.includes(app.id)}
+                              checked={selectedApps.includes(Array.isArray(app.id) ? app.id[0] : app.id)}
                               onChange={() => toggleApp(app.id)}
                             />
                           </div>
@@ -425,11 +431,11 @@ function Apps() {
                               </p>
                             )}
                             <p className="text-xs text-sparkle-text-secondary">
-                              ID: {app.id}
+                              ID: {Array.isArray(app.id) ? app.id.join(', ') : app.id}
                             </p>
                           </div>
                         </div>
-                        {installedApps.includes(app.id) && (
+                        {installedApps.includes(Array.isArray(app.id) ? app.id[0] : app.id) && (
                           <div className="text-xs font-semibold text-sparkle-text bg-sparkle-accent py-1 px-2 rounded-full">
                             Installed
                           </div>
