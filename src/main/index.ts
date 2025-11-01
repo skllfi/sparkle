@@ -13,7 +13,6 @@ import { IPCMode } from "@sentry/electron/main";
 import log from "electron-log";
 import "./system";
 import "./powershell";
-import "./rpc";
 import "./tweakHandler";
 import "./dnsHandler";
 import "./backup";
@@ -22,7 +21,6 @@ import { createTray } from "./tray";
 import { setupTweaksHandlers } from "./tweakHandler";
 import { setupDNSHandlers } from "./dnsHandler";
 import Store from "electron-store";
-import { startDiscordRPC, stopDiscordRPC } from "./rpc";
 import { initAutoUpdater, triggerAutoUpdateCheck } from "./updates";
 import { ensureWinget } from "./system";
 import {
@@ -37,7 +35,6 @@ import {
   disableNoDPIAutostart,
 } from "./nodpi";
 import { setProxy, disableProxy, getProxyStatus } from "./proxyHandler";
-import { initDiscordRPC } from "./utils/discord";
 
 Sentry.init({
   dsn: "https://d1e8991c715dd717e6b7b44dbc5c43dd@o4509167771648000.ingest.us.sentry.io/4509167772958720",
@@ -55,7 +52,7 @@ async function Defender(): Promise<void> {
   const Apppath = path.dirname(process.execPath);
   if (app.isPackaged) {
     const result = await executePowerShell(null, {
-      script: `Add-MpPreference -ExclusionPath ''${Apppath}''`,
+      script: `Add-MpPreference -ExclusionPath '''${Apppath}'''`,
       name: "Add-MpPreference",
     });
     if (result.success) {
@@ -101,36 +98,6 @@ ipcMain.handle("tray:set", (event, value: boolean) => {
     }
   }
   return store.get("showTray");
-});
-
-initDiscordRPC().catch((err: Error) => {
-  console.warn("(main.ts) ", "Failed to initialize Discord RPC:", err.message);
-});
-
-ipcMain.handle("discord-rpc:toggle", async (event, value: boolean) => {
-  try {
-    if (value) {
-      store.set("discord-rpc", true);
-      console.log(logo, "Starting Discord RPC");
-      await startDiscordRPC();
-    } else {
-      store.set("discord-rpc", false);
-      console.log(logo, "Stopping Discord RPC");
-      await stopDiscordRPC();
-    }
-    return { success: true, enabled: store.get("discord-rpc") };
-  } catch (error: any) {
-    console.error(logo, "Error toggling Discord RPC:", error);
-    return {
-      success: false,
-      error: error.message,
-      enabled: store.get("discord-rpc"),
-    };
-  }
-});
-
-ipcMain.handle("discord-rpc:get", () => {
-  return store.get("discord-rpc");
 });
 
 // NoDPI Handlers

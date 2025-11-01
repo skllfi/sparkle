@@ -19,7 +19,6 @@ import Button from "./ui/button";
 import Modal from "./ui/modal";
 import { invoke } from "@/lib/electron";
 import GithubIcon from "./githubicon";
-import DiscordIcon from "./discordicon";
 
 // Define a type for the tab identifiers to ensure consistency
 type TabId =
@@ -181,13 +180,6 @@ function Nav(): React.ReactElement {
           rel="noreferrer"
         >
           <GithubIcon className="w-5 fill-sparkle-primary" />
-        </a>
-        <a
-          href="https://discord.com/invite/En5YJYWj3Z"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <DiscordIcon className="w-5 fill-sparkle-primary" />
         </a>
       </div>
       <p className="text-sparkle-primary text-center">v{info.version}</p>
