@@ -41,8 +41,6 @@ function Settings() {
     localStorage.getItem("language") || "en",
   );
   const [checking, setChecking] = useState(false);
-  const [discordEnabled, setDiscordEnabled] = useState(true);
-  const [discordLoading, setDiscordLoading] = useState(false);
   const [trayEnabled, setTrayEnabled] = useState(true);
   const [trayLoading, setTrayLoading] = useState(false);
   const [posthogDisabled, setPosthogDisabled] = useState(() => {
@@ -93,9 +91,6 @@ function Settings() {
   }, [theme]);
 
   useEffect(() => {
-    invoke({ channel: "discord-rpc:get" }).then((status) =>
-      setDiscordEnabled(status as boolean),
-    );
     invoke({ channel: "tray:get" }).then((status) =>
       setTrayEnabled(status as boolean),
     );
@@ -109,14 +104,6 @@ function Settings() {
     }
     localStorage.setItem("posthogDisabled", String(posthogDisabled));
   }, [posthogDisabled]);
-
-  const handleToggleDiscord = async () => {
-    setDiscordLoading(true);
-    const newStatus = !discordEnabled;
-    await invoke({ channel: "discord-rpc:toggle", payload: newStatus });
-    setDiscordEnabled(newStatus);
-    setDiscordLoading(false);
-  };
 
   const clearCache = async () => {
     await invoke({ channel: "clear-sparkle-cache" });
@@ -231,38 +218,6 @@ function Settings() {
               </SettingCard>
             </SettingSection>
 
-            <SettingSection title={t("settings.discord_rpc_title")}>
-              <SettingCard>
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <h3 className="text-base font-medium text-sparkle-text mb-1">
-                      {t("settings.discord_rpc_title")}
-                    </h3>
-                    <p className="text-sm text-sparkle-text-secondary">
-                      {t("settings.discord_rpc_description")}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Toggle
-                      checked={discordEnabled}
-                      onChange={handleToggleDiscord}
-                      disabled={discordLoading}
-                    />
-                    <span
-                      className={`text-xs font-medium px-2 py-1 rounded-full ${
-                        discordEnabled
-                          ? "text-green-400 bg-green-400/10"
-                          : "text-sparkle-text-secondary bg-sparkle-border-secondary/20"
-                      }`}
-                    >
-                      {discordEnabled
-                        ? t("settings.enabled")
-                        : t("settings.disabled")}
-                    </span>
-                  </div>
-                </div>
-              </SettingCard>
-            </SettingSection>
             <SettingSection title={t("settings.updates_title")}>
               <SettingCard>
                 <div className="flex items-center justify-between">
