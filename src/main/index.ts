@@ -6,7 +6,7 @@ import {
   globalShortcut,
   Tray,
 } from "electron";
-import path, { join } from "path";
+import * as path from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import * as Sentry from "@sentry/electron/main";
 import { IPCMode } from "@sentry/electron/main";
@@ -171,7 +171,7 @@ function createWindow(): void {
     autoHideMenuBar: true,
     icon: path.join(__dirname, "../../resources/sparkle2.ico"),
     webPreferences: {
-      preload: join(__dirname, "../preload/index.js"),
+      preload: path.join(__dirname, "../preload/index.js"),
       devTools: !app.isPackaged,
       sandbox: false,
     },
@@ -187,7 +187,7 @@ function createWindow(): void {
   if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
     mainWindow.loadURL(process.env["ELECTRON_RENDERER_URL"]);
   } else {
-    mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
+    mainWindow.loadFile(path.join(__dirname, "../renderer/index.html"));
   }
 
   if (shouldShow) {

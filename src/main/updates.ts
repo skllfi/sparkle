@@ -1,6 +1,5 @@
 import { app, ipcMain, BrowserWindow } from "electron";
-import pkg from "electron-updater";
-const { autoUpdater } = pkg;
+import { autoUpdater } from "electron-updater";
 import type { UpdateInfo, ProgressInfo } from "electron-updater";
 
 // Define the type for the getMainWindow function

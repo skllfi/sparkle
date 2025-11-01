@@ -1,6 +1,5 @@
 import { ipcMain, app, IpcMainInvokeEvent } from "electron";
 import fs from "fs/promises";
-import fsSync from "fs";
 import path from "path";
 import { exec } from "child_process";
 import { logo } from "./index";
@@ -258,9 +257,9 @@ export const setupTweaksHandlers = (): void => {
   });
 };
 
-const getActiveTweaks = (): string[] => {
+const getActiveTweaks = async (): Promise<string[]> => {
   try {
-    const data = fsSync.readFileSync(tweaksStatePath, "utf8");
+    const data = await fs.readFile(tweaksStatePath, "utf8");
     const parsed = JSON.parse(data);
     return Object.keys(parsed).filter((key) => parsed[key]);
   } catch (error) {
@@ -269,8 +268,8 @@ const getActiveTweaks = (): string[] => {
   }
 };
 
-ipcMain.handle("tweak:active", (): string[] => {
-  return getActiveTweaks();
+ipcMain.handle("tweak:active", async (): Promise<string[]> => {
+  return await getActiveTweaks();
 });
 
 export const cleanupTweaksHandlers = (): void => {

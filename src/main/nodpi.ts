@@ -1,6 +1,6 @@
 import { execFile, exec, ChildProcess } from "child_process";
 import path from "path";
-import fs from "fs";
+import fs from "fs/promises";
 import { setProxy, disableProxy } from "./proxyHandler";
 import { BrowserWindow } from "electron";
 
@@ -95,29 +95,30 @@ interface BlacklistResult {
   error?: string;
 }
 
-export function getNoDPIBlacklist(): BlacklistResult {
+export async function getNoDPIBlacklist(): Promise<BlacklistResult> {
   try {
-    if (fs.existsSync(blacklistPath)) {
-      const content = fs.readFileSync(blacklistPath, "utf-8");
-      return { success: true, content };
-    }
-    return { success: true, content: "" };
+    const content = await fs.readFile(blacklistPath, "utf-8");
+    return { success: true, content };
   } catch (error: any) {
+    if (error.code === 'ENOENT') {
+      return { success: true, content: "" }; // File doesn't exist, return empty string
+    }
     return { success: false, error: error.message };
   }
 }
 
-export function updateNoDPIBlacklist(content: string): {
+export async function updateNoDPIBlacklist(content: string): Promise<{
   success: boolean;
   error?: string;
-} {
+}> {
   try {
-    fs.writeFileSync(blacklistPath, content, "utf-8");
+    await fs.writeFile(blacklistPath, content, "utf-8");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };
   }
 }
+
 
 const autostartKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
 const autostartName = "SparkleNoDPIAutostart";
