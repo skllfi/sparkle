@@ -12,17 +12,25 @@ const clientId = "1188686354490609754";
 let rpcClient: discordRPC.Client | null = null;
 
 async function stopDiscordRPC(): Promise<boolean> {
-  if (rpcClient) {
+  const clientToDestroy = rpcClient;
+  if (clientToDestroy) {
+    rpcClient = null; // Nullify immediately to prevent race conditions
+
     try {
-      await rpcClient.destroy();
+      // The discord-rpc library crashes if destroy is called on a client
+      // that failed to connect, because client.transport is null.
+      // We add a defensive check here to prevent that crash.
+      if (clientToDestroy.transport) {
+        await clientToDestroy.destroy();
+      }
     } catch (error: any) {
       console.warn(
         "(rpc.ts) ",
-        "Error destroying Discord RPC client (might be expected if connection failed):",
+        "Error while destroying Discord RPC client:",
         error.message,
       );
     }
-    rpcClient = null;
+
     console.log("(rpc.ts) ", "Discord RPC disconnected");
     return true;
   }
@@ -40,8 +48,9 @@ async function startDiscordRPC(): Promise<boolean> {
     await new Promise<void>((resolve, reject) => {
       const timeout = setTimeout(() => {
         reject(new Error("Connection timed out"));
-      }, 10000); // 10s timeout
+      }, 10000);
 
+      // Attach listeners BEFORE calling login to prevent race conditions
       rpcClient?.once("ready", () => {
         clearTimeout(timeout);
         resolve();
@@ -60,25 +69,27 @@ async function startDiscordRPC(): Promise<boolean> {
 
     console.log("(rpc.ts) ", logo, "Discord RPC connected");
 
-    await rpcClient.setActivity({
-      details: "Optimizing your PC",
-      state: `Running Sparkle v${jsonData.version || "2"}`,
-      buttons: [
-        { label: "Download Sparkle", url: "https://parcoil.com/sparkle" },
-        {
-          label: "Join Discord",
-          url: "https://discord.com/invite/En5YJYWj3Z",
-        },
-      ],
-      largeImageKey: "sparklelogo",
-      largeImageText: "Sparkle Optimizer",
-      instance: false,
-    });
+    if (rpcClient) {
+      await rpcClient.setActivity({
+        details: "Optimizing your PC",
+        state: `Running Sparkle v${jsonData.version || "2"}`,
+        buttons: [
+          { label: "Download Sparkle", url: "https://parcoil.com/sparkle" },
+          {
+            label: "Join Discord",
+            url: "https://discord.com/invite/En5YJYWj3Z",
+          },
+        ],
+        largeImageKey: "sparklelogo",
+        largeImageText: "Sparkle Optimizer",
+        instance: false,
+      });
+    }
 
     return true;
   } catch (err: any) {
     console.warn("(rpc.ts) ", "Discord RPC failed:", err.message);
-    await stopDiscordRPC();
+    await stopDiscordRPC(); // Cleanup on failure
     return false;
   }
 }
