@@ -1,10 +1,9 @@
-import { promises as fsp } from "fs";
+import { promises as fs } from "fs";
 import path from "path";
 import util from "util";
 import { exec, ExecException } from "child_process";
 import { app, ipcMain, IpcMainInvokeEvent } from "electron";
 import { mainWindow } from "./index";
-import fs from "fs";
 import log from "electron-log";
 
 const execPromise = util.promisify(exec);
@@ -13,9 +12,11 @@ console.log = log.log;
 console.error = log.error;
 console.warn = log.warn;
 
-function ensureDirectoryExists(dirPath: string): void {
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
+async function ensureDirectoryExists(dirPath: string): Promise<void> {
+  try {
+    await fs.access(dirPath);
+  } catch {
+    await fs.mkdir(dirPath, { recursive: true });
   }
 }
 
@@ -38,16 +39,16 @@ export async function executePowerShell(
 
   try {
     const tempDir = path.join(app.getPath("userData"), "scripts");
-    ensureDirectoryExists(tempDir);
+    await ensureDirectoryExists(tempDir);
     const tempFile = path.join(tempDir, `${name}-${Date.now()}.ps1`);
 
-    await fsp.writeFile(tempFile, script);
+    await fs.writeFile(tempFile, script);
 
     const { stdout, stderr } = await execPromise(
       `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "${tempFile}"`,
     );
 
-    await fsp.unlink(tempFile).catch(console.error);
+    await fs.unlink(tempFile).catch(console.error);
 
     if (stderr) {
       console.warn(`PowerShell stderr [${name}]:`, stderr);
@@ -74,10 +75,10 @@ async function runPowerShellInWindow(
 ): Promise<PowerShellResult> {
   try {
     const tempDir = path.join(app.getPath("userData"), "scripts");
-    ensureDirectoryExists(tempDir);
+    await ensureDirectoryExists(tempDir);
 
     const tempFile = path.join(tempDir, `${name}-${Date.now()}.ps1`);
-    await fsp.writeFile(tempFile, script);
+    await fs.writeFile(tempFile, script);
     const noExitFlag = noExit ? "-NoExit" : "";
     const command = `start powershell.exe ${noExitFlag} -ExecutionPolicy Bypass -File "${tempFile}"`;
 

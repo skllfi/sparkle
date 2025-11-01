@@ -9,16 +9,16 @@ import {
 import data from "../assets/apps.json";
 import RootDiv from "@/components/rootdiv";
 import { Search, Download, Trash, Upload } from "lucide-react";
-import Button from "@/components/ui/button.jsx";
-import Checkbox from "@/components/ui/checkbox.jsx";
-import Modal from "@/components/ui/modal.jsx";
+import Button from "@/components/ui/button";
+import Checkbox from "@/components/ui/checkbox";
+import Modal from "@/components/ui/modal";
 import { invoke } from "@/lib/electron";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import log from "electron-log/renderer";
-import Card from "@/components/ui/card.jsx";
-import { LargeInput } from "@/components/ui/input.jsx";
-import sparkleLogo from "@/assets/icon.png";
+import Card from "@/components/ui/card";
+import { LargeInput } from "@/components/ui/input";
+import sparkleLogo from "../../../../resources/sparklelogo.png";
 
 interface App {
   id: string | string[];
