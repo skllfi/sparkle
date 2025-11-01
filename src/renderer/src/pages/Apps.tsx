@@ -1,4 +1,11 @@
-import { useState, useMemo, Suspense, useCallback, useEffect, ChangeEvent } from "react";
+import {
+  useState,
+  useMemo,
+  Suspense,
+  useCallback,
+  useEffect,
+  ChangeEvent,
+} from "react";
 import data from "../assets/apps.json";
 import RootDiv from "@/components/rootdiv";
 import { Search, Download, Trash, Upload } from "lucide-react";
@@ -31,7 +38,8 @@ function Apps() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [importModalOpen, setImportModalOpen] = useState(false);
   const [importedApps, setImportedApps] = useState<string[]>([]);
-  const [selectedImportedApps, setSelectedImportedApps] = useState<string[]>(importedApps);
+  const [selectedImportedApps, setSelectedImportedApps] =
+    useState<string[]>(importedApps);
   const [appsList, setAppsList] = useState<App[]>([]);
 
   const router = useNavigate();
@@ -59,7 +67,7 @@ function Apps() {
     reader.onload = (e) => {
       try {
         const result = e.target?.result;
-        if (typeof result !== 'string') return;
+        if (typeof result !== "string") return;
         const parsed = JSON.parse(result);
         if (Array.isArray(parsed)) {
           setImportedApps(parsed);
@@ -71,18 +79,21 @@ function Apps() {
       } catch {
         toast.error("Failed to parse JSON file");
       } finally {
-        if(event.target) event.target.value = "";
+        if (event.target) event.target.value = "";
       }
     };
     reader.readAsText(file);
   };
 
   const appsByCategory = useMemo(() => {
-    return filteredApps.reduce((acc, app) => {
-      if (!acc[app.category]) acc[app.category] = [];
-      acc[app.category].push(app);
-      return acc;
-    }, {} as Record<string, App[]>);
+    return filteredApps.reduce(
+      (acc, app) => {
+        if (!acc[app.category]) acc[app.category] = [];
+        acc[app.category].push(app);
+        return acc;
+      },
+      {} as Record<string, App[]>,
+    );
   }, [filteredApps]);
 
   const checkInstalledApps = useCallback(() => {
@@ -98,9 +109,7 @@ function Apps() {
   const toggleApp = (appId: string | string[]) => {
     const id = Array.isArray(appId) ? appId[0] : appId;
     setSelectedApps((prev) =>
-      prev.includes(id)
-        ? prev.filter((i) => i !== id)
-        : [...prev, id],
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
     );
   };
 
@@ -160,7 +169,14 @@ function Apps() {
           "There was an error during the operation. Please try again.",
         );
       },
-      "installed-apps-checked": (event: any, { success, installed, error }: { success: boolean; installed: string[]; error: any }) => {
+      "installed-apps-checked": (
+        event: any,
+        {
+          success,
+          installed,
+          error,
+        }: { success: boolean; installed: string[]; error: any },
+      ) => {
         if (success) {
           setInstalledApps(installed);
           try {
@@ -190,7 +206,10 @@ function Apps() {
     };
   }, [checkInstalledApps]);
 
-  const handleAppAction = async (type: 'install' | 'uninstall', appsToUse = selectedApps) => {
+  const handleAppAction = async (
+    type: "install" | "uninstall",
+    appsToUse = selectedApps,
+  ) => {
     const actionVerb = type === "install" ? "Installing" : "Uninstalling";
     setLoading(type);
 
@@ -241,8 +260,7 @@ function Apps() {
                     >
                       <Checkbox
                         checked={selectedImportedApps.includes(id)}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                          const checked = e.target.checked;
+                        onChange={(checked: boolean) => {
                           setSelectedImportedApps((prev) => {
                             if (checked) {
                               return prev.includes(id) ? prev : [...prev, id];
@@ -251,6 +269,7 @@ function Apps() {
                             }
                           });
                         }}
+                        label=""
                       />
 
                       {app ? app.name : `Unknown App (${id})`}
@@ -313,7 +332,9 @@ function Apps() {
           icon={Search}
           placeholder={`Search for ${appsList.length} apps...`}
           value={search}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setSearch(e.target.value)
+          }
         />
 
         <div className="flex gap-3 mt-5 w-auto ml-1 mr-1">
@@ -357,7 +378,7 @@ function Apps() {
           {selectedApps.length > 0 && (
             <Button
               className="flex gap-2 ml-auto bg-sparkle-border text-sparkle-text"
-              variant="ghost"
+              variant="secondary"
               onClick={() => setSelectedApps([])}
             >
               Uncheck All
@@ -402,7 +423,10 @@ function Apps() {
                         <div className="flex items-center gap-4">
                           <div onClick={(e) => e.stopPropagation()}>
                             <Checkbox
-                              checked={selectedApps.includes(Array.isArray(app.id) ? app.id[0] : app.id)}
+                              label=""
+                              checked={selectedApps.includes(
+                                Array.isArray(app.id) ? app.id[0] : app.id,
+                              )}
                               onChange={() => toggleApp(app.id)}
                             />
                           </div>
@@ -431,11 +455,16 @@ function Apps() {
                               </p>
                             )}
                             <p className="text-xs text-sparkle-text-secondary">
-                              ID: {Array.isArray(app.id) ? app.id.join(', ') : app.id}
+                              ID:{" "}
+                              {Array.isArray(app.id)
+                                ? app.id.join(", ")
+                                : app.id}
                             </p>
                           </div>
                         </div>
-                        {installedApps.includes(Array.isArray(app.id) ? app.id[0] : app.id) && (
+                        {installedApps.includes(
+                          Array.isArray(app.id) ? app.id[0] : app.id,
+                        ) && (
                           <div className="text-xs font-semibold text-sparkle-text bg-sparkle-accent py-1 px-2 rounded-full">
                             Installed
                           </div>

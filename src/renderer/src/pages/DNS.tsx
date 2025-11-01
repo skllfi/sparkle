@@ -110,7 +110,10 @@ export default function DNSPage() {
   const [currentDNS, setCurrentDNS] = useState<DnsInfo[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [customDNS, setCustomDNS] = useState<CustomDns>({ primary: "", secondary: "" });
+  const [customDNS, setCustomDNS] = useState<CustomDns>({
+    primary: "",
+    secondary: "",
+  });
   const [showCustom, setShowCustom] = useState(false);
 
   useEffect(() => {
@@ -250,7 +253,7 @@ export default function DNSPage() {
               <h2 className="font-semibold">Current DNS Settings</h2>
               <Button
                 onClick={getCurrentDNS}
-                variant=""
+                variant="secondary"
                 size="sm"
                 className="ml-auto"
               >
@@ -282,7 +285,6 @@ export default function DNSPage() {
               <Card
                 key={provider.id}
                 onClick={() => openConfirmationModal(provider)}
-                disabled={loading}
                 className="bg-sparkle-card border border-sparkle-border p-4 rounded-2xl hover:border-sparkle-primary transition text-left"
               >
                 <div className="flex items-center gap-3 mb-3">

@@ -10,10 +10,10 @@ import {
   Zap,
   Paintbrush,
   ExternalLink,
-  Gpu, 
-  Plus, 
-  RefreshCw, 
-  Star
+  Gpu,
+  Plus,
+  RefreshCw,
+  Star,
 } from "lucide-react";
 import { toast } from "react-toastify";
 import RootDiv from "@/components/rootdiv.jsx";
@@ -21,7 +21,7 @@ import Tooltip from "@/components/ui/tooltip.jsx";
 import Modal from "@/components/ui/modal.jsx";
 import { invoke } from "@/lib/electron";
 import useRestartStore from "@/store/restartState";
-import useSystemStore from "@/store/systemInfo.ts";
+import useSystemStore from "@/store/systemInfo";
 import Button from "@/components/ui/button.jsx";
 import Toggle from "@/components/ui/toggle.jsx";
 import log from "electron-log/renderer";
@@ -96,7 +96,7 @@ function Tweaks() {
     } catch (error) {
       console.error("Error fetching tweaks:", error);
       log.error("Error fetching tweaks:", error);
-    } 
+    }
   };
 
   const loadToggleStates = async () => {
@@ -128,7 +128,7 @@ function Tweaks() {
     }
   };
 
-  const applyTweak = async (tweak: Tweak, index: number) => {
+  const applyTweak = async (tweak: Tweak) => {
     const newState = !toggleStates[tweak.name];
     const newStates = {
       ...toggleStates,
@@ -184,7 +184,9 @@ function Tweaks() {
       log.error(`Error toggling tweak ${tweak.title}:`, error);
 
       toast.update(loadingToastId, {
-        render: `Failed to ${newState ? "apply" : "unapply"} tweak: ${tweak.title}`,
+        render: `Failed to ${newState ? "apply" : "unapply"} tweak: ${
+          tweak.title
+        }`,
         type: "error",
         isLoading: false,
         autoClose: 3000,
@@ -206,7 +208,7 @@ function Tweaks() {
     }
   };
 
-  const applyNonReversibleTweak = async (tweak: Tweak, index: number) => {
+  const applyNonReversibleTweak = async (tweak: Tweak) => {
     const newStates = {
       ...toggleStates,
       [tweak.name]: true,
@@ -246,9 +248,7 @@ function Tweaks() {
     }
   };
 
-  const handleToggle = async (index: number) => {
-    const tweak = tweaks[index];
-
+  const handleToggle = async (tweak: Tweak) => {
     if (tweak.modal && !toggleStates[tweak.name]) {
       setSelectedTweak(tweak);
       setModalContent(tweak.modal);
@@ -256,12 +256,10 @@ function Tweaks() {
       return;
     }
 
-    await applyTweak(tweak, index);
+    await applyTweak(tweak);
   };
 
-  const handleButtonClick = async (index: number) => {
-    const tweak = tweaks[index];
-
+  const handleButtonClick = async (tweak: Tweak) => {
     if (tweak.modal) {
       setSelectedTweak(tweak);
       setModalContent(tweak.modal);
@@ -269,7 +267,7 @@ function Tweaks() {
       return;
     }
 
-    await applyNonReversibleTweak(tweak, index);
+    await applyNonReversibleTweak(tweak);
   };
 
   const categories = useMemo(
@@ -300,7 +298,7 @@ function Tweaks() {
     return [...filteredTweaks].sort((a, b) => {
       const aRec = !!a.top;
       const bRec = !!b.top;
-      return bRec - aRec;
+      return Number(bRec) - Number(aRec);
     });
   }, [filteredTweaks]);
 
@@ -351,7 +349,6 @@ function Tweaks() {
             <Button
               onClick={async () => {
                 if (!selectedTweak) return;
-                const index = tweaks.indexOf(selectedTweak);
                 const newState = true;
                 const newStates = {
                   ...toggleStates,
@@ -439,7 +436,7 @@ function Tweaks() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
             {sortedTweaks.length > 0 ? (
-              sortedTweaks.map((tweak, index) => {
+              sortedTweaks.map((tweak) => {
                 const originalIndex = tweaks.indexOf(tweak);
                 return (
                   <Card key={originalIndex} className=" p-0 h-52">
@@ -570,7 +567,7 @@ function Tweaks() {
                                           e.preventDefault();
                                           e.stopPropagation();
                                         }
-                                        handleToggle(originalIndex);
+                                        handleToggle(tweak);
                                       }}
                                       disabled={!compatibility.compatible}
                                     />
@@ -584,9 +581,7 @@ function Tweaks() {
                                     }
                                   >
                                     <Button
-                                      onClick={() =>
-                                        handleButtonClick(originalIndex)
-                                      }
+                                      onClick={() => handleButtonClick(tweak)}
                                       disabled={!compatibility.compatible}
                                     >
                                       Apply

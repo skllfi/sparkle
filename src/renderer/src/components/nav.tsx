@@ -1,5 +1,15 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Wrench, Folder, LayoutGrid, Icon, Box, Settings, RefreshCw, EthernetPort, Gauge } from "lucide-react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
+import {
+  Wrench,
+  Folder,
+  LayoutGrid,
+  Icon,
+  Box,
+  Settings,
+  RefreshCw,
+  EthernetPort,
+  Gauge,
+} from "lucide-react";
 import { broom } from "@lucide/lab";
 import { useLocation, useNavigate } from "react-router-dom";
 import { clsx } from "clsx";
@@ -12,7 +22,15 @@ import GithubIcon from "./githubicon";
 import DiscordIcon from "./discordicon";
 
 // Define a type for the tab identifiers to ensure consistency
-type TabId = "home" | "tweaks" | "clean" | "backup" | "utilities" | "dns" | "apps" | "settings";
+type TabId =
+  | "home"
+  | "tweaks"
+  | "clean"
+  | "backup"
+  | "utilities"
+  | "dns"
+  | "apps"
+  | "settings";
 
 const tabIcons: Record<TabId, React.ReactElement> = {
   home: <Gauge size={20} />,
@@ -42,6 +60,14 @@ function Nav(): React.ReactElement {
   const { needsRestart } = useRestartStore();
 
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+
+  const setTabRef = useCallback(
+    (id: string) => (el: HTMLButtonElement | null) => {
+      tabRefs.current[id] = el;
+    },
+    [],
+  );
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ top: 0, height: 0 });
   const [showRestartModal, setShowRestartModal] = useState<boolean>(false);
@@ -49,7 +75,9 @@ function Nav(): React.ReactElement {
   const getActiveTab = (): TabId | "" => {
     const path = location.pathname;
     if (path === "/") return "home";
-    const match = (Object.entries(tabs) as [TabId, { path: string }][]).find(([_, { path: p }]) => p === path);
+    const match = (Object.entries(tabs) as [TabId, { path: string }][]).find(
+      ([, { path: p }]) => p === path,
+    );
     return match ? match[0] : "";
   };
 
@@ -87,11 +115,13 @@ function Nav(): React.ReactElement {
             transition: "top 0.2s ease, height 0.2s ease",
           }}
         />
-        {(Object.entries(tabs) as [TabId, { label: string; path: string }][]).map(([id, { label, path }]) => (
+        {(
+          Object.entries(tabs) as [TabId, { label: string; path: string }][]
+        ).map(([id, { label, path }]) => (
           <Button
-            variant=""
+            variant="secondary"
             key={id}
-            ref={(el) => (tabRefs.current[id] = el)}
+            ref={setTabRef(id)}
             onClick={() => navigate(path)}
             className={clsx(
               "flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 border relative",
@@ -121,7 +151,7 @@ function Nav(): React.ReactElement {
           </span>
         </button>
       )}
-      <Modal open={showRestartModal} onOpenChange={setShowRestartModal}>
+      <Modal open={showRestartModal} onClose={() => setShowRestartModal(false)}>
         <div className="bg-sparkle-card p-6 rounded-2xl border border-sparkle-border text-sparkle-text w-[90vw] max-w-md">
           <h2 className="text-lg font-semibold">Confirm Restart</h2>
           <p>Are you sure you want to restart your computer now?</p>

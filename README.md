@@ -34,7 +34,7 @@ This is a significantly enhanced version of the original [Sparkle](https://githu
   <p>
     <img alt="React" src="https://img.shields.io/badge/React-000000?style=for-the-badge&logo=react&labelColor=0c121f&color=0c121f">
     <img alt="Electron" src="https://img.shields.io/badge/Electron-000000?style=for-the-badge&logo=electron&labelColor=0c121f&color=0c121f">
-    <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-000000?style=for-the-badge&logo=javascript&labelColor=0c121f&color=0c121f">
+    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-000000?style=for-the-badge&logo=typescript&labelColor=0c121f&color=0c121f">
     <img alt="PowerShell" src="https://img.shields.io/badge/PowerShell-000000?style=for-the-badge&logo=gnometerminal&labelColor=0c121f&color=0c121f">
   </p>
 
@@ -191,7 +191,7 @@ cd Sparkle</code></pre>
   <p>
     <img alt="React" src="https://img.shields.io/badge/React-000000?style=for-the-badge&logo=react&labelColor=0c121f&color=0c121f">
     <img alt="Electron" src="https://img.shields.io/badge/Electron-000000?style=for-the-badge&logo=electron&labelColor=0c121f&color=0c121f">
-    <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-000000?style=for-the-badge&logo=javascript&labelColor=0c121f&color=0c121f">
+    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-000000?style=for-the-badge&logo=typescript&labelColor=0c121f&color=0c121f">
     <img alt="PowerShell" src="https://img.shields.io/badge/PowerShell-000000?style=for-the-badge&logo=gnometerminal&labelColor=0c121f&color=0c121f">
   </p>
 
@@ -227,7 +227,7 @@ irm https://getsparkle.net/get | iex
 
 <div>
   <h2>📃 Документация</h2>
-  <p>Вы можете найти документацию <a href="https://docs.getsparkle.net">здесь</a>.</p>
+  <p>Вы можете найти документацию <a href="https.docs.getsparkle.net">здесь</a>.</p>
   Документация описывает все твики, как они работают, что они делают, а также все страницы Sparkle.
 </div>
 

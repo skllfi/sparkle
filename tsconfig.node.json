@@ -7,11 +7,13 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "allowJs": true,
+    "strict": true,
+    "skipLibCheck": true,
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
       "@common/*": ["src/common/*"]
     }
   },
-  "include": ["electron.vite.config.mjs", "src/main", "src/preload"]
+  "include": ["electron.vite.config.mjs", "src/main", "src/preload", "build.ts", "tests/discord.test.ts"]
 }

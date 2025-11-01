@@ -47,23 +47,27 @@ export default function RestorePointManager() {
     try {
       const response = await invoke({ channel: "get-restore-points" });
       if (response.success && Array.isArray(response.points)) {
-        const sorted = response.points.sort((a: RestorePoint, b: RestorePoint) => {
-          const parse = (str: string) =>
-            new Date(
-              str.slice(0, 4) +
-                "-" +
-                str.slice(4, 6) +
-                "-" +
-                str.slice(6, 8) +
-                "T" +
-                str.slice(8, 10) +
-                ":" +
-                str.slice(10, 12) +
-                ":" +
-                str.slice(12, 14),
+        const sorted = response.points.sort(
+          (a: RestorePoint, b: RestorePoint) => {
+            const parse = (str: string) =>
+              new Date(
+                str.slice(0, 4) +
+                  "-" +
+                  str.slice(4, 6) +
+                  "-" +
+                  str.slice(6, 8) +
+                  "T" +
+                  str.slice(8, 10) +
+                  ":" +
+                  str.slice(10, 12) +
+                  ":" +
+                  str.slice(12, 14),
+              );
+            return (
+              parse(b.CreationTime).getTime() - parse(a.CreationTime).getTime()
             );
-          return parse(b.CreationTime).getTime() - parse(a.CreationTime).getTime();
-        });
+          },
+        );
         setRestorePoints(sorted);
       } else {
         toast.error("Failed to load restore points. Please check logs");
@@ -156,7 +160,9 @@ export default function RestorePointManager() {
                 type="text"
                 placeholder="Search Restore Points..."
                 value={searchQuery}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSearchQuery(e.target.value)
+                }
                 icon={Search}
               />
             </div>
@@ -224,10 +230,10 @@ export default function RestorePointManager() {
               {!searchQuery && (
                 <Button
                   variant="primary"
-                  icon={<PlusCircle size={16} />}
                   onClick={handleCreateRestorePoint}
                   disabled={processing}
                 >
+                  <PlusCircle size={16} />
                   Create a Quick Restore Point
                 </Button>
               )}
@@ -253,7 +259,7 @@ export default function RestorePointManager() {
                         </td>
                         <td className="px-14 py-4 text-center">
                           <Button
-                            variant="ghost"
+                            variant="secondary"
                             className="p-2! hover:bg-sparkle-accent"
                             onClick={() => handleRestore(rp)}
                             disabled={processing}
@@ -295,7 +301,7 @@ export default function RestorePointManager() {
               <p className="text-sparkle-text-secondary mb-4">
                 Are you sure you want to restore your system to{" "}
                 <span className="font-bold">
-                  "{modalState.restorePoint.Description}"?
+                  &quot;{modalState.restorePoint.Description}&quot;?
                 </span>{" "}
                 Your PC will restart shortly. and the restore point will be
                 applied. <br /> <br />
@@ -349,7 +355,9 @@ export default function RestorePointManager() {
             <input
               type="text"
               value={customName}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCustomName(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setCustomName(e.target.value)
+              }
               placeholder="Enter restore point name"
               className="w-full px-3 py-2 bg-sparkle-card border border-sparkle-border rounded-lg text-sparkle-text placeholder-sparkle-text-secondary focus:outline-hidden focus:ring-2 focus:ring-sparkle-primary focus:border-transparent transition-colors"
               disabled={processing}

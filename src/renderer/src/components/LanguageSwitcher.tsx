@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 const LanguageSwitcher: React.FC = () => {
@@ -26,6 +26,6 @@ const LanguageSwitcher: React.FC = () => {
       </button>
     </div>
   );
-}
+};
 
 export default LanguageSwitcher;

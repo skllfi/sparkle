@@ -96,7 +96,9 @@ function Settings() {
     invoke({ channel: "discord-rpc:get" }).then((status) =>
       setDiscordEnabled(status as boolean),
     );
-    invoke({ channel: "tray:get" }).then((status) => setTrayEnabled(status as boolean));
+    invoke({ channel: "tray:get" }).then((status) =>
+      setTrayEnabled(status as boolean),
+    );
   }, []);
 
   useEffect(() => {
@@ -293,7 +295,9 @@ function Settings() {
                       localStorage.setItem("sparkle:user", e.target.value)
                     }
                     className="w-full bg-sparkle-card border border-sparkle-border rounded-lg px-3 py-2 text-sparkle-text focus:ring-0 focus:outline-hidden"
-                    placeholder={t("settings.user_name_placeholder") ?? undefined}
+                    placeholder={
+                      t("settings.user_name_placeholder") ?? undefined
+                    }
                   />
                   <div className="flex gap-2">
                     <Button
@@ -302,7 +306,10 @@ function Settings() {
                         const username = await invoke({
                           channel: "get-user-name",
                         });
-                        localStorage.setItem("sparkle:user", username as string);
+                        localStorage.setItem(
+                          "sparkle:user",
+                          username as string,
+                        );
                         toast.success(t("settings.name_reset_success"));
                       }}
                     >
@@ -460,11 +467,21 @@ function Settings() {
   );
 }
 
-const SettingCard = ({ children, className = "" }: { children: ReactNode, className?: string }) => (
-  <Card className={`p-4 ${className}`}>{children}</Card>
-);
+const SettingCard = ({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) => <Card className={`p-4 ${className}`}>{children}</Card>;
 
-const SettingSection = ({ title, children }: { title: string, children: ReactNode }) => (
+const SettingSection = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: ReactNode;
+}) => (
   <div className="space-y-4">
     <h2 className="text-xl font-semibold text-sparkle-primary">{title}</h2>
     {children}

@@ -1,15 +1,16 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { invoke } from "@/lib/electron";
 import { useTranslation } from "react-i18next";
 
 function Greeting(): React.ReactElement {
   const { t } = useTranslation();
-  const [name, setName] = useState<string>(localStorage.getItem("sparkle:user") || "");
+  const [name, setName] = useState<string>(
+    localStorage.getItem("sparkle:user") || "",
+  );
+  const [randomGreeting, setRandomGreeting] = useState<string>("");
 
   useEffect(() => {
     if (!name) {
-      // We now know from the main process that this returns a string.
-      // We cast the result to Promise<string> for type safety.
       (invoke({ channel: "get-user-name" }) as Promise<string>)
         .then((username) => {
           if (username) {
@@ -46,9 +47,12 @@ function Greeting(): React.ReactElement {
     return [t("greetings.good_evening")];
   }, [t]);
 
-  const randomGreeting = useMemo(() => {
+  useEffect(() => {
     const allGreetings = [...generalGreetings, ...timeGreetings];
-    return allGreetings[Math.floor(Math.random() * allGreetings.length)];
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRandomGreeting(
+      allGreetings[Math.floor(Math.random() * allGreetings.length)],
+    );
   }, [generalGreetings, timeGreetings]);
 
   return (

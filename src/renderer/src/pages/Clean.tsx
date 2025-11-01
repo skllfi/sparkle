@@ -1,12 +1,12 @@
-import Button from "@/components/ui/button.jsx";
-import Toggle from "@/components/ui/toggle.jsx";
+import Button from "@/components/ui/button";
+import Toggle from "@/components/ui/toggle";
 import { useState } from "react";
 import { invoke } from "@/lib/electron";
 import RootDiv from "@/components/rootdiv";
-import { RefreshCw, Broom } from "lucide-react";
+import { RefreshCw, Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 import log from "electron-log/renderer";
-import Card from "@/components/ui/card.jsx";
+import Card from "@/components/ui/card";
 
 interface CleanupItem {
   id: string;
@@ -102,7 +102,9 @@ function Clean() {
     localStorage.getItem("last-clean") || "Not cleaned yet.",
   );
   const [isCleaning, setIsCleaning] = useState(false);
-  const [cleanupResults, setCleanupResults] = useState<Record<string, number>>({});
+  const [cleanupResults, setCleanupResults] = useState<Record<string, number>>(
+    {},
+  );
 
   const toggleCleanup = (id: string) => {
     setSelected((prev) =>
@@ -122,7 +124,7 @@ function Clean() {
     setLoadingQueue([]);
     setCleanupResults({});
     let anySuccess = false;
-    let newResults: Record<string, number> = {};
+    const newResults: Record<string, number> = {};
 
     for (const cleanup of cleanups) {
       if (!selected.includes(cleanup.id)) continue;
@@ -172,7 +174,7 @@ function Clean() {
       <div className="flex flex-col gap-6">
         <Card className="flex items-center gap-4 p-4">
           <div className="flex items-center justify-center p-3 rounded-xl bg-teal-500/10">
-            <Broom className="text-teal-500" size={28} />
+            <Trash2 className="text-teal-500" size={28} />
           </div>
           <div className="flex-1">
             <h2 className="text-2xl font-bold text-sparkle-text mb-1">
@@ -243,7 +245,7 @@ function Clean() {
               </>
             ) : (
               <>
-                <Broom size={18} />
+                <Trash2 size={18} />
                 <span>Clean Selected</span>
               </>
             )}

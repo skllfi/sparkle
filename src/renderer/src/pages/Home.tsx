@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
 import RootDiv from "@/components/rootdiv";
-import { Cpu, HardDrive, Zap, MemoryStick, MonitorCog, Wrench } from "lucide-react";
+import {
+  Cpu,
+  HardDrive,
+  Zap,
+  MemoryStick,
+  MonitorCog,
+  Wrench,
+} from "lucide-react";
 import InfoCard from "@/components/infocard.jsx";
 import { invoke } from "@/lib/electron";
 import Button from "@/components/ui/button.jsx";
 import { useNavigate } from "react-router-dom";
-import useSystemStore from "@/store/systemInfo.ts";
+import useSystemStore from "@/store/systemInfo";
 import log from "electron-log/renderer";
 import Greeting from "@/components/greeting";
 import Card from "@/components/ui/card.jsx";
@@ -18,7 +25,7 @@ interface TweakInfo {
   description: string;
   reboot: boolean;
   author: string;
-  mitigation?: string; 
+  mitigation?: string;
 }
 
 function Home() {
@@ -88,7 +95,7 @@ function Home() {
     });
 
     return () => cancelIdleCallback(idleHandle);
-  }, []);
+  }, [setSystemInfo]);
 
   useEffect(() => {
     const idleHandle = requestIdleCallback(() => {
@@ -170,7 +177,7 @@ function Home() {
           />
 
           <InfoCard
-            icon={MemoryStick} 
+            icon={MemoryStick}
             iconBgColor="bg-teal-500/10"
             iconColor="text-teal-500"
             title="GPU"
