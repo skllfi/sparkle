@@ -6,22 +6,34 @@ import {
   RotateCcw,
   Loader2,
   Search,
+  Trash,
 } from "lucide-react";
 import RootDiv from "@/components/rootdiv.jsx";
 import { invoke } from "@/lib/electron";
 import Button from "@/components/ui/button.jsx";
 import Modal from "@/components/ui/modal.jsx";
 import { toast } from "react-toastify";
-import { Trash } from "lucide-react";
 import log from "electron-log/renderer";
 import { LargeInput } from "@/components/ui/input.jsx";
 
+interface RestorePoint {
+  CreationTime: string;
+  Description: string;
+  SequenceNumber: number;
+}
+
+interface ModalState {
+  isOpen: boolean;
+  type: "restore" | null;
+  restorePoint: RestorePoint | null;
+}
+
 export default function RestorePointManager() {
-  const [restorePoints, setRestorePoints] = useState([]);
+  const [restorePoints, setRestorePoints] = useState<RestorePoint[]>([]);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [modalState, setModalState] = useState({
+  const [modalState, setModalState] = useState<ModalState>({
     isOpen: false,
     type: null,
     restorePoint: null,
@@ -35,8 +47,8 @@ export default function RestorePointManager() {
     try {
       const response = await invoke({ channel: "get-restore-points" });
       if (response.success && Array.isArray(response.points)) {
-        const sorted = response.points.sort((a, b) => {
-          const parse = (str) =>
+        const sorted = response.points.sort((a: RestorePoint, b: RestorePoint) => {
+          const parse = (str: string) =>
             new Date(
               str.slice(0, 4) +
                 "-" +
@@ -50,7 +62,7 @@ export default function RestorePointManager() {
                 ":" +
                 str.slice(12, 14),
             );
-          return parse(b.CreationTime) - parse(a.CreationTime);
+          return parse(b.CreationTime).getTime() - parse(a.CreationTime).getTime();
         });
         setRestorePoints(sorted);
       } else {
@@ -83,11 +95,12 @@ export default function RestorePointManager() {
     setProcessing(false);
   };
 
-  const handleRestore = (restorePoint) => {
+  const handleRestore = (restorePoint: RestorePoint) => {
     setModalState({ isOpen: true, type: "restore", restorePoint });
   };
 
   const executeRestore = async () => {
+    if (!modalState.restorePoint) return;
     setProcessing(true);
     try {
       await invoke({
@@ -143,7 +156,7 @@ export default function RestorePointManager() {
                 type="text"
                 placeholder="Search Restore Points..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
                 icon={Search}
               />
             </div>
@@ -336,7 +349,7 @@ export default function RestorePointManager() {
             <input
               type="text"
               value={customName}
-              onChange={(e) => setCustomName(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCustomName(e.target.value)}
               placeholder="Enter restore point name"
               className="w-full px-3 py-2 bg-sparkle-card border border-sparkle-border rounded-lg text-sparkle-text placeholder-sparkle-text-secondary focus:outline-hidden focus:ring-2 focus:ring-sparkle-primary focus:border-transparent transition-colors"
               disabled={processing}

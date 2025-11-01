@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import { invoke } from "@/lib/electron";
 import RootDiv from "@/components/rootdiv.jsx";
 import Modal from "@/components/ui/modal.jsx";
@@ -9,7 +9,6 @@ import log from "electron-log/renderer";
 import NoDPIComponent from "@/lib/components/utilities/NoDPI.jsx";
 import ProxyManager from "@/lib/components/utilities/ProxyManager.jsx";
 import {
-  SquareTerminal,
   Binary,
   BarChartBig,
   Settings,
@@ -25,7 +24,21 @@ import {
   ScreenShare,
 } from "lucide-react";
 
-const utilities = [
+interface Utility {
+  name: string;
+  command: string;
+  type: string;
+  icon: ReactNode;
+  color: string;
+}
+
+interface QuickAccessTool {
+  name: string;
+  command: string;
+  icon: ReactNode;
+}
+
+const utilities: Utility[] = [
   {
     name: "System File Checker",
     command: "sfc /scannow",
@@ -87,7 +100,7 @@ const utilities = [
 export default function UtilitiesPage() {
   const [running, setRunning] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedUtility, setSelectedUtility] = useState(null);
+  const [selectedUtility, setSelectedUtility] = useState<Utility | null>(null);
   const [noExit, setNoExit] = useState(true);
 
   const confirmAndRun = async () => {
@@ -110,7 +123,7 @@ export default function UtilitiesPage() {
         isLoading: false,
         autoClose: 3000,
       });
-    } catch (error) {
+    } catch (error: any) {
       log.error(`Error running utility ${selectedUtility.name}:`, error);
       toast.update(toastId, {
         render: `Failed to run ${selectedUtility.name}: ${error.message || error}`,
@@ -123,12 +136,12 @@ export default function UtilitiesPage() {
     setSelectedUtility(null);
   };
 
-  const openConfirmationModal = (utility) => {
+  const openConfirmationModal = (utility: Utility) => {
     setSelectedUtility(utility);
     setModalOpen(true);
   };
 
-  const openQuickAccessTool = async (script) => {
+  const openQuickAccessTool = async (script: string) => {
     try {
       await invoke({
         channel: "run-powershell",
@@ -139,7 +152,7 @@ export default function UtilitiesPage() {
     }
   };
 
-  const quickAccess = [
+  const quickAccess: QuickAccessTool[] = [
     {
       name: "Regedit",
       command: "start regedit.exe",

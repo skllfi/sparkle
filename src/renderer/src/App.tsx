@@ -5,17 +5,17 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 import TitleBar from "@/components/titlebar.jsx";
-import Nav from "@/components/nav.jsx";
+import Nav from "@/components/nav.tsx";
 import Rootdiv from "@/components/rootdiv.jsx";
-import Home from "@/pages/Home.jsx";
-import Tweaks from "@/pages/Tweaks.jsx";
-import Clean from "@/pages/Clean.jsx";
-import Apps from "@/pages/Apps.jsx";
-import Settings from "@/pages/Settings.jsx";
-import NotFound from "@/pages/Notfound.jsx";
-import DNS from "@/pages/DNS.jsx";
-import Backup from "@/pages/Backup.jsx";
-import Utilities from "@/pages/Utilities.jsx";
+import Home from "@/pages/Home.tsx";
+import Tweaks from "@/pages/Tweaks.tsx";
+import Clean from "@/pages/Clean.tsx";
+import Apps from "@/pages/Apps.tsx";
+import Settings from "@/pages/Settings.tsx";
+import NotFound from "@/pages/Notfound.tsx";
+import DNS from "@/pages/DNS.tsx";
+import Backup from "@/pages/Backup.tsx";
+import Utilities from "@/pages/Utilities.tsx";
 
 function App() {
   return (

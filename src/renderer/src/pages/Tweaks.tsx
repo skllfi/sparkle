@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, ReactNode } from "react";
 import {
   Wrench,
   Search,
@@ -10,6 +10,10 @@ import {
   Zap,
   Paintbrush,
   ExternalLink,
+  Gpu, 
+  Plus, 
+  RefreshCw, 
+  Star
 } from "lucide-react";
 import { toast } from "react-toastify";
 import RootDiv from "@/components/rootdiv.jsx";
@@ -17,55 +21,65 @@ import Tooltip from "@/components/ui/tooltip.jsx";
 import Modal from "@/components/ui/modal.jsx";
 import { invoke } from "@/lib/electron";
 import useRestartStore from "@/store/restartState";
-import useSystemStore from "@/store/systemInfo";
+import useSystemStore from "@/store/systemInfo.ts";
 import Button from "@/components/ui/button.jsx";
 import Toggle from "@/components/ui/toggle.jsx";
 import log from "electron-log/renderer";
 import posthog from "posthog-js";
 import Card from "@/components/ui/card.jsx";
-import { Gpu, Plus, RefreshCw } from "lucide-react";
 import { LargeInput } from "@/components/ui/input.jsx";
 import {
   isNewInCurrentVersion,
   isUpdatedInCurrentVersion,
   CURRENT_VERSION,
 } from "@/lib/version";
-import { Star } from "lucide-react";
+
+interface Tweak {
+  name: string;
+  title: string;
+  description: string;
+  category: string | string[];
+  restart?: boolean;
+  modal?: string;
+  warning?: string;
+  recommended?: boolean;
+  addedversion?: string;
+  updatedversion?: string;
+  top?: boolean;
+  reversible?: boolean;
+}
 
 function Tweaks() {
-  const [tweaks, setTweaks] = useState([]);
-  const [toggleStates, setToggleStates] = useState({});
+  const [tweaks, setTweaks] = useState<Tweak[]>([]);
+  const [toggleStates, setToggleStates] = useState<Record<string, boolean>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
-  const [modalContent, setModalContent] = useState(null);
+  const [modalContent, setModalContent] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTweak, setSelectedTweak] = useState(null);
+  const [selectedTweak, setSelectedTweak] = useState<Tweak | null>(null);
 
   const { setNeedsRestart } = useRestartStore();
   const systemInfo = useSystemStore((state) => state.systemInfo);
 
-  const isTweakCompatible = (tweak) => {
-    // If system info is not loaded yet, assume compatible to avoid false negatives
+  const isTweakCompatible = (tweak: Tweak) => {
     if (!systemInfo || Object.keys(systemInfo).length === 0) {
-      return { compatible: true };
+      return { compatible: true, reason: "" };
     }
 
-    // Check if tweak requires GPU
     if (tweak.category && tweak.category.includes("GPU")) {
       if (!systemInfo.hasGPU) {
         return { compatible: false, reason: "Requires a dedicated GPU" };
       }
     }
 
-    // Check if tweak requires NVIDIA GPU
     if (tweak.name === "optimize-nvidia-settings") {
       if (!systemInfo.isNvidia) {
         return { compatible: false, reason: "Requires an NVIDIA GPU" };
       }
     }
 
-    return { compatible: true };
+    return { compatible: true, reason: "" };
   };
 
   useEffect(() => {
@@ -78,11 +92,11 @@ function Tweaks() {
       const fetchedTweaks = await invoke({
         channel: "tweaks:fetch",
       });
-      setTweaks(fetchedTweaks);
+      setTweaks(fetchedTweaks as Tweak[]);
     } catch (error) {
       console.error("Error fetching tweaks:", error);
       log.error("Error fetching tweaks:", error);
-    }
+    } 
   };
 
   const loadToggleStates = async () => {
@@ -92,7 +106,7 @@ function Tweaks() {
       });
 
       if (savedStates) {
-        setToggleStates(JSON.parse(savedStates));
+        setToggleStates(JSON.parse(savedStates as string));
       }
     } catch (error) {
       console.error("Error loading toggle states:", error);
@@ -102,7 +116,7 @@ function Tweaks() {
     }
   };
 
-  const saveToggleStates = async (newStates) => {
+  const saveToggleStates = async (newStates: Record<string, boolean>) => {
     try {
       await invoke({
         channel: "tweak-states:save",
@@ -114,7 +128,7 @@ function Tweaks() {
     }
   };
 
-  const applyTweak = async (tweak, index) => {
+  const applyTweak = async (tweak: Tweak, index: number) => {
     const newState = !toggleStates[tweak.name];
     const newStates = {
       ...toggleStates,
@@ -192,7 +206,7 @@ function Tweaks() {
     }
   };
 
-  const applyNonReversibleTweak = async (tweak, index) => {
+  const applyNonReversibleTweak = async (tweak: Tweak, index: number) => {
     const newStates = {
       ...toggleStates,
       [tweak.name]: true,
@@ -232,7 +246,7 @@ function Tweaks() {
     }
   };
 
-  const handleToggle = async (index) => {
+  const handleToggle = async (index: number) => {
     const tweak = tweaks[index];
 
     if (tweak.modal && !toggleStates[tweak.name]) {
@@ -245,7 +259,7 @@ function Tweaks() {
     await applyTweak(tweak, index);
   };
 
-  const handleButtonClick = async (index) => {
+  const handleButtonClick = async (index: number) => {
     const tweak = tweaks[index];
 
     if (tweak.modal) {
@@ -282,7 +296,6 @@ function Tweaks() {
     });
   }, [tweaks, searchTerm, activeCategory]);
 
-  // sort this so recommended tweaks are at the top
   const sortedTweaks = useMemo(() => {
     return [...filteredTweaks].sort((a, b) => {
       const aRec = !!a.top;
@@ -291,7 +304,7 @@ function Tweaks() {
     });
   }, [filteredTweaks]);
 
-  const categoryIcons = {
+  const categoryIcons: Record<string, ReactNode> = {
     Performance: <Zap className="w-4 h-4  text-yellow-500" />,
     GPU: <Gpu className="w-4 h-4 text-red-500" />,
     Privacy: <Shield className="w-4 h-4 text-green-500" />,
@@ -337,6 +350,7 @@ function Tweaks() {
             </Button>
             <Button
               onClick={async () => {
+                if (!selectedTweak) return;
                 const index = tweaks.indexOf(selectedTweak);
                 const newState = true;
                 const newStates = {
@@ -408,15 +422,15 @@ function Tweaks() {
               <div className="flex flex-wrap items-center gap-2">
                 {categories.map((category) => (
                   <button
-                    key={category}
+                    key={category as string}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 active:scale-95  ${
                       activeCategory === category
                         ? "bg-sparkle-primary text-white shadow-lg border border-sparkle-border"
                         : "bg-sparkle-card/50 text-sparkle-text-secondary  hover:bg-sparkle-border border border-sparkle-border-secondary"
                     }`}
-                    onClick={() => setActiveCategory(category)}
+                    onClick={() => setActiveCategory(category as string)}
                   >
-                    {category}
+                    {category as string}
                   </button>
                 ))}
               </div>
@@ -541,7 +555,7 @@ function Tweaks() {
                                     content={
                                       !compatibility.compatible
                                         ? compatibility.reason
-                                        : null
+                                        : ""
                                     }
                                   >
                                     <Toggle
@@ -566,7 +580,7 @@ function Tweaks() {
                                     content={
                                       !compatibility.compatible
                                         ? compatibility.reason
-                                        : null
+                                        : ""
                                     }
                                   >
                                     <Button

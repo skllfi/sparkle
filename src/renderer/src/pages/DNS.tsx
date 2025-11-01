@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import { invoke } from "@/lib/electron";
 import RootDiv from "@/components/rootdiv";
 import Button from "@/components/ui/button.jsx";
@@ -17,7 +17,29 @@ import {
 import log from "electron-log/renderer";
 import Card from "@/components/ui/card.jsx";
 
-const dnsProviders = [
+interface DnsProvider {
+  id: string;
+  name: string;
+  primary: string;
+  secondary: string;
+  description: string;
+  features: string[];
+  recommended?: boolean;
+  color: string;
+  icon: ReactNode;
+}
+
+interface DnsInfo {
+  adapter: string;
+  servers: string;
+}
+
+interface CustomDns {
+  primary: string;
+  secondary: string;
+}
+
+const dnsProviders: DnsProvider[] = [
   {
     id: "cloudflare",
     name: "Cloudflare",
@@ -82,11 +104,13 @@ const dnsProviders = [
 ];
 
 export default function DNSPage() {
-  const [selectedProvider, setSelectedProvider] = useState(null);
-  const [currentDNS, setCurrentDNS] = useState(null);
+  const [selectedProvider, setSelectedProvider] = useState<DnsProvider | null>(
+    null,
+  );
+  const [currentDNS, setCurrentDNS] = useState<DnsInfo[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [customDNS, setCustomDNS] = useState({ primary: "", secondary: "" });
+  const [customDNS, setCustomDNS] = useState<CustomDns>({ primary: "", secondary: "" });
   const [showCustom, setShowCustom] = useState(false);
 
   useEffect(() => {
@@ -100,7 +124,7 @@ export default function DNSPage() {
       });
 
       if (result.success) {
-        setCurrentDNS(result.data);
+        setCurrentDNS(result.data as DnsInfo[]);
       }
     } catch (error) {
       console.error("Error getting current DNS:", error);
@@ -108,7 +132,7 @@ export default function DNSPage() {
     }
   };
 
-  const applyDNS = async (provider) => {
+  const applyDNS = async (provider: DnsProvider) => {
     setLoading(true);
     const toastId = toast.loading(`Applying ${provider.name} DNS...`);
 
@@ -140,9 +164,9 @@ export default function DNSPage() {
         });
         await getCurrentDNS();
       } else {
-        throw new Error(result.error);
+        throw new Error(result.error as string);
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.update(toastId, {
         render: `Failed to apply DNS: ${error.message}`,
         type: "error",
@@ -156,12 +180,12 @@ export default function DNSPage() {
     }
   };
 
-  const openConfirmationModal = (provider) => {
+  const openConfirmationModal = (provider: DnsProvider) => {
     setSelectedProvider(provider);
     setModalOpen(true);
   };
 
-  const validateCustomDNS = (dns) => {
+  const validateCustomDNS = (dns: string) => {
     // regex is weird
     const ipRegex =
       /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
@@ -211,7 +235,7 @@ export default function DNSPage() {
               Cancel
             </Button>
             <Button
-              onClick={() => applyDNS(selectedProvider)}
+              onClick={() => applyDNS(selectedProvider!)}
               disabled={loading}
             >
               {loading ? "Applying..." : "Apply"}
@@ -356,6 +380,10 @@ export default function DNSPage() {
                       name: "Custom DNS",
                       primary: customDNS.primary,
                       secondary: customDNS.secondary,
+                      description: "Custom DNS servers",
+                      features: ["Custom"],
+                      color: "text-purple-500",
+                      icon: <Settings className="w-5 h-5" />,
                     })
                   }
                   disabled={!isCustomDNSValid() || loading}

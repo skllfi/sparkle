@@ -8,7 +8,14 @@ import { toast } from "react-toastify";
 import log from "electron-log/renderer";
 import Card from "@/components/ui/card.jsx";
 
-const cleanups = [
+interface CleanupItem {
+  id: string;
+  label: string;
+  description: string;
+  script: string;
+}
+
+const cleanups: CleanupItem[] = [
   {
     id: "temp",
     label: "Clean Temporary Files",
@@ -89,21 +96,21 @@ const cleanups = [
 ];
 
 function Clean() {
-  const [selected, setSelected] = useState([]);
-  const [loadingQueue, setLoadingQueue] = useState([]);
+  const [selected, setSelected] = useState<string[]>([]);
+  const [loadingQueue, setLoadingQueue] = useState<string[]>([]);
   const [lastClean, setLastClean] = useState(
     localStorage.getItem("last-clean") || "Not cleaned yet.",
   );
   const [isCleaning, setIsCleaning] = useState(false);
-  const [cleanupResults, setCleanupResults] = useState({});
+  const [cleanupResults, setCleanupResults] = useState<Record<string, number>>({});
 
-  const toggleCleanup = (id) => {
+  const toggleCleanup = (id: string) => {
     setSelected((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
   };
 
-  const formatBytes = (bytes) => {
+  const formatBytes = (bytes: number) => {
     if (bytes === 0 || !bytes) return "0 B";
     const sizes = ["B", "KB", "MB", "GB", "TB"];
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
@@ -115,7 +122,7 @@ function Clean() {
     setLoadingQueue([]);
     setCleanupResults({});
     let anySuccess = false;
-    let newResults = {};
+    let newResults: Record<string, number> = {};
 
     for (const cleanup of cleanups) {
       if (!selected.includes(cleanup.id)) continue;
@@ -127,7 +134,7 @@ function Clean() {
           payload: { script: cleanup.script, name: `cleanup-${cleanup.id}` },
         });
 
-        const resultStr = result?.output || "0";
+        const resultStr = (result?.output as string) || "0";
         const freedSpace = parseInt(resultStr.trim(), 10) || 0;
         newResults[cleanup.id] = freedSpace;
 
@@ -138,7 +145,7 @@ function Clean() {
           autoClose: 3000,
         });
         anySuccess = true;
-      } catch (err) {
+      } catch (err: any) {
         toast.update(toastId, {
           render: `Failed: ${err.message || err}`,
           type: "error",

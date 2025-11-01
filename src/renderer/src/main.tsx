@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import App from "./App.tsx";
 import { HashRouter } from "react-router-dom";
 import { init } from "@sentry/electron/renderer";
 import { init as reactInit } from "@sentry/react";
@@ -21,7 +21,7 @@ init({
   reactInit,
 });
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <PostHogProvider
       apiKey="phc_4vF2nxwQK17nl5wIQ4sT8UJae8iHZmsjGkPxgyQJhZo"

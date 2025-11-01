@@ -1,5 +1,5 @@
 import RootDiv from "@/components/rootdiv.jsx";
-import { useEffect, useState } from "react";
+import { useEffect, useState, ReactNode } from "react";
 import jsonData from "../../../../package.json";
 import { invoke } from "@/lib/electron";
 import Button from "@/components/ui/button.jsx";
@@ -10,7 +10,17 @@ import Card from "@/components/ui/card.jsx";
 import { useTranslation } from "react-i18next";
 import { Trash2 } from "lucide-react";
 
-const themes = [
+interface Theme {
+  labelKey: string;
+  value: string;
+}
+
+interface Language {
+  label: string;
+  value: string;
+}
+
+const themes: Theme[] = [
   { labelKey: "settings.themes.system", value: "system" },
   { labelKey: "settings.themes.dark", value: "dark" },
   { labelKey: "settings.themes.light", value: "light" },
@@ -19,7 +29,7 @@ const themes = [
   { labelKey: "settings.themes.classic", value: "classic" },
 ];
 
-const languages = [
+const languages: Language[] = [
   { label: "English", value: "en" },
   { label: "Russian", value: "ru" },
 ];
@@ -40,7 +50,7 @@ function Settings() {
   });
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
-  const changeLanguage = (lng) => {
+  const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
     setLanguage(lng);
     localStorage.setItem("language", lng);
@@ -84,9 +94,9 @@ function Settings() {
 
   useEffect(() => {
     invoke({ channel: "discord-rpc:get" }).then((status) =>
-      setDiscordEnabled(status),
+      setDiscordEnabled(status as boolean),
     );
-    invoke({ channel: "tray:get" }).then((status) => setTrayEnabled(status));
+    invoke({ channel: "tray:get" }).then((status) => setTrayEnabled(status as boolean));
   }, []);
 
   useEffect(() => {
@@ -95,7 +105,7 @@ function Settings() {
     } else {
       document.body.classList.remove("ph-no-capture");
     }
-    localStorage.setItem("posthogDisabled", posthogDisabled);
+    localStorage.setItem("posthogDisabled", String(posthogDisabled));
   }, [posthogDisabled]);
 
   const handleToggleDiscord = async () => {
@@ -283,7 +293,7 @@ function Settings() {
                       localStorage.setItem("sparkle:user", e.target.value)
                     }
                     className="w-full bg-sparkle-card border border-sparkle-border rounded-lg px-3 py-2 text-sparkle-text focus:ring-0 focus:outline-hidden"
-                    placeholder={t("settings.user_name_placeholder")}
+                    placeholder={t("settings.user_name_placeholder") ?? undefined}
                   />
                   <div className="flex gap-2">
                     <Button
@@ -292,7 +302,7 @@ function Settings() {
                         const username = await invoke({
                           channel: "get-user-name",
                         });
-                        localStorage.setItem("sparkle:user", username);
+                        localStorage.setItem("sparkle:user", username as string);
                         toast.success(t("settings.name_reset_success"));
                       }}
                     >
@@ -450,11 +460,11 @@ function Settings() {
   );
 }
 
-const SettingCard = ({ children, className = "" }) => (
+const SettingCard = ({ children, className = "" }: { children: ReactNode, className?: string }) => (
   <Card className={`p-4 ${className}`}>{children}</Card>
 );
 
-const SettingSection = ({ title, children }) => (
+const SettingSection = ({ title, children }: { title: string, children: ReactNode }) => (
   <div className="space-y-4">
     <h2 className="text-xl font-semibold text-sparkle-primary">{title}</h2>
     {children}
