@@ -52,7 +52,7 @@ async function Defender(): Promise<void> {
   const Apppath = path.dirname(process.execPath);
   if (app.isPackaged) {
     const result = await executePowerShell(null, {
-      script: `Add-MpPreference -ExclusionPath ''${Apppath}''`,
+      script: `Add-MpPreference -ExclusionPath '''${Apppath}'''`,
       name: "Add-MpPreference",
     });
     if (result.success) {
